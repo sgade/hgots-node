@@ -1,7 +1,8 @@
 /*
  * Main application module
- * Created by Sören Gade
- * 16.03.2014 - 00:21
+ * @module app
+ * @author Sören Gade
+ * Project started: 16.03.2014 - 00:21
  * */
 
 console.log("Hello World!");
