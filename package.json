@@ -2,9 +2,9 @@
   "name": "hgots-node",
   "version": "0.0.0",
   "description": "A door lock system.",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node app"
+    "start": "node src/app"
   },
   "keywords": [
     "security",
