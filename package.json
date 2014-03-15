@@ -1,0 +1,15 @@
+{
+  "name": "hgots-node",
+  "version": "0.0.0",
+  "description": "A door lock system.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "keywords": [
+    "security",
+    "hgo"
+  ],
+  "author": "Sören Gade <gade.soeren@gmail.com>",
+  "license": "MIT"
+}
