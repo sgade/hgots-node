@@ -14,7 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "3.4.8",
-    "jade": "*"
+    "jade": "*",
+    "serialport": "^1.3.1"
   },
   "devDependencies": {
     "grunt": "^0.4.4",
