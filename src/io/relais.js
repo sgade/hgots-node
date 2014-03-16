@@ -372,7 +372,7 @@ Relais.prototype.activateAll = function(delay, start, tickMultiplication) {
  * @param {int} start
  * @param {double} tickMultiplication
  * */
-Relais.prototype.activateAll = function(delay, start, tickMultiplication) {
+Relais.prototype.deactivateAll = function(delay, start, tickMultiplication) {
   if ( !delay ) {
     delay = 0;
   }
