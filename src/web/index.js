@@ -16,6 +16,7 @@ var path = require('path');
  * The express instance
  * */
 var app = null;
+var server = null;
 var callbacks = {};
 
 /**
@@ -66,6 +67,13 @@ function configure(port) {
 }
 
 /**
+ * Stops the express server.
+ * */
+exports.stop = function(callback) {
+  server.close(callback);
+};
+
+/**
  * Returns the port set by the init function.
  * @returns {Integer} The port.
  * */
@@ -78,7 +86,8 @@ exports.getPort = function() {
  * @param {Callback} callback - A callback that is called once the server is running.
  * */
 exports.start = function(callback) {
-  http.createServer(app).listen(app.get('port'), callback);
+  server = http.createServer(app);
+  server.listen(app.get('port'), callback);
 };
 
 // start the server if we are invoked directly
