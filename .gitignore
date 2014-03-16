@@ -1,3 +1,8 @@
+# Dependencies
 node_modules
 bower_components
+# Cache
 .sass-cache
+# Generated
+doc
+#./src/web/public

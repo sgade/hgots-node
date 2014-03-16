@@ -1,10 +1,10 @@
-/*
+/**
  * Main webserver module
  * @module web/index
  * @author Sören Gade
  * */
 
-/**
+/*
  * Module dependencies.
  */
 var express = require('express');
@@ -12,12 +12,21 @@ var routes = require('./routes');
 var http = require('http');
 var path = require('path');
 
+/**
+ * The express instance
+ * */
 var app = null;
 
+/**
+ * Initializes the server instance and configures express.
+ * */
 exports.init = function() {
   app = express();
   configure();
 };
+/**
+ * Configures express.
+ * */
 function configure() {
   // all environments
   app.set('port', process.env.PORT || 3000);
@@ -42,13 +51,23 @@ function configure() {
   app.get('/', routes.index);
 }
 
+/**
+ * Starts the express web server.
+ * @param {Callback} callback - A callback that is called once the server is running.
+ * */
 exports.start = function(callback) {
   http.createServer(app).listen(app.get('port'), callback);
 };
 
+// start the server if we are invoked directly
 if ( !module.parent ) {
   exports.init();
   exports.start(function() {
-    console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + app.get('port') + ".");
   });
 }
+
+/**
+ * An callback that is simply called with no parameters.
+ * @callback callback
+ * */

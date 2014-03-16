@@ -1,4 +1,4 @@
-/*
+/**
  * Main application module
  * @module app
  * @author Sören Gade
