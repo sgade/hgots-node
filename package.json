@@ -4,7 +4,8 @@
   "description": "A door lock system.",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app"
+    "start": "node src/app",
+    "test": "grunt test"
   },
   "keywords": [
     "security",
