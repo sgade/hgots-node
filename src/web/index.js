@@ -9,6 +9,7 @@
  */
 var express = require('express');
 var routes = require('./routes');
+var queries = require('./routes/queries');
 var http = require('http');
 var path = require('path');
 
@@ -17,7 +18,6 @@ var path = require('path');
  * */
 var app = null;
 var server = null;
-var callbacks = {};
 
 /**
  * Express instance for testing purposes.
@@ -31,7 +31,7 @@ exports.getExpress = function() {
  * @param {Integer} port - The port to listen on.
  * */
 exports.init = function(port, rfidRequestCallback) {
-  callbacks.rfidRequestCallback = rfidRequestCallback;
+  queries.setRFIDRequestCallback(rfidRequestCallback);
   
   app = express();
   configure(port);
@@ -66,14 +66,10 @@ function configureRoutes() {
   // Routes for login
   app.get('/', routes.index);
   app.get('/logout', routes.logout);
-  app.post('/validate_login', routes.validateLogin);
+  app.post('/validate_login', queries.validateLogin);
   // Routes for app
   app.get('/app', routes.app);
-  app.get('/get_rfid', function(req, res) {
-    callbacks.rfidRequestCallback(function(data) {
-      res.end(data);
-    });
-  });
+  app.get('/get_rfid', queries.getRFID);
 }
 
 /**
