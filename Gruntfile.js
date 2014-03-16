@@ -60,7 +60,7 @@ module.exports = function(grunt) {
           
         },
         files: {
-          './src/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css', './src/web/public/css/style.css' ]
+          './src/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css', './bower_components/bootflatv2/bootflat/css/bootflat.css', './src/web/public/css/style.css' ]
         }
       }
     },

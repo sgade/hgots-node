@@ -8,7 +8,7 @@ App.IndexController = Ember.ObjectController.extend({
       
       // TODO request to open the door
       setTimeout(function() {
-        self.set('status', 'Not yet implemented.');
+        self.set('status', 'Info: Not yet implemented.');
       }, 1000);
     }
   }

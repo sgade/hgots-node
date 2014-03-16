@@ -41,9 +41,8 @@ script(type="text/x-handlebars").
   {{outlet}}
 
 script#index(type="text/x-handlebars").
-  <b>TODO: Create Index</b>
-  
+  <h1>Home</h1>
   <div>
-    <span>{{status}}</span>
-    <button {{action 'openDoor'}}>Open Door</button>
+    <p>Status: {{status}}</p>
+    <button class="btn btn-default" {{action 'openDoor'}}>Open Door</button>
   </div>
