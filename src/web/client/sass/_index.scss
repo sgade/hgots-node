@@ -1,0 +1,21 @@
+.login {
+  margin: 50px;
+  
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  
+    .flex-item {
+      align-items: center;
+    }
+  }
+  
+  .login-container {
+    padding: 50px;
+    
+    input {
+      width: 100%;
+    }
+  }
+}
