@@ -6,18 +6,25 @@
  *
  * @requires config
  * @requires web/index
- * @requires io/serial
  * @requires io/rfidreader
  * */
 
 var config = require('./config');
 var web = require('./web/');
-var serial = require('./io/serial');
-var rfidreader = require('./io/rfidreader');
+var RFIDReader = require('./io/rfidreader');
 
 console.log("Hello World!");
 console.log("This is going to be a full featured door lock system.");
+/* ==========
+ * Globals
+ * ==========
+ * */
+var rfidReader = null;
 
+/* ==========
+ * Init
+ * ==========
+ * */
 /**
  * Starts the webserver.
  * */
@@ -32,14 +39,19 @@ function startWeb() {
  * Initializes the connection with the RFID reader.
  * */
 function initRFIDReader() {
-  serial.list(function(err, results) {
-    console.log("Found", results.length, "potential serial ports.");
+  var port = config['rfidreader-port'];
+  
+  // create new instance
+  rfidReader = new RFIDReader(port);
+  
+  // add event listeners
+  rfidReader.on('data', function(data) {
+    console.log("Data by RFID reader:", data);
   });
   
-  rfidreader.init(config['rfidreader-port'], function() {
+  // open connection
+  rfidReader.open(function() {
     console.log("Connection to RFID reader opened.");
-  }, function(data) {
-    console.log("Data by RFID reader:", data);
   });
 }
 
