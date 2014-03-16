@@ -18,6 +18,18 @@ var SerialPort = serialport.SerialPort;
  * @default
  * */
 var NEWLINE = '\n';
+/**
+ * Options for the serial port.
+ * @constant
+ * @type {Object}
+ * @default
+ * */
+var SERIAL_OPTIONS = {
+  baudrate: 9200,
+  databits: 8,
+  stopbits: 1,
+  parity: 'none'
+};
 
 /**
  * Initalizes the class on the port defined.
@@ -41,9 +53,9 @@ var RFIDReader = function(port) {
    * ==========
    * */
   events.EventEmitter.call(this);
-  this.serialPort = new SerialPort(port, {
-    parser: serialport.parsers.readline(NEWLINE)
-  }, false);
+  var options = SERIAL_OPTIONS;
+  options.parser = serialport.parsers.readline(NEWLINE);
+  this.serialPort = new SerialPort(port, options, false);
   
   /* ==========
    * Privates
@@ -73,19 +85,6 @@ var RFIDReader = function(port) {
      * */
     this.emit('data', data);
   };
-  /**
-   * A function that should be called after we have written our buffer to the serial port.
-   * @param {Exception} err - The error object we may have obtained.
-   * @fires RFIDReader#written
-   * */
-  var _onWritten = function(err) {
-    /**
-     * Written event.
-     * @event RFIDReader#written
-     * @type {Exception}
-     * */
-    this.emit('written', err);
-  };
   
   /* ==========
    * Publics
@@ -106,20 +105,6 @@ var RFIDReader = function(port) {
       self.serialPort.on('data', function(data) {
         _onData.call(self, data);
       });
-    });
-  };
-
-  /**
-   * @param {Buffer} buffer - The buffer to write.
-   * @param {ErrorCallback} [callback] - The callback.
-   * */
-  this.write = function(buffer, callback) {
-    var self = this;
-  
-    self.serialPort.write(buffer, function(err) {
-      if ( callback )
-        callback();
-      _onWritten.call(self, err);
     });
   };
 };

@@ -1,4 +1,5 @@
 {
   "web-port": "3000",
-  "rfidreader-port": "/dev/ttyUSB0"
+  "rfidreader-port": "/dev/ttyUSB0",
+  "relais-port": "/dev/ttyUSB1"
 }
