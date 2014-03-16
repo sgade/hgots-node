@@ -90,7 +90,7 @@ module.exports = function(grunt) {
     }
   });
   
-  grunt.registerTask('default', [ 'test', 'build' ]);
+  grunt.registerTask('default', [ 'build' ]);
   grunt.registerTask('dev', [ 'default', 'watch' ]);
   /* Single purpose tasks */
   grunt.registerTask('test', [ 'jshint', 'mochaTest' ]);
@@ -98,6 +98,5 @@ module.exports = function(grunt) {
   grunt.registerTask('build-js', [ 'uglify' ]);
   grunt.registerTask('doc', [ 'jsdoc' ]);
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
-  grunt.loadNpmTasks('grunt-mocha');
   
 };

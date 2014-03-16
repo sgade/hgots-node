@@ -1,5 +1,8 @@
 {
   "web-port": "3000",
   "rfidreader-port": "/dev/ttyUSB0",
-  "relais-port": "/dev/ttyUSB1"
+  "relais-port": "/dev/ttyUSB1",
+  "db-name": "db.sqlite",
+  "db-username": "admin",
+  "db-password": "admin"
 }
