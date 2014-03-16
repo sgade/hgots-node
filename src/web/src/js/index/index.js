@@ -13,7 +13,7 @@ $(function() {
     return $("#login-password").val();
   }
   
-  $("input").keyup(function(e) {
+  $("input").keyup(function() {
     var username = getUsername();
     var password = getPassword();
     console.log(username, password);
@@ -31,10 +31,10 @@ $(function() {
         
         console.log(data);
         if ( data ) {
-          if ( data.statusCode == 200 ) {
+          if ( data.statusCode === 200 ) {
             location.href = "/app";
           } else {
-            alert(data.message);
+            console.log(data.message);
           }
         }
         
