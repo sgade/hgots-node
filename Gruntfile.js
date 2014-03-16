@@ -78,16 +78,26 @@ module.exports = function(grunt) {
         files: [ './src/web/client/sass/**/*.scss' ],
         tasks: [ 'build-css' ]
       }
+    },
+    /* Serverside Tests */
+    mochaTest: {
+      test: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['src/web/test/**/*.js']
+      }
     }
   });
   
   grunt.registerTask('default', [ 'test', 'build' ]);
   grunt.registerTask('dev', [ 'default', 'watch' ]);
   /* Single purpose tasks */
-  grunt.registerTask('test', [ 'jshint' ]);
+  grunt.registerTask('test', [ 'jshint', 'mochaTest' ]);
   grunt.registerTask('build', [ 'build-js', 'build-css' ]);
   grunt.registerTask('build-js', [ 'uglify' ]);
   grunt.registerTask('doc', [ 'jsdoc' ]);
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
+  grunt.loadNpmTasks('grunt-mocha');
   
 };
