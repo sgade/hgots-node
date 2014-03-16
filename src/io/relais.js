@@ -155,7 +155,7 @@ Relais.prototype.send = function(command, data, callback) {
   
   // call callback after write
   if ( callback ) {
-    self.serialPort.once('data', function(dat) {
+    self.serialPort.once('data', function(data) {
       if ( callback ) {
         callback(null, data);
       }

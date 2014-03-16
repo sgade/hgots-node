@@ -56,10 +56,13 @@ function configure(port) {
   app.use(express.static(path.join(__dirname, 'public')));
 
   // development only
-  if ('development' == app.get('env')) {
+  if ('development' === app.get('env')) {
     app.use(express.errorHandler());
   }
   
+  configureRoutes();
+}
+function configureRoutes() {
   // Routes for login
   app.get('/', routes.index);
   app.get('/logout', routes.logout);

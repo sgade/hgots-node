@@ -24,7 +24,7 @@ describe('HGOTS Web Server', function() {
     done();
   });
   
-  it('should be listening at localhost:3333', function(done) {
+  it('should be listening at localhost:' + port, function(done) {
     request(expressApp)
       .get('/')
       .expect(200, done);
@@ -70,7 +70,7 @@ describe('HGOTS Web Server', function() {
   describe('App /app', function() {
     it('should redirect with credentials', function(done) {
       request(expressApp)
-        .get('/app') //TODO: somehow get the server to love our credentials
+        .get('/app') // TODO: somehow get the server to love our credentials
         .expect(302, done);
     });
   });
