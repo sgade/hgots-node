@@ -42,15 +42,15 @@ module.exports = function(grunt) {
           sourceMap: true
         },
         files: {
-          './src/web/public/js/index.js': [ './bower_components/jquery/dist/jquery.js', './src/web/src/js/index/index.js' ],
-          './src/web/public/js/app.js': [ './bower_components/jquery/dist/jquery.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', /* './bower_components/ember-data/ember-data.js', */'./src/web/src/js/app/**/*.js' ]
+          './src/web/public/js/index.js': [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ],
+          './src/web/public/js/app.js': [ './bower_components/jquery/dist/jquery.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', /* './bower_components/ember-data/ember-data.js', */'./src/web/client/js/app/**/*.js' ]
         }
       }
     },
     sass: {
       src: {
         files: {
-          './src/web/public/css/style.css': [ './src/web/src/sass/style.scss' ]
+          './src/web/public/css/style.css': [ './src/web/client/sass/style.scss' ]
         }
       }
     },
@@ -71,11 +71,11 @@ module.exports = function(grunt) {
       },
       
       js: {
-        files: [ './src/web/src/js/**/*.js' ],
+        files: [ './src/web/client/js/**/*.js' ],
         tasks: [ 'build-js' ]
       },
       css: {
-        files: [ './src/web/src/sass/**/*.scss' ],
+        files: [ './src/web/client/sass/**/*.scss' ],
         tasks: [ 'build-css' ]
       }
     }
