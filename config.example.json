@@ -1,0 +1,3 @@
+{
+  "rfidreader-port": "/dev/ttyUSB0"
+}
