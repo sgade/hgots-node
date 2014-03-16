@@ -16,6 +16,9 @@ script(type="text/x-handlebars").
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li>
+            {{#link-to 'index'}}Home{{/link-to}}
+          </li>
+          <li>
             {{#link-to 'admin'}}Admin{{/link-to}}
           </li>
           <li>
@@ -38,4 +41,9 @@ script(type="text/x-handlebars").
   {{outlet}}
 
 script#index(type="text/x-handlebars").
-  TODO: Create Index
+  <b>TODO: Create Index</b>
+  
+  <div>
+    <span>{{status}}</span>
+    <button {{action 'openDoor'}}>Open Door</button>
+  </div>
