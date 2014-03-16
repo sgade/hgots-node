@@ -1,8 +1,8 @@
 /**
- * Main application module
+ * Main application module.
+ * Project started: 16.03.2014 - 00:21
  * @module app
  * @author Sören Gade
- * Project started: 16.03.2014 - 00:21
  * */
 
 var web = require('./web/');
