@@ -26,8 +26,6 @@ exports.validateLogin = function(req, res) {
   var params = req.body;
   var username = params.username,
     password = params.password;
-    
-  console.log("Login:", username, password);
   
   var msg = {
     statusCode: 200,
