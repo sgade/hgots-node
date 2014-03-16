@@ -22,7 +22,9 @@ var callbacks = {};
 /**
  * Express instance for testing purposes.
  * */
-exports.app = app;
+exports.getExpress = function() {
+  return app;
+};
 
 /**
  * Initializes the server instance and configures express.
