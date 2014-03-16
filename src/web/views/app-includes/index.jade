@@ -43,6 +43,8 @@ script(type="text/x-handlebars").
 script#index(type="text/x-handlebars").
   <h1>Home</h1>
   <div>
-    <p>Status: {{status}}</p>
+    {{#if isLoading}}
+      <p>Loading...</p>
+    {{/if}}
     <button class="btn btn-default" {{action 'openDoor'}}>Open Door</button>
   </div>

@@ -1,14 +1,14 @@
 App.IndexController = Ember.ObjectController.extend({
-  status: 'Ready',
+  isLoading: false,
   
   actions: {
     openDoor: function() {
       var self = this;
-      self.set('status', 'Waiting...');
+      self.set('isLoading', true);
       
       // TODO request to open the door
       setTimeout(function() {
-        self.set('status', 'Info: Not yet implemented.');
+        self.set('isLoading', false);
       }, 1000);
     }
   }
