@@ -15,6 +15,7 @@
  
 var util = require('util');
 var events = require('events');
+var async = require('async');
 var serialport = require('serialport');
 var SerialPort = serialport.SerialPort;
 
@@ -82,6 +83,39 @@ Relais.prototype.open = function(callback) {
       callback();
     }
   });
+  
+  /**
+   * @param {unsigned int} delay
+   * @param {Function} relaisOperation - An operation that is passed a relais number that it should work on.
+   * @param {Callback} callback
+   * */
+  var _iterateAllRelais = function(delay, relaisOperation, callback) {
+    var self = this;
+    if ( !delay ) {
+      delay = 0;
+    }
+    
+    if ( delay === 0 ) {
+      relaisOperation(self.getAllRelais());
+    } else {
+      var relaisNums = [ 1, 2, 4, 8, 16, 32, 64, 128 ];
+      
+      async.each(relaisNums, function(item, cb) {
+        
+        // item == relaisnum
+        relaisOperation(item);
+        
+        setTimeout(function() {
+          cb();
+        }, delay);
+        
+      }, function(err) {
+        // done
+        callback();
+      });
+      
+    }
+  };
 };
 
 /*
@@ -338,62 +372,16 @@ Relais.prototype.toggle = function(relais, callback) {
 
 /**
  * @param {int} delay
- * @param {int} start
- * @param {double} tickMultiplication
+ * @param {Callback} callback
  * */
-Relais.prototype.activateAll = function(delay, start, tickMultiplication) {
-  if ( !delay ) {
-    delay = 0;
-  }
-  if ( !start ) {
-    start = 1;
-  }
-  if ( !tickMultiplication ) {
-    tickMultiplication = 2.0;
-  }
-  
-  if ( delay == 0 ) {
-    this.setSingle(Relais.getAllRelais());
-  } else {
-    var relaisNum = start;
-    var relais = 0;
-    for ( var i = 0; i < 8; i++ ) {
-      relais = relaisNum;
-      this.setSingle(relais);
-      
-      relaisNum = ( relaisNum * tickMultiplication );
-      // Sleep(delay);
-    }
-  }
+Relais.prototype.activateAll = function(delay, callback) {
+  _iterateAllRelais.call(this, delay, this.setSingle, callback);
 };
 
 /**
  * @param {int} delay
- * @param {int} start
- * @param {double} tickMultiplication
+ * @param {Callback} callback
  * */
-Relais.prototype.deactivateAll = function(delay, start, tickMultiplication) {
-  if ( !delay ) {
-    delay = 0;
-  }
-  if ( !start ) {
-    start = 1;
-  }
-  if ( !tickMultiplication ) {
-    tickMultiplication = 2.0;
-  }
-  
-  if ( delay == 0 ) {
-    this.delSingle(Relais.getAllRelais());
-  } else {
-    var relaisNum = start;
-    var relais = 0;
-    for ( var i = 0; i < 8; i++ ) {
-      relais = relaisNum;
-      this.delSingle(relais);
-      
-      relaisNum = ( relaisNum * tickMultiplication );
-      // Sleep(delay);
-    }
-  }
+Relais.prototype.deactivateAll = function(delay) {
+  _iterateAllRelais.call(this, delay, this.delSingle, callback);
 };
