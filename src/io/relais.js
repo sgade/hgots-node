@@ -61,54 +61,30 @@ var RelaisByteNames = {
 
 /**
  * @constructor
+ * @extends events.EventEmitter
  * */
 function Relais(port) {
   /**
    * @instance
    * */ 
   var serialPort = null;
+  /**
+   * @instance
+   * */
   var relaisID = 0;
+  /**
+   * @instance
+   * */
   var isOpen = false;
   
   this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
-  
-  /**
-   * @param {unsigned int} delay
-   * @param {Function} relaisOperation - An operation that is passed a relais number that it should work on.
-   * @param {Callback} callback
-   * */
-  var _iterateAllRelais = function(delay, relaisOperation, callback) {
-    var self = this;
-    if ( !delay ) {
-      delay = 0;
-    }
-    
-    if ( delay === 0 ) {
-      relaisOperation(self.getAllRelais());
-    } else {
-      var relaisNums = [ 1, 2, 4, 8, 16, 32, 64, 128 ];
-      
-      async.each(relaisNums, function(item, cb) {
-        
-        // item == relaisnum
-        relaisOperation(item);
-        
-        setTimeout(function() {
-          cb();
-        }, delay);
-        
-      }, function(err) {
-        // done
-        callback();
-      });
-      
-    }
-  };
 }
+util.inherits(Relais, events.EventEmitter);
+
 Relais.prototype.open = function(callback) {
   var self = this;
   
-  self.serialport.open(function() {
+  self.serialPort.open(function() {
     self.isOpen = true;
     
     if ( callback ) {
@@ -133,11 +109,30 @@ Relais.prototype.writeOK = function() {
  * Writes the buffer to the serial port.
  * @param {Buffer} buffer - The buffer to write.
  * @param {ErrorCallback} [callback] - The callback that is called upon finish. Data might not be flushed at that point.
+ *
  * {@link https://github.com/voodootikigod/node-serialport#write-buffer-callback}
+ * @fires Relais#written
  * */
 Relais.prototype.write = function(buffer, callback) {
-  if ( this.writeOK() ) {
-      this.serialport.write(buffer, callback);
+  var self = this;
+  
+  if ( self.writeOK() ) {
+    self.serialPort.write(buffer, function(err) {
+      if ( callback ) {
+        callback(err);
+      }
+      /**
+       * Written event.
+       * @event Relais#written
+       * @type {Object}
+       * @param {Buffer} buffer
+       * @param {Exception} err
+       * */
+      self.emit('written', {
+        buffer: buffer,
+        err: err
+      });
+    });
   }
 };
 
@@ -160,7 +155,7 @@ Relais.prototype.send = function(command, data, callback) {
   
   // call callback after write
   if ( callback ) {
-    self.serialport.once('data', function(dat) {
+    self.serialPort.once('data', function(dat) {
       if ( callback ) {
         callback(null, data);
       }
@@ -197,6 +192,9 @@ Relais.prototype.getAllRelais = function() {
  * */
 Relais.prototype.noOperation = function(callback) {
   var self = this;
+  if ( !callback ) {
+    callback = function() {};
+  }
   
   self.send(Commands.NoOperation, 0, function(err, data) {
     if ( err ) {
@@ -223,6 +221,9 @@ Relais.prototype.NOP = function(callback) {
  * */
 Relais.prototype.setup = function(callback) {
   var self = this;
+  if ( !callback ) {
+    callback = function() {};
+  }
   
   if ( self.relaisID === 0 ) {
     self.send(Commands.Setup, 0, function(err, data) {
@@ -248,6 +249,9 @@ Relais.prototype.setup = function(callback) {
  * */
 Relais.prototype.getPort = function(callback) {
   var self = this;
+  if ( !callback ) {
+    return;
+  }
   
   self.send(Commands.GetPort, 0, function(err, data) {
     if ( err ) {
@@ -277,6 +281,9 @@ Relais.prototype.setPort = function(relais) {
  * */
 Relais.prototype.getOption = function(callback) {
   var self = this;
+  if ( !callback ) {
+    return;
+  }
   
   self.send(Commands.GetOption, 0, function(err, data) {
     if ( err ) {
@@ -307,6 +314,9 @@ Relais.prototype.setOption = function(option) {
  * */
 Relais.prototype.setSingle = function(relais, callback) {
   var self = this;
+  if ( !callback ) {
+    callback = function() {};
+  }
   
   self.send(Commands.SetSingle, relais, function(err, data) {
     if ( err ) {
@@ -330,6 +340,9 @@ Relais.prototype.setSingle = function(relais, callback) {
  * */
 Relais.prototype.delSingle = function(relais, callback) {
   var self = this;
+  if ( !callback ) {
+    callback = function() {};
+  }
   
   self.send(Commands.DelSingle, relais, function(err, data) {
     if ( err ) {
@@ -353,6 +366,9 @@ Relais.prototype.delSingle = function(relais, callback) {
  * */
 Relais.prototype.toggle = function(relais, callback) {
   var self = this;
+  if ( !callback ) {
+    callback = function() {};
+  }
   
   self.send(Commands.Toggle, relais, function(err, data) {
     if ( err ) {
@@ -375,13 +391,51 @@ Relais.prototype.toggle = function(relais, callback) {
  * @param {Callback} callback
  * */
 Relais.prototype.activateAll = function(delay, callback) {
-  _iterateAllRelais.call(this, delay, this.setSingle, callback);
+  this._iterateAllRelais(delay, this.setSingle, callback);
 };
 
 /**
  * @param {int} delay
  * @param {Callback} callback
  * */
-Relais.prototype.deactivateAll = function(delay) {
-  _iterateAllRelais.call(this, delay, this.delSingle, callback);
+Relais.prototype.deactivateAll = function(delay, callback) {
+  this._iterateAllRelais(delay, this.delSingle, callback);
 };
+
+/**
+ * @param {uint} delay
+ * @param {Function} relaisOperation - An operation that is passed a relais number that it should work on.
+ * @param {Callback} callback
+ * */
+Relais.prototype._iterateAllRelais = function(delay, relaisOperation, callback) {
+  var self = this;
+  if ( !delay ) {
+    delay = 0;
+  }
+  if ( !callback ) {
+    callback = function() {};
+  }
+  
+  if ( delay === 0 ) {
+    relaisOperation.call(self, self.getAllRelais());
+  } else {
+    var relaisNums = [ 1, 2, 4, 8, 16, 32, 64, 128 ];
+    
+    async.each(relaisNums, function(item, cb) {
+      
+      // item == relaisnum
+      relaisOperation.call(self, item);
+      
+      setTimeout(function() {
+        cb();
+      }, delay);
+      
+    }, function(err) {
+      // done
+      callback();
+    });
+    
+  }
+};
+
+module.exports = Relais;
