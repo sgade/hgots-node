@@ -12,6 +12,10 @@
   ],
   "author": "Sören Gade <gade.soeren@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sgade/hgots-node.git"
+  },
   "dependencies": {
     "express": "3.4.8",
     "jade": "*",
