@@ -1,3 +1,4 @@
+var config = require('../../config');
 var db = require('../../db/');
 
 /**
@@ -11,7 +12,7 @@ function validateUser(user, pw, callback) {
     return;
   }
   
-  if ( user == "admin" && pw == "admin" ) { // TODO read from config
+  if ( user == config.web.admin.username && pw == config.web.admin.password ) {
     callback(true);
   } else {
     db.User.find({

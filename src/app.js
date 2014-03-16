@@ -32,7 +32,7 @@ var relais = null;
  * Starts the webserver.
  * */
 function startWeb() {
-  var port = config.port.web;
+  var port = config.web.port;
   
   web.init(port, web_RFIDRequest);
   web.start(function() {
