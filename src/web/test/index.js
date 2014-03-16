@@ -71,7 +71,7 @@ describe('HGOTS Web Server', function() {
     it('should redirect with credentials', function(done) {
       request(expressApp)
         .get('/app') //TODO: somehow get the server to love our credentials
-        .expect(302, done)
+        .expect(302, done);
     });
   });
   
