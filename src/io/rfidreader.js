@@ -18,6 +18,18 @@ var SerialPort = serialport.SerialPort;
  * @default
  * */
 var NEWLINE = '\n';
+/**
+ * Options for the serial port.
+ * @constant
+ * @type {Object}
+ * @default
+ * */
+var SERIAL_OPTIONS = {
+  baudrate: 9200,
+  databits: 8,
+  stopbits: 1,
+  parity: 'none'
+};
 
 /**
  * Initalizes the class on the port defined.
@@ -41,9 +53,9 @@ var RFIDReader = function(port) {
    * ==========
    * */
   events.EventEmitter.call(this);
-  this.serialPort = new SerialPort(port, {
-    parser: serialport.parsers.readline(NEWLINE)
-  }, false);
+  var options = SERIAL_OPTIONS;
+  options.parser = serialport.parsers.readline(NEWLINE);
+  this.serialPort = new SerialPort(port, options, false);
   
   /* ==========
    * Privates
