@@ -20,6 +20,11 @@ var server = null;
 var callbacks = {};
 
 /**
+ * Express instance for testing purposes.
+ * */
+exports.app = app;
+
+/**
  * Initializes the server instance and configures express.
  * @param {Integer} port - The port to listen on.
  * */
