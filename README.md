@@ -1,4 +1,6 @@
-# hgots-node [![Build Status](https://drone.io/github.com/sgade/hgots-node/status.png)](https://drone.io/github.com/sgade/hgots-node/latest) [![Code Climate](https://codeclimate.com/github/sgade/hgots-node.png)](https://codeclimate.com/github/sgade/hgots-node) [![Dependency Status](https://david-dm.org/sgade/hgots-node.png?theme=shields.io)](https://david-dm.org/sgade/hgots-node) [![devDependency Status](https://david-dm.org/sgade/hgots-node/dev-status.png?theme=shields.io)](https://david-dm.org/sgade/hgots-node#info=devDependencies) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+# hgots-node
+
+[![Build Status](https://drone.io/github.com/sgade/hgots-node/status.png)](https://drone.io/github.com/sgade/hgots-node/latest) [![Code Climate](https://codeclimate.com/github/sgade/hgots-node.png)](https://codeclimate.com/github/sgade/hgots-node) [![Dependency Status](https://david-dm.org/sgade/hgots-node.png?theme=shields.io)](https://david-dm.org/sgade/hgots-node) [![devDependency Status](https://david-dm.org/sgade/hgots-node/dev-status.png?theme=shields.io)](https://david-dm.org/sgade/hgots-node#info=devDependencies) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 *Door lock system in nodejs.*
 
