@@ -16,3 +16,7 @@ This application is still in **very** early development.
 2. `npm install`
 3. `bower install`
 4. `grunt dev` and `node src/app`
+
+# Generate documentation
+
+Use `grunt doc`.
