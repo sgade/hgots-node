@@ -9,7 +9,7 @@
 var config = require('../config');
 var Sequelize = require('sequelize');
 
-var sequelize = new Sequelize(config['db-name'], config['db-username'], config['db-password'], {
+var sequelize = new Sequelize(config.db.name, config.db.username, config.db.password, {
   dialect: 'sqlite',
   storage: config['db-name']
 });

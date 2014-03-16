@@ -32,7 +32,7 @@ var relais = null;
  * Starts the webserver.
  * */
 function startWeb() {
-  var port = config["web-port"];
+  var port = config.port.web;
   
   web.init(port, web_RFIDRequest);
   web.start(function() {
@@ -49,7 +49,7 @@ function web_RFIDRequest(callback) {
  * Initializes the connection with the RFID reader.
  * */
 function initRFIDReader() {
-  var port = config['rfidreader-port'];
+  var port = config.port.rfid;
   if ( !port ) {
     console.log("Please set the rfidreader port in the config.");
     return;
@@ -72,7 +72,7 @@ function initRFIDReader() {
  * Initializes the connection with the relais card.
  * */
 function initRelais() {
-  var port = config["relais-port"];
+  var port = config.port.relais;
   if ( !port ) {
     console.log("Please set the relais card port in the config.");
     return;
