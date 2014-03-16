@@ -47,8 +47,12 @@ function configure() {
     app.use(express.errorHandler());
   }
   
-  // Routes
+  // Routes for login
   app.get('/', routes.index);
+  app.get('/logout', routes.logout);
+  app.post('/validate_login', routes.validateLogin);
+  // Routes for app
+  app.get('/app', routes.app);
 }
 
 /**

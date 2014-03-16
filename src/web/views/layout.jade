@@ -4,12 +4,9 @@ html
     title= title
     link(rel='stylesheet', href='/css/style.css')
   body
-    header
-      h1= title
-    noscript
-      p We're sorry, but you need to&nbsp;
-        b enable Javascript&nbsp;
-        | to use this website.
-    block content
-    
-    script(src="/js/script.js")
+    div.container-fluid
+      noscript
+        p We're sorry, but you need to&nbsp;
+          b enable Javascript&nbsp;
+          | to use this website.
+      block content

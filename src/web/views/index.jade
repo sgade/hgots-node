@@ -1,3 +1,13 @@
 extends layout
 
 block content
+  h1= title
+  form
+    div.form-group
+      input#login-username(type="text", placeholder="Username")
+    div.form-group
+      input#login-password(type="password", placeholder="Password")
+    
+    button.btn.btn-default#login(type="submit") Login
+  
+  script(src='/js/index.js')

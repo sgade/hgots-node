@@ -42,7 +42,8 @@ module.exports = function(grunt) {
           sourceMap: true
         },
         files: {
-          './src/web/public/js/script.js': [ './bower_components/jquery/dist/jquery.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/src/js/**/*.js' ]
+          './src/web/public/js/index.js': [ './bower_components/jquery/dist/jquery.js', './src/web/src/js/index/index.js' ],
+          './src/web/public/js/app.js': [ './bower_components/jquery/dist/jquery.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', /* './bower_components/ember-data/ember-data.js', */'./src/web/src/js/app/**/*.js' ]
         }
       }
     },
