@@ -13,13 +13,15 @@ $(function() {
     return $("#login-password").val();
   }
   
-  $("input").keyup(function() {
+  function setButtonState() {
     var username = getUsername();
     var password = getPassword();
-    console.log(username, password);
     
     setState($("#login"), username && password);
-  });
+  }
+  setButtonState();
+  
+  $("input").keyup(setButtonState);
   $("#login").click(function(e) {
     e.preventDefault();
     
