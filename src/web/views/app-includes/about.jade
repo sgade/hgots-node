@@ -1,6 +1,8 @@
 // About page
 script#about(type="text/x-handlebars")
-  h1 #{title}
+  h1= title
   
-  p By&nbsp;
-    i Sören Gade
+  :markdown
+    By *Sören Gade*.
+    
+  p Take a look at the {{#link-to 'readme'}}Readme{{/link-to}}.
