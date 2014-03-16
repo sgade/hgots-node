@@ -2,6 +2,8 @@
  * Routes
  * */
 
+var pkg = require('../../../package');
+
 function validateUser(user, pw) {
   if ( !user || !pw ) {
     return false;
@@ -18,7 +20,7 @@ exports.index = function(req, res) {
     res.redirect('/app');
   } else {
     res.render('index', {
-      title: 'hgots-node'
+      title: pkg.name
     });
   }
 };
@@ -56,7 +58,7 @@ exports.app = function(req, res) {
     res.redirect('/');
   } else {
     res.render('app', {
-      title: "hgots-node"
+      title: pkg.name
     });
   }
 };
