@@ -1,14 +1,17 @@
-var http = require('http');
 var should = require('should');
+var request = require('supertest');
 
 var app = require('../');
+var expressApp = null;
 var port = 3333;
-var sessionCookie = null;
 
 describe('app', function(){
 	before(function(done) {
 		app.init(port, null);
-		app.start(done);
+		app.start(function() {
+      expressApp = app.getExpress();
+      done();
+		});
 	});
 	
 	after(function(done) {
@@ -17,29 +20,20 @@ describe('app', function(){
 	});
   
   it('should exist', function(done) {
-    should.exist(app);
+    should.exist(expressApp);
     done();
   });
   
-  it('should be listening at localhost:3333', function(done) {
-    var headers = defaultGetOptions('/');
-    http.get(headers, function(res) {
-      res.statusCode.should.eql(200);
-      done();
-    });
+  it('should be listening at localhost:3333 on /', function(done) {
+    request(expressApp)
+      .get('/')
+      .expect(200, done);
   });
   
-  
-  function defaultGetOptions(path) {
-    var options = {
-      "host": "localhost",
-      "port": port,
-      "path": path,
-      "method": "GET",
-      "headers": {
-        "Cookie": sessionCookie
-      }
-    };
-    return options;
-  }
+  it('should respond with HTML on /', function(done) {
+    request(expressApp)
+      .get('/')
+      .expect('Content-Type', /html/)
+      .expect(200, done);
+  });
 });
