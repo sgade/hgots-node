@@ -1,0 +1,23 @@
+{
+  "name": "hgots-node",
+  "version": "0.0.0",
+  "private": true,
+  "authors": [
+    "Sören Gade <gade.soeren@googlemail.com>"
+  ],
+  "main": "src/app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1",
+    "ember": "~1.4.0",
+    "ember-data": "~0.0.14",
+    "jquery": "~2.1.0"
+  }
+}
