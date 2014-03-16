@@ -71,18 +71,6 @@ function Relais(port) {
   var isOpen = false;
   
   this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
-}
-
-Relais.prototype.open = function(callback) {
-  var self = this;
-  
-  self.serialport.open(function() {
-    self.isOpen = true;
-    
-    if ( callback ) {
-      callback();
-    }
-  });
   
   /**
    * @param {unsigned int} delay
@@ -116,6 +104,18 @@ Relais.prototype.open = function(callback) {
       
     }
   };
+}
+Relais.prototype.open = function(callback) {
+  var self = this;
+  
+  self.serialport.open(function() {
+    self.isOpen = true;
+    
+    if ( callback ) {
+      callback();
+    }
+    self.emit('open');
+  });
 };
 
 /*
