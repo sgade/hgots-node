@@ -14,25 +14,21 @@ script(type="text/x-handlebars")
       
         div.collapse.navbar-collapse
           ul.nav.navbar-nav
-            li
-              {{#link-to 'index'}}Home{{/link-to}}
-            li
-              {{#link-to 'admin'}}Admin{{/link-to}}
-            li
-              {{#link-to 'operator'}}Operator{{/link-to}}
+            li {{#link-to 'index'}}Home{{/link-to}}
+            li {{#link-to 'admin'}}Admin{{/link-to}}
+            li {{#link-to 'operator'}}Operator{{/link-to}}
             
           ul.nav.navbar-nav.navbar-right
-            li
-              {{#link-to 'about'}}About{{/link-to}}
+            li {{#link-to 'about'}}About{{/link-to}}
             li
               a(href="/logout") Logout
         
-    {{outlet}}
+    | {{outlet}}
 
 script#index(type="text/x-handlebars")
   h1 Home
   div
-    {{#if isLoading}}
+    | {{#if isLoading}}
     p Loading...
-    {{/if}}
+    | {{/if}}
     <button class="btn btn-default" {{action 'openDoor'}}>Open Door</button>
