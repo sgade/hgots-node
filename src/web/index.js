@@ -19,17 +19,19 @@ var app = null;
 
 /**
  * Initializes the server instance and configures express.
+ * @param {Integer} port - The port to listen on.
  * */
-exports.init = function() {
+exports.init = function(port) {
   app = express();
-  configure();
+  configure(port);
 };
 /**
  * Configures express.
+ * @param {Integer} port - The port to listen on.
  * */
-function configure() {
+function configure(port) {
   // all environments
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', port || process.env.PORT || 3000);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -53,6 +55,14 @@ function configure() {
   app.post('/validate_login', routes.validateLogin);
   // Routes for app
   app.get('/app', routes.app);
+}
+
+/**
+ * Returns the port set by the init function.
+ * @returns {Integer} The port.
+ * */
+exports.getPort = function() {
+  return app.get('port');
 }
 
 /**

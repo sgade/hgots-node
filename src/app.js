@@ -29,9 +29,11 @@ var rfidReader = null;
  * Starts the webserver.
  * */
 function startWeb() {
-  web.init();
+  var port = config["web-port"];
+  
+  web.init(port);
   web.start(function() {
-    console.log("Web interface running.");
+    console.log("Web interface running on port " + web.getPort() + ".");
   });
 }
 
