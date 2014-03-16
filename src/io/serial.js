@@ -15,7 +15,7 @@ var serialport = require('serialport');
  * @param {Object} object - The resulting data.
  * */
 /**
- * Lists all serial port devices found on the device.
+ * Lists all serial ports found on the device.
  * @param {ErrorResultCallback} callback - A callback that is called upon finish or error.
  * */
 exports.list = function(callback) {
