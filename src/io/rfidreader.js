@@ -73,19 +73,6 @@ var RFIDReader = function(port) {
      * */
     this.emit('data', data);
   };
-  /**
-   * A function that should be called after we have written our buffer to the serial port.
-   * @param {Exception} err - The error object we may have obtained.
-   * @fires RFIDReader#written
-   * */
-  var _onWritten = function(err) {
-    /**
-     * Written event.
-     * @event RFIDReader#written
-     * @type {Exception}
-     * */
-    this.emit('written', err);
-  };
   
   /* ==========
    * Publics
@@ -106,20 +93,6 @@ var RFIDReader = function(port) {
       self.serialPort.on('data', function(data) {
         _onData.call(self, data);
       });
-    });
-  };
-
-  /**
-   * @param {Buffer} buffer - The buffer to write.
-   * @param {ErrorCallback} [callback] - The callback.
-   * */
-  this.write = function(buffer, callback) {
-    var self = this;
-  
-    self.serialPort.write(buffer, function(err) {
-      if ( callback )
-        callback();
-      _onWritten.call(self, err);
     });
   };
 };
