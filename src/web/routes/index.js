@@ -32,14 +32,14 @@ exports.validateLogin = function(req, res) {
     message: "OK"
   };
   if ( !validateUser(username, password) ) {
-    msg.statusCode = 304;
-    msg.message = "Invalid credentials";
+    msg.statusCode = 403;
+    msg.message = "Invalid credentials.";
   } else {
     req.session.username = username;
     req.session.password = password;
   }
   
-  res.set({
+  res.status(msg.statusCode).set({
     'Content-Type': 'application/json'
   });
   res.end(JSON.stringify(msg));
