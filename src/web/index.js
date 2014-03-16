@@ -73,5 +73,5 @@ if ( !module.parent ) {
 
 /**
  * An callback that is simply called with no parameters.
- * @callback callback
+ * @callback Callback
  * */
