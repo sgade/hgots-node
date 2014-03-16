@@ -1,13 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  form
-    div.form-group
-      input#login-username(type="text", placeholder="Username")
-    div.form-group
-      input#login-password(type="password", placeholder="Password")
-    
-    button.btn.btn-default#login(type="submit") Login
+  div.login
+    div.flex-container
+      div.flex-item.well.login-container
+        h1= title
+        form.form
+          div.form-group.flex-container
+            input#login-username.flex-item(type="text", placeholder="Username")
+          div.form-group.flex-container
+            input#login-password.flex-item(type="password", placeholder="Password")
+          div.flex-container
+            button.btn.btn-default.flex-item#login(type="submit") Login
   
   script(src='/js/index.js')

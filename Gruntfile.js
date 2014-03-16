@@ -5,6 +5,8 @@ module.exports = function(grunt) {
   // load all grunt modules
   require('load-grunt-tasks')(grunt);
   
+  var BANNER = "/*! <%= pkg.name %> v<%= pkg.version %> - Copyright (c) 2014 Sören Gade - see <%= pkg.repository.url %> */";
+  
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     
@@ -39,7 +41,8 @@ module.exports = function(grunt) {
     uglify: {
       src: {
         options: {
-          sourceMap: true
+          sourceMap: true,
+          banner: BANNER
         },
         files: {
           './src/web/public/js/index.js': [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ],
@@ -57,7 +60,7 @@ module.exports = function(grunt) {
     cssmin: {
       src: {
         options: {
-          
+          banner: BANNER
         },
         files: {
           './src/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css', './bower_components/bootflatv2/bootflat/css/bootflat.css', './src/web/public/css/style.css' ]
@@ -90,7 +93,7 @@ module.exports = function(grunt) {
     }
   });
   
-  grunt.registerTask('default', [ 'build' ]);
+  grunt.registerTask('default', [ 'jshint', 'build' ]);
   grunt.registerTask('dev', [ 'default', 'watch' ]);
   /* Single purpose tasks */
   grunt.registerTask('test', [ 'jshint', 'mochaTest' ]);
