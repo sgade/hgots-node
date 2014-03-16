@@ -9,6 +9,7 @@
  * @requires io/rfidreader
  * */
 
+require('./log-replace')();
 var config = require('./config');
 var web = require('./web/');
 var RFIDReader = require('./io/rfidreader');
