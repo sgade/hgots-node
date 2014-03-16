@@ -31,9 +31,14 @@ var rfidReader = null;
 function startWeb() {
   var port = config["web-port"];
   
-  web.init(port);
+  web.init(port, web_RFIDRequest);
   web.start(function() {
     console.log("Web interface running on port " + web.getPort() + ".");
+  });
+}
+function web_RFIDRequest(callback) {
+  rfidReader.on('data', function(data) {
+    callback(data);
   });
 }
 
@@ -53,7 +58,7 @@ function initRFIDReader() {
   
   // open connection
   rfidReader.open(function() {
-    console.log("Connection to RFID reader opened.");
+    console.log("Connection to RFID reader opened (" + port + ").");
   });
 }
 

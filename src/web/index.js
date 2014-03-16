@@ -16,12 +16,15 @@ var path = require('path');
  * The express instance
  * */
 var app = null;
+var callbacks = {};
 
 /**
  * Initializes the server instance and configures express.
  * @param {Integer} port - The port to listen on.
  * */
-exports.init = function(port) {
+exports.init = function(port, rfidRequestCallback) {
+  callbacks.rfidRequestCallback = rfidRequestCallback;
+  
   app = express();
   configure(port);
 };
@@ -55,6 +58,11 @@ function configure(port) {
   app.post('/validate_login', routes.validateLogin);
   // Routes for app
   app.get('/app', routes.app);
+  app.get('/get_rfid', function(req, res) {
+    callbacks.rfidRequestCallback(function(data) {
+      res.end(data);
+    });
+  });
 }
 
 /**
@@ -63,7 +71,7 @@ function configure(port) {
  * */
 exports.getPort = function() {
   return app.get('port');
-}
+};
 
 /**
  * Starts the express web server.
