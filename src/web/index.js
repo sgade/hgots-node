@@ -70,6 +70,9 @@ function configureRoutes() {
   // Routes for app
   app.get('/app', routes.app);
   app.get('/get_rfid', queries.getRFID);
+  
+  // configure api
+  require('./routes/api/')(app);
 }
 
 /**
