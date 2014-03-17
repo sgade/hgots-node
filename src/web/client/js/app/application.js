@@ -8,7 +8,7 @@ App = Ember.Application.create();
 App.Store = DS.Store;
 // Fetch
 App.ApplicationAdapter = DS.RESTAdapter.extend({
-  namespace: 'api'
+  namespace: 'api/v1'
 });
 
 /* ==========
