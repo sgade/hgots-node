@@ -104,6 +104,7 @@ util.inherits(Relais, events.EventEmitter);
 
 /**
  * @param {ErrorCallback} callback
+ * @fires Relais#open
  * */
 Relais.prototype.open = function(callback) {
   var self = this;
@@ -116,6 +117,10 @@ Relais.prototype.open = function(callback) {
       if ( !err ) {
         self.isOpen = true;
     
+        /**
+         * Open event.
+         * @event Relais#open
+         * */
         self.emit('open');
       }
       
@@ -125,6 +130,7 @@ Relais.prototype.open = function(callback) {
 };
 /**
  * @param {ErrorCallback} callback
+ * @fires Relais#close
  * */
 Relais.prototype.close = function(callback) {
   var self = this;
@@ -137,6 +143,10 @@ Relais.prototype.close = function(callback) {
       if ( !err ) {
         self.isOpen = false;
         
+        /**
+         * Close event.
+         * @event Relais#close
+         * */
         self.emit('close');
       }
       
