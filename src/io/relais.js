@@ -146,6 +146,9 @@ Relais.prototype.send = function(command, data, callback) {
     return;
   }
   var self = this;
+  if ( !callback ) {
+    callback = function() {};
+  }
   
   var buffer = new Array(4);
   buffer[RelaisByteNames.Command] = command;
@@ -154,20 +157,12 @@ Relais.prototype.send = function(command, data, callback) {
   buffer[RelaisByteNames.CheckSum] = ( command ^ self.relaisID ^ data );
   
   // call callback after write
-  if ( callback ) {
-    self.serialPort.once('data', function(data) { // could be a data leak
-      if ( callback ) {
-        callback(null, data);
-      }
-    });
-  }
+  self.serialPort.once('data', function(data) { // TODO: could be a data leak, if it's virutally never called...
+    callback(null, data);
+  });
   
   self.write(buffer, function(err) {
-    if ( err ) {
-      if ( callback ) {
-        callback(err);
-      }
-    }
+    callback(err);
   });
 };
 
