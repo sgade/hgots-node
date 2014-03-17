@@ -31,6 +31,12 @@ var SERIAL_OPTIONS = {
   stopbits: 1,
   parity: 'none'
 };
+/**
+ * Commands the Relais card understands.
+ * @constant
+ * @type {Object}
+ * @default
+ * */
 var Commands = {
   NoOperation: 0,
   Setup: 1,
@@ -42,6 +48,12 @@ var Commands = {
   DelSingle: 7,
   Toggle: 8
 };
+/**
+ * Relais can be identified via a certain byte. These are there values.
+ * @constant
+ * @type {Object}
+ * @default
+ * */
 var RelaisByteCount = {
   One: 1,
   Two: 2,
@@ -52,6 +64,12 @@ var RelaisByteCount = {
   Seven: 64,
   Eight: 128
 };
+/**
+ * Name for the part of the messages send between us and the relais card.
+ * @constant
+ * @type {Object}
+ * @default
+ * */
 var RelaisByteNames = {
   Command: 0,
   Address: 1,
@@ -65,14 +83,17 @@ var RelaisByteNames = {
  * */
 function Relais(port) {
   /**
+   * The serial port connection.
    * @instance
    * */ 
   var serialPort = null;
   /**
+   * The id our card has.
    * @instance
    * */
   var relaisID = 0;
   /**
+   * Whether the connection should be open.
    * @instance
    * */
   var isOpen = false;
@@ -81,17 +102,47 @@ function Relais(port) {
 }
 util.inherits(Relais, events.EventEmitter);
 
+/**
+ * @param {ErrorCallback} callback
+ * */
 Relais.prototype.open = function(callback) {
   var self = this;
+  if ( !callback ) {
+    callback = function() {};
+  }
   
-  self.serialPort.open(function() {
-    self.isOpen = true;
+  if ( !self.isOpen ) {
+    self.serialPort.open(function(err) {
+      if ( !err ) {
+        self.isOpen = true;
     
-    if ( callback ) {
-      callback();
-    }
-    self.emit('open');
-  });
+        self.emit('open');
+      }
+      
+      callback(err);
+    });
+  }
+};
+/**
+ * @param {ErrorCallback} callback
+ * */
+Relais.prototype.close = function(callback) {
+  var self = this;
+  if ( !callback ) {
+    callback = function() {};
+  }
+  
+  if ( self.isOpen ) {
+    self.serialPort.close(function(err) {
+      if ( !err ) {
+        self.isOpen = false;
+        
+        self.emit('close');
+      }
+      
+      callback(err);
+    });
+  }
 };
 
 /*
