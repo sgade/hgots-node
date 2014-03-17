@@ -17,9 +17,17 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
 // models
 var User = require('./models/user')(sequelize);
 
-sequelize.sync().complete(function(err) {
+// TODO remove force: true
+sequelize.sync(true).complete(function(err) {
   if ( !err ) {
     console.log("Connected to database.");
+    
+    // Dummy data
+    User.create({
+      username: 'test',
+      password: 'test',
+      type: 'admin'
+    });
   }
 });
 
