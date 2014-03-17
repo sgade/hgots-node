@@ -14,10 +14,8 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
   storage: config['db-name']
 });
 
-var User = sequelize.define('User', {
-  username: Sequelize.STRING,
-  password: Sequelize.STRING,
-});
+// models
+var User = require('./models/user')(sequelize);
 
 sequelize.sync().complete(function(err) {
   if ( !err ) {
