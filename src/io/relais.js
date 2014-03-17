@@ -155,7 +155,7 @@ Relais.prototype.send = function(command, data, callback) {
   
   // call callback after write
   if ( callback ) {
-    self.serialPort.once('data', function(data) {
+    self.serialPort.once('data', function(data) { // could be a data leak
       if ( callback ) {
         callback(null, data);
       }
@@ -421,7 +421,7 @@ Relais.prototype._iterateAllRelais = function(delay, relaisOperation, callback) 
   } else {
     var relaisNums = [ 1, 2, 4, 8, 16, 32, 64, 128 ];
     
-    async.each(relaisNums, function(item, cb) {
+    async.eachSeries(relaisNums, function(item, cb) {
       
       // item == relaisnum
       relaisOperation.call(self, item);
