@@ -39,7 +39,7 @@ exports.validateLogin = function(req, res) {
 };
 
 exports.getRFID = function(req, res) {
-  helpers.validateRequest(req, function(ok) {
+  helpers.validateAuthenticatedRequest(req, function(ok) {
     if ( ok ) {
       callbacks.rfidRequestCallback(function(data) {
         res.end(data);

@@ -34,7 +34,7 @@ function validateUser(user, pw, callback) {
 }
 exports.validateUser = validateUser;
 
-function validateRequest(req, callback) {
+function validateAuthenticatedRequest(req, callback) {
   validateUser(req.session.username, req.session.password, callback);
 }
-exports.validateRequest = validateRequest;
+exports.validateAuthenticatedRequest = validateAuthenticatedRequest;
