@@ -18,7 +18,7 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
 var User = require('./models/user')(sequelize);
 
 // TODO remove force: true
-sequelize.sync(true).complete(function(err) {
+sequelize.sync({ force: true }).complete(function(err) {
   if ( !err ) {
     console.log("Connected to database.");
     
