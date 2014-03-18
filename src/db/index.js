@@ -16,6 +16,12 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
 
 // models
 var User = require('./models/user')(sequelize);
+var Card = require('./models/Card')(sequelize);
+// associations
+User.hasMany(Card, {
+  as: 'Cards'
+});
+Card.belongsTo(User);
 
 // TODO remove force: true
 sequelize.sync({ force: true }).complete(function(err) {
@@ -27,6 +33,14 @@ sequelize.sync({ force: true }).complete(function(err) {
       username: 'test',
       password: 'test',
       type: 'admin'
+    }).success(function(userTest) {
+      
+      Card.create({
+        uid: 'test'
+      }).success(function(cardTest) {
+        userTest.addCard(cardTest);
+      });
+      
     });
   }
 });
