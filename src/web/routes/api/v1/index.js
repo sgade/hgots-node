@@ -6,5 +6,6 @@ module.exports = function(app) {
   
   assert(!!app, "App must be given so routes can be added for API/v1.");
   
-  app.get(prefix + '/users', users.getAllUsers);  
+  app.get(prefix + '/users', users.getAllUsers);
+  app.get(prefix + '/user/:id/cards', users.getCardsOfUser);
 };
