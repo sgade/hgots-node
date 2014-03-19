@@ -14,6 +14,7 @@ var config = require('./config');
 var web = require('./web/');
 var RFIDReader = require('./io/rfidreader');
 var Relais = require('./io/relais');
+var db = require('./db/');
 
 console.log("Hello World!");
 console.log("This is going to be a full featured door lock system.");
@@ -62,6 +63,25 @@ function initRFIDReader() {
   rfidReader.on('data', function(data) {
     data = data.toString();
     console.log("Data by RFID reader:", data);
+    
+    db.Card.find({
+      where: {
+        uid: data
+      }
+    }).success(function(card) {
+      if ( !card ) {
+        console.log("no card found.");
+      } else {
+        console.log("Card found.");
+        card.getUser().success(function(user) {
+          if ( !user ) {
+            console.log("no user found");
+          } else {
+            console.log("user is", user.username);
+          }
+        });
+      }
+    });
   });
   
   // open connection
