@@ -1,3 +1,11 @@
 // Admin page
 script#admin(type="text/x-handlebars").
-  TODO: Create Admin
+  <div class="grid">
+    {{#each}}
+      <div class="row">
+        <div class="col-md-12">
+          <span>{{username}}</span>
+        </div>
+      </div>
+    {{/each}}
+  </div>
