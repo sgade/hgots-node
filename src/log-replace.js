@@ -5,7 +5,13 @@ module.exports = function() {
     
     var string = "";
     for ( var i = 0; i < arguments.length; i++ ) {
-      string += arguments[i] + " ";
+      var argument = arguments[i];
+      if ( typeof argument == "object" ) {
+        string += util.inspect(argument);
+      } else {
+        string += argument;
+      }
+      string += " ";
     }
     string = string.trim();
     
