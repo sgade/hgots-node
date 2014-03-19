@@ -17,6 +17,7 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
  * */
 App.Router.map(function() {
   this.resource('admin');
+  /* TODO may specify sub-routes for specific users to be shown to the admin */
   
   this.route('about');
 });
