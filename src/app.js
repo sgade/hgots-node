@@ -60,6 +60,7 @@ function initRFIDReader() {
   
   // add event listeners
   rfidReader.on('data', function(data) {
+    data = data.toString();
     console.log("Data by RFID reader:", data);
   });
   
