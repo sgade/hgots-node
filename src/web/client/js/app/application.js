@@ -5,10 +5,12 @@ App = Ember.Application.create();
  * Store
  * ==========
  * */
-App.Store = DS.Store;
 // Fetch
 App.ApplicationAdapter = DS.RESTAdapter.extend({
   namespace: 'api/v1'
+});
+App.Store = DS.Store.extend({
+  adapter: 'App.ApplicationAdapter'
 });
 
 /* ==========
