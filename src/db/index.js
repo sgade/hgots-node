@@ -50,5 +50,6 @@ sequelize.sync({ force: true }).complete(function(err) {
 module.exports = {
   sequelize: sequelize,
   Sequelize: Sequelize,
-  User: User
+  User: User,
+  Card: Card
 };
