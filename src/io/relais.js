@@ -110,7 +110,7 @@ function Relais(port) {
       data = parts.pop();
       parts.forEach(function(part) {
         emitter.emit('data', part);
-      })
+      });
     };
     
   }());
@@ -120,7 +120,7 @@ util.inherits(Relais, events.EventEmitter);
 
 Relais.prototype.isOpen = function() {
   return this.isOpen;
-}
+};
 
 /**
  * @param {ErrorCallback} callback
