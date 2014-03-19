@@ -3,6 +3,9 @@ var db = require('../../../../db/');
 
 exports.db = db;
 
+exports.getAllUsers = function(callback) {
+  db.User.findAll().complete(callback);
+};
 exports.getUser = function(where, callback) {
   db.User.find({
     where: where,

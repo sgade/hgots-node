@@ -15,7 +15,7 @@ exports.getAllUsers = function(req, res) {
       } else {
         
         // TODO filter for type
-        helpers.getUser({}, function(err, users) {
+        helpers.getAllUsers(function(err, users) {
           if ( err ) {
             res.status(500).end();
           } else {
