@@ -96,10 +96,16 @@ var RFIDReader = function(port) {
    * */
   this.open = function(callback) {
     var self = this;
+    if ( !callback ) {
+      callback = function() {};
+    }
   
-    self.serialPort.open(function() {
-      if ( callback )
-        callback();
+    self.serialPort.open(function(err) {
+      if ( err ) {
+        throw err; // TODO handle error
+      }
+      
+      callback();
       _onOpen.call(self);
     
       self.serialPort.on('data', function(data) {
