@@ -239,7 +239,9 @@ Relais.prototype.send = function(command, data, callback) {
   });
   
   self.write(buffer, function(err) {
-    callback(err);
+    if ( err ) {
+      callback(err);
+    }
   });
 };
 
