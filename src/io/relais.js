@@ -98,6 +98,22 @@ function Relais(port) {
    * */
   var isOpen = false;
   
+  // our custom parser
+  // emit after 4 bytes each
+  SERIAL_OPTIONS.parser = (function() {
+    var data = "";
+    
+    return function(emitter, buffer) {
+      data += buffer.toString();
+      
+      var parts = data.match(/.{1,4}/g);
+      data = parts.pop();
+      parts.forEach(function(part) {
+        emitter.emit('data', part);
+      })
+    };
+    
+  }());
   this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
 }
 util.inherits(Relais, events.EventEmitter);
