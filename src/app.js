@@ -97,8 +97,12 @@ function initRelais() {
   startWeb();
 }());
 
-function exit() {
-  console.log("Exiting...");
+function exit(err) {
+  if ( err ) {
+    console.log("Unhandled Error:", err.stack);
+  } else {
+    console.log("Exiting...");
+  }
   if ( rfidReader.isOpen ) {
     rfidReader.close();
   }
