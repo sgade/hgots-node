@@ -234,7 +234,11 @@ Relais.prototype.send = function(command, data, callback) {
   buffer[RelaisByteNames.CheckSum] = ( command ^ self.relaisID ^ data );
   
   // call callback after write
-  self.serialPort.once('data', function(data) { // TODO: could be a data leak, if it's virutally never called...
+  self.serialPort.once('data', function(data) {
+    // TODO maybe validate, use ArrayBuffer or similar
+    data = data.toString();
+    data = data.match(/.{1,1}/g);
+    
     callback(null, data);
   });
   
@@ -275,8 +279,6 @@ Relais.prototype.noOperation = function(callback) {
       callback(false);
     } else {
       
-      console.log(data);
-      // TODO validate buffer, first test with real data
       var ok = ( data[RelaisByteNames.Command] == 255 );
       callback(ok); 
       
