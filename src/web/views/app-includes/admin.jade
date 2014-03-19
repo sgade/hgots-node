@@ -1,11 +1,22 @@
 // Admin page
 script#admin(type="text/x-handlebars").
-  <div class="grid">
+  <table class="table">
+    <thead>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Type</th>
+      <th>Created</th>
+      <th>Updated</th>
+    </thead>
     {{#each}}
-      <div class="row">
-        <div class="col-md-12">
-          <span>{{username}}</span>
-        </div>
-      </div>
+    <tr>
+      <td>{{id}}</th>
+      <td>{{username}}</th>
+      <td>{{password}}</th>
+      <td>{{type}}</th>
+      <td>{{createdAt}}</th>
+      <td>{{updatedAt}}</th>
+    </tr>
     {{/each}}
-  </div>
+  </table>
