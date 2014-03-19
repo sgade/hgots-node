@@ -38,7 +38,7 @@ sequelize.sync({ force: true }).complete(function(err) {
     }).success(function(userTest) {
       
       Card.create({
-        uid: 'test'
+        uid: '6040082934'
       }).success(function(cardTest) {
         userTest.addCard(cardTest);
       });
