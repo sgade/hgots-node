@@ -132,6 +132,10 @@ Relais.prototype.open = function(callback) {
     self.serialPort.open(function(err) {
       if ( !err ) {
         self.isOpen = true;
+        
+        self.serialPort.on('data', function(data) {
+          self.emit('data');
+        });
     
         /**
          * Open event.
