@@ -29,6 +29,6 @@ for ( var i = 0; i < configLoad.length; i++ ) {
     break;
   }
 }
-assert(config != null, "No config file found.");
+assert(config !== null, "No config file found.");
 
 module.exports = config;
