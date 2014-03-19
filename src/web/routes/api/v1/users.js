@@ -20,6 +20,7 @@ exports.getAllUsers = function(req, res) {
             res.status(500).end();
           } else {
             
+            res.set('Content-Type', 'application/json');
             res.end(JSON.stringify(users));
             
           }
@@ -54,6 +55,7 @@ exports.getCardsOfUser = function(req, res) {
             user.getCards().success(function(cards) {
               
               if ( cards ) {
+                res.set('Content-Type', 'application/json');
                 res.end(JSON.stringify(cards));
               } else {
                 res.status(500).end();
