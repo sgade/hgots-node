@@ -39,13 +39,17 @@ module.exports = function(grunt) {
      * */
     /* Build */
     uglify: {
-      src: {
-        options: {
-          sourceMap: true,
-          banner: BANNER
-        },
+      options: {
+        sourceMap: true,
+        banner: BANNER
+      },
+      index: {
         files: {
-          './src/web/public/js/index.js': [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ],
+          './src/web/public/js/index.js': [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ]
+        }
+      },
+      app: {
+        files: {
           './src/web/public/js/app.js': [ './bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/client/js/app/**/*.js' ]
         }
       }
@@ -73,10 +77,15 @@ module.exports = function(grunt) {
         livereload: true
       },
       
-      js: {
-        files: [ './src/web/client/js/**/*.js' ],
-        tasks: [ 'build-js' ]
+      jsIndex: {
+        files: [ './src/web/client/js/index/**/*.js' ],
+        tasks: [ 'build-js-index' ]
       },
+      jsapp: {
+        files: [ './src/web/client/js/app/**/*.js' ],
+        tasks: [ 'build-js-app' ]
+      },
+      
       css: {
         files: [ './src/web/client/sass/**/*.scss' ],
         tasks: [ 'build-css' ]
@@ -98,7 +107,9 @@ module.exports = function(grunt) {
   /* Single purpose tasks */
   grunt.registerTask('test', [ 'jshint', 'mochaTest' ]);
   grunt.registerTask('build', [ 'build-js', 'build-css' ]);
-  grunt.registerTask('build-js', [ 'uglify' ]);
+  grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index' ]);
+  grunt.registerTask('build-js-index', [ 'uglify:index' ]);
+  grunt.registerTask('build-js-app', [ 'uglify:app' ]);
   grunt.registerTask('doc', [ 'jsdoc' ]);
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
   
