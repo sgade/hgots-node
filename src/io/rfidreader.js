@@ -25,7 +25,7 @@ var NEWLINE = '\n';
  * @default
  * */
 var SERIAL_OPTIONS = {
-  baudrate: 9200,
+  baudrate: 9600,
   databits: 8,
   stopbits: 1,
   parity: 'none'
