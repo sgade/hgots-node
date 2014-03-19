@@ -17,6 +17,9 @@ App.Store = DS.Store.extend({
  * Routing
  * ==========
  * */
+App.Router.reopen({
+  rootURL: '/app'
+});
 App.Router.map(function() {
   this.resource('admin');
   /* TODO may specify sub-routes for specific users to be shown to the admin */
