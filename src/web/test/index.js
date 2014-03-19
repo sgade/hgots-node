@@ -62,7 +62,7 @@ describe('HGOTS Web Server', function() {
     it('should respond with 200 with correct credentials', function(done) {
       request(expressApp)
         .post('/validate_login')
-        .send({ username: "user", password: "pass" })
+        .send({ username: "test", password: "test" })
         .expect(200, done);
     });
   });
