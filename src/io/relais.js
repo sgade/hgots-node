@@ -118,6 +118,10 @@ function Relais(port) {
 }
 util.inherits(Relais, events.EventEmitter);
 
+Relais.prototype.isOpen = function() {
+  return this.isOpen;
+}
+
 /**
  * @param {ErrorCallback} callback
  * @fires Relais#open

@@ -123,10 +123,10 @@ function exit(err) {
   } else {
     console.log("Exiting...");
   }
-  if ( rfidReader.isOpen ) {
+  if ( rfidReader.isOpen() ) {
     rfidReader.close();
   }
-  if ( relais.isOpen ) {
+  if ( relais.isOpen() ) {
     relais.close();
   }
   

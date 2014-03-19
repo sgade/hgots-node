@@ -48,6 +48,8 @@ var RFIDReader = function(port) {
    * */
   var serialPort = null;
   
+  var isOpen = false;
+  
   /* ==========
    * Construct
    * ==========
@@ -72,6 +74,9 @@ var RFIDReader = function(port) {
      * */
     this.emit('open');
   };
+  var _onClose = function() {
+    this.emit('close');
+  };
   /**
    * A function that should be called once we have received data from our serial port.
    * @param {Buffer} data - The data that was read.
@@ -90,6 +95,10 @@ var RFIDReader = function(port) {
    * Publics
    * ==========
    * */
+  this.isOpen = function() {
+    return this.isOpen;
+  };
+  
   /**
    * Opens the serial port connection via the port specified in the constructor.
    * @param {Callback} callback - A callback that is called upon finish.
@@ -99,19 +108,41 @@ var RFIDReader = function(port) {
     if ( !callback ) {
       callback = function() {};
     }
+    
+    if ( this.isOpen ) {
+      callback();
+      return;
+    }
   
     self.serialPort.open(function(err) {
       if ( err ) {
         throw err; // TODO handle error
       }
       
-      callback();
+      callback(err);
       _onOpen.call(self);
     
       self.serialPort.on('data', function(data) {
         _onData.call(self, data);
       });
     });
+  };
+  
+  this.close = function(callback) {
+    var self = this;
+    if ( !callback ) {
+      callback = function() {};
+    }
+    
+    if ( this.isOpen ) {
+      self.serialPort.close(function(err) {
+        callback(err);
+        
+        _onClose.call(self);
+      });
+    } else {
+      callback();
+    }
   };
 };
 // inherit for events
