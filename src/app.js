@@ -90,9 +90,8 @@ function initRelais() {
 /**
  * The main application entry point.
  * */
-function main() {
+(function main() {
   initRFIDReader();
   initRelais();
   startWeb();
-}
-main();
+}());
