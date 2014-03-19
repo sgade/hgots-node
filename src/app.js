@@ -96,3 +96,23 @@ function initRelais() {
   initRelais();
   startWeb();
 }());
+
+function exit() {
+  console.log("Exiting...");
+  if ( rfidReader.isOpen ) {
+    rfidReader.close();
+  }
+  if ( relais.isOpen ) {
+    relais.close();
+  }
+  
+  web.stop();
+  
+  // Done
+  console.log("Bye!");
+  // won't exit otherwise
+  process.kill();
+}
+process.on('exit', exit);
+process.on('SIGINT', exit);
+process.on('uncaughtException', exit);
