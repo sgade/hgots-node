@@ -50,10 +50,9 @@ script(type="text/x-handlebars").
   </div>
 
 script#index(type="text/x-handlebars").
-  <h1>Home</h1>
   <div>
     {{#if isLoading}}
       <p>Loading...</p>
     {{/if}}
-    <button class="btn btn-default" {{action 'openDoor'}}>Open Door</button>
+    <button class="btn btn-primary btn-lg center-block" {{action 'openDoor'}}>Open Door</button>
   </div>
