@@ -46,7 +46,7 @@ module.exports = function(grunt) {
         },
         files: {
           './src/web/public/js/index.js': [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ],
-          './src/web/public/js/app.js': [ './bower_components/jquery/dist/jquery.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/client/js/app/**/*.js' ]
+          './src/web/public/js/app.js': [ './bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/client/js/app/**/*.js' ]
         }
       }
     },

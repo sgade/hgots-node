@@ -4,7 +4,7 @@ script(type="text/x-handlebars")
     nav.navbar.navbar-default(role="navigation")
       div.container-fluid
         div.navbar-header
-          button.navbar-toggle(type="button", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+          button.navbar-toggle(type="button", data-toggle="collapse", data-target="#nav-collapse")
             span.sr-only Toggle navigation
             span.icon-bar
             span.icon-bar
@@ -12,7 +12,7 @@ script(type="text/x-handlebars")
         
           a.navbar-brand(href="#") #{title}
       
-        div.collapse.navbar-collapse
+        div.collapse.navbar-collapse#nav-collapse
           ul.nav.navbar-nav
             li {{#link-to 'index'}}Home{{/link-to}}
             li {{#link-to 'admin'}}Admin{{/link-to}}
