@@ -7,11 +7,11 @@
  * */
 
 var config = require('../config');
-var fs        = require('fs')
-  , path      = require('path')
-  , Sequelize = require('sequelize')
-  , lodash    = require('lodash')
-  , db        = {};
+var fs        = require('fs'),
+    path      = require('path'),
+    Sequelize = require('sequelize'),
+    lodash    = require('lodash'),
+    db        = {};
 
 var sequelize = new Sequelize(config.db.name, config.db.username, config.db.password, {
   dialect: 'sqlite',
@@ -25,18 +25,16 @@ var dirname = __dirname + "/models";
 fs
   .readdirSync(dirname)
   .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== 'index.js')
+    return (file.indexOf('.') !== 0) && (file !== 'index.js');
   })
-  .forEach(function(file) {
-    console.log(dirname);
-    
-    var model = sequelize.import(path.join(dirname, file))
-    db[model.name] = model
-  })
+  .forEach(function(file) {    
+    var model = sequelize.import(path.join(dirname, file));
+    db[model.name] = model;
+  });
  
 Object.keys(db).forEach(function(modelName) {
   if ('associate' in db[modelName]) {
-    db[modelName].associate(db)
+    db[modelName].associate(db);
   }
 });
 
