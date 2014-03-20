@@ -37,6 +37,20 @@ module.exports = function(grunt) {
      * Webserver
      * ==========
      * */
+    /* Dev */
+    concat: {
+      options: {
+        banner: BANNER
+      },
+      index: {
+        src: [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ],
+        dest: './src/web/public/js/index.js'
+      },
+      app: {
+        src: [ './bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/client/js/app/**/*.js' ],
+        dest: './src/web/public/js/app.js'
+      }
+    },
     /* Build */
     uglify: {
       options: {
@@ -45,12 +59,12 @@ module.exports = function(grunt) {
       },
       index: {
         files: {
-          './src/web/public/js/index.js': [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ]
+          './src/web/public/js/index.js': [ './src/web/public/js/index.js' ]
         }
       },
       app: {
         files: {
-          './src/web/public/js/app.js': [ './bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/client/js/app/**/*.js' ]
+          './src/web/public/js/app.js': [ './src/web/public/js/app.js' ]
         }
       }
     },
@@ -79,11 +93,11 @@ module.exports = function(grunt) {
       
       jsIndex: {
         files: [ './src/web/client/js/index/**/*.js' ],
-        tasks: [ 'build-js-index' ]
+        tasks: [ 'build-dev-js-index' ]
       },
       jsapp: {
         files: [ './src/web/client/js/app/**/*.js' ],
-        tasks: [ 'build-js-app' ]
+        tasks: [ 'build-dev-js-app' ]
       },
       
       css: {
@@ -103,14 +117,20 @@ module.exports = function(grunt) {
   });
   
   grunt.registerTask('default', [ 'jshint', 'build' ]);
-  grunt.registerTask('dev', [ 'default', 'watch' ]);
+  grunt.registerTask('dev', [ 'build-dev', 'watch' ]);
   /* Single purpose tasks */
-  grunt.registerTask('test', [ 'jshint', 'mochaTest' ]);
-  grunt.registerTask('build', [ 'build-js', 'build-css' ]);
+  grunt.registerTask('build-dev', [ 'build-dev-js', 'build-css' ]);
+  grunt.registerTask('build-dev-js', [ 'build-dev-js-app', 'build-dev-js-index' ]);
+  grunt.registerTask('build-dev-js-index', [ 'concat:index' ]);
+  grunt.registerTask('build-dev-js-app', [ 'concat:app' ]);
+  
+  grunt.registerTask('build', [ 'build-js' ]);
   grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index' ]);
-  grunt.registerTask('build-js-index', [ 'uglify:index' ]);
-  grunt.registerTask('build-js-app', [ 'uglify:app' ]);
-  grunt.registerTask('doc', [ 'jsdoc' ]);
+  grunt.registerTask('build-js-index', [ 'build-dev-js-index', 'uglify:index' ]);
+  grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
+  
+  grunt.registerTask('test', [ 'jshint', 'mochaTest' ]);  
+  grunt.registerTask('doc', [ 'jsdoc' ]);
   
 };
