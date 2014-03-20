@@ -1,5 +1,5 @@
 App.AdminRoute = Ember.Route.extend({
   model: function() {
-    return this.store.findAll('User');
+    return App.User.findAll();
   }
 });
