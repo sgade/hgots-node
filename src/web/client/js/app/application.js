@@ -25,4 +25,5 @@ App.Router.map(function() {
   /* TODO may specify sub-routes for specific users to be shown to the admin */
   
   this.route('about');
+  this.route('readme');
 });
