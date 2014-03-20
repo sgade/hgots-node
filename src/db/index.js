@@ -18,7 +18,7 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
 
 // models
 var User = require('./models/user')(sequelize);
-var Card = require('./models/Card')(sequelize);
+var Card = require('./models/card')(sequelize);
 // associations
 User.hasMany(Card, {
   as: 'Cards'
