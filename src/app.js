@@ -108,14 +108,16 @@ function initRelais() {
   });
 }
 
-/**
- * The main application entry point.
- * */
-(function main() {
-  initRFIDReader();
-  initRelais();
-  startWeb();
-}());
+if ( !module.parent ) {
+  /**
+   * The main application entry point.
+   * */
+  (function main() {
+    initRFIDReader();
+    initRelais();
+    startWeb();
+  }());
+}
 
 function exit(err) {
   if ( err ) {
