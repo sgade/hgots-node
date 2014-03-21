@@ -152,360 +152,362 @@ function Relais(port) {
     
     }
   };
-}
-util.inherits(Relais, events.EventEmitter);
-
-Relais.prototype.isOpen = function() {
-  return this.isOpen;
-};
-
-/**
- * @param {ErrorCallback} callback
- * @fires Relais#open
- * */
-Relais.prototype.open = function(callback) {
-  var self = this;
-  callback = callback || function() {};
   
-  if ( !self.isOpen ) {
-    self.serialPort.open(function(err) {
-      if ( !err ) {
-        self.isOpen = true;
+  /* ==========
+   * PUBLIC
+   * ==========
+   * */
+  this.isOpen = function() {
+    return this.isOpen;
+  };
+  
+  /**
+   * @param {ErrorCallback} callback
+   * @fires Relais#open
+   * */
+  this.open = function(callback) {
+    var self = this;
+    callback = callback || function() {};
+  
+    if ( !self.isOpen ) {
+      self.serialPort.open(function(err) {
+        if ( !err ) {
+          self.isOpen = true;
         
-        self.serialPort.on('data', function(data) {
-          /**
-           * Data event.
-           * @event Relais#data
-           * @type {Buffer}
-           * */
-          self.emit('data', data);
-        });
+          self.serialPort.on('data', function(data) {
+            /**
+             * Data event.
+             * @event Relais#data
+             * @type {Buffer}
+             * */
+            self.emit('data', data);
+          });
     
-        /**
-         * Open event.
-         * @event Relais#open
-         * */
-        self.emit('open');
-      }
+          /**
+           * Open event.
+           * @event Relais#open
+           * */
+          self.emit('open');
+        }
       
-      callback(err);
-    });
-  }
-};
-/**
- * @param {ErrorCallback} callback
- * @fires Relais#close
- * */
-Relais.prototype.close = function(callback) {
-  var self = this;
-  callback = callback || function() {};
+        callback(err);
+      });
+    }
+  };
+  /**
+   * @param {ErrorCallback} callback
+   * @fires Relais#close
+   * */
+  this.close = function(callback) {
+    var self = this;
+    callback = callback || function() {};
   
-  if ( self.isOpen ) {
-    self.serialPort.close(function(err) {
-      if ( !err ) {
-        self.isOpen = false;
+    if ( self.isOpen ) {
+      self.serialPort.close(function(err) {
+        if ( !err ) {
+          self.isOpen = false;
         
-        /**
-         * Close event.
-         * @event Relais#close
-         * */
-        self.emit('close');
-      }
+          /**
+           * Close event.
+           * @event Relais#close
+           * */
+          self.emit('close');
+        }
       
-      callback(err);
-    });
-  }
-};
-
-/*
- * Disclaimer:
- * Ported directly from old .cs source file:
- * | | | | | | | | | | | | | | | | | | | | |
- * | | | | | | | | | | | | | | | | | | | | |
- * v v v v v v v v v v v v v v v v v v v v v
- * */
-
-Relais.prototype.writeOK = function() {
-  return this.isOpen;
-};
-/**
- * Writes the buffer to the serial port.
- * @param {Buffer} buffer - The buffer to write.
- * @param {ErrorCallback} [callback] - The callback that is called upon finish. Data might not be flushed at that point.
- *
- * {@link https://github.com/voodootikigod/node-serialport#write-buffer-callback}
- * @fires Relais#written
- * */
-Relais.prototype.write = function(buffer, callback) {
-  var self = this;
+        callback(err);
+      });
+    }
+  };
   
-  if ( self.writeOK() ) {
-    self.serialPort.write(buffer, function(err) {
-      if ( callback ) {
+  /*
+   * Disclaimer:
+   * Ported directly from old .cs source file:
+   * | | | | | | | | | | | | | | | | | | | | |
+   * | | | | | | | | | | | | | | | | | | | | |
+   * v v v v v v v v v v v v v v v v v v v v v
+   * */
+  this.writeOK = function() {
+    return this.isOpen;
+  };
+  /**
+   * Writes the buffer to the serial port.
+   * @param {Buffer} buffer - The buffer to write.
+   * @param {ErrorCallback} [callback] - The callback that is called upon finish. Data might not be flushed at that point.
+   *
+   * {@link https://github.com/voodootikigod/node-serialport#write-buffer-callback}
+   * @fires Relais#written
+   * */
+  this.write = function(buffer, callback) {
+    var self = this;
+  
+    if ( self.writeOK() ) {
+      self.serialPort.write(buffer, function(err) {
+        if ( callback ) {
+          callback(err);
+        }
+        /**
+         * Written event.
+         * @event Relais#written
+         * @type {Object}
+         * @param {Buffer} buffer
+         * @param {Exception} err
+         * */
+        self.emit('written', {
+          buffer: buffer,
+          err: err
+        });
+      });
+    }
+  };
+  /**
+   * @param {byte} command
+   * @param {byte} data
+   * @param {ErrorResultCallback} callback - Callback for Relais#write (Error) and Relais#read (Result).
+   * */
+  this.send = function(command, data, callback) {
+    if ( !this.writeOK() ) {
+      return;
+    }
+    var self = this;
+    callback = callback || function() {};
+  
+    var buffer = new Array(4);
+    buffer[RelaisByteNames.Command] = command;
+    buffer[RelaisByteNames.Address] = self.relaisID;
+    buffer[RelaisByteNames.DataByte] = data;
+    buffer[RelaisByteNames.CheckSum] = ( command ^ self.relaisID ^ data );
+  
+    // call callback after write
+    self.serialPort.once('data', function(data) {
+      // TODO maybe validate, use ArrayBuffer or similar
+      data = data.toString();
+      data = data.match(/.{1,1}/g);
+    
+      callback(null, data);
+    });
+  
+    self.write(buffer, function(err) {
+      if ( err ) {
         callback(err);
       }
-      /**
-       * Written event.
-       * @event Relais#written
-       * @type {Object}
-       * @param {Buffer} buffer
-       * @param {Exception} err
-       * */
-      self.emit('written', {
-        buffer: buffer,
-        err: err
-      });
     });
-  }
-};
-
-/**
- * @param {byte} command
- * @param {byte} data
- * @param {ErrorResultCallback} callback - Callback for Relais#write (Error) and Relais#read (Result).
- * */
-Relais.prototype.send = function(command, data, callback) {
-  if ( !this.writeOK() ) {
-    return;
-  }
-  var self = this;
-  callback = callback || function() {};
+  };
   
-  var buffer = new Array(4);
-  buffer[RelaisByteNames.Command] = command;
-  buffer[RelaisByteNames.Address] = self.relaisID;
-  buffer[RelaisByteNames.DataByte] = data;
-  buffer[RelaisByteNames.CheckSum] = ( command ^ self.relaisID ^ data );
+  this.getMoreRelais = function(relais1, relais2, relais3, relais4, relais5, relais6, relais7, relais8) {
+    var retVal = ( RelaisByteCount.One * relais1 );
+    retVal += ( RelaisByteCount.Two * relais2 );
+    retVal += ( RelaisByteCount.Three * relais3 );
+    retVal += ( RelaisByteCount.Four * relais4 );
+    retVal += ( RelaisByteCount.Five * relais5 );
+    retVal += ( RelaisByteCount.Six * relais6 );
+    retVal += ( RelaisByteCount.Seven * relais7 );
+    retVal += ( RelaisByteCount.Eight * relais8 );
   
-  // call callback after write
-  self.serialPort.once('data', function(data) {
-    // TODO maybe validate, use ArrayBuffer or similar
-    data = data.toString();
-    data = data.match(/.{1,1}/g);
-    
-    callback(null, data);
-  });
+    return retVal;
+  };
+  this.getAllRelais = function() {
+    return this.getMoreRelais(1, 1, 1, 1, 1, 1, 1, 1);
+  };
   
-  self.write(buffer, function(err) {
-    if ( err ) {
-      callback(err);
-    }
-  });
-};
-
-Relais.prototype.getMoreRelais = function(relais1, relais2, relais3, relais4, relais5, relais6, relais7, relais8) {
-  var retVal = ( RelaisByteCount.One * relais1 );
-  retVal += ( RelaisByteCount.Two * relais2 );
-  retVal += ( RelaisByteCount.Three * relais3 );
-  retVal += ( RelaisByteCount.Four * relais4 );
-  retVal += ( RelaisByteCount.Five * relais5 );
-  retVal += ( RelaisByteCount.Six * relais6 );
-  retVal += ( RelaisByteCount.Seven * relais7 );
-  retVal += ( RelaisByteCount.Eight * relais8 );
+  /**
+   * @param {SuccessCallback} callback
+   * */
+  this.noOperation = function(callback) {
+    var self = this;
+    callback = callback || function() {};
   
-  return retVal;
-};
-Relais.prototype.getAllRelais = function() {
-  return this.getMoreRelais(1, 1, 1, 1, 1, 1, 1, 1);
-};
-
-/**
- * @param {SuccessCallback} callback
- * */
-Relais.prototype.noOperation = function(callback) {
-  var self = this;
-  callback = callback || function() {};
-  
-  self.send(Commands.NoOperation, 0, function(err, data) {
-    if ( err ) {
-      callback(false);
-    } else {
-      
-      var ok = ( data[RelaisByteNames.Command] === 255 );
-      callback(ok); 
-      
-    }
-  });
-};
-/**
- * @param {SuccessCallback} callback
- * */
-Relais.prototype.NOP = function(callback) {
-  this.noOperation(callback);
-};
-
-/**
- * @param {SuccessCallback} callback
- * */
-Relais.prototype.setup = function(callback) {
-  var self = this;
-  callback = callback || function() {};
-  
-  if ( self.relaisID === 0 ) {
-    self.send(Commands.Setup, 0, function(err, data) {
+    self.send(Commands.NoOperation, 0, function(err, data) {
       if ( err ) {
         callback(false);
       } else {
-       
-        if ( data[RelaisByteNames.Command] === ( 255 - Commands.Setup ) ) {
-          self.relaisID = data[RelaisByteNames.Address];
-        
-          callback(true);
-        }
-        
+      
+        var ok = ( data[RelaisByteNames.Command] === 255 );
+        callback(ok); 
+      
       }
     });
-  }
-  
-  callback(false);
-};
+  };
+  /**
+   * @param {SuccessCallback} callback
+   * */
+  this.NOP = function(callback) {
+    this.noOperation(callback);
+  };
 
-/**
- * @param {ErrorResultCallback}
- * */
-Relais.prototype.getPort = function(callback) {
-  var self = this;
-  callback = callback || function() {};
+  /**
+   * @param {SuccessCallback} callback
+   * */
+  this.setup = function(callback) {
+    var self = this;
+    callback = callback || function() {};
   
-  self.send(Commands.GetPort, 0, function(err, data) {
-    if ( err ) {
-      callback(err);
-    } else {
+    if ( self.relaisID === 0 ) {
+      self.send(Commands.Setup, 0, function(err, data) {
+        if ( err ) {
+          callback(false);
+        } else {
+       
+          if ( data[RelaisByteNames.Command] === ( 255 - Commands.Setup ) ) {
+            self.relaisID = data[RelaisByteNames.Address];
+        
+            callback(true);
+          }
+        
+        }
+      });
+    }
+  
+    callback(false);
+  };
+
+  /**
+   * @param {ErrorResultCallback}
+   * */
+  this.getPort = function(callback) {
+    var self = this;
+    callback = callback || function() {};
+  
+    self.send(Commands.GetPort, 0, function(err, data) {
+      if ( err ) {
+        callback(err);
+      } else {
      
-      if ( data[RelaisByteNames.Command] === ( 255 - Commands.GetPort ) ) {
-        var port = data[RelaisByteNames.DataByte];
-        callback(null, port);
-      } else {
-        callback(null, 0);
-      }
+        if ( data[RelaisByteNames.Command] === ( 255 - Commands.GetPort ) ) {
+          var port = data[RelaisByteNames.DataByte];
+          callback(null, port);
+        } else {
+          callback(null, 0);
+        }
       
-    }
-  });
-};
+      }
+    });
+  };
 
-/**
- * @param {byte} relais
- * */
-Relais.prototype.setPort = function(relais) {
-  this.send(Commands.SetPort, relais);
-};
+  /**
+   * @param {byte} relais
+   * */
+  this.setPort = function(relais) {
+    this.send(Commands.SetPort, relais);
+  };
 
-/**
- * @param {ErrorResultCallback} callback
- * */
-Relais.prototype.getOption = function(callback) {
-  var self = this;
-  callback = callback || function() {};
+  /**
+   * @param {ErrorResultCallback} callback
+   * */
+  this.getOption = function(callback) {
+    var self = this;
+    callback = callback || function() {};
   
-  self.send(Commands.GetOption, 0, function(err, data) {
-    if ( err ) {
-      callback(err);
-    } else {
-      
-      if ( data[RelaisByteNames.Command] === ( 255 - Commands.GetOption) ) {
-        var dataByte = data[RelaisByteNames.DataByte];
-        callback(null, dataByte);
+    self.send(Commands.GetOption, 0, function(err, data) {
+      if ( err ) {
+        callback(err);
       } else {
-        callback(null, 0);
-      }
       
-    }
-  });
-};
+        if ( data[RelaisByteNames.Command] === ( 255 - Commands.GetOption) ) {
+          var dataByte = data[RelaisByteNames.DataByte];
+          callback(null, dataByte);
+        } else {
+          callback(null, 0);
+        }
+      
+      }
+    });
+  };
 
-/**
- * @param {byte} option
- * */
-Relais.prototype.setOption = function(option) {
-  this.send(Commands.SetOption, option);
-};
+  /**
+   * @param {byte} option
+   * */
+  this.setOption = function(option) {
+    this.send(Commands.SetOption, option);
+  };
 
-/**
- * @param {byte} relais
- * @param {ErrorResultCallback} callback
- * */
-Relais.prototype.setSingle = function(relais, callback) {
-  var self = this;
-  callback = callback || function() {};
+  /**
+   * @param {byte} relais
+   * @param {ErrorResultCallback} callback
+   * */
+  this.setSingle = function(relais, callback) {
+    var self = this;
+    callback = callback || function() {};
   
-  self.send(Commands.SetSingle, relais, function(err, data) {
-    if ( err ) {
-      callback(err);
-    } else {
-      
-      if ( data[RelaisByteNames.Command] === ( 255 - Commands.SetSingle ) ) {
-        var single = data[RelaisByteNames.DataByte];
-        callback(null, single);
+    self.send(Commands.SetSingle, relais, function(err, data) {
+      if ( err ) {
+        callback(err);
       } else {
-        callback(null, 0);
-      }
       
-    }
-  });
-};
+        if ( data[RelaisByteNames.Command] === ( 255 - Commands.SetSingle ) ) {
+          var single = data[RelaisByteNames.DataByte];
+          callback(null, single);
+        } else {
+          callback(null, 0);
+        }
+      
+      }
+    });
+  };
 
-/**
- * @param {byte} relais
- * @param {ErrorResultCallback} callback
- * */
-Relais.prototype.delSingle = function(relais, callback) {
-  var self = this;
-  callback = callback || function() {};
+  /**
+   * @param {byte} relais
+   * @param {ErrorResultCallback} callback
+   * */
+  this.delSingle = function(relais, callback) {
+    var self = this;
+    callback = callback || function() {};
   
-  self.send(Commands.DelSingle, relais, function(err, data) {
-    if ( err ) {
-      callback(err);
-    } else {
-      
-      if ( data[RelaisByteNames.Command] === ( 255 - Commands.DelSingle ) ) {
-        var single = data[RelaisByteNames.DataByte];
-        callback(null, single);
+    self.send(Commands.DelSingle, relais, function(err, data) {
+      if ( err ) {
+        callback(err);
       } else {
-        callback(null, 0);
-      }
       
-    }
-  });
-};
+        if ( data[RelaisByteNames.Command] === ( 255 - Commands.DelSingle ) ) {
+          var single = data[RelaisByteNames.DataByte];
+          callback(null, single);
+        } else {
+          callback(null, 0);
+        }
+      
+      }
+    });
+  };
 
-/**
- * @param {byte} relais
- * @param {ErrorResultCallback} callback
- * */
-Relais.prototype.toggle = function(relais, callback) {
-  var self = this;
-  callback = callback || function() {};
+  /**
+   * @param {byte} relais
+   * @param {ErrorResultCallback} callback
+   * */
+  this.toggle = function(relais, callback) {
+    var self = this;
+    callback = callback || function() {};
   
-  self.send(Commands.Toggle, relais, function(err, data) {
-    if ( err ) {
-      callback(err);
-    } else {
-      
-      if ( data[RelaisByteNames.Command] === ( 255 - Commands.Toggle ) ) {
-        var resp = data[RelaisByteNames.DataByte];
-        callback(null, resp);
+    self.send(Commands.Toggle, relais, function(err, data) {
+      if ( err ) {
+        callback(err);
       } else {
-        callback(null, 0);
-      }
       
-    }
-  });
-};
+        if ( data[RelaisByteNames.Command] === ( 255 - Commands.Toggle ) ) {
+          var resp = data[RelaisByteNames.DataByte];
+          callback(null, resp);
+        } else {
+          callback(null, 0);
+        }
+      
+      }
+    });
+  };
 
-/**
- * @param {int} delay
- * @param {Callback} callback
- * */
-Relais.prototype.activateAll = function(delay, callback) {
-  _iterateAllRelais.call(this, delay, this.setSingle, callback);
-};
+  /**
+   * @param {int} delay
+   * @param {Callback} callback
+   * */
+  this.activateAll = function(delay, callback) {
+    _iterateAllRelais.call(this, delay, this.setSingle, callback);
+  };
 
-/**
- * @param {int} delay
- * @param {Callback} callback
- * */
-Relais.prototype.deactivateAll = function(delay, callback) {
-  _iterateAllRelais.call(this, delay, this.delSingle, callback);
-};
+  /**
+   * @param {int} delay
+   * @param {Callback} callback
+   * */
+  this.deactivateAll = function(delay, callback) {
+    _iterateAllRelais.call(this, delay, this.delSingle, callback);
+  };
+}
+util.inherits(Relais, events.EventEmitter);
 
 module.exports = Relais;
