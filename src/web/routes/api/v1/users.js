@@ -21,7 +21,9 @@ exports.getAllUsers = function(req, res) {
           } else {
             
             res.set('Content-Type', 'application/json');
-            res.end(JSON.stringify(users));
+            res.end(JSON.stringify({
+              users: users
+            }));
             
           }
         });
