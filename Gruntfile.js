@@ -31,6 +31,10 @@ module.exports = function(grunt) {
         dest: 'doc'
       }
     },
+    clean: {
+      doc: [ "./doc/" ],
+      client: [ './src/web/public/' ]
+    },
     
     /*
      * ==========
@@ -160,13 +164,13 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [ 'lint', 'build' ]);
   grunt.registerTask('dev', [ 'build-dev', 'watch' ]);
   /* Single purpose tasks */
-  grunt.registerTask('build-dev', [ 'build-dev-js', 'build-css' ]);
+  grunt.registerTask('build-dev', [ 'clean', 'build-dev-js', 'build-css' ]);
   grunt.registerTask('build-dev-js', [ 'build-dev-js-app', 'build-dev-js-index', 'build-dev-js-templates' ]);
   grunt.registerTask('build-dev-js-index', [ 'concat:index' ]);
   grunt.registerTask('build-dev-js-app', [ 'concat:app' ]);
   grunt.registerTask('build-dev-js-templates', [ 'emberTemplates', 'emblem', 'concat:templates' ]);
   
-  grunt.registerTask('build', [ 'build-js' ]);
+  grunt.registerTask('build', [ 'clean', 'build-js', 'build-css' ]);
   grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index', 'build-js-templates' ]);
   grunt.registerTask('build-js-index', [ 'build-dev-js-index', 'uglify:index' ]);
   grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
