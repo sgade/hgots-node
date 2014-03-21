@@ -20,6 +20,7 @@
     "ember-data": "1.0.0-beta.7",
     "jquery": "~2.1.0",
     "bootflatv2": "*",
-    "cryptojslib": "~3.1.2"
+    "cryptojslib": "~3.1.2",
+    "emblem": "0.3.*"
   }
 }

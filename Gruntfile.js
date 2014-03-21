@@ -49,6 +49,10 @@ module.exports = function(grunt) {
       app: {
         src: [ './bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/client/js/app/**/*.js' ],
         dest: './src/web/public/js/app.js'
+      },
+      templates: {
+        src: [ './src/web/public/js/templates-handlebars.js', './src/web/public/js/templates-emblem.js'],
+        dest: './src/web/public/js/templates.js'
       }
     },
     /* Build */
@@ -65,6 +69,11 @@ module.exports = function(grunt) {
       app: {
         files: {
           './src/web/public/js/app.js': [ './src/web/public/js/app.js' ]
+        }
+      },
+      templates: {
+        files: {
+          './src/web/public/js/templates.js': [ './src/web/public/js/templates.js' ]
         }
       }
     },
@@ -90,7 +99,10 @@ module.exports = function(grunt) {
       options: {
         livereload: true
       },
-      
+      templates: {
+        files: ['./src/web/client/views/**/*.handlebars', './src/web/client/views/**/*.emblem'],
+        tasks: ['build-dev-js-templates']
+      },
       jsIndex: {
         files: [ './src/web/client/js/index/**/*.js' ],
         tasks: [ 'build-dev-js-index' ]
@@ -103,6 +115,35 @@ module.exports = function(grunt) {
       css: {
         files: [ './src/web/client/sass/**/*.scss' ],
         tasks: [ 'build-css' ]
+      }
+    },
+    /* Handlebars Templates */
+    emberTemplates: {
+      compile: {
+        options: {
+          amd: false,
+          templateBasePath: './src/web/client/views'
+        },
+        files: {
+          './src/web/public/js/templates-handlebars.js': ['./src/web/client/views/**/*.handlebars']
+        }
+      }
+    },
+    /* Emblem Templates */
+    emblem: {
+      compile: {
+        files: {
+          './src/web/public/js/templates-emblem.js': [ './src/web/client/views/**/*.emblem' ]
+        },
+        options: {
+          root: './src/web/client/views/',
+          dependencies: {
+            jquery: 'bower_components/jquery/dist/jquery.js',
+            ember: 'bower_components/ember/ember.js',
+            emblem: 'bower_components/emblem/dist/emblem.js',
+            handlebars: 'bower_components/handlebars/handlebars.js'
+          }
+        }
       }
     },
     /* Serverside Tests */
@@ -120,14 +161,16 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', [ 'build-dev', 'watch' ]);
   /* Single purpose tasks */
   grunt.registerTask('build-dev', [ 'build-dev-js', 'build-css' ]);
-  grunt.registerTask('build-dev-js', [ 'build-dev-js-app', 'build-dev-js-index' ]);
+  grunt.registerTask('build-dev-js', [ 'build-dev-js-app', 'build-dev-js-index', 'build-dev-js-templates' ]);
   grunt.registerTask('build-dev-js-index', [ 'concat:index' ]);
   grunt.registerTask('build-dev-js-app', [ 'concat:app' ]);
+  grunt.registerTask('build-dev-js-templates', [ 'emberTemplates', 'emblem', 'concat:templates' ]);
   
   grunt.registerTask('build', [ 'build-js' ]);
-  grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index' ]);
+  grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index', 'build-js-templates' ]);
   grunt.registerTask('build-js-index', [ 'build-dev-js-index', 'uglify:index' ]);
   grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
+  grunt.registerTask('build-js-templates', [ 'build-dev-js-templates', 'uglify:templates' ]);
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
   
   grunt.registerTask('lint', [ 'jshint' ]);
