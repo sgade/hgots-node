@@ -321,7 +321,7 @@ Relais.prototype.noOperation = function(callback) {
       callback(false);
     } else {
       
-      var ok = ( data[RelaisByteNames.Command] == 255 );
+      var ok = ( data[RelaisByteNames.Command] === 255 );
       callback(ok); 
       
     }
