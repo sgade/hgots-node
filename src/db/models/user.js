@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     password: Sequelize.STRING,
     type: {
       type: Sequelize.ENUM,
-      values: [ 'user', 'accessor', 'admin' ]
+      values: [ 'user', 'controller', 'admin' ]
     }
   }, {
     classMethods: {
