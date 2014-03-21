@@ -1,25 +1,27 @@
-div.well
-  h3 Create new user
-  form.form#createNewUser
-    div.form-group
-      / label for="newuser-username" Username
-      input.form-control#newuser-username type="text" placeholder="Username"
-    div.form-group
-      / label for="newuser-password" Password
-      input.form-control#newuser-password type="password" placeholder="Password"
-    div.form-group
-      / label for="newuser-type" Type
-      select.form-control#newuser-type
-        option value="user" User
-        option value="controller" Controller
-        option value="admin" Admin
+div.panel.panel-primary
+  div.panel-heading
+    h3.panel-title Create new user
+  div.panel-body
+    form.form#createNewUser
+      div.form-group
+        / label for="newuser-username" Username
+        input.form-control#newuser-username type="text" placeholder="Username"
+      div.form-group
+        / label for="newuser-password" Password
+        input.form-control#newuser-password type="password" placeholder="Password"
+      div.form-group
+        / label for="newuser-type" Type
+        select.form-control#newuser-type
+          option value="user" User
+          option value="controller" Controller
+          option value="admin" Admin
       
-    div.form-actions
-      div.row
-        div.col-md-6
-          button.btn.btn-danger click="cancelNewUser" Cancel
-        div.col-md-6
-          button.btn.btn-success click="createNewUser" Create
+      div.form-actions
+        div.row
+          div.col-md-6
+            button.btn.btn-danger click="cancelNewUser" Cancel
+          div.col-md-6
+            button.btn.btn-success click="createNewUser" Create
 
 
 table.table#admin-users
