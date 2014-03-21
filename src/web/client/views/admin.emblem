@@ -1,0 +1,18 @@
+table.table
+  thead
+    tr
+      th ID
+      th Username
+      th Password
+      th Type
+      th Created
+      th Updated
+  
+  each
+    tr
+      td= id
+      td= username
+      td= password
+      td= type
+      td= createdAt
+      td= updatedAt
