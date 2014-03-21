@@ -14,7 +14,7 @@ App.IndexController = Ember.ObjectController.extend({
         setTimeout(function() {
           self.set('isDisabled', false);
         }, 5000);
-      })
+      });
     }
   }
 });
