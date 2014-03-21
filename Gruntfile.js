@@ -177,7 +177,4 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [ 'lint', 'mochaTest' ]);  
   grunt.registerTask('doc', [ 'jsdoc' ]);
   
-  grunt.loadNpmTasks('grunt-ember-templates');
-  grunt.loadNpmTasks('grunt-emblem');
-  
 };
