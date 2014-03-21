@@ -8,6 +8,9 @@ var callbacks = {};
 exports.setRFIDRequestCallback = function(callback) {
   callbacks.rfidRequestCallback = callback;
 };
+exports.setOpenDoorCallback = function(callback) {
+  callbacks.openDoorCallback = callback;
+};
 
 /* says yes or no */
 exports.validateLogin = function(req, res) {
@@ -47,5 +50,17 @@ exports.getRFID = function(req, res) {
     } else {
       res.status(403).end();
     }
+  });
+};
+
+exports.openDoor = function(req, res) {
+  helpers.validateAuthenticatedRequest(req, function(ok) {
+    if ( ok ) {
+      callbacks.openDoorCallback();
+      res.status(200);
+    } else {
+      res.res(403);
+    }
+    res.end();
   });
 };

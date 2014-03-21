@@ -30,8 +30,9 @@ exports.getExpress = function() {
  * Initializes the server instance and configures express.
  * @param {Integer} port - The port to listen on.
  * */
-exports.init = function(port, rfidRequestCallback) {
+exports.init = function(port, rfidRequestCallback, openDoorCallback) {
   queries.setRFIDRequestCallback(rfidRequestCallback);
+  queries.setOpenDoorCallback(openDoorCallback);
   
   app = express();
   configure(port);
@@ -70,6 +71,7 @@ function configureRoutes() {
   // Routes for app
   app.get('/app', routes.app);
   app.get('/get_rfid', queries.getRFID);
+  app.get('/open_door', queries.openDoor);
   
   // configure api
   require('./routes/api/')(app);

@@ -1,15 +1,20 @@
 App.IndexController = Ember.ObjectController.extend({
   isLoading: false,
+  isDisabled: false,
   
   actions: {
     openDoor: function() {
       var self = this;
       self.set('isLoading', true);
+      self.set('isDisabled', true);
       
-      // TODO request to open the door
-      setTimeout(function() {
+      $.get('/open_door', function() {
         self.set('isLoading', false);
-      }, 1000);
+        // prevent spamming:
+        setTimeout(function() {
+          self.set('isDisabled', false);
+        }, 5000);
+      })
     }
   }
 });

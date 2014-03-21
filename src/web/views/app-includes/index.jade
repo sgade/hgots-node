@@ -2,6 +2,6 @@
 script#index(type="text/x-handlebars")
   div
     | {{#if isLoading}}
-    p Loading...
+    p Please wait... Loading...
     | {{/if}}
-    <button class="btn btn-primary btn-lg center-block" {{action 'openDoor'}}>Open Door</button>
+    <button class="btn btn-primary btn-lg center-block" {{action 'openDoor'}} {{bind-attr disabled=isDisabled}}>Open Door</button>
