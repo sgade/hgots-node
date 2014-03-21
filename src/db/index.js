@@ -22,15 +22,12 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
 
 var dirname = __dirname + "/models";
 
-fs
-  .readdirSync(dirname)
-  .filter(function(file) {
-    return (file.indexOf('.') !== 0) && (file !== 'index.js');
-  })
-  .forEach(function(file) {    
-    var model = sequelize.import(path.join(dirname, file));
-    db[model.name] = model;
-  });
+fs.readdirSync(dirname).filter(function(file) {
+  return (file.indexOf('.') !== 0) && (file !== 'index.js');
+}).forEach(function(file) {    
+  var model = sequelize.import(path.join(dirname, file));
+  db[model.name] = model;
+});
  
 Object.keys(db).forEach(function(modelName) {
   if ('associate' in db[modelName]) {
