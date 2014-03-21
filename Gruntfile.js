@@ -116,7 +116,7 @@ module.exports = function(grunt) {
     }
   });
   
-  grunt.registerTask('default', [ 'jshint', 'build' ]);
+  grunt.registerTask('default', [ 'lint', 'build' ]);
   grunt.registerTask('dev', [ 'build-dev', 'watch' ]);
   /* Single purpose tasks */
   grunt.registerTask('build-dev', [ 'build-dev-js', 'build-css' ]);
@@ -130,7 +130,8 @@ module.exports = function(grunt) {
   grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
   
-  grunt.registerTask('test', [ 'jshint', 'mochaTest' ]);  
+  grunt.registerTask('lint', [ 'jshint' ]);
+  grunt.registerTask('test', [ 'lint', 'mochaTest' ]);  
   grunt.registerTask('doc', [ 'jsdoc' ]);
   
 };
