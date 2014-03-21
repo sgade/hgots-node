@@ -19,6 +19,7 @@
     "ember": "~1.4.0",
     "ember-data": "1.0.0-beta.7",
     "jquery": "~2.1.0",
-    "bootflatv2": "*"
+    "bootflatv2": "*",
+    "emblem": "0.3.*"
   }
 }

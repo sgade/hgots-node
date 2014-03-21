@@ -1,0 +1,4 @@
+div
+  if isLoading
+    p Loading...
+  button.btn.btn-primary.btn-lg.center-block click="openDoor" Open Door

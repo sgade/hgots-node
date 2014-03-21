@@ -1,0 +1,5 @@
+h1= title
+  
+p By Sören Gade.
+    
+p Take a look at the #{link-to 'readme'| Readme}.
