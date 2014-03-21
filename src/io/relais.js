@@ -138,7 +138,12 @@ Relais.prototype.open = function(callback) {
         self.isOpen = true;
         
         self.serialPort.on('data', function(data) {
-          self.emit('data');
+          /**
+           * Data event.
+           * @event Relais#data
+           * @type {Buffer}
+           * */
+          self.emit('data', data);
         });
     
         /**
@@ -315,7 +320,7 @@ Relais.prototype.setup = function(callback) {
         callback(false);
       } else {
        
-        if ( data[RelaisByteNames.Command] == ( 255 - Commands.Setup ) ) {
+        if ( data[RelaisByteNames.Command] === ( 255 - Commands.Setup ) ) {
           self.relaisID = data[RelaisByteNames.Address];
         
           callback(true);
@@ -342,7 +347,7 @@ Relais.prototype.getPort = function(callback) {
       callback(err);
     } else {
      
-      if ( data[RelaisByteNames.Command] == ( 255 - Commands.GetPort ) ) {
+      if ( data[RelaisByteNames.Command] === ( 255 - Commands.GetPort ) ) {
         var port = data[RelaisByteNames.DataByte];
         callback(null, port);
       } else {
@@ -374,7 +379,7 @@ Relais.prototype.getOption = function(callback) {
       callback(err);
     } else {
       
-      if ( data[RelaisByteNames.Command] == ( 255 - Commands.GetOption) ) {
+      if ( data[RelaisByteNames.Command] === ( 255 - Commands.GetOption) ) {
         var dataByte = data[RelaisByteNames.DataByte];
         callback(null, dataByte);
       } else {
@@ -407,7 +412,7 @@ Relais.prototype.setSingle = function(relais, callback) {
       callback(err);
     } else {
       
-      if ( data[RelaisByteNames.Command] == ( 255 - Commands.SetSingle ) ) {
+      if ( data[RelaisByteNames.Command] === ( 255 - Commands.SetSingle ) ) {
         var single = data[RelaisByteNames.DataByte];
         callback(null, single);
       } else {
@@ -433,7 +438,7 @@ Relais.prototype.delSingle = function(relais, callback) {
       callback(err);
     } else {
       
-      if ( data[RelaisByteNames.Command] == ( 255 - Commands.DelSingle ) ) {
+      if ( data[RelaisByteNames.Command] === ( 255 - Commands.DelSingle ) ) {
         var single = data[RelaisByteNames.DataByte];
         callback(null, single);
       } else {
@@ -459,7 +464,7 @@ Relais.prototype.toggle = function(relais, callback) {
       callback(err);
     } else {
       
-      if ( data[RelaisByteNames.Command] == ( 255 - Commands.Toggle ) ) {
+      if ( data[RelaisByteNames.Command] === ( 255 - Commands.Toggle ) ) {
         var resp = data[RelaisByteNames.DataByte];
         callback(null, resp);
       } else {
@@ -515,6 +520,9 @@ Relais.prototype._iterateAllRelais = function(delay, relaisOperation, callback) 
       }, delay);
       
     }, function(err) {
+      if ( err ) {
+        throw err;
+      }
       // done
       callback();
     });
