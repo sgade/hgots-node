@@ -11,7 +11,7 @@ $(function() {
   }
   function getPassword() {
     var val = $("#login-password").val();
-    return CryptoJS.SHA256(val).toString(CryptoJS.enc.Base64);
+    return CryptoJS.SHA256(val).toString(CryptoJS.enc.hex);
   }
   
   function setButtonState() {
