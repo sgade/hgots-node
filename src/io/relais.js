@@ -115,6 +115,45 @@ function Relais(port) {
     
   }());
   this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
+  
+  /**
+   * @param {uint} delay
+   * @param {Function} relaisOperation - An operation that is passed a relais number that it should work on.
+   * @param {Callback} callback
+   * */
+  var _iterateAllRelais = function(delay, relaisOperation, callback) {
+    var self = this;
+    if ( !delay ) {
+      delay = 0;
+    }
+    if ( !callback ) {
+      callback = function() {};
+    }
+  
+    if ( delay === 0 ) {
+      relaisOperation.call(self, self.getAllRelais());
+    } else {
+      var relaisNums = [ 1, 2, 4, 8, 16, 32, 64, 128 ];
+    
+      async.eachSeries(relaisNums, function(item, cb) {
+      
+        // item == relaisnum
+        relaisOperation.call(self, item);
+      
+        setTimeout(function() {
+          cb();
+        }, delay);
+      
+      }, function(err) {
+        if ( err ) {
+          throw err;
+        }
+        // done
+        callback();
+      });
+    
+    }
+  };
 }
 util.inherits(Relais, events.EventEmitter);
 
@@ -480,7 +519,7 @@ Relais.prototype.toggle = function(relais, callback) {
  * @param {Callback} callback
  * */
 Relais.prototype.activateAll = function(delay, callback) {
-  this._iterateAllRelais(delay, this.setSingle, callback);
+  _iterateAllRelais.call(this, delay, this.setSingle, callback);
 };
 
 /**
@@ -488,46 +527,7 @@ Relais.prototype.activateAll = function(delay, callback) {
  * @param {Callback} callback
  * */
 Relais.prototype.deactivateAll = function(delay, callback) {
-  this._iterateAllRelais(delay, this.delSingle, callback);
-};
-
-/**
- * @param {uint} delay
- * @param {Function} relaisOperation - An operation that is passed a relais number that it should work on.
- * @param {Callback} callback
- * */
-Relais.prototype._iterateAllRelais = function(delay, relaisOperation, callback) {
-  var self = this;
-  if ( !delay ) {
-    delay = 0;
-  }
-  if ( !callback ) {
-    callback = function() {};
-  }
-  
-  if ( delay === 0 ) {
-    relaisOperation.call(self, self.getAllRelais());
-  } else {
-    var relaisNums = [ 1, 2, 4, 8, 16, 32, 64, 128 ];
-    
-    async.eachSeries(relaisNums, function(item, cb) {
-      
-      // item == relaisnum
-      relaisOperation.call(self, item);
-      
-      setTimeout(function() {
-        cb();
-      }, delay);
-      
-    }, function(err) {
-      if ( err ) {
-        throw err;
-      }
-      // done
-      callback();
-    });
-    
-  }
+  _iterateAllRelais.call(this, delay, this.delSingle, callback);
 };
 
 module.exports = Relais;
