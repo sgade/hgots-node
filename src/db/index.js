@@ -7,6 +7,7 @@
  * */
 
 var config = require('../config');
+var crypt = require('../crypto/');
 var fs        = require('fs'),
     path      = require('path'),
     Sequelize = require('sequelize'),
@@ -43,7 +44,7 @@ sequelize.sync({ force: true }).complete(function(err) {
     // Dummy data
     db.User.create({
       username: 'test',
-      password: 'test',
+      password: crypt.encrypt('test'),
       type: 'admin'
     }).success(function(userTest) {
       

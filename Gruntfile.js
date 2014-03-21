@@ -43,11 +43,11 @@ module.exports = function(grunt) {
         banner: BANNER
       },
       index: {
-        src: [ './bower_components/cryptojslib/rollups/sha256.js', './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ],
+        src: [ './bower_components/cryptojslib/rollups/sha256.js', './bower_components/cryptojslib/components/enc-base64-min.js', './bower_components/jquery/dist/jquery.js', './src/web/client/js/index/index.js' ],
         dest: './src/web/public/js/index.js'
       },
       app: {
-        src: [ './bower_components/cryptojslib/rollups/sha256.js', './bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/client/js/app/**/*.js' ],
+        src: [ './bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/handlebars/handlebars.js', './bower_components/ember/ember.js', './bower_components/ember-data/ember-data.js', './src/web/client/js/app/**/*.js' ],
         dest: './src/web/public/js/app.js'
       }
     },
