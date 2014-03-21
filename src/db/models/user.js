@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = function(sequelize, DataTypes) {
   
   var User = sequelize.define('User', {
     username: Sequelize.STRING,
@@ -8,6 +8,12 @@ module.exports = function(sequelize) {
     type: {
       type: Sequelize.ENUM,
       values: [ 'user', 'accessor', 'admin' ]
+    }
+  }, {
+    classMethods: {
+      associate: function(models) {
+        User.hasMany(models.Card);
+      }
     }
   });
   

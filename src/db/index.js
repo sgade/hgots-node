@@ -7,7 +7,11 @@
  * */
 
 var config = require('../config');
-var Sequelize = require('sequelize');
+var fs        = require('fs'),
+    path      = require('path'),
+    Sequelize = require('sequelize'),
+    lodash    = require('lodash'),
+    db        = {};
 
 var sequelize = new Sequelize(config.db.name, config.db.username, config.db.password, {
   dialect: 'sqlite',
@@ -16,14 +20,23 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
   logging: ( process.env.NODE_ENV === 'production' ) ? false : console.log
 });
 
-// models
-var User = require('./models/user')(sequelize);
-var Card = require('./models/card')(sequelize);
-// associations
-User.hasMany(Card, {
-  as: 'Cards'
+var dirname = __dirname + "/models";
+
+fs
+  .readdirSync(dirname)
+  .filter(function(file) {
+    return (file.indexOf('.') !== 0) && (file !== 'index.js');
+  })
+  .forEach(function(file) {    
+    var model = sequelize.import(path.join(dirname, file));
+    db[model.name] = model;
+  });
+ 
+Object.keys(db).forEach(function(modelName) {
+  if ('associate' in db[modelName]) {
+    db[modelName].associate(db);
+  }
 });
-Card.belongsTo(User);
 
 // TODO remove force: true
 sequelize.sync({ force: true }).complete(function(err) {
@@ -31,13 +44,13 @@ sequelize.sync({ force: true }).complete(function(err) {
     console.log("Connected to database.");
     
     // Dummy data
-    User.create({
+    db.User.create({
       username: 'test',
       password: 'test',
       type: 'admin'
     }).success(function(userTest) {
       
-      Card.create({
+      db.Card.create({
         uid: '6040082934'
       }).success(function(cardTest) {
         userTest.addCard(cardTest);
@@ -47,9 +60,7 @@ sequelize.sync({ force: true }).complete(function(err) {
   }
 });
 
-module.exports = {
+module.exports = lodash.extend({
   sequelize: sequelize,
-  Sequelize: Sequelize,
-  User: User,
-  Card: Card
-};
+  Sequelize: Sequelize
+}, db);
