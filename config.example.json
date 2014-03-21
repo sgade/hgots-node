@@ -9,10 +9,6 @@
     "password": "admin"
   },
   "web": {
-    "port": 3000,
-    "admin": {
-      "username": "admin",
-      "password": "admin"
-    }
+    "port": 3000
   }
 }

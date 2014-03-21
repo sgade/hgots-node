@@ -1,4 +1,3 @@
-var config = require('../../config');
 var db = require('../../db/');
 
 /**
@@ -12,25 +11,21 @@ function validateUser(user, pw, callback) {
     return;
   }
   
-  if ( user == config.web.admin.username && pw == config.web.admin.password ) {
-    callback(true);
-  } else {
-    db.User.find({
-      where: {
-        username: user,
-        password: pw
-      }
-    }).complete(function(err, user) {
-      if ( err ) {
-        throw err; // TODO handle error!
-      } else {
-      
-        var ok = !!user;
-        callback(ok);
-      
-      }
-    });
-  }
+  db.User.find({
+    where: {
+      username: user,
+      password: pw
+    }
+  }).complete(function(err, user) {
+    if ( err ) {
+      throw err; // TODO handle error!
+    } else {
+    
+      var ok = !!user;
+      callback(ok);
+    
+    }
+  });
 }
 exports.validateUser = validateUser;
 
