@@ -126,9 +126,7 @@ function Relais(port) {
     if ( !delay ) {
       delay = 0;
     }
-    if ( !callback ) {
-      callback = function() {};
-    }
+    callback = callback || function() {};
   
     if ( delay === 0 ) {
       relaisOperation.call(self, self.getAllRelais());
@@ -167,9 +165,7 @@ Relais.prototype.isOpen = function() {
  * */
 Relais.prototype.open = function(callback) {
   var self = this;
-  if ( !callback ) {
-    callback = function() {};
-  }
+  callback = callback || function() {};
   
   if ( !self.isOpen ) {
     self.serialPort.open(function(err) {
@@ -202,9 +198,7 @@ Relais.prototype.open = function(callback) {
  * */
 Relais.prototype.close = function(callback) {
   var self = this;
-  if ( !callback ) {
-    callback = function() {};
-  }
+  callback = callback || function() {};
   
   if ( self.isOpen ) {
     self.serialPort.close(function(err) {
@@ -275,9 +269,7 @@ Relais.prototype.send = function(command, data, callback) {
     return;
   }
   var self = this;
-  if ( !callback ) {
-    callback = function() {};
-  }
+  callback = callback || function() {};
   
   var buffer = new Array(4);
   buffer[RelaisByteNames.Command] = command;
@@ -322,9 +314,7 @@ Relais.prototype.getAllRelais = function() {
  * */
 Relais.prototype.noOperation = function(callback) {
   var self = this;
-  if ( !callback ) {
-    callback = function() {};
-  }
+  callback = callback || function() {};
   
   self.send(Commands.NoOperation, 0, function(err, data) {
     if ( err ) {
@@ -349,9 +339,7 @@ Relais.prototype.NOP = function(callback) {
  * */
 Relais.prototype.setup = function(callback) {
   var self = this;
-  if ( !callback ) {
-    callback = function() {};
-  }
+  callback = callback || function() {};
   
   if ( self.relaisID === 0 ) {
     self.send(Commands.Setup, 0, function(err, data) {
@@ -377,9 +365,7 @@ Relais.prototype.setup = function(callback) {
  * */
 Relais.prototype.getPort = function(callback) {
   var self = this;
-  if ( !callback ) {
-    return;
-  }
+  callback = callback || function() {};
   
   self.send(Commands.GetPort, 0, function(err, data) {
     if ( err ) {
@@ -409,9 +395,7 @@ Relais.prototype.setPort = function(relais) {
  * */
 Relais.prototype.getOption = function(callback) {
   var self = this;
-  if ( !callback ) {
-    return;
-  }
+  callback = callback || function() {};
   
   self.send(Commands.GetOption, 0, function(err, data) {
     if ( err ) {
@@ -442,9 +426,7 @@ Relais.prototype.setOption = function(option) {
  * */
 Relais.prototype.setSingle = function(relais, callback) {
   var self = this;
-  if ( !callback ) {
-    callback = function() {};
-  }
+  callback = callback || function() {};
   
   self.send(Commands.SetSingle, relais, function(err, data) {
     if ( err ) {
@@ -468,9 +450,7 @@ Relais.prototype.setSingle = function(relais, callback) {
  * */
 Relais.prototype.delSingle = function(relais, callback) {
   var self = this;
-  if ( !callback ) {
-    callback = function() {};
-  }
+  callback = callback || function() {};
   
   self.send(Commands.DelSingle, relais, function(err, data) {
     if ( err ) {
@@ -494,9 +474,7 @@ Relais.prototype.delSingle = function(relais, callback) {
  * */
 Relais.prototype.toggle = function(relais, callback) {
   var self = this;
-  if ( !callback ) {
-    callback = function() {};
-  }
+  callback = callback || function() {};
   
   self.send(Commands.Toggle, relais, function(err, data) {
     if ( err ) {
