@@ -15,10 +15,11 @@ div.well
         option value="admin" Admin
       
     div.form-actions
-      div.grid
-        div.row
-          div.col-md-10.col-md-offset-1
-            button.btn.btn-default click="createNewUser" Create
+      div.row
+        div.col-md-6
+          button.btn.btn-danger click="cancelNewUser" Cancel
+        div.col-md-6
+          button.btn.btn-success click="createNewUser" Create
 
 
 table.table#admin-users

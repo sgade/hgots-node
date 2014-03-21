@@ -6,10 +6,16 @@
       return this.store.findAll('user');
     }
   });
+  
+  var clearNewUserInputFields = function() {
+    $("#createNewUser input").val("");
+    $("#createNewUser select").prop('selectedIndex', 0);
+  };
+  
   App.AdminController = Ember.ArrayController.extend({
     actions: {
       cancelNewUser: function() {
-        $("#createNewUser input").val("");
+        clearNewUserInputFields();
       },
       createNewUser: function() {
         var username = $("#createNewUser #newuser-username").val();
@@ -23,6 +29,8 @@
           password: password,
           type: type
         });
+        
+        clearNewUserInputFields();
       }
     }
   });
