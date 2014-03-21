@@ -60,9 +60,10 @@ describe('HGOTS Web Server', function() {
     });
     
     it('should respond with 200 with correct credentials', function(done) {
+      var pw = require('../../crypto/').encrypt('test');
       request(expressApp)
         .post('/validate_login')
-        .send({ username: "test", password: "test" })
+        .send({ username: "test", password: pw })
         .expect(200, done);
     });
   });
