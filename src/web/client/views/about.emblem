@@ -1,5 +1,12 @@
-h1= App.Globals.title
-  
-p By Sören Gade.
-    
-p Take a look at the #{link-to 'readme'| Readme}.
+p= App.Globals.title
+p
+ | Version 
+ span= App.Globals.version
+
+p
+  | By 
+  a href="https://github.com/sgade" Sören Gade.
+p
+  | Visit the repo at 
+  a href="https://github.com/sgade/hgots-node" Github
+  | .
