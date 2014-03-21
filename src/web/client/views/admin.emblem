@@ -1,3 +1,26 @@
+div.well
+  h3 Create new user
+  form.form#createNewUser
+    div.form-group
+      / label for="newuser-username" Username
+      input.form-control#newuser-username type="text" placeholder="Username"
+    div.form-group
+      / label for="newuser-password" Password
+      input.form-control#newuser-password type="password" placeholder="Password"
+    div.form-group
+      / label for="newuser-type" Type
+      select.form-control#newuser-type
+        option value="user" User
+        option value="controller" Controller
+        option value="admin" Admin
+      
+    div.form-actions
+      div.grid
+        div.row
+          div.col-md-10.col-md-offset-1
+            button.btn.btn-default click="createNewUser" Create
+
+
 table.table
   thead
     tr
