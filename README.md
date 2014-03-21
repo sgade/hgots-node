@@ -6,6 +6,10 @@
 
 This application is still in **very** early development.
 
+# Setup
+
+`node setup`
+
 # How to run
 
 1. `git clone https://github.com/sgade/hgots-node.git`
