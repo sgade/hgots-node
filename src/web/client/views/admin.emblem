@@ -21,15 +21,19 @@ div.well
             button.btn.btn-default click="createNewUser" Create
 
 
-table.table
+table.table#admin-users
   thead
     tr
       th ID
       th Username
       th Type
+      th Options
   
   each
     tr
-      td= id
-      td= username
-      td= type
+      td.id= id
+      td.username= username
+      td.type= type
+      td.options
+        button.btn.btn-warning Edit
+        button.btn.btn-danger Delete

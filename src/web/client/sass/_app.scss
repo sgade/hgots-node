@@ -5,3 +5,22 @@ a.active {
 #createNewUser .form-actions button {
   width: 100%;
 }
+
+#admin-users {
+  // Table
+  .username {
+    font-weight: bold;
+  }
+  
+  tr td button {
+    margin-left: 3px;
+    margin-right: 3px;
+    
+    &:first-child {
+      margin-left: 0px;
+    }
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
