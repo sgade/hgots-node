@@ -2,6 +2,15 @@
 App = Ember.Application.create();
 
 /* ==========
+ * Globals
+ * ==========
+ * */
+App.Globals = {
+  title: "HGO Türschloss",
+  version: "0.0.0"
+};
+
+/* ==========
  * Store
  * ==========
  * */
