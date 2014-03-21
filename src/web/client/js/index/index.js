@@ -10,14 +10,15 @@ $(function() {
     return $("#login-username").val();
   }
   function getPassword() {
-    return $("#login-password").val();
+    var val = $("#login-password").val();
+    return CryptoJS.SHA256(val).toString(CryptoJS.enc.Base64);
   }
   
   function setButtonState() {
     var username = getUsername();
-    var password = getPassword();
+    var password = $("#login-password").val();
     
-    setState($("#login"), username && password);
+    setState($("#login"), !!username && !!password);
   }
   setButtonState();
   
