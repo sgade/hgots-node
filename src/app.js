@@ -35,9 +35,10 @@ var relais = null;
 function startWeb() {
   var port = config.web.port;
   
-  web.init(port, web_RFIDRequest, web_OpenDoor);
-  web.start(function() {
-    console.log("Web interface running on port " + web.getPort() + ".");
+  web.init(port, web_RFIDRequest, web_OpenDoor, function() {
+    web.start(function() {
+      console.log("Web interface running on port " + web.getPort() + ".");
+    });
   });
 }
 function web_RFIDRequest(callback) {

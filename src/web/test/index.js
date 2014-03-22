@@ -9,10 +9,11 @@ var port = 3333;
 
 describe('HGOTS Web Server', function() {
   before(function(done) {
-    app.init(port, null);
-    app.start(function() {
-      expressApp = app.getExpress();
-      sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, done);
+    app.init(port, null, null, function() {
+      app.start(function() {
+        expressApp = app.getExpress();
+        sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, done);
+      });
     });
   });
   

@@ -60,6 +60,8 @@ var initDB = function(done) {
           });
       
         });
+      } else {
+        done();
       }
     }
   });
