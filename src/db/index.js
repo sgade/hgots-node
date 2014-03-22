@@ -36,7 +36,7 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
-var initDB = new function(done) {
+var initDB = function(done) {
   // TODO remove force: true
   sequelize.sync({force: true}).complete(function(err) {
     if ( !err ) {
