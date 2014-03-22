@@ -1,23 +1,25 @@
 var should = require('should');
 var request = require('supertest');
+var sequelize_fixtures =  require('sequelize-fixtures');
 
 var app = require('../');
+var db = require('../../db');
 var expressApp = null;
 var port = 3333;
 
 describe('HGOTS Web Server', function() {
-	before(function(done) {
-		app.init(port, null);
-		app.start(function() {
+  before(function(done) {
+    app.init(port, null);
+    app.start(function() {
       expressApp = app.getExpress();
-      done();
-		});
-	});
-	
-	after(function(done) {
-		app.stop();
+      sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, done);
+    });
+  });
+  
+  after(function(done) {
+    app.stop();
     done();
-	});
+  });
   
   it('should exist', function(done) {
     should.exist(expressApp);
@@ -60,10 +62,10 @@ describe('HGOTS Web Server', function() {
     });
     
     it('should respond with 200 with correct credentials', function(done) {
-      var pw = require('../../crypto/').encrypt('test');
+      var pw = require('../../crypto/').encrypt('testPassword');
       request(expressApp)
         .post('/validate_login')
-        .send({ username: "test", password: pw })
+        .send({ username: "testUser", password: "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb" })
         .expect(200, done);
     });
   });

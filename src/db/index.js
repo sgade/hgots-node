@@ -18,7 +18,7 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
   dialect: 'sqlite',
   storage: config.db.name,
   
-  logging: ( process.env.NODE_ENV === 'production' ) ? false : console.log
+  logging: ( lodash.contains(['production', 'test'], process.env.NODE_ENV) ) ? false : console.log
 });
 
 var dirname = __dirname + "/models";
@@ -39,7 +39,7 @@ Object.keys(db).forEach(function(modelName) {
 // TODO remove force: true
 sequelize.sync({ force: true }).complete(function(err) {
   if ( !err ) {
-    console.log("Connected to database.");
+    if(!lodash.contains(['production', 'test'], process.env.NODE_ENV))
     
     // Dummy data
     db.User.create({
