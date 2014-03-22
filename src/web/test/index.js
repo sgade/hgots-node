@@ -220,7 +220,7 @@ describe('HGOTS Web Server', function() {
         });
         
         it('should not allow a normal user to create a new user', function(done) {
-          authenticatedControllerAgent
+          authenticatedUserAgent
             .post(url)
             .send({ username: "newTestUser3", password: defaultPasswordHash, type: "user" })
             .expect('Content-Type', /json/)
@@ -228,7 +228,7 @@ describe('HGOTS Web Server', function() {
         });
         
         it('should not allow a normal user to create a new controller', function(done) {
-          authenticatedControllerAgent
+          authenticatedUserAgent
             .post(url)
             .send({ username: "newTestController3", password: defaultPasswordHash, type: "controller" })
             .expect('Content-Type', /json/)
@@ -236,7 +236,7 @@ describe('HGOTS Web Server', function() {
         });
         
         it('should not allow a normal user to create a new admin', function(done) {
-          authenticatedControllerAgent
+          authenticatedUserAgent
             .post(url)
             .send({ username: "newTestAdmin3", password: defaultPasswordHash, type: "admin" })
             .expect('Content-Type', /json/)
@@ -285,6 +285,30 @@ describe('HGOTS Web Server', function() {
         it('should give a 403 to a normal user', function(done) {
           authenticatedUserAgent
             .get(url + "/3/cards")
+            .expect(403, done);
+        });
+      });
+      
+      describe('POST /user/:id/cards', function() {
+        var url = prefix + "/user";
+        it('should allow an admin to add a new card to a user', function() {
+          authenticatedAdminAgent
+            .post(url + '/3/cards')
+            .send({uid: "42"})
+            .expect(200, done);
+        });
+        
+        it('should allow a controller to add a new card to a user', function(done) {
+          authenticatedControllerAgent
+            .post(url + '/3/cards')
+            .send({uid: "42"})
+            .expect(200, done);
+        });
+        
+        it('should not allow a normal user to add a new card to a user', function(done) {
+          authenticatedControllerAgent
+            .post(url + '/3/cards')
+            .send({uid: "42"})
             .expect(403, done);
         });
       });
