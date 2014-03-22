@@ -7,21 +7,21 @@
     }
   });
   
-  var clearNewUserInputFields = function() {
-    $("#createNewUser input").val("");
-    $("#createNewUser select").prop('selectedIndex', 0);
-  };
-  
   App.AdminController = Ember.ArrayController.extend({
+    userTypes: ["User", "Controller", "Admin"],
+    selectedUserType: 'User',
+    selectedUsername: '',
+    selectedPassword: '',
     actions: {
       cancelNewUser: function() {
-        clearNewUserInputFields();
+        this.set('selectedUsername', "");
+        this.set('selectedPassword', "");
       },
       createNewUser: function() {
-        var username = $("#createNewUser #newuser-username").val();
-        var password = $("#createNewUser #newuser-password").val();
-        var type = $("#createNewUser #newuser-type").val();
-      
+        var username = this.get('selectedUsername');
+        var password = this.get('selectedPassword');
+        var type = this.get('selectedUserType').toLowerCase();
+
         console.log(username, password, type);
       
         this.store.createRecord('user', {
@@ -30,7 +30,8 @@
           type: type
         });
         
-        clearNewUserInputFields();
+        this.set('selectedUsername', "");
+        this.set('selectedPassword', "");
       }
     }
   });
