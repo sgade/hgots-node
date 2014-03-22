@@ -63,7 +63,7 @@ var initDB = function(done) {
       }
     }
   });
-}
+};
 
 module.exports = lodash.extend({
   sequelize: sequelize,
