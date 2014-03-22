@@ -19,6 +19,11 @@ module.exports = function(grunt) {
       self: [ './*.js', './*.json' ],
       src: [ './src/**/*.js', '!./src/web/public/**/*.js' ]
     },
+    env: {
+      test: {
+        NODE_ENV: 'test'
+      }
+    },
     
     /*
      * ==========
@@ -178,7 +183,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
   
   grunt.registerTask('lint', [ 'jshint' ]);
-  grunt.registerTask('test', [ 'lint', 'mochaTest' ]);  
+  grunt.registerTask('test', [ 'env', 'lint', 'mochaTest' ]);  
   grunt.registerTask('doc', [ 'jsdoc' ]);
   
 };
