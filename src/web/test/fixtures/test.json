@@ -22,5 +22,19 @@
       "password": "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb",
       "type": "user"
     }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "42",
+      "UserId": 3
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52",
+      "UserId": 1
+    }
   }
 ]

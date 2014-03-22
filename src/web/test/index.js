@@ -143,10 +143,10 @@ describe('HGOTS Web Server', function() {
     describe('v1', function() {
       prefix += '/v1';
       describe('/users', function() {
-        prefix += '/users';
+        var url = prefix + '/users';
         it('should return all users to an admin', function(done) {
           authenticatedAdminAgent
-            .get(prefix)
+            .get(url)
             .expect('Content-Type', /json/)
             .expect(200)
             .expect({users: users}, done);
@@ -154,7 +154,7 @@ describe('HGOTS Web Server', function() {
         
         it('should return all users to a controller', function(done) {
           authenticatedControllerAgent
-            .get(prefix)
+            .get(url)
             .expect('Content-Type', /json/)
             .expect(200)
             .expect({users: users}, done);
@@ -162,7 +162,52 @@ describe('HGOTS Web Server', function() {
         
         it('should give a 403 to a normal user', function(done) {
           authenticatedUserAgent
-            .get(prefix)
+            .get(url)
+            .expect(403, done);
+        });
+      });
+      
+      describe('/users/:id/cards', function() {
+        var url = prefix + "/user";
+        it('should return all cards of user 3 to an admin', function(done) {
+          authenticatedAdminAgent
+            .get(url + "/3/cards")
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              res.body.should.be.an.Array.and.an.Object.and.have.lengthOf(1);
+
+              var card = res.body[0];
+              card.should.have.properties('id', 'uid', 'UserId');
+              done();
+            });
+        });
+        
+        it('should return all cards of user 3 to user 3', function(done) {
+          authenticatedUserAgent
+            .get(url + "/3/cards")
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .end(function(err, res) {
+              res.body.should.be.an.Array.and.an.Object.and.have.lengthOf(1);
+
+              var card = res.body[0];
+              card.should.have.properties('id', 'uid', 'UserId');
+              done();
+            });
+        });
+        
+        it('should return no cards of user 1 to user 3', function(done) {
+          authenticatedUserAgent
+            .get(url + "/1/cards")
+            .expect('Content-Type', /json/)
+            .expect(403, done);
+        });
+        
+        
+        it('should give a 403 to a normal user', function(done) {
+          authenticatedUserAgent
+            .get(url + "/3/cards")
             .expect(403, done);
         });
       });
