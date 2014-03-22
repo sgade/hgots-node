@@ -36,5 +36,33 @@
       "uid": "52",
       "UserId": 1
     }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52a",
+      "UserId": 3
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52b",
+      "UserId": 3
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52c",
+      "UserId": 3
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52d",
+      "UserId": 1
+    }
   }
 ]

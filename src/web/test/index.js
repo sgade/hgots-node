@@ -312,6 +312,28 @@ describe('HGOTS Web Server', function() {
             .expect(403, done);
         });
       });
+      
+      describe('DELETE /user/:id/card/:id', function() {
+        var url = prefix + "/user/3/card/";
+        
+        it('should allow an admin to delete a card from a user', function(done) {
+          authenticatedAdminAgent
+            .del(url + '/3')
+            .expect(200, done);
+        });
+        
+        it('should allow a controller to delete a card from a user', function(done) {
+          authenticatedControllerAgent
+            .del(url + '/4')
+            .expect(200, done);
+        });
+        
+        it('should not allow a normal user to delete a card from a user', function(done) {
+          authenticatedControllerAgent
+            .del(url + '/5')
+            .expect(403, done);
+        });
+      });
     });
   });
   
