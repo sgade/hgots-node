@@ -39,23 +39,26 @@ Object.keys(db).forEach(function(modelName) {
 // TODO remove force: true
 sequelize.sync().complete(function(err) {
   if ( !err ) {
-    if(!lodash.contains(['production', 'test'], process.env.NODE_ENV))
+    if(!lodash.contains(['production', 'test'], process.env.NODE_ENV)) {
       console.log("Connected to database.");
+    }
     
-    // Dummy data
-    db.User.findOrCreate({
-      username: 'test',
-      password: crypt.encrypt('test'),
-      type: 'admin'
-    }).success(function(userTest) {
+    if(process.env.NODE_ENV !== 'test') {
+      // Dummy data
+      db.User.findOrCreate({
+        username: 'test',
+        password: crypt.encrypt('test'),
+        type: 'admin'
+      }).success(function(userTest) {
       
-      db.Card.findOrCreate({
-        uid: '6040082934'
-      }).success(function(cardTest) {
-        userTest.addCard(cardTest);
+        db.Card.findOrCreate({
+          uid: '6040082934'
+        }).success(function(cardTest) {
+          userTest.addCard(cardTest);
+        });
+      
       });
-      
-    });
+    }
   }
 });
 
