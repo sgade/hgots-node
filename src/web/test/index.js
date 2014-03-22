@@ -75,7 +75,7 @@ describe('HGOTS Web Server', function() {
       .expect(200, done);
   });
   
-  describe('Main /', function() {
+  describe('GET Main /', function() {
     it('should respond with HTML on /', function(done) {
       request(expressApp)
         .get('/')
@@ -84,7 +84,7 @@ describe('HGOTS Web Server', function() {
     });
   });
   
-  describe('Validate Login /validate_login', function() {
+  describe('POST Validate Login /validate_login', function() {
     it('should respond with json', function(done) {
       request(expressApp)
         .post('/validate_login')
@@ -124,7 +124,7 @@ describe('HGOTS Web Server', function() {
     });
   });
   
-  describe('App /app', function() {
+  describe('GET App /app', function() {
     it('should redirect without credentials', function(done) {
       request(expressApp)
         .get('/app') 
@@ -142,7 +142,7 @@ describe('HGOTS Web Server', function() {
     var prefix = '/api';
     describe('v1', function() {
       prefix += '/v1';
-      describe('/users', function() {
+      describe('GET /users', function() {
         var url = prefix + '/users';
         it('should return all users to an admin', function(done) {
           authenticatedAdminAgent
@@ -167,7 +167,7 @@ describe('HGOTS Web Server', function() {
         });
       });
       
-      describe('/users/:id/cards', function() {
+      describe('GET /users/:id/cards', function() {
         var url = prefix + "/user";
         it('should return all cards of user 3 to an admin', function(done) {
           authenticatedAdminAgent
