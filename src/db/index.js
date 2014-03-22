@@ -43,13 +43,13 @@ sequelize.sync().complete(function(err) {
       console.log("Connected to database.");
     
     // Dummy data
-    db.User.create({
+    db.User.findOrCreate({
       username: 'test',
       password: crypt.encrypt('test'),
       type: 'admin'
     }).success(function(userTest) {
       
-      db.Card.create({
+      db.Card.findOrCreate({
         uid: '6040082934'
       }).success(function(cardTest) {
         userTest.addCard(cardTest);
