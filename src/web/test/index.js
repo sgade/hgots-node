@@ -52,6 +52,7 @@ describe('HGOTS Web Server', function() {
     it('should respond with 403 without credentials', function(done) {
       request(expressApp)
         .post('/validate_login')
+        .expect('Content-Type', /json/)
         .expect(403, done);
     });
     
@@ -59,6 +60,15 @@ describe('HGOTS Web Server', function() {
       request(expressApp)
         .post('/validate_login')
         .send({ username: "failingUser", password: "failingPassword" })
+        .expect('Content-Type', /json/)
+        .expect(403, done);
+    });
+    
+    it('should respond with 403 with correct username but wrong pass', function(done) {
+      request(expressApp)
+        .post('/validate_login')
+        .send({ username: "testUser", password: "zulf" })
+        .expect('Content-Type', /json/)
         .expect(403, done);
     });
     
@@ -67,6 +77,7 @@ describe('HGOTS Web Server', function() {
       request(expressApp)
         .post('/validate_login')
         .send({ username: "testUser", password: "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb" })
+        .expect('Content-Type', /json/)
         .expect(200, done);
     });
   });
