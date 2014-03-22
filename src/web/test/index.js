@@ -103,7 +103,7 @@ describe('HGOTS Web Server', function() {
       var pw = require('../../crypto/').encrypt('testPassword');
       request(expressApp)
         .post('/validate_login')
-        .send({ username: "testUser", password: "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb" })
+        .send({ username: "testUser", password: defaultPasswordHash })
         .expect('Content-Type', /json/)
         .expect(200, done);
     });
