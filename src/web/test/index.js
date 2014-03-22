@@ -252,7 +252,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
-              res.body.should.be.an.Array.and.an.Object.and.have.lengthOf(1);
+              res.body.should.be.an.Array.and.an.Object.and.have.lengthOf(4);
 
               var card = res.body[0];
               card.should.have.properties('id', 'uid', 'UserId');
@@ -266,7 +266,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function(err, res) {
-              res.body.should.be.an.Array.and.an.Object.and.have.lengthOf(1);
+              res.body.should.be.an.Array.and.an.Object.and.have.lengthOf(4);
 
               var card = res.body[0];
               card.should.have.properties('id', 'uid', 'UserId');
