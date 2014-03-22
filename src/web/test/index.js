@@ -7,12 +7,39 @@ var db = require('../../db');
 var expressApp = null;
 var port = 3333;
 
+var defaultPasswordHash = "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb";
+
+var authenticatedAdminAgent;
+var authenticatedControllerAgent;
+var authenticatedUserAgent; 
+
+var loginUser = function(username, password, cb) {
+  var server = request.agent('http://localhost:' + port);
+  server
+    .post('/validate_login')
+    .send({ username: username, password: password })
+    .end(function(err, res) {
+      cb(server);
+    });
+};
+
 describe('HGOTS Web Server', function() {
   before(function(done) {
     app.init(port, null, null, function() {
       app.start(function() {
         expressApp = app.getExpress();
-        sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, done);
+        sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, function() {
+          loginUser("testAdmin", defaultPasswordHash, function(agent) {
+            authenticatedAdminAgent = agent;
+            loginUser("testController", defaultPasswordHash, function(agent) {
+              authenticatedControllerAgent = agent;
+              loginUser("testUser", defaultPasswordHash, function(agent) {
+                authenticatedUserAgent = agent;
+                done();
+              });
+            });
+          });
+        });
       });
     });
   });
@@ -83,10 +110,16 @@ describe('HGOTS Web Server', function() {
   });
   
   describe('App /app', function() {
-    it('should redirect with credentials', function(done) {
+    it('should redirect without credentials', function(done) {
       request(expressApp)
-        .get('/app') // TODO: somehow get the server to love our credentials
+        .get('/app') 
         .expect(302, done);
+    });
+    
+    it('should stay with logged in user', function(done) {
+      authenticatedUserAgent
+        .get('/app')
+        .expect(200, done);
     });
   });
   
