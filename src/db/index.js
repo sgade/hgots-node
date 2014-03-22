@@ -37,9 +37,10 @@ Object.keys(db).forEach(function(modelName) {
 });
 
 // TODO remove force: true
-sequelize.sync({ force: true }).complete(function(err) {
+sequelize.sync().complete(function(err) {
   if ( !err ) {
     if(!lodash.contains(['production', 'test'], process.env.NODE_ENV))
+      console.log("Connected to database.");
     
     // Dummy data
     db.User.create({
