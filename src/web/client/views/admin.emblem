@@ -5,16 +5,13 @@ div.panel.panel-primary
     form.form#createNewUser
       div.form-group
         / label for="newuser-username" Username
-        input.form-control#newuser-username type="text" placeholder="Username"
+        view Ember.TextField type="text" value=selectedUsername classNames="form-control" placeholder="Username"
       div.form-group
         / label for="newuser-password" Password
-        input.form-control#newuser-password type="password" placeholder="Password"
+        view Ember.TextField type="password" value=selectedPassword classNames="form-control" placeholder="Password"
       div.form-group
+        view Ember.Select content=userTypes value=selectedUserType classNames="form-control"
         / label for="newuser-type" Type
-        select.form-control#newuser-type
-          option value="user" User
-          option value="controller" Controller
-          option value="admin" Admin
       
       div.form-actions
         div.row
