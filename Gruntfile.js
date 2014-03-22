@@ -5,7 +5,8 @@ module.exports = function(grunt) {
   // load all grunt modules
   require('load-grunt-tasks')(grunt);
   
-  var BANNER = "/*! <%= pkg.name %> v<%= pkg.version %> - Copyright (c) 2014 Sören Gade - see <%= pkg.repository.url %> */";
+  
+  var BANNER = "/*! <%= pkg.name %> v<%= pkg.version %> - Copyright (c) 2014 Sören Gade and UltraUlf aka. Jan-Henrik Bruhn - see <%= pkg.repository.url %> */";
   
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),

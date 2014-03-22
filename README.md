@@ -14,7 +14,9 @@ This application is still in **very** early development.
 
 1. `git clone https://github.com/sgade/hgots-node.git`
 2. `npm install --production`
-3. `npm start`
+3. `npm install -g grunt-cli`
+4. `grunt build`
+5. `npm start`
 
 # How to develop
 
