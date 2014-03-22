@@ -9,6 +9,21 @@ var port = 3333;
 
 var defaultPasswordHash = "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb";
 
+var users = [ {
+                id: 1,
+                username: "testAdmin",
+                type: "admin"
+              }, {
+                id: 2,
+                username: "testController",
+                type: "controller"
+              }, {
+                id: 3,
+                username: "testUser",
+                type: "user"
+              } ];
+            
+
 var authenticatedAdminAgent;
 var authenticatedControllerAgent;
 var authenticatedUserAgent; 
@@ -120,6 +135,37 @@ describe('HGOTS Web Server', function() {
       authenticatedUserAgent
         .get('/app')
         .expect(200, done);
+    });
+  });
+  
+  describe('API', function() {
+    var prefix = '/api';
+    describe('v1', function() {
+      prefix += '/v1';
+      describe('/users', function() {
+        prefix += '/users';
+        it('should return all users to an admin', function(done) {
+          authenticatedAdminAgent
+            .get(prefix)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({users: users}, done);
+        });
+        
+        it('should return all users to a controller', function(done) {
+          authenticatedControllerAgent
+            .get(prefix)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({users: users}, done);
+        });
+        
+        it('should give a 403 to a normal user', function(done) {
+          authenticatedUserAgent
+            .get(prefix)
+            .expect(403, done);
+        });
+      });
     });
   });
   
