@@ -21,12 +21,17 @@ var users = [ {
                 id: 3,
                 username: "testUser",
                 type: "user"
+              }, {
+                id: 4,
+                username: "killMe",
+                type: "user"
               } ];
             
 
 var authenticatedAdminAgent;
 var authenticatedControllerAgent;
 var authenticatedUserAgent; 
+var authenticatedDeadUserAgent; 
 
 var loginUser = function(username, password, cb) {
   var server = request.agent('http://localhost:' + port);
@@ -50,7 +55,10 @@ describe('HGOTS Web Server', function() {
               authenticatedControllerAgent = agent;
               loginUser("testUser", defaultPasswordHash, function(agent) {
                 authenticatedUserAgent = agent;
-                done();
+                loginUser("killMe", defaultPasswordHash, function(agent) {
+                  authenticatedDeadUserAgent = agent;
+                  done();
+                });
               });
             });
           });
@@ -241,6 +249,106 @@ describe('HGOTS Web Server', function() {
             .send({ username: "newTestAdmin3", password: defaultPasswordHash, type: "admin" })
             .expect('Content-Type', /json/)
             .expect(403, done);
+        });
+      });
+      
+      describe('GET /user/:id', function() {
+        var url = prefix + "/user/";
+        
+        it('should return user 3 to an admin', function(done) {
+          authenticatedAdminAgent
+            .get(url + 3)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect(users[2], done);
+        });
+        
+        it('should return user 3 to a controller', function(done) {
+          authenticatedControllerAgent
+            .get(url + 3)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect(users[2], done);
+        });
+        
+        it('should return user 3 to user 3', function(done) {
+          authenticatedUserAgent
+            .get(url + 3)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect(users[2], done);
+        });
+        
+        it('should give a 403 to a normal user requesting another user', function(done) {
+          authenticatedUserAgent
+            .get(url + 2)
+            .expect(403, done);
+        });
+      });
+      
+      describe('PUT /user/:id', function() {
+        var url = prefix + "/user/";
+        
+        it('should allow an admin to update user 4', function(done) {
+          authenticatedAdminAgent
+            .put(url + 4)
+            .send({username: "killMeToo"})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({username: "killMeToo", type: "user"}, done);
+        });
+        
+        it('should allow a controller to update user 4', function(done) {
+          authenticatedControllerAgent
+            .put(url + 4)
+            .send({username: "killMe"})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({username: "killMe", type: "user"}, done);
+        });
+        
+        it('should allow user 4 to update user 4', function(done) {
+          authenticatedDeadUserAgent
+            .put(url + 4)
+            .send({username: "killMeAgain"})
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({username: "killMeAgain", type: "user"}, done);
+        });
+        
+        it('should not allow user 3 to update user 4', function(done) {
+          authenticatedControllerAgent
+            .put(url + 4)
+            .send({username: "killMeAgain"})
+            .expect(403, done);
+        });
+      });
+      
+      describe('DELETE /user/:id', function() {
+        var url = prefix + "/user/";
+        
+        it('should not allow user 3 to delete user 4', function(done) {
+          authenticatedUserAgent
+            .del(url + 4)
+            .expect(403, done);
+        });
+        
+        it('should allow user 4 to delete user 4', function(done) {
+          authenticatedDeadUserAgent
+            .del(url + 4)
+            .expect(200, done);
+        });
+        
+        it('should allow an admin to delete user 5', function(done) {
+          authenticatedAdminAgent
+            .del(url + 5)
+            .expect(200, done);
+        });
+        
+        it('should allow a controller to delete user 6', function(done) {
+          authenticatedControllerAgent
+            .del(url + 6)
+            .expect(200, done);
         });
       });
       
