@@ -18,6 +18,17 @@ function isInstalled(app, callback) {
   });
 }
 
+function npmInstall(callback) {
+  exec("npm install", function(err, stdout, stderr) {
+    callback(err);
+  });
+}
+function bowerInstall(callback) {
+  exec("bower install", function(err, stdout, stderr) {
+    callback(err);
+  });
+}
+
 function ensureGrunt(callback) {
   callback = callback || function() {};
   isInstalled("grunt", function(isInstalled) {
@@ -56,28 +67,19 @@ if ( !fs.existsSync('config.json') ) {
 console.log("We are installing dependencies, just to be sure...");
 console.log("You need npm and bower installed.");
 console.log("----- npm install -----");
-exec("npm install", function(err, stdout, stderr) {
-  if ( err ) {
-    throw err;
-  } else {
-    console.log(stdout);
-    
-    console.log("Installing grunt...");
-    ensureGrunt(function(err) {
-      console.log("Installing bower...");
-      ensureBower(function(err) {
-        
-        console.log("----- bower install -----");
-        exec("bower install", function(err, stdot, stderr) {
-          if ( err ) {
-            throw err;
-          } else {
-            console.log(stdout);
-            console.log("All done.");
-          }
-        });
-        
+npmInstall(function(err) {
+  
+  console.log("Installing grunt...");
+  ensureGrunt(function(err2) {
+    console.log("Installing bower...");
+    ensureBower(function(err3) {
+      
+      console.log("----- bower install -----");
+      bowerInstall(function(err4) {
+        console.log("All done.");
       });
+      
     });
-  }
+  });
+  
 });
