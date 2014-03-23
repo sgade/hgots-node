@@ -1,0 +1,76 @@
+[
+  {
+    "model": "User",
+    "data": {
+      "username": "testAdmin",
+      "password": "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb",
+      "type": "admin"
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "testController",
+      "password": "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb",
+      "type": "controller"
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "testUser",
+      "password": "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb",
+      "type": "user"
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "username": "killMe",
+      "password": "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb",
+      "type": "user"
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "42",
+      "UserId": 3
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52",
+      "UserId": 1
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52a",
+      "UserId": 3
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52b",
+      "UserId": 3
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52c",
+      "UserId": 3
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "52d",
+      "UserId": 1
+    }
+  }
+]

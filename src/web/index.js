@@ -12,6 +12,7 @@ var routes = require('./routes');
 var queries = require('./routes/queries');
 var http = require('http');
 var path = require('path');
+var db = require('../db');
 
 /**
  * The express instance
@@ -30,12 +31,13 @@ exports.getExpress = function() {
  * Initializes the server instance and configures express.
  * @param {Integer} port - The port to listen on.
  * */
-exports.init = function(port, rfidRequestCallback, openDoorCallback) {
+exports.init = function(port, rfidRequestCallback, openDoorCallback, done) {
   queries.setRFIDRequestCallback(rfidRequestCallback);
   queries.setOpenDoorCallback(openDoorCallback);
   
   app = express();
   configure(port);
+  db.init(done);
 };
 /**
  * Configures express.

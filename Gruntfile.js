@@ -5,7 +5,8 @@ module.exports = function(grunt) {
   // load all grunt modules
   require('load-grunt-tasks')(grunt);
   
-  var BANNER = "/*! <%= pkg.name %> v<%= pkg.version %> - Copyright (c) 2014 Sören Gade - see <%= pkg.repository.url %> */";
+  
+  var BANNER = "/*! <%= pkg.name %> v<%= pkg.version %> - Copyright (c) 2014 Sören Gade and UltraUlf aka. Jan-Henrik Bruhn - see <%= pkg.repository.url %> */";
   
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -18,6 +19,11 @@ module.exports = function(grunt) {
     jshint: {
       self: [ './*.js', './*.json' ],
       src: [ './src/**/*.js', '!./src/web/public/**/*.js' ]
+    },
+    env: {
+      test: {
+        NODE_ENV: 'test'
+      }
     },
     
     /*
@@ -178,7 +184,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
   
   grunt.registerTask('lint', [ 'jshint' ]);
-  grunt.registerTask('test', [ 'lint', 'mochaTest' ]);  
+  grunt.registerTask('test', [ 'env', 'lint', 'mochaTest' ]);  
   grunt.registerTask('doc', [ 'jsdoc' ]);
   
 };

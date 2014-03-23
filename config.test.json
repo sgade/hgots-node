@@ -1,0 +1,14 @@
+{
+  "port": {
+    "rfid": "/dev/ttyUSB0",
+    "relais": "/dev/ttyUSB1"
+  },
+  "db": {
+    "name": "test.sqlite",
+    "username": "admin",
+    "password": "admin"
+  },
+  "web": {
+    "port": 3000
+  }
+}

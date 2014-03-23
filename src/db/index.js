@@ -18,7 +18,7 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
   dialect: 'sqlite',
   storage: config.db.name,
   
-  logging: ( process.env.NODE_ENV === 'production' ) ? false : console.log
+  logging: ( lodash.contains(['production', 'test'], process.env.NODE_ENV) ) ? false : console.log
 });
 
 var dirname = __dirname + "/models";
@@ -36,29 +36,39 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
-// TODO remove force: true
-sequelize.sync({ force: true }).complete(function(err) {
-  if ( !err ) {
-    console.log("Connected to database.");
+var initDB = function(done) {
+  // TODO remove force: true
+  sequelize.sync({force: true}).complete(function(err) {
+    if ( !err ) {
+      if(!lodash.contains(['production', 'test'], process.env.NODE_ENV)) {
+        console.log("Connected to database.");
+      }
     
-    // Dummy data
-    db.User.create({
-      username: 'test',
-      password: crypt.encrypt('test'),
-      type: 'admin'
-    }).success(function(userTest) {
+      if(process.env.NODE_ENV !== 'test') {
+        // Dummy data
+        db.User.findOrCreate({
+          username: 'test',
+          password: crypt.encrypt('test'),
+          type: 'admin'
+        }).success(function(userTest) {
       
-      db.Card.create({
-        uid: '6040082934'
-      }).success(function(cardTest) {
-        userTest.addCard(cardTest);
-      });
+          db.Card.findOrCreate({
+            uid: '6040082934'
+          }).success(function(cardTest) {
+            userTest.addCard(cardTest);
+            done();
+          });
       
-    });
-  }
-});
+        });
+      } else {
+        done();
+      }
+    }
+  });
+};
 
 module.exports = lodash.extend({
   sequelize: sequelize,
-  Sequelize: Sequelize
+  Sequelize: Sequelize,
+  init: initDB
 }, db);
