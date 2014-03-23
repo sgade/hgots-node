@@ -10,11 +10,12 @@ This application is still in **very** early development.
 
 `node setup`
 
-# How to run
+This will setup everything you need, including running `npm install` and installing `grunt` and `bower`.
+
+# How to run in production
 
 1. `git clone https://github.com/sgade/hgots-node.git`
 2. `npm install --production`
-3. `npm install -g grunt-cli bower`
 4. `bower install`
 5. `grunt build`
 6. `npm start`
@@ -28,4 +29,4 @@ This application is still in **very** early development.
 
 # Generate documentation
 
-Use `grunt doc`.
+Use `grunt doc` and look in the `./doc/` directory.
