@@ -39,7 +39,7 @@ function ensureGrunt(callback) {
     } else {
       callback();
     }
-  })
+  });
 }
 function ensureBower(callback) {
   callback = callback || function() {};
@@ -47,11 +47,11 @@ function ensureBower(callback) {
     if ( !isInstalled ) {
       exec("npm install -g bower", function(err, stdout, stderr) {
         callback(err);
-      })
+      });
     } else {
       callback();
     }
-  })
+  });
 }
 
 // First, check if there is a config.json
