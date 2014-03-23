@@ -44,7 +44,7 @@ var loginUser = function(username, password, cb) {
 };
 
 describe('HGOTS Web Server', function() {
-  before(function(done) {
+  beforeEach(function(done) {
     app.init(port, null, null, function() {
       app.start(function() {
         expressApp = app.getExpress();
@@ -67,7 +67,7 @@ describe('HGOTS Web Server', function() {
     });
   });
   
-  after(function(done) {
+  afterEach(function(done) {
     app.stop();
     done();
   });
@@ -301,25 +301,25 @@ describe('HGOTS Web Server', function() {
         it('should allow a controller to update user 4', function(done) {
           authenticatedControllerAgent
             .put(url + 4)
-            .send({username: "killMe"})
+            .send({username: "killMeToo"})
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({username: "killMe", type: "user"}, done);
+            .expect({username: "killMeToo", type: "user"}, done);
         });
         
         it('should allow user 4 to update user 4', function(done) {
           authenticatedDeadUserAgent
             .put(url + 4)
-            .send({username: "killMeAgain"})
+            .send({username: "killMeToo"})
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({username: "killMeAgain", type: "user"}, done);
+            .expect({username: "killMeToo", type: "user"}, done);
         });
         
         it('should not allow user 3 to update user 4', function(done) {
           authenticatedControllerAgent
             .put(url + 4)
-            .send({username: "killMeAgain"})
+            .send({username: "killMeToo"})
             .expect(403, done);
         });
       });
@@ -339,15 +339,15 @@ describe('HGOTS Web Server', function() {
             .expect(200, done);
         });
         
-        it('should allow an admin to delete user 5', function(done) {
+        it('should allow an admin to delete user 4', function(done) {
           authenticatedAdminAgent
-            .del(url + 5)
+            .del(url + 4)
             .expect(200, done);
         });
         
-        it('should allow a controller to delete user 6', function(done) {
+        it('should allow a controller to delete user 4', function(done) {
           authenticatedControllerAgent
-            .del(url + 6)
+            .del(url + 4)
             .expect(200, done);
         });
       });
@@ -399,7 +399,7 @@ describe('HGOTS Web Server', function() {
       
       describe('POST /user/:id/cards', function() {
         var url = prefix + "/user";
-        it('should allow an admin to add a new card to a user', function() {
+        it('should allow an admin to add a new card to a user', function(done) {
           authenticatedAdminAgent
             .post(url + '/3/cards')
             .send({uid: "42"})
