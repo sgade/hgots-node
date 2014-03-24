@@ -4,8 +4,8 @@ var ALGORITHM = 'sha256';
 var DIGEST = 'hex';
 
 exports.encrypt = function(text) {
-  var cypher = crypto.createHash(ALGORITHM);
+  var hash = crypto.createHash(ALGORITHM);
   
-  cypher.update(text);
-  return cypher.digest(DIGEST);
+  hash.update(text);
+  return hash.digest(DIGEST);
 };
