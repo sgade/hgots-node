@@ -51,8 +51,8 @@ http {
         listen       8080; # probably 80
         server_name  localhost;
         
-        root /webapps/hgots-node/src/web/public/; # and this to the root dir + "/src/web/public"
         passenger_app_root /webapps/hgots-node/; # change this to the root-dir of the app
+        root /webapps/hgots-node/src/web/public/; # and this to the root dir + "/src/web/public"
         passenger_enabled on;
         passenger_app_type node;
         passenger_startup_file src/app.js;  
