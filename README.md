@@ -30,3 +30,32 @@ This will setup everything you need, including running `npm install` and install
 # Generate documentation
 
 Use `grunt doc` and look in the `./doc/` directory.
+
+# How to nginx.
+To use this application behind an nginx-server, you should first install nginx with Phusion Passenger enabled (there are a lot of docs for this on the interwebz). Your nginx config file should look similar to this one here:
+```
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+    gzip  on;
+    passenger_root /awesome/path/phusion_passenger/locations.ini; # get this via "passenger-config --root"
+
+    server {
+        listen       8080; # probably 80
+        server_name  localhost;
+        
+        passenger_app_root /webapps/hgots-node/; # change this to the root-dir of the app
+        passenger_enabled on;
+
+        passenger_startup_file src/app.js;
+        root /webapps/hgots-node/src/web/public/; # and this to the root dir + "/src/web/public"  
+    }
+
+}
+
+```
