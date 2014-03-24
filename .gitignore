@@ -13,3 +13,7 @@ doc
 
 # User-defined
 config.json
+
+*.log
+
+*.lock

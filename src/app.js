@@ -35,6 +35,11 @@ var relais = null;
 function startWeb() {
   var port = config.web.port;
   
+  if(typeof PhusionPassenger !== 'undefined') {
+    PhusionPassenger.configure({ autoInstall: false });
+    port = 'passenger';
+  }
+  
   web.init(port, web_RFIDRequest, web_OpenDoor, function() {
     web.start(function() {
       console.log("Web interface running on port " + web.getPort() + ".");
@@ -113,7 +118,7 @@ function initRelais() {
   });
 }
 
-if ( !module.parent ) {
+if ( !module.parent || typeof PhusionPassenger !== 'undefined') {
   /**
    * The main application entry point.
    * */
