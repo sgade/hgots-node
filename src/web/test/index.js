@@ -385,14 +385,6 @@ describe('HGOTS Web Server', function() {
         it('should return no cards of user 1 to user 3', function(done) {
           authenticatedUserAgent
             .get(url + "/1/cards")
-            .expect('Content-Type', /json/)
-            .expect(403, done);
-        });
-        
-        
-        it('should give a 403 to a normal user', function(done) {
-          authenticatedUserAgent
-            .get(url + "/3/cards")
             .expect(403, done);
         });
       });
