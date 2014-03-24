@@ -56,7 +56,10 @@ function configure(port) {
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  
+  if(typeof PhusionPassenger === 'undefined') { // only serve static files if not using Passenger
+    app.use(express.static(path.join(__dirname, 'public')));
+  }
 
   // development only
   if ('development' === app.get('env')) {
