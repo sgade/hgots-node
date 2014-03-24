@@ -13,20 +13,22 @@ exports.getAllUsers = function(req, res) {
       if ( !user ) {
         res.status(403).end();
       } else {
-        
-        // TODO filter for type
-        helpers.getAllUsers(function(err, users) {
-          if ( err ) {
-            res.status(500).end();
-          } else {
+        if(!user.isPrivileged()) {
+           res.status(403).end();
+        } else {
+          helpers.getAllUsers(function(err, users) {
+            if ( err ) {
+              res.status(500).end();
+            } else {
             
-            res.set('Content-Type', 'application/json');
-            res.end(JSON.stringify({
-              users: users
-            }));
+              res.set('Content-Type', 'application/json');
+              res.end(JSON.stringify({
+                users: users
+              }));
             
-          }
-        });
+            }
+          });
+        }
         
       }
       
@@ -46,27 +48,31 @@ exports.getCardsOfUser = function(req, res) {
       if ( !user ) {
         res.status(403).end();
       } else {
-        
-        // TODO filter for type
         var id = req.params.id;
-        helpers.getUser({
-          id: id
-        }, function(err, user) {
+
+        if(user.isPrivileged() || user.id == id) {
+          helpers.getUser({
+            id: id
+          }, function(err, user) {
           
-          if ( user ) {
-            user.getCards().success(function(cards) {
+            if ( user ) {
+              user.getCards().success(function(cards) {
               
-              if ( cards ) {
-                res.set('Content-Type', 'application/json');
-                res.end(JSON.stringify(cards));
-              } else {
-                res.status(500).end();
-              }
+                if ( cards ) {
+                  res.set('Content-Type', 'application/json');
+                  res.end(JSON.stringify(cards));
+                } else {
+                  res.end(500).end();
+                }
               
-            });
-          }
+              });
+            }
           
-        });
+          });
+          
+        } else {
+          res.status(403).end();
+        }
         
       }
       
