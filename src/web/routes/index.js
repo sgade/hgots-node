@@ -6,7 +6,7 @@ var helpers = require('./helpers');
 
 /* Default route: Login */
 exports.index = function(req, res) {
-  helpers.validateUser(req.session.username, req.session.password, function(ok) {
+  helpers.validateAuthenticatedRequest(req, function(ok) {
     
     if ( ok ) {
       res.redirect("/app");
@@ -21,7 +21,7 @@ exports.index = function(req, res) {
 
 /* Default route: App */
 exports.app = function(req, res) {
-  helpers.validateUser(req.session.username, req.session.password, function(ok) {
+  helpers.validateAuthenticatedRequest(req, function(ok) {
     
     if ( !ok ) {
       res.redirect('/');
@@ -34,8 +34,7 @@ exports.app = function(req, res) {
   });
 };
 exports.logout = function(req, res) {
-  req.session.username = "";
-  req.session.password = "";
+  req.logout();
   
   res.redirect('/');
 };
