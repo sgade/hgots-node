@@ -12,35 +12,6 @@ exports.setOpenDoorCallback = function(callback) {
   callbacks.openDoorCallback = callback;
 };
 
-/* says yes or no */
-exports.validateLogin = function(req, res) {
-  var params = req.body;
-  var username = params.username,
-    password = params.password;
-  
-  var msg = {
-    statusCode: 200,
-    message: "OK"
-  };
-  
-  helpers.validateUser(username, password, function(ok) {
-    
-    if ( !ok ) {
-      msg.statusCode = 403;
-      msg.message = "Invalid credentials.";
-    } else {
-      req.session.username = username;
-      req.session.password = password;
-    }
-    
-    res.status(msg.statusCode).set({
-      'Content-Type': 'application/json'
-    });
-    res.end(JSON.stringify(msg));
-    
-  });
-};
-
 exports.getRFID = function(req, res) {
   helpers.validateAuthenticatedRequest(req, function(ok) {
     if ( ok ) {
