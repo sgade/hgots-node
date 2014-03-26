@@ -3,6 +3,12 @@
     "rfid": "/dev/ttyUSB0",
     "relais": "/dev/ttyUSB1"
   },
+  "relaisport": {
+    "door": 1,
+    "green": 2,
+    "yellow": 4,
+    "red": 8
+  },
   "db": {
     "name": "db.sqlite",
     "username": "admin",
