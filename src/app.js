@@ -54,6 +54,14 @@ function web_RFIDRequest(callback) {
 function web_OpenDoor() {
   // TODO relais.setSingle on door relais
   console.log("Open door...");
+  
+  relais.setSingle(config.relais.door, function() {
+    setTimeout(function() {
+      relais.delSingle(config.relais.door, function() {
+        console.log("door closed.");
+      });
+    }, 3000);
+  });
 }
 
 /**
