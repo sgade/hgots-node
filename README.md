@@ -32,7 +32,8 @@ This will setup everything you need, including running `npm install` and install
 Use `grunt doc` and look in the `./doc/` directory.
 
 # How to nginx.
-To use this application behind an nginx-server, you should first install nginx with Phusion Passenger enabled (there are a lot of docs for this on the interwebz). Your nginx config file should look similar to this one here:
+
+To use this application behind an nginx-server, you should first install nginx with Phusion Passenger enabled (there are a lot of docs for this out there). Your nginx config file should look similar to this:
 ```
 http {
     passenger_root /usr/local/opt/passenger/libexec/lib/phusion_passenger/locations.ini; # get this via "passenger-config --root"
