@@ -111,6 +111,9 @@ function configureRoutes() {
   // Routes for login
   app.get('/', routes.index);
   app.get('/logout', routes.logout);
+  app.get('/login', function(req, res) {
+    res.redirect('/');
+  });
   app.post('/login', passport.authenticate('local'), function(req, res) {
     res.redirect('/app');
   });
