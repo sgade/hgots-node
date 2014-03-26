@@ -34,8 +34,7 @@ exports.app = function(req, res) {
   });
 };
 exports.logout = function(req, res) {
-  req.session.username = "";
-  req.session.password = "";
+  req.logout();
   
   res.redirect('/');
 };
