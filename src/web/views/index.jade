@@ -9,11 +9,12 @@ block content
     div.flex-container
       div.flex-item.well.login-container
         h1= title
-        form.form
+        form.form(action="/login", method="post")
           div.form-group.flex-container
-            input#login-username.flex-item.form-control(type="text", placeholder="Username", autofocus="true")
+            input#login-username.flex-item.form-control(type="text", name="username", placeholder="Username", autofocus="true")
           div.form-group.flex-container
             input#login-password.flex-item.form-control(type="password", placeholder="Password")
+            input#login-password-hash(type="hidden", name="password", placeholder="invisible")
           div.flex-container
             button.btn.btn-default.flex-item.btn-lg#login(type="submit") Login
   
