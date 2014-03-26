@@ -8,6 +8,8 @@
  * Module dependencies.
  */
 var express = require('express');
+var passport = require('passport'),
+  PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
 var queries = require('./routes/queries');
 var http = require('http');
@@ -49,28 +51,66 @@ function configure(port) {
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
   app.use(express.favicon());
-  // app.use(express.logger('dev'));
   app.use(express.compress());
   app.use(express.json());
   app.use(express.urlencoded());
   app.use(express.methodOverride());
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
+  configurePassport();
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 
   // development only
   if ('development' === app.get('env')) {
     app.use(express.errorHandler());
+    // app.use(express.logger('dev'));
   }
   
   configureRoutes();
+}
+function configurePassport() {
+  app.use(passport.initialize());
+  app.use(passport.session());
+  
+  passport.use(new PassportLocal(function(username, password, done) {
+    db.User.find({
+      where: {
+        username: username,
+        password: password
+      }
+    }).complete(function(err, user) {
+      if ( err ) {
+        return done(err);
+      }
+      
+      if ( !user ) {
+        return done(null, false, { message: 'Incorrect credentials.' });
+      } else {
+        return done(null, user);
+      }
+    });
+  }));
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+  passport.deserializeUser(function(id, done) {
+    db.User.find({
+      where: {
+        id: id
+      }
+    }).complete(function(err, user) {
+      done(err, user);
+    });
+  });
 }
 function configureRoutes() {
   // Routes for login
   app.get('/', routes.index);
   app.get('/logout', routes.logout);
-  app.post('/validate_login', queries.validateLogin);
+  app.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/app');
+  });
   // Routes for app
   app.get('/app', routes.app);
   app.get('/get_rfid', queries.getRFID);
