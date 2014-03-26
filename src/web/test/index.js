@@ -36,7 +36,7 @@ var authenticatedDeadUserAgent;
 var loginUser = function(username, password, cb) {
   var server = request.agent('http://localhost:' + port);
   server
-    .post('/validate_login')
+    .post('/login')
     .send({ username: username, password: password })
     .end(function(err, res) {
       cb(server);
@@ -92,23 +92,23 @@ describe('HGOTS Web Server', function() {
     });
   });
   
-  describe('POST Validate Login /validate_login', function() {
+  describe('POST Validate Login /login', function() {
     it('should respond with json', function(done) {
       request(expressApp)
-        .post('/validate_login')
+        .post('/login')
         .expect('Content-Type', /json/, done);
     });
     
     it('should respond with 403 without credentials', function(done) {
       request(expressApp)
-        .post('/validate_login')
+        .post('/login')
         .expect('Content-Type', /json/)
         .expect(403, done);
     });
     
     it('should respond with 403 with wrong credentials', function(done) {
       request(expressApp)
-        .post('/validate_login')
+        .post('/login')
         .send({ username: "failingUser", password: "failingPassword" })
         .expect('Content-Type', /json/)
         .expect(403, done);
@@ -116,7 +116,7 @@ describe('HGOTS Web Server', function() {
     
     it('should respond with 403 with correct username but wrong pass', function(done) {
       request(expressApp)
-        .post('/validate_login')
+        .post('/login')
         .send({ username: "testUser", password: "zulf" })
         .expect('Content-Type', /json/)
         .expect(403, done);
@@ -125,7 +125,7 @@ describe('HGOTS Web Server', function() {
     it('should respond with 200 with correct credentials', function(done) {
       var pw = require('../../crypto/').encrypt('testPassword');
       request(expressApp)
-        .post('/validate_login')
+        .post('/login')
         .send({ username: "testUser", password: defaultPasswordHash })
         .expect('Content-Type', /json/)
         .expect(200, done);
