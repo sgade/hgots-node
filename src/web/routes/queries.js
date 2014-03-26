@@ -30,7 +30,7 @@ exports.openDoor = function(req, res) {
       callbacks.openDoorCallback();
       res.status(200);
     } else {
-      res.res(403);
+      res.status(403);
     }
     res.end();
   });
