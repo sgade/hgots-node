@@ -20,13 +20,5 @@ exports.getUser = function(where, callback) {
 exports.getRequestingUser = function(req, callback) {
   assert(callback, "Callback must be defined.");
   
-  if ( req.session && req.session.username ) {
-    var username = req.session.username;
-    
-    exports.getUser({
-      username: username
-    }, callback);
-  } else {
-    callback(null, null);
-  }
+  callback(null, req.user);
 };
