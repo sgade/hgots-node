@@ -31,7 +31,7 @@ var RFIDReader = function(port, options) {
    * ==========
    * */
   options = options || {};
-  options.parser = serialport.parsers.readline(NEWLINE);
+  options.parser = options.parser || serialport.parsers.readline(NEWLINE);
   Serial.call(this, port, options);
 };
 // inherit for serial handling
