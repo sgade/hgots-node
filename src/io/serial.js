@@ -47,7 +47,15 @@ var SERIAL_OPTIONS = {
  * @extends events.EventEmitter
  * */
 function Serial(port, options) {
+  /**
+   * The serial port connection.
+   * @instance
+   * */
   this.serialPort = null;
+  /**
+   * Whether the connection should be open.
+   * @instance
+   * */
   this.isOpen = false;
   
   /* ==========
@@ -189,9 +197,7 @@ function Serial(port, options) {
    * ==========
    * */
   events.EventEmitter.call(this);
-  console.log("options:", options);
   options = _combineProperties(SERIAL_OPTIONS, options);
-  console.log("options merged:", options);
   this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
 }
 // inherit for events
