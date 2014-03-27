@@ -55,9 +55,9 @@ function web_OpenDoor() {
   // TODO relais.setSingle on door relais
   console.log("Open door...");
   
-  relais.setSingle(config.relais.door, function() {
+  relais.setSingle(config.relaisport.door, function() {
     setTimeout(function() {
-      relais.delSingle(config.relais.door, function() {
+      relais.delSingle(config.relaisport.door, function() {
         console.log("door closed.");
       });
     }, 3000);
