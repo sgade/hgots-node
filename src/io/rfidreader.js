@@ -3,7 +3,7 @@
  * @module io/rfidreader
  * @author Sören Gade
  *
- * @requires serialport
+ * @requires io/serial
  * */
 
 var util = require('util');
@@ -22,7 +22,7 @@ var NEWLINE = '\n';
 /**
  * Initalizes the class on the port defined.
  * @constructor RFIDReader
- * @extends events.EventEmitter
+ * @extends Serial
  * @param {String} port - The path/name of the port to be opened.
  * */
 var RFIDReader = function(port, options) {
@@ -38,9 +38,3 @@ var RFIDReader = function(port, options) {
 util.inherits(RFIDReader, Serial);
 
 module.exports = RFIDReader;
-
-/**
- * A callback that only contains an error object.
- * @callback ErrorCallback
- * @param {Exception} err - Is an error object or null.
- * */

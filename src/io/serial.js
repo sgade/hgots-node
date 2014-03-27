@@ -162,3 +162,8 @@ util.inherits(Serial, events.EventEmitter);
 
 module.exports.Serial = Serial;
 
+/**
+ * A callback that only contains an error object.
+ * @callback ErrorCallback
+ * @param {Exception} err - Is an error object or null.
+ * */
