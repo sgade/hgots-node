@@ -64,11 +64,11 @@ function Serial(port, options) {
       }
     }
     
-    for ( var attr in object1 ) {
-      object[attr] = object1[attr];
+    for ( var attr1 in object1 ) {
+      object[attr1] = object1[attr1];
     }
-    for ( var attr in object2 ) {
-      object[attr] = object2[attr];
+    for ( var attr2 in object2 ) {
+      object[attr2] = object2[attr2];
     }
     
     return object;
@@ -156,7 +156,7 @@ function Serial(port, options) {
   options = _combineProperties(SERIAL_OPTIONS, options);
   console.log("options merged:", options);
   this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
-};
+}
 // inherit for events
 util.inherits(Serial, events.EventEmitter);
 
