@@ -2,8 +2,6 @@
  * A general serial port helper.
  * @module io/serial
  * @author Sören Gade
- *
- * @requires serialport
  * */
 
 var util = require('util');
@@ -25,7 +23,7 @@ exports.list = function(callback) {
 };
 
 /* ==========
- * Serial Class
+ * Serial Class implementation
  * ==========
  * */
 var SerialPort = serialport.SerialPort;
@@ -43,6 +41,11 @@ var SERIAL_OPTIONS = {
   parity: 'none'
 };
 
+/**
+ * A serial port base class with defaults.
+ * @constructor
+ * @extends events.EventEmitter
+ * */
 function Serial(port, options) {
   this.serialPort = null;
   this.isOpen = false;
@@ -144,6 +147,23 @@ function Serial(port, options) {
       
       callback(err);
       _onClose.call(self);
+    });
+  };
+  /**
+   * Writes the data to the serial port.
+   * @param {Buffer} buffer
+   * @param {ErrorSuccessCallback} callback
+   * */
+  this.write = function(buffer, callback) {
+    var self = this;
+    callback = callback || function() {};
+    
+    if ( !this.isOpen ) {
+      return callback();
+    }
+    
+    self.serialPort.write(buffer, function(err) {
+      callback(err);
     });
   };
   
