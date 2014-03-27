@@ -60,7 +60,7 @@ function web_OpenDoor() {
       relais.delSingle(config.relaisport.door, function() {
         console.log("door closed.");
       });
-    }, 3000);
+    }, config.web.doorOpenTime);
   });
 }
 
