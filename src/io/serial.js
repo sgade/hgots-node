@@ -53,6 +53,17 @@ function Serial(port, options) {
    * */
   var _combineProperties = function(object1, object2) {
     var object = {};
+    // checks for objects
+    if ( typeof object1 !== 'object' || typeof object2 !== 'object' ) {
+      if ( typeof object1 === 'object' ) {
+        return object1;
+      } else if ( typeof object2 === 'object' ) {
+        return object2;
+      } else {
+        return object;
+      }
+    }
+    
     for ( var attr in object1 ) {
       object[attr] = object1[attr];
     }
