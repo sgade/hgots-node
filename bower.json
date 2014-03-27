@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "authors": [
-    "Sören Gade <gade.soeren@googlemail.com>"
+    "Sören Gade <gade.soeren@googlemail.com>",
+    "Jan-Henrik Bruhn <jh.bruhn@me.com>"
   ],
   "main": "src/app.js",
   "license": "MIT",

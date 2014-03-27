@@ -12,6 +12,9 @@
     "hgo"
   ],
   "author": "Sören Gade <gade.soeren@gmail.com>",
+  "contributors": [
+    "Jan-Henrik Bruhn <jh.bruhn@me.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
