@@ -80,19 +80,21 @@ function Serial(port, options) {
    * A function that should be called once we have openend the serial port.
    * @fires Serial#open
    * */
-  var _onOpen = function() {
+  var _onOpen = function(err) {
     /**
      * Open event.
      * @event Serial#open
+     * @type {Error}
      * */
-    this.emit('open');
+    this.emit('open', err);
   };
-  var _onClose = function() {
+  var _onClose = function(err) {
     /**
      * Close event.
      * @event Serial#close
+     * @type {Error}
      * */
-    this.emit('close');
+    this.emit('close', err);
   };
   /**
    * A function that should be called once we have received data from our serial port.
@@ -106,6 +108,19 @@ function Serial(port, options) {
      * @type {Buffer}
      * */
     this.emit('data', data);
+  };
+  var _onWritten = function(err, buffer) {
+    /**
+     * Written event.
+     * @event Serial#written
+     * @type {Object}
+     * @param {Error} err
+     * @param {Buffer} buffer
+     * */
+    this.emit('written', {
+      err: err,
+      buffer: buffer
+    });
   };
   
   /* ==========
@@ -125,7 +140,7 @@ function Serial(port, options) {
         throw err; // TODO handle error
       }
       
-      _onOpen.call(self);
+      _onOpen.call(self, err);
       self.serialPort.on('data', function(data) {
         _onData.call(self, data);
       });
@@ -146,7 +161,7 @@ function Serial(port, options) {
       }
       
       callback(err);
-      _onClose.call(self);
+      _onClose.call(self, err);
     });
   };
   /**
@@ -163,6 +178,8 @@ function Serial(port, options) {
     }
     
     self.serialPort.write(buffer, function(err) {
+      _onWritten.call(self, err, buffer);
+      
       callback(err);
     });
   };
