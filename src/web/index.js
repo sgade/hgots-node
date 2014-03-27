@@ -130,7 +130,9 @@ function configureRoutes() {
  * Stops the express server.
  * */
 exports.stop = function(callback) {
-  server.close(callback);
+  if ( server ) {
+    server.close(callback);
+  }
 };
 
 /**
