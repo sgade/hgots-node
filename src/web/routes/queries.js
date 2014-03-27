@@ -27,11 +27,12 @@ exports.getRFID = function(req, res) {
 exports.openDoor = function(req, res) {
   helpers.validateAuthenticatedRequest(req, function(ok) {
     if ( ok ) {
-      callbacks.openDoorCallback();
       res.status(200);
+      callbacks.openDoorCallback(function() {
+        res.end();
+      });
     } else {
-      res.status(403);
+      res.status(403).end();
     }
-    res.end();
   });
 };

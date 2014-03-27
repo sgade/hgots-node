@@ -51,7 +51,7 @@ function web_RFIDRequest(callback) {
     callback(data);
   });
 }
-function web_OpenDoor() {
+function web_OpenDoor(callback) {
   // TODO relais.setSingle on door relais
   console.log("Open door...");
   
@@ -59,6 +59,7 @@ function web_OpenDoor() {
     setTimeout(function() {
       relais.delSingle(config.relaisport.door, function() {
         console.log("door closed.");
+        callback();
       });
     }, config.web.doorOpenTime);
   });
