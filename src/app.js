@@ -147,7 +147,7 @@ function exit(err) {
   if ( rfidReader.isOpen ) {
     rfidReader.close();
   }
-  if ( relais.isOpen() ) {
+  if ( relais.isOpen ) {
     relais.close();
   }
   

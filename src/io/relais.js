@@ -14,10 +14,8 @@
  * */
  
 var util = require('util');
-var events = require('events');
 var async = require('async');
-var serialport = require('serialport');
-var SerialPort = serialport.SerialPort;
+var Serial = require('./serial').Serial;
 
 /**
  * Options for the serial port.
@@ -83,20 +81,10 @@ var RelaisByteNames = {
  * */
 function Relais(port) {
   /**
-   * The serial port connection.
-   * @instance
-   * */ 
-  var serialPort = null;
-  /**
    * The id our card has.
    * @instance
    * */
   var relaisID = 0;
-  /**
-   * Whether the connection should be open.
-   * @instance
-   * */
-  var isOpen = false;
   
   // our custom parser
   // emit after 4 bytes each
@@ -114,8 +102,12 @@ function Relais(port) {
     };
     
   }());
-  this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
+  Serial.call(this, port, SERIAL_OPTIONS);
   
+  /* ==========
+   * PRIVATE
+   * ==========
+   * */
   /**
    * @param {uint} delay
    * @param {Function} relaisOperation - An operation that is passed a relais number that it should work on.
@@ -157,68 +149,6 @@ function Relais(port) {
    * PUBLIC
    * ==========
    * */
-  this.isOpen = function() {
-    return this.isOpen;
-  };
-  
-  /**
-   * @param {ErrorCallback} callback
-   * @fires Relais#open
-   * */
-  this.open = function(callback) {
-    var self = this;
-    callback = callback || function() {};
-  
-    if ( !self.isOpen ) {
-      self.serialPort.open(function(err) {
-        if ( !err ) {
-          self.isOpen = true;
-        
-          self.serialPort.on('data', function(data) {
-            /**
-             * Data event.
-             * @event Relais#data
-             * @type {Buffer}
-             * */
-            self.emit('data', data);
-          });
-    
-          /**
-           * Open event.
-           * @event Relais#open
-           * */
-          self.emit('open');
-        }
-      
-        callback(err);
-      });
-    }
-  };
-  /**
-   * @param {ErrorCallback} callback
-   * @fires Relais#close
-   * */
-  this.close = function(callback) {
-    var self = this;
-    callback = callback || function() {};
-  
-    if ( self.isOpen ) {
-      self.serialPort.close(function(err) {
-        if ( !err ) {
-          self.isOpen = false;
-        
-          /**
-           * Close event.
-           * @event Relais#close
-           * */
-          self.emit('close');
-        }
-      
-        callback(err);
-      });
-    }
-  };
-  
   /*
    * Disclaimer:
    * Ported directly from old .cs source file:
@@ -226,50 +156,18 @@ function Relais(port) {
    * | | | | | | | | | | | | | | | | | | | | |
    * v v v v v v v v v v v v v v v v v v v v v
    * */
-  this.writeOK = function() {
-    return this.isOpen;
-  };
-  /**
-   * Writes the buffer to the serial port.
-   * @param {Buffer} buffer - The buffer to write.
-   * @param {ErrorCallback} [callback] - The callback that is called upon finish. Data might not be flushed at that point.
-   *
-   * {@link https://github.com/voodootikigod/node-serialport#write-buffer-callback}
-   * @fires Relais#written
-   * */
-  this.write = function(buffer, callback) {
-    var self = this;
-  
-    if ( self.writeOK() ) {
-      self.serialPort.write(buffer, function(err) {
-        if ( callback ) {
-          callback(err);
-        }
-        /**
-         * Written event.
-         * @event Relais#written
-         * @type {Object}
-         * @param {Buffer} buffer
-         * @param {Exception} err
-         * */
-        self.emit('written', {
-          buffer: buffer,
-          err: err
-        });
-      });
-    }
-  };
   /**
    * @param {byte} command
    * @param {byte} data
    * @param {ErrorResultCallback} callback - Callback for Relais#write (Error) and Relais#read (Result).
    * */
   this.send = function(command, data, callback) {
-    if ( !this.writeOK() ) {
-      return;
-    }
     var self = this;
     callback = callback || function() {};
+    
+    if ( !this.isOpen ) {
+      return callback();
+    }
   
     var buffer = new Array(4);
     buffer[RelaisByteNames.Command] = command;
@@ -508,6 +406,6 @@ function Relais(port) {
     _iterateAllRelais.call(this, delay, this.delSingle, callback);
   };
 }
-util.inherits(Relais, events.EventEmitter);
+util.inherits(Relais, Serial);
 
 module.exports = Relais;
