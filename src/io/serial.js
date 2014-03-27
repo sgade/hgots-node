@@ -47,14 +47,21 @@ function Serial(port, options) {
   this.serialPort = null;
   this.isOpen = false;
   
-  events.EventEmitter.call(this);
-  // TODO merge objects
-  this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
-  
   /* ==========
    * Privates
    * ==========
    * */
+  var _combineProperties = function(object1, object2) {
+    var object = {};
+    for ( var attr in object1 ) {
+      object[attr] = object1[attr];
+    }
+    for ( var attr in object2 ) {
+      object[attr] = object2[attr];
+    }
+    
+    return object;
+  };
   /**
    * A function that should be called once we have openend the serial port.
    * @fires Serial#open
@@ -128,6 +135,16 @@ function Serial(port, options) {
       _onClose.call(self);
     });
   };
+  
+  /* ==========
+   * Construct
+   * ==========
+   * */
+  events.EventEmitter.call(this);
+  console.log("options:", options);
+  options = _combineProperties(SERIAL_OPTIONS, options);
+  console.log("options merged:", options);
+  this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
 };
 // inherit for events
 util.inherits(Serial, events.EventEmitter);
