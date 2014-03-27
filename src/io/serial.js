@@ -4,6 +4,7 @@
  * @author Sören Gade
  * */
 
+var assert = require('assert');
 var util = require('util');
 var events = require('events');
 var serialport = require('serialport');
@@ -199,6 +200,9 @@ function Serial(port, options) {
   events.EventEmitter.call(this);
   options = _combineProperties(SERIAL_OPTIONS, options);
   this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
+  
+  // checks
+  assert(port !== '/dev/null', "Caution: Do not use /dev/null for serial ports!");
 }
 // inherit for events
 util.inherits(Serial, events.EventEmitter);
