@@ -146,7 +146,10 @@ function Serial(port, options) {
     
     self.serialPort.open(function(err) {
       if ( err ) {
-        throw err; // TODO handle error
+        if ( process.env.NODE_ENV === 'production' ) {
+          throw err; // TODO handle error
+        }
+        return;
       }
       
       _onOpen.call(self, err);
