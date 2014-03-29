@@ -1,6 +1,8 @@
 /**
  * This is the setup module.
  * It is supposed to help you create the correct environment to start the app.
+ * For more information on how to use this script or on how to start the application,
+ * please read README.md.
  * */
 
 var exec = require('child_process').exec;
