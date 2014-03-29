@@ -7,6 +7,7 @@
 /*
  * Module dependencies.
  */
+var config = require('../config');
 var express = require('express');
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy,
@@ -113,9 +114,10 @@ function configurePassport() {
   configurePassportOpenID();
 }
 function configurePassportOpenID() {
+  var host = config.openid.hostURL;
   passport.use(new PassportOpenID({
-      returnURL: 'http://192.168.69.27:3000/auth/openid/return',
-      realm: 'http://192.168.69.27/app',
+      returnURL: host + '/auth/openid/return',
+      realm: host + '/app',
       profile: true
     }, function(identifier, profile, done) {
       db.User.findOrCreate({

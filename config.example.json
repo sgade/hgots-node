@@ -17,5 +17,8 @@
   "web": {
     "port": 3000,
     "doorOpenTime": 3000
+  },
+  "openid": {
+    "hostURL": "http://example.com"
   }
 }
