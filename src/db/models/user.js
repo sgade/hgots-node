@@ -8,7 +8,8 @@ module.exports = function(sequelize, DataTypes) {
     password: Sequelize.STRING,
     type: {
       type: Sequelize.ENUM,
-      values: [ 'user', 'controller', 'admin' ]
+      values: [ 'user', 'controller', 'admin' ],
+      defaultValue: 'user'
     },
     openid: Sequelize.STRING
   }, {
