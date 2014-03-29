@@ -143,9 +143,10 @@ function configureRoutes() {
   app.get('/login', function(req, res) {
     res.redirect('/');
   });
-  app.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/app');
-  });
+  app.post('/login', passport.authenticate('local', {
+    successRedirect: '/app',
+    failureRedirect: '/'
+  }));
   // Routes for app
   app.get('/app', routes.app);
   app.get('/get_rfid', queries.getRFID);
