@@ -9,7 +9,7 @@ block content
     div.flex-container
       div.flex-item.well.login-container
         h1= title
-        form.form(action="/login", method="post")
+        form.form(action="/auth/login", method="post")
           div.form-group.flex-container
             input#login-username.flex-item.form-control(type="text", name="username", placeholder="Username", autofocus="true")
           div.form-group.flex-container
