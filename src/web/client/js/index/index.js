@@ -23,8 +23,8 @@ $(function() {
   setButtonState();
   
   $("input").keyup(setButtonState);
+  // convert password
   $("#login-password").keyup(function() {
-    console.log(getPassword());
     $("#login-password-hash").val(getPassword());
   });
 });
