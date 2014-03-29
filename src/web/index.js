@@ -117,7 +117,7 @@ function configurePassportOpenID() {
   var host = config.openid.hostURL;
   passport.use(new PassportOpenID({
       returnURL: host + '/auth/openid/return',
-      realm: host + '/app',
+      realm: host,
       profile: true
     }, function(identifier, profile, done) {
       db.User.findOrCreate({
