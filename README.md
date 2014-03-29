@@ -12,6 +12,11 @@ This application is still in **very** early development.
 
 This will setup everything you need, including running `npm install` and installing `grunt` and `bower`.
 
+### The central configuration
+
+Everything important is defined in the file named `config.json` which is located in the root of the project.
+The setup script should have created such a file for you, so before you first run the application you should go ahead and adjust the values according to your setup.
+
 # How to run in production
 
 1. `git clone https://github.com/sgade/hgots-node.git`
