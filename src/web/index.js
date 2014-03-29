@@ -9,7 +9,8 @@
  */
 var express = require('express');
 var passport = require('passport'),
-  PassportLocal = require('passport-local').Strategy;
+  PassportLocal = require('passport-local').Strategy,
+  PassportOpenID = require('passport-openid').Strategy;
 var routes = require('./routes');
 var queries = require('./routes/queries');
 var http = require('http');
@@ -76,6 +77,7 @@ function configurePassport() {
   app.use(passport.initialize());
   app.use(passport.session());
   
+  // username and password based authentication
   passport.use(new PassportLocal(function(username, password, done) {
     db.User.find({
       where: {
@@ -106,6 +108,33 @@ function configurePassport() {
       done(err, user);
     });
   });
+  
+  // openID based authentication
+  configurePassportOpenID();
+}
+function configurePassportOpenID() {
+  passport.use(new PassportOpenID({
+      returnURL: 'http://192.168.69.27:3000/auth/openid/return',
+      realm: 'http://192.168.69.27/app',
+      profile: true
+    }, function(identifier, profile, done) {
+      db.User.findOrCreate({
+        where: {
+          openid: identifier
+        }
+      }).complete(function(err, user) {
+        console.log(profile.displayName, "authenticated using openID.");
+        user.profile = profile; // save info
+        done(err, user);
+      });
+    }
+  ));
+  
+  app.post('/auth/openid', passport.authenticate('openid'));
+  app.get('/auth/openid/return', passport.authenticate('openid', {
+    successRedirect: '/app',
+    failureRedirect: '/login'
+  }));
 }
 function configureRoutes() {
   // Routes for login

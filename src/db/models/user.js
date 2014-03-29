@@ -9,7 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     type: {
       type: Sequelize.ENUM,
       values: [ 'user', 'controller', 'admin' ]
-    }
+    },
+    openid: Sequelize.STRING
   }, {
     classMethods: {
       associate: function(models) {

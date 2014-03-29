@@ -17,5 +17,13 @@ block content
             input#login-password-hash(type="hidden", name="password", placeholder="invisible")
           div.flex-container
             button.btn.btn-default.flex-item.btn-lg#login(type="submit") Login
+
+        hr
+        form.form(action="/auth/openid", method="post")
+          div.form-group.flex-container
+            input#login-username.flex-item.form-control(type="text", name="openid_identifier", placeholder="OpenID identifier")
+          div.flex-container
+            button.btn.btn-default.flex-item.btn.lg(type="submit") Login using OpenID
+  
   
   script(src='/js/index.js')
