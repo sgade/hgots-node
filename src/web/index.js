@@ -125,6 +125,12 @@ function configurePassportOpenID() {
           openid: identifier
         }
       }).complete(function(err, user) {
+        if ( err ) {
+          if ( profile ) {
+            console.log("Although we are going to crash,", profile.displayName, "authenticated!");
+          }
+          throw err; // TODO handle error
+        }
         console.log(profile.displayName, "authenticated using openID.");
         user.profile = profile; // save info
         done(err, user);
