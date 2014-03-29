@@ -121,9 +121,7 @@ function configurePassportOpenID() {
       profile: true
     }, function(identifier, profile, done) {
       db.User.findOrCreate({
-        where: {
-          openid: identifier
-        }
+        openid: identifier
       }).complete(function(err, user) {
         if ( err ) {
           if ( profile ) {
