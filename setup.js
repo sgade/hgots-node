@@ -62,6 +62,10 @@ function bowerInstall(callback) {
   });
 }
 
+/**
+ * Ensures that grunt is installed.
+ * @param {ErrorCallback} callback - A callback that is called once the operation finished.
+ * */
 function ensureGrunt(callback) {
   callback = callback || function() {};
   isInstalled("grunt", function(isInstalled) {
@@ -74,6 +78,10 @@ function ensureGrunt(callback) {
     }
   });
 }
+/**
+ * Ensures that bower is installed.
+ * @param {ErrorCallback} callback - A callback that is called once the operation finished.
+ * */
 function ensureBower(callback) {
   callback = callback || function() {};
   isInstalled("bower", function(isInstalled) {
