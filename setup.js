@@ -3,28 +3,59 @@
  * It is supposed to help you create the correct environment to start the app.
  * For more information on how to use this script or on how to start the application,
  * please read README.md.
+ *
+ * @mdoule setup
+ * @author Sören Gade
  * */
 
+/* Our requirements */
 var exec = require('child_process').exec;
 var fs = require('fs');
 
+/** ========== ========== ==========
+ * Helpers
+ *  ========== ========== ==========
+ * */
+
+/**
+ * Copies a file synchronioulsy.
+ * @param {String} src - The source path of the file that should be copied.
+ * @param {String} dest - The destiation path of the copy.
+ * */
 function copyFileSync(src, dest) {
-  var data = fs.readFileSync(src);
-  fs.writeFileSync(dest, data);
+  var data = fs.readFileSync(src); // read all the data from the file
+  fs.writeFileSync(dest, data); // write the data into the new file
 }
+/**
+ * Checks if the given command line application is installed.
+ * @param {String} app - The command that should be installed.
+ * @param {SuccessCallback} callback - A callback that defines whether the tool is installed.
+ * */
 function isInstalled(app, callback) {
-  var cmd = "which " + app;
+  var cmd = "which " + app; // use 'which' to determine path => it then is installed
   exec(cmd, function(err, stdout, stderr) {
     var isInstalled = !err;
     callback(isInstalled);
   });
 }
 
+/** ========== ========== ==========
+ * Executed commands
+ *  ========== ========== ==========
+ * */
+/**
+ * Executes 'npm install'.
+ * @param {ErrorCallback} callback - A callback that is called once the operation finished.
+ * */
 function npmInstall(callback) {
   exec("npm install", function(err, stdout, stderr) {
     callback(err);
   });
 }
+/**
+ * Executes 'bower install'.
+ * @param {ErrorCallback} callback - A callback that is called once the operation finished.
+ * */
 function bowerInstall(callback) {
   exec("bower install", function(err, stdout, stderr) {
     callback(err);
