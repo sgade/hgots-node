@@ -38,7 +38,7 @@ exports.getExpress = function() {
 exports.init = function(port, rfidRequestCallback, openDoorCallback, done) {
   queries.setRFIDRequestCallback(rfidRequestCallback);
   queries.setOpenDoorCallback(openDoorCallback);
-  
+
   app = express();
   configure(port);
   db.init(done);
@@ -61,7 +61,7 @@ function configure(port) {
   app.use(express.session());
   configurePassport();
   app.use(app.router);
-  
+
   if(typeof PhusionPassenger === 'undefined') { // only serve static files if not using Passenger
     app.use(express.static(path.join(__dirname, 'public')));
   }
@@ -71,13 +71,13 @@ function configure(port) {
     app.use(express.errorHandler());
     // app.use(express.logger('dev'));
   }
-  
+
   configureRoutes();
 }
 function configurePassport() {
   app.use(passport.initialize());
   app.use(passport.session());
-  
+
   // username and password based authentication
   passport.use(new PassportLocal(function(username, password, done) {
     db.User.find({
@@ -89,7 +89,7 @@ function configurePassport() {
       if ( err ) {
         return done(err);
       }
-      
+
       if ( !user ) {
         return done(null, false, { message: 'Incorrect credentials.' });
       } else {
@@ -109,7 +109,7 @@ function configurePassport() {
       done(err, user);
     });
   });
-  
+
   // openID based authentication
   configurePassportOpenID();
 }
@@ -120,8 +120,13 @@ function configurePassportOpenID() {
       realm: host,
       profile: true
     }, function(identifier, profile, done) {
+      var displayName = "";
+      if(typeof profile.displayName !== 'undefined') {
+        displayName = profile.displayName;
+      }
       db.User.findOrCreate({
-        openid: identifier
+        openid: identifier,
+        username: displayName
       }).complete(function(err, user) {
         if ( err ) {
           if ( profile ) {
@@ -135,7 +140,7 @@ function configurePassportOpenID() {
       });
     }
   ));
-  
+
   app.post('/auth/openid', passport.authenticate('openid'));
   app.get('/auth/openid/return', passport.authenticate('openid', {
     successRedirect: '/app',
@@ -157,7 +162,7 @@ function configureRoutes() {
   app.get('/app', routes.app);
   app.get('/get_rfid', queries.getRFID);
   app.get('/open_door', queries.openDoor);
-  
+
   // configure api
   require('./routes/api/')(app);
 }
