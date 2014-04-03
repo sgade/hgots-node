@@ -10,14 +10,13 @@
  * */
 
 require('./log-replace')();
+var package = require('../package');
 var config = require('./config');
 var web = require('./web/');
 var RFIDReader = require('./io/rfidreader');
 var Relais = require('./io/relais');
 var db = require('./db/');
 
-console.log("Hello World!");
-console.log("This is going to be a full featured door lock system.");
 /* ==========
  * Globals
  * ==========
@@ -132,6 +131,8 @@ if ( !module.parent || typeof PhusionPassenger !== 'undefined') {
    * The main application entry point.
    * */
   (function main() {
+    console.log(package.name, "v" + package.version, "started.");
+    
     initRFIDReader();
     initRelais();
     startWeb();
