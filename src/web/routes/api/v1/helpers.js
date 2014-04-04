@@ -51,9 +51,8 @@ exports.getPublicUser = function(user) {
   var publicUser = {
     id: user.id,
     username: user.username,
-    type: user.type,
-    updatedAt: user.updatedAt,
-    openid: user.openid
+    type: user.type
+    //updatedAt: user.updatedAt
   };
   
   return publicUser;
