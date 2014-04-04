@@ -20,6 +20,24 @@ exports.getUser = function(where, callback) {
 exports.createUser = function(data, callback) {
   db.User.create(data).complete(callback);
 };
+exports.updateUser = function(id, data, callback) {
+  // prevent 'undefined' values:
+  db.User.find({
+    id: id
+  }).complete(function(err, user) {
+    if ( err ) {
+      callback(err);
+    } else {
+      user.username = data.username || user.username;
+      user.password = data.password || user.password;
+      user.type = data.type || user.type;
+      
+      user.save().complete(function(err) {
+        callback(err, user);
+      });
+    }
+  });
+};
 
 exports.getRequestingUser = function(req, callback) {
   assert(callback, "Callback must be defined.");

@@ -165,3 +165,43 @@ exports.getCardsOfUser = function(req, res) {
     }
   });
 };
+
+/* PUT /user/:id */
+exports.updateUser = function(req, res) {
+  helpers.getRequestingUser(req, function(err, user) {
+    if ( err ) {
+      res.status(500).end();
+    } else {
+      if ( !user ) {
+        res.status(403).end();
+      } else {
+        
+        if ( user.isPrivileged() ) {
+          var id = req.params.id;
+          if ( id < 1 ) {
+            res.status(400).end();
+            return;
+          }
+          var username = req.body.username,
+            password = req.body.password,
+            type = req.body.type;
+          
+          helpers.updateUser(id, {
+            username: username,
+            password: password,
+            type: type
+          }, function(err, user) {
+            if ( err ) {
+              res.status(500).end();
+            } else {
+              res.set('Content-Type', 'application/json').end(JSON.stringify(user));
+            }
+          });
+        } else {
+          res.status(403).end();
+        }
+        
+      }
+    }
+  });
+};
