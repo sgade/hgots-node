@@ -51,7 +51,7 @@ function web_RFIDRequest(callback) {
   });
 }
 function web_OpenDoor(callback) {
-  // TODO relais.setSingle on door relais
+  // TODO: relais.setSingle on door relais
   console.log("Open door...");
   
   relais.setSingle(config.relaisport.door, function() {

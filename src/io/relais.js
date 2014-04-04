@@ -177,7 +177,7 @@ function Relais(port) {
   
     // call callback after write
     self.serialPort.once('data', function(data) {
-      // TODO maybe validate, use ArrayBuffer or similar
+      // TODO: maybe validate, use ArrayBuffer or similar
       data = data.toString();
       data = data.match(/.{1,1}/g);
     
@@ -220,7 +220,7 @@ function Relais(port) {
       } else {
       
         var ok = ( data[RelaisByteNames.Command] === 255 );
-        callback(ok); 
+        callback(ok);
       
       }
     });

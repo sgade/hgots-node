@@ -31,7 +31,7 @@ App.Router.reopen({
 });
 App.Router.map(function() {
   this.resource('admin');
-  /* TODO may specify sub-routes for specific users to be shown to the admin */
+  /* TODO: may specify sub-routes for specific users to be shown to the admin */
   
   this.route('about');
   this.route('readme');

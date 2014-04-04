@@ -131,7 +131,7 @@ function configurePassportOpenID() {
           if ( profile ) {
             console.log("Although we are going to crash,", profile.displayName, "authenticated!");
           }
-          throw err; // TODO handle error
+          throw err; // TODO: handle error
         }
         console.log(profile.displayName, "authenticated using openID.");
         user.username = profile.displayName;

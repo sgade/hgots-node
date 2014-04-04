@@ -37,7 +37,7 @@ Object.keys(db).forEach(function(modelName) {
 });
 
 var initDB = function(done) {
-  // TODO remove force: true
+  // TODO: remove force: true
   sequelize.sync({force: true}).complete(function(err) {
     if ( !err ) {
       if(!lodash.contains(['production', 'test'], process.env.NODE_ENV)) {

@@ -147,7 +147,7 @@ function Serial(port, options) {
     self.serialPort.open(function(err) {
       if ( err ) {
         if ( process.env.NODE_ENV === 'production' ) {
-          throw err; // TODO handle error
+          throw err; // TODO: handle error
         }
         return;
       }
@@ -169,7 +169,7 @@ function Serial(port, options) {
     
     self.serialPort.close(function(err) {
       if ( err ) {
-        throw err; // TODO handle error
+        throw err; // TODO: handle error
       }
       
       callback(err);
