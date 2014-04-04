@@ -148,20 +148,22 @@ exports.getCardsOfUser = function(req, res) {
           }, function(err, user) {
           
             if ( user ) {
-              user.getCards().success(function(cards) {
-              
-                if ( cards ) {
+              user.getCards().complete(function(err, cards) {
+                if ( err ) {
+                  res.status(500).end();
+                } else {
+                  cards = cards || [];
+                  
                   var cardsList = [];
                   cards.forEach(function(card) {
                     cardsList.push(helpers.getPublicCard(card));
                   });
                   
                   res.set('Content-Type', 'application/json');
-                  res.end(JSON.stringify(cardsList));
-                } else {
-                  res.end(500).end();
+                  var out = JSON.stringify(cardsList);
+                  console.log("cards:", out);
+                  res.end(out);
                 }
-              
               });
             }
           
