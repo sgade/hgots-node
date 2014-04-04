@@ -3,6 +3,14 @@ var db = require('../../../../db/');
 
 exports.db = db;
 
+/* Helpers for the API */
+exports.getRequestingUser = function(req, callback) {
+  assert(callback, "Callback must be defined.");
+  
+  callback(null, req.user);
+};
+
+/* Users */
 exports.getAllUsers = function(callback) {
   db.User.findAll().complete(callback);
 };
@@ -11,7 +19,6 @@ exports.getUser = function(where, callback) {
     where: where
   }).complete(callback);
 };
-
 exports.createUser = function(data, callback) {
   db.User.create(data).complete(callback);
 };
@@ -35,19 +42,9 @@ exports.updateUser = function(id, data, callback) {
     }
   });
 };
-
 exports.deleteUserObject = function(user, callback) {
   user.destroy().complete(callback);
 };
-
-/* Helpers for the API */
-exports.getRequestingUser = function(req, callback) {
-  assert(callback, "Callback must be defined.");
-  
-  callback(null, req.user);
-};
-
-
 exports.sendPublicUser = function(res, user) {
   assert(!!res, "Response object must be given.");
   assert(!!user, "User object must be given.");
@@ -55,4 +52,9 @@ exports.sendPublicUser = function(res, user) {
   var publicUser = user.getPublicModel();
   
   res.set('Content-Type', 'application/json').end(JSON.stringify(publicUser));
+};
+
+/* Cards */
+exports.createCard = function(data, callback) {
+  db.Card.create(data).complete(callback);
 };
