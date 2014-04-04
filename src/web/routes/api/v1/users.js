@@ -129,6 +129,7 @@ exports.getUser = function(req, res) {
   });
 };
 
+// TODO move to cards.js?
 /* GET /user/:id/cards */
 exports.getCardsOfUser = function(req, res) {
   helpers.getRequestingUser(req, function(err, reqUser) {
@@ -150,8 +151,13 @@ exports.getCardsOfUser = function(req, res) {
               user.getCards().success(function(cards) {
               
                 if ( cards ) {
+                  var cardsList = [];
+                  cards.forEach(function(card) {
+                    cardsList.push(helpers.getPublicCard(card));
+                  });
+                  
                   res.set('Content-Type', 'application/json');
-                  res.end(JSON.stringify(cards));
+                  res.end(JSON.stringify(cardList));
                 } else {
                   res.end(500).end();
                 }
