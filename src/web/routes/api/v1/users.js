@@ -255,7 +255,7 @@ exports.deleteUser = function(req, res) {
             } else {
               
               if ( !user.isPrivileged() || ( user.isPrivileged() && reqUser.isAdmin() ) ) {
-                helpers.deleteUser(user, function(err) {
+                helpers.deleteUserObject(user, function(err) {
                   if ( err ) {
                     res.status(500).end();
                   } else {

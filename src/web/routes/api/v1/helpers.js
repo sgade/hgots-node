@@ -42,7 +42,7 @@ exports.updateUser = function(id, data, callback) {
 };
 
 exports.deleteUserObject = function(user, callback) {
-  user.destroy.complete(callback);
+  user.destroy().complete(callback);
 };
 
 /* Helpers for the API */
