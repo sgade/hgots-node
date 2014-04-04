@@ -358,7 +358,7 @@ describe('HGOTS Web Server', function() {
         });
       });
       
-      describe('GET /users/:id/cards', function() {
+      describe('GET /user/:id/cards', function() {
         var url = prefix + "/user";
         it('should return all cards of user 3 to an admin', function(done) {
           authenticatedAdminAgent
