@@ -30,13 +30,13 @@ var users = [ {
 
 var authenticatedAdminAgent;
 var authenticatedControllerAgent;
-var authenticatedUserAgent; 
-var authenticatedDeadUserAgent; 
+var authenticatedUserAgent;
+var authenticatedDeadUserAgent;
 
 var loginUser = function(username, password, cb) {
   var server = request.agent('http://localhost:' + port);
   server
-    .post('/login')
+    .post('/auth/login')
     .send({ username: username, password: password })
     .end(function(err, res) {
       cb(server);
@@ -92,50 +92,56 @@ describe('HGOTS Web Server', function() {
     });
   });
   
-  describe('POST Validate Login /login', function() {
-    it('should respond with json', function(done) {
+  describe('POST Validate Login /auth/login', function() {
+    it('should redirect to / without credentials', function(done) {
       request(expressApp)
-        .post('/login')
-        .expect('Content-Type', /json/, done);
+        .post('/auth/login')
+        .expect(302)
+        .end(function(err, res) {
+          res.header.location.should.include('/');
+          done();
+        });
     });
     
-    it('should respond with 403 without credentials', function(done) {
+    it('should redirect to / with wrong credentials', function(done) {
       request(expressApp)
-        .post('/login')
-        .expect('Content-Type', /json/)
-        .expect(403, done);
-    });
-    
-    it('should respond with 403 with wrong credentials', function(done) {
-      request(expressApp)
-        .post('/login')
+        .post('/auth/login')
         .send({ username: "failingUser", password: "failingPassword" })
-        .expect('Content-Type', /json/)
-        .expect(403, done);
+        .expect(302)
+        .end(function(err, res) {
+          res.header.location.should.include('/');
+          done();
+        });
     });
     
-    it('should respond with 403 with correct username but wrong pass', function(done) {
+    it('should redirect to / with correct username but wrong password', function(done) {
       request(expressApp)
-        .post('/login')
+        .post('/auth/login')
         .send({ username: "testUser", password: "zulf" })
-        .expect('Content-Type', /json/)
-        .expect(403, done);
+        .expect(302)
+        .end(function(err, res) {
+          res.header.location.should.include('/');
+          done();
+        });
     });
     
-    it('should respond with 200 with correct credentials', function(done) {
+    it('should redirect to /app with correct credentials', function(done) {
       var pw = require('../../crypto/').encrypt('testPassword');
       request(expressApp)
-        .post('/login')
+        .post('/auth/login')
         .send({ username: "testUser", password: defaultPasswordHash })
-        .expect('Content-Type', /json/)
-        .expect(200, done);
+        .expect(302)
+        .end(function(err, res) {
+          res.header.location.should.include('/app');
+          done();
+        });
     });
   });
   
   describe('GET App /app', function() {
     it('should redirect without credentials', function(done) {
       request(expressApp)
-        .get('/app') 
+        .get('/app')
         .expect(302, done);
     });
     
