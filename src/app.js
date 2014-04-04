@@ -51,9 +51,9 @@ function web_RFIDRequest(callback) {
   });
 }
 function web_OpenDoor(callback) {
-  // TODO: relais.setSingle on door relais
-  console.log("Open door...");
+  console.log("Opening door...");
   
+  // TODO: Try out if it really works in real environments
   relais.setSingle(config.relaisport.door, function() {
     setTimeout(function() {
       relais.delSingle(config.relaisport.door, function() {

@@ -177,7 +177,7 @@ function Relais(port) {
   
     // call callback after write
     self.serialPort.once('data', function(data) {
-      // TODO: maybe validate, use ArrayBuffer or similar
+      // TODO: maybe validate the data, use ArrayBuffer or similar
       data = data.toString();
       data = data.match(/.{1,1}/g);
     
