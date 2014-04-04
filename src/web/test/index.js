@@ -352,25 +352,25 @@ describe('HGOTS Web Server', function() {
 
       describe('DELETE /user/:id', function() {
         var url = prefix + "/user/";
-
+        
+        it('should not allow user 4 to delete itself', function(done) {
+          authenticatedDeadUserAgent
+            .del(url + 4)
+            .expect(403, done);
+        });
+        
         it('should not allow user 3 to delete user 4', function(done) {
           authenticatedUserAgent
             .del(url + 4)
             .expect(403, done);
         });
-
-        it('should allow user 4 to delete user 4', function(done) {
-          authenticatedDeadUserAgent
-            .del(url + 4)
-            .expect(200, done);
-        });
-
+        
         it('should allow an admin to delete user 4', function(done) {
           authenticatedAdminAgent
             .del(url + 4)
             .expect(200, done);
         });
-
+        
         it('should allow a controller to delete user 4', function(done) {
           authenticatedControllerAgent
             .del(url + 4)
