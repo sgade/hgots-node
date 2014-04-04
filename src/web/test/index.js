@@ -340,6 +340,14 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
+        
+        it('should not allow a controller to update an admin', function(done) {
+          authenticatedControllerAgent
+            .put(url + 1)
+            .send({ username: 'yeah!' })
+            .expect('Content-Type', /json/)
+            .expect(403, done);
+        });
       });
 
       describe('DELETE /user/:id', function() {
