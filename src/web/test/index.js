@@ -455,7 +455,7 @@ describe('HGOTS Web Server', function() {
         });
         
         it('should not allow a normal user to delete a card from a user', function(done) {
-          authenticatedControllerAgent
+          authenticatedUserAgent
             .del(url + '5')
             .expect(403, done);
         });
