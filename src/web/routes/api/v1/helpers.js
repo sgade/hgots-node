@@ -23,7 +23,9 @@ exports.createUser = function(data, callback) {
 exports.updateUser = function(id, data, callback) {
   // prevent 'undefined' values:
   db.User.find({
-    id: id
+    where: {
+      id: id
+    }
   }).complete(function(err, user) {
     if ( err ) {
       callback(err);
