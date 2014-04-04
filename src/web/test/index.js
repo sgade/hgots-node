@@ -313,7 +313,7 @@ describe('HGOTS Web Server', function() {
             .send({username: "killMeToo"})
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({username: "killMeToo", type: "user"}, done);
+            .expect({id: 4, username: "killMeToo", type: "user"}, done);
         });
 
         it('should allow a controller to update user 4', function(done) {
@@ -322,7 +322,7 @@ describe('HGOTS Web Server', function() {
             .send({username: "killMeToo"})
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({username: "killMeToo", type: "user"}, done);
+            .expect({id: 4, username: "killMeToo", type: "user"}, done);
         });
 
         it('should not allow user 4 to update user 4', function(done) {
@@ -333,10 +333,11 @@ describe('HGOTS Web Server', function() {
             .expect(403, done);
         });
 
-        it('should not allow user 3 to update user 4', function(done) {
-          authenticatedControllerAgent
+        it('should not allow user 4 to update user 3', function(done) {
+          authenticatedDeadUserAgent
             .put(url + 4)
             .send({username: "killMeToo"})
+            .expect('Content-Type', /json/)
             .expect(403, done);
         });
       });
