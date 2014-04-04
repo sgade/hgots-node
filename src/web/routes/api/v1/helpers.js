@@ -44,3 +44,24 @@ exports.getRequestingUser = function(req, callback) {
   
   callback(null, req.user);
 };
+
+exports.getPublicUser = function(user) {
+  assert(!!user, "User object must be given.");
+  
+  var publicUser = {
+    id: user.id,
+    username: user.username,
+    type: user.type,
+    updatedAt: user.updatedAt,
+    openid: user.openid
+  };
+  
+  return publicUser;
+};
+exports.sendPublicUser = function(res, user) {
+  assert(!!res, "Response object must be given.");
+  
+  var publicUser = exports.getPublicUser(user);
+  
+  res.set('Content-Type', 'application/json').end(JSON.stringify(publicUser));
+};

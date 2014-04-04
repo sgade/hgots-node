@@ -18,10 +18,15 @@ exports.getAllUsers = function(req, res) {
             if ( err ) {
               res.status(500).end();
             } else {
-            
+              
+              var userList = [];
+              users.forEach(function(user) {
+                userList.push(helpers.getPublicUser(user));
+              });
+              
               res.set('Content-Type', 'application/json');
               res.end(JSON.stringify({
-                users: users
+                users: userList
               }));
             
             }
@@ -66,8 +71,7 @@ exports.createNewUser = function(req, res) {
               if ( !user ) {
                 res.status(400).end();
               } else {
-                res.set('Content-Type', 'application/json');
-                res.end(JSON.stringify(user));
+                helpers.sendPublicUser(res, user);
               }
             }
           });
@@ -110,13 +114,14 @@ exports.getUser = function(req, res) {
               if ( !user ) {
                 res.status(404).end();
               } else {
-                res.set('Content-Type', 'application/json');
-                res.end(JSON.stringify(user));
+                helpers.sendPublicUser(res, user);
               }
             }
           });
         } else {
-          res.status(403).end();
+          res.status(403).set('Content-Type', 'application/json').end(JSON.stringify({
+            message: 'Forbidden'
+          }));
         }
       }
       
@@ -194,11 +199,13 @@ exports.updateUser = function(req, res) {
             if ( err ) {
               res.status(500).end();
             } else {
-              res.set('Content-Type', 'application/json').end(JSON.stringify(user));
+              helpers.sendPublicUser(res, user);
             }
           });
         } else {
-          res.status(403).end();
+          res.status(403).set('Content-Type', 'application/json').end(JSON.stringify({
+            message: 'Forbidden'
+          }));
         }
         
       }
