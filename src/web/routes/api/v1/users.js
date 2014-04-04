@@ -233,3 +233,51 @@ exports.updateUser = function(req, res) {
     }
   });
 };
+
+/* DELETE /user/:id */
+exports.deleteUser = function(req, res) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
+    if ( err ) {
+      res.status(500).end();
+    } else {
+      if ( !user ) {
+        res.status(403).end();
+      } else {
+        
+        if ( reqUser.isPrivileged() ) {
+          var id = req.params.id;
+          
+          helpers.getUser({
+            id: id
+          }, function(err, user) {
+            if ( err ) {
+              res.status(500).end();
+            } else {
+              
+              if ( !user.isPrivileged() || ( user.isPrivileged() && reqUser.isAdmin() ) ) {
+                helpers.deleteUser(user, function(err) {
+                  if ( err ) {
+                    res.status(500).end();
+                  } else {
+                    res.status(200).end();
+                  }
+                });
+              } else {
+                res.status(403).set('Content-Type', 'application/json').end(JSON.stringify({
+                  message: 'Forbidden'
+                }));
+              }
+              
+            }
+          });
+          
+        } else {
+          res.status(403).set('Content-Type', 'application/json').end(JSON.stringify({
+            message: 'Forbidden'
+          }));
+        }
+        
+      }
+    }
+  });
+};

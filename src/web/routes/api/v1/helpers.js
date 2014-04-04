@@ -41,6 +41,11 @@ exports.updateUser = function(id, data, callback) {
   });
 };
 
+exports.deleteUserObject = function(user, callback) {
+  user.destroy.complete(callback);
+};
+
+/* Helpers for the API */
 exports.getRequestingUser = function(req, callback) {
   assert(callback, "Callback must be defined.");
   
