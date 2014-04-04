@@ -37,6 +37,44 @@ exports.getAllUsers = function(req, res) {
   });
 };
 
+/* /user/:id */
+exports.getUser = function(req, res) {
+  helpers.getRequestingUser(req, function(err, user) {
+    
+    if ( err ) {
+      res.status(500).end();
+    } else {
+      
+      if ( !user ) {
+        res.status(403).end();
+      } else {
+        var id = req.params.id;
+        
+        if ( user.isPrivileged() || user.id == id ) {
+          helpers.getUser({
+            id: id
+          }, function(err, user) {
+            if ( err ) {
+              res.status(500).end();
+            } else {
+              if ( !user ) {
+                res.status(404).end();
+              } else {
+                res.set('Content-Type', 'application/json');
+                res.end(JSON.stringify(user));
+              }
+            }
+          });
+        } else {
+          res.status(403).end();
+        }
+      }
+      
+    }
+    
+  });
+};
+
 /* /user/:id/cards */
 exports.getCardsOfUser = function(req, res) {
   helpers.getRequestingUser(req, function(err, user) {
