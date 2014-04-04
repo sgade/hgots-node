@@ -21,7 +21,7 @@ exports.getAllUsers = function(req, res) {
               
               var userList = [];
               users.forEach(function(user) {
-                userList.push(helpers.getPublicUser(user));
+                userList.push(user.getPublicModel());
               });
               
               res.set('Content-Type', 'application/json');

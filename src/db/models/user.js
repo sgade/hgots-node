@@ -27,6 +27,13 @@ module.exports = function(sequelize, DataTypes) {
       },
       isController: function() {
         return this.type === 'controller';
+      },
+      getPublicModel: function() {
+        return {
+          id: this.id,
+          username: this.username,
+          type: this.type
+        };
       }
     }
   });

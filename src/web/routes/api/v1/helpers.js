@@ -52,23 +52,11 @@ exports.getRequestingUser = function(req, callback) {
   callback(null, req.user);
 };
 
-// TODO maybe move to model?
-exports.getPublicUser = function(user) {
-  assert(!!user, "User object must be given.");
-  
-  var publicUser = {
-    id: user.id,
-    username: user.username,
-    type: user.type
-    //updatedAt: user.updatedAt
-  };
-  
-  return publicUser;
-};
+
 exports.sendPublicUser = function(res, user) {
   assert(!!res, "Response object must be given.");
   
-  var publicUser = exports.getPublicUser(user);
+  var publicUser = user.getPublicModel();
   
   res.set('Content-Type', 'application/json').end(JSON.stringify(publicUser));
 };
