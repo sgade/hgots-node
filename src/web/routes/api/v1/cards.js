@@ -77,8 +77,7 @@ exports.createNewCard = function(req, res) {
                   if ( err ) {
                     res.status(500).end();
                   } else {
-                    // FIXME: Crashes the tests
-                    user.addCard(card);
+                    card.setUser(user);
                     
                     res.set('Content-Type', 'application/json').end(JSON.stringify(card.getPublicModel()));
                   }
