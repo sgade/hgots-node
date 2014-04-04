@@ -1,7 +1,7 @@
 var helpers = require('./helpers');
 var db = helpers.db;
 
-/* /users */
+/* GET /users */
 exports.getAllUsers = function(req, res) {
   helpers.getRequestingUser(req, function(err, user) {
     
@@ -37,7 +37,7 @@ exports.getAllUsers = function(req, res) {
   });
 };
 
-/* /user/:id */
+/* GET /user/:id */
 exports.getUser = function(req, res) {
   helpers.getRequestingUser(req, function(err, user) {
     
@@ -75,7 +75,7 @@ exports.getUser = function(req, res) {
   });
 };
 
-/* /user/:id/cards */
+/* GET /user/:id/cards */
 exports.getCardsOfUser = function(req, res) {
   helpers.getRequestingUser(req, function(err, user) {
     
