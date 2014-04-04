@@ -229,12 +229,12 @@ describe('HGOTS Web Server', function() {
             .expect(200, done);
         });
 
-        it('should allow a controller to create a new controller', function(done) {
+        it('should not allow a controller to create a new controller', function(done) {
           authenticatedControllerAgent
             .post(url)
             .send({ username: "newTestController2", password: defaultPasswordHash, type: "controller" })
             .expect('Content-Type', /json/)
-            .expect(200, done);
+            .expect(403, done);
         });
 
         it('should not allow a controller to create a new admin', function(done) {
