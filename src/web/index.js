@@ -136,7 +136,6 @@ function configurePassportOpenID() {
         console.log(profile.displayName, "authenticated using openID.");
         user.username = profile.displayName;
         user.save();
-        user.profile = profile; // save info
         done(err, user);
       });
     }
