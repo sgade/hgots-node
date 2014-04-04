@@ -1,3 +1,4 @@
+var async = require('async');
 var should = require('should');
 var request = require('supertest');
 var sequelize_fixtures =  require('sequelize-fixtures');
@@ -26,20 +27,22 @@ var users = [ {
                 username: "killMe",
                 type: "user"
               } ];
-            
+
 
 var authenticatedAdminAgent;
 var authenticatedControllerAgent;
 var authenticatedUserAgent;
 var authenticatedDeadUserAgent;
 
-var loginUser = function(username, password, cb) {
+var loginUser = function(username, cb) {
   var server = request.agent('http://localhost:' + port);
   server
     .post('/auth/login')
-    .send({ username: username, password: password })
+    .type('form')
+    .send({ username: username })
+    .send({ password: defaultPasswordHash })
     .end(function(err, res) {
-      cb(server);
+      cb(err, server);
     });
 };
 
@@ -49,40 +52,37 @@ describe('HGOTS Web Server', function() {
       app.start(function() {
         expressApp = app.getExpress();
         sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, function() {
-          loginUser("testAdmin", defaultPasswordHash, function(agent) {
-            authenticatedAdminAgent = agent;
-            loginUser("testController", defaultPasswordHash, function(agent) {
-              authenticatedControllerAgent = agent;
-              loginUser("testUser", defaultPasswordHash, function(agent) {
-                authenticatedUserAgent = agent;
-                loginUser("killMe", defaultPasswordHash, function(agent) {
-                  authenticatedDeadUserAgent = agent;
-                  done();
-                });
-              });
-            });
+          async.map(["testAdmin", "testController", "testUser", "killMe"], loginUser, function(err, results) {
+            if(err) throw err;
+
+            authenticatedAdminAgent = results[0];
+            authenticatedControllerAgent = results[1];
+            authenticatedUserAgent = results[2];
+            authenticatedDeadUserAgent = results[3];
+
+            done();
           });
         });
       });
     });
   });
-  
+
   afterEach(function(done) {
     app.stop();
     done();
   });
-  
+
   it('should exist', function(done) {
     should.exist(expressApp);
     done();
   });
-  
+
   it('should be listening at localhost:' + port, function(done) {
     request(expressApp)
       .get('/')
       .expect(200, done);
   });
-  
+
   describe('GET Main /', function() {
     it('should respond with HTML on /', function(done) {
       request(expressApp)
@@ -91,45 +91,57 @@ describe('HGOTS Web Server', function() {
         .expect(200, done);
     });
   });
-  
+
   describe('POST Validate Login /auth/login', function() {
-    it('should redirect to / without credentials', function(done) {
+    it('should redirect to login', function(done) {
       request(expressApp)
         .post('/auth/login')
+        .expect(302, done);
+    });
+
+    it('should respond with 403 without credentials', function(done) {
+      request(expressApp)
+        .post('/auth/login')
+        .type('form')
         .expect(302)
         .end(function(err, res) {
           res.header.location.should.include('/');
           done();
         });
     });
-    
-    it('should redirect to / with wrong credentials', function(done) {
+
+    it('should respond with 403 with wrong credentials', function(done) {
       request(expressApp)
         .post('/auth/login')
-        .send({ username: "failingUser", password: "failingPassword" })
+        .type('form')
+        .send({ username: "failingUser" })
+        .send({ password: "failingPassword" })
         .expect(302)
         .end(function(err, res) {
           res.header.location.should.include('/');
           done();
         });
     });
-    
-    it('should redirect to / with correct username but wrong password', function(done) {
+
+    it('should respond with 403 with correct username but wrong pass', function(done) {
       request(expressApp)
         .post('/auth/login')
-        .send({ username: "testUser", password: "zulf" })
+        .type('form')
+        .send({ username: "testUser" })
+        .send({ password: "zulf" })
         .expect(302)
         .end(function(err, res) {
           res.header.location.should.include('/');
           done();
         });
     });
-    
-    it('should redirect to /app with correct credentials', function(done) {
-      var pw = require('../../crypto/').encrypt('testPassword');
+
+    it('should respond with 200 with correct credentials', function(done) {
       request(expressApp)
         .post('/auth/login')
-        .send({ username: "testUser", password: defaultPasswordHash })
+        .type('form')
+        .send({ username: "testUser" })
+        .send({ password: defaultPasswordHash })
         .expect(302)
         .end(function(err, res) {
           res.header.location.should.include('/app');
@@ -137,28 +149,28 @@ describe('HGOTS Web Server', function() {
         });
     });
   });
-  
+
   describe('GET App /app', function() {
     it('should redirect without credentials', function(done) {
       request(expressApp)
         .get('/app')
         .expect(302, done);
     });
-    
+
     it('should stay with logged in user', function(done) {
       authenticatedUserAgent
         .get('/app')
         .expect(200, done);
     });
   });
-  
+
   describe('API', function() {
     var prefix = '/api';
     describe('v1', function() {
       prefix += '/v1';
       describe('GET /users', function() {
         var url = prefix + '/users';
-        
+
         it('should return all users to an admin', function(done) {
           authenticatedAdminAgent
             .get(url)
@@ -166,7 +178,7 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect({users: users}, done);
         });
-        
+
         it('should return all users to a controller', function(done) {
           authenticatedControllerAgent
             .get(url)
@@ -174,17 +186,17 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect({users: users}, done);
         });
-        
+
         it('should give a 403 to a normal user', function(done) {
           authenticatedUserAgent
             .get(url)
             .expect(403, done);
         });
       });
-      
+
       describe('POST /users', function() {
         var url = prefix + '/users';
-        
+
         it('should allow an admin to create a new user', function(done) {
           authenticatedAdminAgent
             .post(url)
@@ -192,7 +204,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(200, done);
         });
-        
+
         it('should allow an admin to create a new controller', function(done) {
           authenticatedAdminAgent
             .post(url)
@@ -200,7 +212,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(200, done);
         });
-        
+
         it('should allow an admin to create a new admin', function(done) {
           authenticatedAdminAgent
             .post(url)
@@ -208,7 +220,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(200, done);
         });
-        
+
         it('should allow a controller to create a new user', function(done) {
           authenticatedControllerAgent
             .post(url)
@@ -216,7 +228,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(200, done);
         });
-        
+
         it('should not allow a controller to create a new controller', function(done) {
           authenticatedControllerAgent
             .post(url)
@@ -224,7 +236,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
-        
+
         it('should not allow a controller to create a new admin', function(done) {
           authenticatedControllerAgent
             .post(url)
@@ -232,7 +244,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
-        
+
         it('should not allow a normal user to create a new user', function(done) {
           authenticatedUserAgent
             .post(url)
@@ -240,7 +252,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
-        
+
         it('should not allow a normal user to create a new controller', function(done) {
           authenticatedUserAgent
             .post(url)
@@ -248,7 +260,7 @@ describe('HGOTS Web Server', function() {
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
-        
+
         it('should not allow a normal user to create a new admin', function(done) {
           authenticatedUserAgent
             .post(url)
@@ -257,10 +269,10 @@ describe('HGOTS Web Server', function() {
             .expect(403, done);
         });
       });
-      
+
       describe('GET /user/:id', function() {
         var url = prefix + "/user/";
-        
+
         it('should return user 3 to an admin', function(done) {
           authenticatedAdminAgent
             .get(url + 3)
@@ -268,7 +280,7 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect(users[2], done);
         });
-        
+
         it('should return user 3 to a controller', function(done) {
           authenticatedControllerAgent
             .get(url + 3)
@@ -276,7 +288,7 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect(users[2], done);
         });
-        
+
         it('should return user 3 to user 3', function(done) {
           authenticatedUserAgent
             .get(url + 3)
@@ -284,17 +296,17 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect(users[2], done);
         });
-        
+
         it('should give a 403 to a normal user requesting another user', function(done) {
           authenticatedUserAgent
             .get(url + 2)
             .expect(403, done);
         });
       });
-      
+
       describe('PUT /user/:id', function() {
         var url = prefix + "/user/";
-        
+
         it('should allow an admin to update user 4', function(done) {
           authenticatedAdminAgent
             .put(url + 4)
@@ -303,7 +315,7 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect({username: "killMeToo", type: "user"}, done);
         });
-        
+
         it('should allow a controller to update user 4', function(done) {
           authenticatedControllerAgent
             .put(url + 4)
@@ -312,7 +324,7 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect({username: "killMeToo", type: "user"}, done);
         });
-        
+
         it('should allow user 4 to update user 4', function(done) {
           authenticatedDeadUserAgent
             .put(url + 4)
@@ -321,7 +333,7 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect({username: "killMeToo", type: "user"}, done);
         });
-        
+
         it('should not allow user 3 to update user 4', function(done) {
           authenticatedControllerAgent
             .put(url + 4)
@@ -329,36 +341,36 @@ describe('HGOTS Web Server', function() {
             .expect(403, done);
         });
       });
-      
+
       describe('DELETE /user/:id', function() {
         var url = prefix + "/user/";
-        
+
         it('should not allow user 3 to delete user 4', function(done) {
           authenticatedUserAgent
             .del(url + 4)
             .expect(403, done);
         });
-        
+
         it('should allow user 4 to delete user 4', function(done) {
           authenticatedDeadUserAgent
             .del(url + 4)
             .expect(200, done);
         });
-        
+
         it('should allow an admin to delete user 4', function(done) {
           authenticatedAdminAgent
             .del(url + 4)
             .expect(200, done);
         });
-        
+
         it('should allow a controller to delete user 4', function(done) {
           authenticatedControllerAgent
             .del(url + 4)
             .expect(200, done);
         });
       });
-      
-      describe('GET /user/:id/cards', function() {
+
+      describe('GET /users/:id/cards', function() {
         var url = prefix + "/user";
         it('should return all cards of user 3 to an admin', function(done) {
           authenticatedAdminAgent
@@ -373,7 +385,7 @@ describe('HGOTS Web Server', function() {
               done();
             });
         });
-        
+
         it('should return all cards of user 3 to user 3', function(done) {
           authenticatedUserAgent
             .get(url + "/3/cards")
@@ -387,14 +399,14 @@ describe('HGOTS Web Server', function() {
               done();
             });
         });
-        
+
         it('should return no cards of user 1 to user 3', function(done) {
           authenticatedUserAgent
             .get(url + "/1/cards")
             .expect(403, done);
         });
       });
-      
+
       describe('POST /user/:id/cards', function() {
         var url = prefix + "/user";
         it('should allow an admin to add a new card to a user', function(done) {
@@ -403,14 +415,14 @@ describe('HGOTS Web Server', function() {
             .send({uid: "42"})
             .expect(200, done);
         });
-        
+
         it('should allow a controller to add a new card to a user', function(done) {
           authenticatedControllerAgent
             .post(url + '/3/cards')
             .send({uid: "42"})
             .expect(200, done);
         });
-        
+
         it('should not allow a normal user to add a new card to a user', function(done) {
           authenticatedControllerAgent
             .post(url + '/3/cards')
@@ -418,22 +430,22 @@ describe('HGOTS Web Server', function() {
             .expect(403, done);
         });
       });
-      
+
       describe('DELETE /user/:id/card/:id', function() {
         var url = prefix + "/user/3/card/";
-        
+
         it('should allow an admin to delete a card from a user', function(done) {
           authenticatedAdminAgent
             .del(url + '/3')
             .expect(200, done);
         });
-        
+
         it('should allow a controller to delete a card from a user', function(done) {
           authenticatedControllerAgent
             .del(url + '/4')
             .expect(200, done);
         });
-        
+
         it('should not allow a normal user to delete a card from a user', function(done) {
           authenticatedControllerAgent
             .del(url + '/5')
@@ -442,5 +454,5 @@ describe('HGOTS Web Server', function() {
       });
     });
   });
-  
+
 });

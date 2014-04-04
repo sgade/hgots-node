@@ -19,6 +19,6 @@
     "doorOpenTime": 3000
   },
   "openid": {
-    "hostURL": "http://localhost:3000"
+    "hostURL": "http://localhost:3000/"
   }
 }
