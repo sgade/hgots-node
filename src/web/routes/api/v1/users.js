@@ -187,21 +187,42 @@ exports.updateUser = function(req, res) {
             res.status(400).end();
             return;
           }
-          var username = req.body.username,
-            password = req.body.password,
-            type = req.body.type;
           
-          helpers.updateUser(id, {
-            username: username,
-            password: password,
-            type: type
+          helpers.getUser({
+            id: id
           }, function(err, user) {
             if ( err ) {
               res.status(500).end();
             } else {
-              helpers.sendPublicUser(res, user);
+              
+              if ( reqUser.isController() && user.isAdmin() ) {
+                res.status(403).set('Content-Type', 'application/json').end(JSON.stringify({
+                  message: 'Forbidden'
+                }));
+              } else {
+                
+                var username = req.body.username,
+                  password = req.body.password,
+                  type = req.body.type;
+                
+                helpers.updateUser(id, {
+                  username: username,
+                  password: password,
+                  type: type
+                }, function(err, user) {
+                  if ( err ) {
+                    res.status(500).end();
+                  } else {
+                    helpers.sendPublicUser(res, user);
+                  }
+                });
+                
+              }
+              
             }
           });
+          
+          
         } else {
           res.status(403).set('Content-Type', 'application/json').end(JSON.stringify({
             message: 'Forbidden'
