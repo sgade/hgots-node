@@ -1,5 +1,4 @@
 var helpers = require('./helpers');
-var db = helpers.db;
 
 /* GET /users */
 exports.getAllUsers = function(req, res) {
