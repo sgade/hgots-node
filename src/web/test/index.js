@@ -432,7 +432,7 @@ describe('HGOTS Web Server', function() {
         });
         
         it('should not allow a normal user to add a new card to a user', function(done) {
-          authenticatedControllerAgent
+          authenticatedUserAgent
             .post(url + '/3/cards')
             .send({uid: "42"})
             .expect(403, done);
