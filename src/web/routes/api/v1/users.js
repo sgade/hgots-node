@@ -240,7 +240,7 @@ exports.deleteUser = function(req, res) {
     if ( err ) {
       res.status(500).end();
     } else {
-      if ( !user ) {
+      if ( !reqUser ) {
         res.status(403).end();
       } else {
         
