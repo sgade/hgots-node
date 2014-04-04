@@ -142,7 +142,7 @@ exports.getCardsOfUser = function(req, res) {
       } else {
         var id = req.params.id;
 
-        if ( reqUser.isPrivileged() || user.id == id ) {
+        if ( reqUser.isPrivileged() || reqUser.id == id ) {
           helpers.getUser({
             id: id
           }, function(err, user) {
