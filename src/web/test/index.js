@@ -47,6 +47,9 @@ var loginUser = function(username, cb) {
 };
 
 describe('HGOTS Web Server', function() {
+  this.timeout(10000);
+  
+  
   beforeEach(function(done) {
     app.init(port, null, null, function() {
       app.start(function() {
