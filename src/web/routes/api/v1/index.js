@@ -1,5 +1,7 @@
 var assert = require('assert');
+// routes
 var users = require('./users');
+var cards = require('./cards');
 
 module.exports = function(app) {
   var prefix = '/api/v1';
@@ -11,5 +13,6 @@ module.exports = function(app) {
   app.get(prefix + '/user/:id', users.getUser);
   app.put(prefix + '/user/:id', users.updateUser);
   app.delete(prefix + '/user/:id', users.deleteUser);
-  app.get(prefix + '/user/:id/cards', users.getCardsOfUser);
+  
+  app.get(prefix + '/user/:id/cards', cards.getCardsOfUser);
 };
