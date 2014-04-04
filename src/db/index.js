@@ -21,7 +21,7 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
   logging: ( lodash.contains(['production', 'test'], process.env.NODE_ENV) ) ? false : console.log
 });
 
-var dirname = __dirname + "/models";
+var dirname = path.join(__dirname, "models");
 
 fs.readdirSync(dirname).filter(function(file) {
   return (file.indexOf('.') !== 0) && (file !== 'index.js');
