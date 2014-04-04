@@ -125,8 +125,7 @@ function configurePassportOpenID() {
         displayName = profile.displayName;
       }
       db.User.findOrCreate({
-        openid: identifier,
-        username: displayName
+        openid: identifier
       }).complete(function(err, user) {
         if ( err ) {
           if ( profile ) {
@@ -135,6 +134,8 @@ function configurePassportOpenID() {
           throw err; // TODO handle error
         }
         console.log(profile.displayName, "authenticated using openID.");
+        user.username = profile.displayName;
+        user.save();
         user.profile = profile; // save info
         done(err, user);
       });
