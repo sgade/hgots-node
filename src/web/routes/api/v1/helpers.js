@@ -17,6 +17,10 @@ exports.getUser = function(where, callback) {
   }).complete(callback);
 };
 
+exports.createUser = function(data, callback) {
+  db.User.create(data).complete(callback);
+};
+
 exports.getRequestingUser = function(req, callback) {
   assert(callback, "Callback must be defined.");
   
