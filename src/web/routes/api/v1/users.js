@@ -3,15 +3,15 @@ var db = helpers.db;
 
 /* GET /users */
 exports.getAllUsers = function(req, res) {
-  helpers.getRequestingUser(req, function(err, user) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
     if ( err ) {
       res.status(500).end();
     } else {
       
-      if ( !user ) {
+      if ( !reqUser ) {
         res.status(403).end();
       } else {
-        if(!user.isPrivileged()) {
+        if(!reqUser.isPrivileged()) {
            res.status(403).end();
         } else {
           helpers.getAllUsers(function(err, users) {
@@ -41,12 +41,12 @@ exports.getAllUsers = function(req, res) {
 
 /* POST /users */
 exports.createNewUser = function(req, res) {
-  helpers.getRequestingUser(req, function(err, user) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
     if ( err ) {
       res.status(500).end();
     } else {
       
-      if ( !user ) {
+      if ( !reqUser ) {
         res.status(403).end();
       } else {
         var username = req.body.username,
@@ -58,7 +58,7 @@ exports.createNewUser = function(req, res) {
           return;
         }
         
-        if ( user.isAdmin() || ( user.isController() && type == 'user' ) ) {
+        if ( reqUser.isAdmin() || ( reqUser.isController() && type == 'user' ) ) {
           
           helpers.createUser({
             username: username,
@@ -89,12 +89,12 @@ exports.createNewUser = function(req, res) {
 
 /* GET /user/:id */
 exports.getUser = function(req, res) {
-  helpers.getRequestingUser(req, function(err, user) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
     if ( err ) {
       res.status(500).end();
     } else {
       
-      if ( !user ) {
+      if ( !reqUser ) {
         res.status(403).end();
       } else {
         var id = req.params.id;
@@ -104,7 +104,7 @@ exports.getUser = function(req, res) {
           return;
         }
         
-        if ( user.isPrivileged() || user.id == id ) {
+        if ( reqUser.isPrivileged() || reqUser.id == id ) {
           helpers.getUser({
             id: id
           }, function(err, user) {
@@ -131,17 +131,17 @@ exports.getUser = function(req, res) {
 
 /* GET /user/:id/cards */
 exports.getCardsOfUser = function(req, res) {
-  helpers.getRequestingUser(req, function(err, user) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
     if ( err ) {
       res.status(500).end();
     } else {
       
-      if ( !user ) {
+      if ( !reqUser ) {
         res.status(403).end();
       } else {
         var id = req.params.id;
 
-        if(user.isPrivileged() || user.id == id) {
+        if ( reqUser.isPrivileged() || user.id == id ) {
           helpers.getUser({
             id: id
           }, function(err, user) {
@@ -173,15 +173,15 @@ exports.getCardsOfUser = function(req, res) {
 
 /* PUT /user/:id */
 exports.updateUser = function(req, res) {
-  helpers.getRequestingUser(req, function(err, user) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
     if ( err ) {
       res.status(500).end();
     } else {
-      if ( !user ) {
+      if ( !reqUser ) {
         res.status(403).end();
       } else {
         
-        if ( user.isPrivileged() ) {
+        if ( reqUser.isPrivileged() ) {
           var id = req.params.id;
           if ( id < 1 ) {
             res.status(400).end();
