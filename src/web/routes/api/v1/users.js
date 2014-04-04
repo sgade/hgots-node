@@ -157,7 +157,7 @@ exports.getCardsOfUser = function(req, res) {
                   });
                   
                   res.set('Content-Type', 'application/json');
-                  res.end(JSON.stringify(cardList));
+                  res.end(JSON.stringify(cardsList));
                 } else {
                   res.end(500).end();
                 }

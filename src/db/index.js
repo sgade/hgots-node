@@ -25,7 +25,7 @@ var dirname = __dirname + "/models";
 
 fs.readdirSync(dirname).filter(function(file) {
   return (file.indexOf('.') !== 0) && (file !== 'index.js');
-}).forEach(function(file) {    
+}).forEach(function(file) {
   var model = sequelize.import(path.join(dirname, file));
   db[model.name] = model;
 });

@@ -52,6 +52,7 @@ exports.getRequestingUser = function(req, callback) {
   callback(null, req.user);
 };
 
+// TODO maybe move to model?
 exports.getPublicUser = function(user) {
   assert(!!user, "User object must be given.");
   
