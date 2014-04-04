@@ -55,19 +55,9 @@ exports.getRequestingUser = function(req, callback) {
 
 exports.sendPublicUser = function(res, user) {
   assert(!!res, "Response object must be given.");
+  assert(!!user, "User object must be given.");
   
   var publicUser = user.getPublicModel();
   
   res.set('Content-Type', 'application/json').end(JSON.stringify(publicUser));
-};
-exports.getPublicCard = function(card) {
-  assert(!!card, "Card object must be given.");
-  
-  var publicCard = {
-    id: card.id,
-    uid: card.uid,
-    UserId: card.UserId
-  };
-  
-  return publicCard;
 };

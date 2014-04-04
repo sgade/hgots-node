@@ -156,13 +156,11 @@ exports.getCardsOfUser = function(req, res) {
                   
                   var cardsList = [];
                   cards.forEach(function(card) {
-                    cardsList.push(helpers.getPublicCard(card));
+                    cardsList.push(card.getPublicModel());
                   });
                   
                   res.set('Content-Type', 'application/json');
-                  var out = JSON.stringify(cardsList);
-                  console.log("cards:", out);
-                  res.end(out);
+                  res.end(JSON.stringify(cardsList));
                 }
               });
             }

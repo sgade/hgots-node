@@ -9,6 +9,15 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models){
         Card.belongsTo(models.User);
       }
+    },
+    instanceMethods: {
+      getPublicModel: function() {
+        return {
+          id: this.id,
+          uid: this.uid,
+          UserId: this.UserId
+        };
+      }
     }
   });
   
