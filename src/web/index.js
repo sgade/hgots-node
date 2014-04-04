@@ -54,8 +54,8 @@ function configure(port) {
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.compress());
-  app.use(express.json());
   app.use(express.urlencoded());
+  app.use(express.json());
   app.use(express.methodOverride());
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
