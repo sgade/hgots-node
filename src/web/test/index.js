@@ -187,7 +187,7 @@ describe('HGOTS Web Server', function() {
             .expect({users: users}, done);
         });
 
-        it('should give a 403 to a normal user', function(done) {
+        it('should return "403: Forbidden" to a user', function(done) {
           authenticatedUserAgent
             .get(url)
             .expect(403, done);
@@ -297,7 +297,7 @@ describe('HGOTS Web Server', function() {
             .expect(users[2], done);
         });
 
-        it('should give a 403 to a normal user requesting another user', function(done) {
+        it('should not return any user to any other user', function(done) {
           authenticatedUserAgent
             .get(url + 2)
             .expect(403, done);
@@ -325,13 +325,12 @@ describe('HGOTS Web Server', function() {
             .expect({username: "killMeToo", type: "user"}, done);
         });
 
-        it('should allow user 4 to update user 4', function(done) {
+        it('should not allow user 4 to update user 4', function(done) {
           authenticatedDeadUserAgent
             .put(url + 4)
             .send({username: "killMeToo"})
             .expect('Content-Type', /json/)
-            .expect(200)
-            .expect({username: "killMeToo", type: "user"}, done);
+            .expect(403, done);
         });
 
         it('should not allow user 3 to update user 4', function(done) {
