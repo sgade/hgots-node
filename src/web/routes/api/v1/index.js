@@ -16,4 +16,5 @@ module.exports = function(app) {
   
   app.get(prefix + '/user/:id/cards', cards.getCardsOfUser);
   app.post(prefix + '/user/:id/cards', cards.createNewCard);
+  app.delete(prefix + '/user/:userid/card/:id', cards.deleteCard);
 };

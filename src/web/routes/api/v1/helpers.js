@@ -58,3 +58,9 @@ exports.sendPublicUser = function(res, user) {
 exports.createCard = function(data, callback) {
   db.Card.create(data).complete(callback);
 };
+exports.getCard = function(where, callback) {
+  db.Card.find(where).complete(callback);
+};
+exports.deleteCardObject = function(card, callback) {
+  card.destroy().complete(callback);
+};

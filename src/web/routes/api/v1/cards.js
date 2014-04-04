@@ -97,3 +97,54 @@ exports.createNewCard = function(req, res) {
     }
   });
 };
+
+exports.deleteCard = function(req, res) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
+    if ( err ) {
+      res.status(500).end();
+    } else {
+      if ( !reqUser ) {
+        res.status(403).end();
+      } else {
+        
+        if ( reqUser.isPrivileged() ) {
+          
+          var userId = req.params.userid,
+            cardId = req.params.id;
+          
+          helpers.getCard({
+            id: cardId
+          }, function(err, card) {
+            if ( err ) {
+              res.status(500).end();
+            } else {
+              
+              card.getUser().complete(function(err, user) {
+                if ( err ) {
+                  res.status(500).end();
+                } else {
+                  if ( user.id == userId ) {
+                    card.destroy().complete(function(err) {
+                      if ( err ) {
+                        res.status(500).end();
+                      } else {
+                        res.status(200).end();
+                      }
+                    });
+                  } else {
+                    res.status(400).end();
+                  }
+                }
+              });
+              
+            }
+          });
+          
+        } else {
+          res.status(403).end();
+        }
+        
+      }
+    }
+  });
+};
