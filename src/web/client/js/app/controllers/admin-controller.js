@@ -7,6 +7,12 @@
     }
   });
   
+  App.AdminUserRoute = Ember.Route.extend({
+    model: function(params) {
+      return this.store.find('user', params.userid);
+    }
+  });
+  
   App.AdminNewController = Ember.ArrayController.extend({
     userTypes: [ "User", "Controller", "Admin" ],
     selectedUserType: 'User',

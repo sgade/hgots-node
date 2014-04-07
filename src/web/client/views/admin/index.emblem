@@ -19,5 +19,5 @@ div.panel.panel-default
         td.username= username
         td.type= type
         td.options
-          button.btn.btn-warning Edit
+          link-to .btn.btn-warning  'admin.user' id | Edit
           button.btn.btn-danger Delete

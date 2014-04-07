@@ -38,6 +38,9 @@ App = undefined;
     this.resource('admin', function() {
       /* TODO: may specify sub-routes for specific users to be shown to the admin */
       this.route('new');
+      this.route('user', {
+        path: '/user/:userid'
+      });
     });
     
     this.route('about');
