@@ -17,6 +17,8 @@
       cancelNewUser: function() {
         this.set('selectedUsername', "");
         this.set('selectedPassword', "");
+        
+        this.transitionTo('admin');
       },
       createNewUser: function() {
         var username = this.get('selectedUsername');
