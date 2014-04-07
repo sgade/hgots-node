@@ -10,11 +10,11 @@ module.exports = function(app) {
   
   app.get(prefix + '/users', users.getAllUsers);
   app.post(prefix + '/users', users.createNewUser);
-  app.get(prefix + '/user/:id', users.getUser);
-  app.put(prefix + '/user/:id', users.updateUser);
-  app.delete(prefix + '/user/:id', users.deleteUser);
+  app.get(prefix + '/users/:id', users.getUser);
+  app.put(prefix + '/users/:id', users.updateUser);
+  app.delete(prefix + '/users/:id', users.deleteUser);
   
-  app.get(prefix + '/user/:id/cards', cards.getCardsOfUser);
-  app.post(prefix + '/user/:id/cards', cards.createNewCard);
-  app.delete(prefix + '/user/:userid/card/:id', cards.deleteCard);
+  app.get(prefix + '/users/:id/cards', cards.getCardsOfUser);
+  app.post(prefix + '/users/:id/cards', cards.createNewCard);
+  app.delete(prefix + '/users/:userid/card/:id', cards.deleteCard);
 };
