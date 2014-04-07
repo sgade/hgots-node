@@ -25,7 +25,7 @@ div.panel.panel-primary
 div.panel.panel-default
   div.panel-heading
     h3.panel-title Users
-  table.table#admin-users
+  table.table#users
     thead
       tr
         th #

@@ -12,6 +12,7 @@
     selectedUserType: 'User',
     selectedUsername: '',
     selectedPassword: '',
+        
     actions: {
       cancelNewUser: function() {
         this.set('selectedUsername', "");
