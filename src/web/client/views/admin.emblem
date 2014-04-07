@@ -1,3 +1,4 @@
+/ Create new user form
 div.panel.panel-primary
   div.panel-heading
     h3.panel-title Create new user
@@ -20,7 +21,7 @@ div.panel.panel-primary
           div.col-md-6
             button.btn.btn-success click="createNewUser" Create
 
-
+/ User list
 div.panel.panel-default
   div.panel-heading
     h3.panel-title Users
