@@ -8,7 +8,7 @@
   });
   
   App.AdminController = Ember.ArrayController.extend({
-    userTypes: ["User", "Controller", "Admin"],
+    userTypes: [ "User", "Controller", "Admin" ],
     selectedUserType: 'User',
     selectedUsername: '',
     selectedPassword: '',
