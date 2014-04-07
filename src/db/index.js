@@ -45,25 +45,43 @@ var initDB = function(done) {
       }
     
       if(process.env.NODE_ENV !== 'test') {
-        // Dummy data
-        db.User.findOrCreate({
-          username: 'test',
-          password: crypt.encrypt('test'),
-          type: 'admin'
-        }).success(function(userTest) {
-      
-          db.Card.findOrCreate({
-            uid: '6040082934'
-          }).success(function(cardTest) {
-            userTest.addCard(cardTest);
-            done();
-          });
-      
-        });
+        sampleData(done);
       } else {
         done();
       }
     }
+  });
+};
+
+var sampleData = function(callback) {
+  // Dummy data
+  db.User.findOrCreate({
+    username: 'test',
+    password: crypt.encrypt('test'),
+    type: 'admin'
+  }).success(function(testAdmin) {
+
+    db.Card.findOrCreate({
+      uid: '6040082934'
+    }).success(function(cardTest) {
+      testAdmin.addCard(cardTest);
+      
+      db.User.findOrCreate({
+        username: 'test-controller',
+        password: crypt.encrypt('test'),
+        type: 'controller'
+      }).success(function(testController) {
+        db.User.findOrCreate({
+          username: 'test-user',
+          password: crypt.encrypt('test'),
+          type: 'user'
+        }).success(function(testUser) {
+          callback();
+        });
+      });
+      
+    });
+
   });
 };
 
