@@ -273,8 +273,8 @@ describe('HGOTS Web Server', function() {
         });
       });
       
-      describe('GET /user/:id', function() {
-        var url = prefix + "/user/";
+      describe('GET /users/:id', function() {
+        var url = prefix + "/users/";
         
         it('should return user 3 to an admin', function(done) {
           authenticatedAdminAgent
@@ -307,8 +307,8 @@ describe('HGOTS Web Server', function() {
         });
       });
       
-      describe('PUT /user/:id', function() {
-        var url = prefix + "/user/";
+      describe('PUT /users/:id', function() {
+        var url = prefix + "/users/";
         
         it('should allow an admin to update user 4', function(done) {
           authenticatedAdminAgent
@@ -353,8 +353,8 @@ describe('HGOTS Web Server', function() {
         });
       });
       
-      describe('DELETE /user/:id', function() {
-        var url = prefix + "/user/";
+      describe('DELETE /users/:id', function() {
+        var url = prefix + "/users/";
         
         it('should not allow user 4 to delete itself', function(done) {
           authenticatedDeadUserAgent
@@ -382,7 +382,7 @@ describe('HGOTS Web Server', function() {
       });
       
       describe('GET /users/:id/cards', function() {
-        var url = prefix + "/user";
+        var url = prefix + "/users";
         it('should return all cards of user 3 to an admin', function(done) {
           authenticatedAdminAgent
             .get(url + "/3/cards")
@@ -418,8 +418,8 @@ describe('HGOTS Web Server', function() {
         });
       });
       
-      describe('POST /user/:id/cards', function() {
-        var url = prefix + "/user";
+      describe('POST /users/:id/cards', function() {
+        var url = prefix + "/users";
         it('should allow an admin to add a new card to a user', function(done) {
           authenticatedAdminAgent
             .post(url + '/3/cards')
@@ -442,8 +442,8 @@ describe('HGOTS Web Server', function() {
         });
       });
       
-      describe('DELETE /user/:id/card/:id', function() {
-        var url = prefix + "/user/3/card/";
+      describe('DELETE /users/:id/card/:id', function() {
+        var url = prefix + "/users/3/card/";
         
         it('should allow an admin to delete a card from a user', function(done) {
           authenticatedAdminAgent
