@@ -35,8 +35,10 @@ App = undefined;
     rootURL: '/app'
   });
   App.Router.map(function() {
-    this.resource('admin');
-    /* TODO: may specify sub-routes for specific users to be shown to the admin */
+    this.resource('admin', function() {
+      /* TODO: may specify sub-routes for specific users to be shown to the admin */
+      this.route('new');
+    });
     
     this.route('about');
     this.route('readme');

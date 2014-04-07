@@ -1,0 +1,23 @@
+/ Create new user
+link-to .btn.btn-default 'admin.new' | Create new User
+
+/ User list
+div.panel.panel-default
+  div.panel-heading
+    h3.panel-title Users
+  table.table#users
+    thead
+      tr
+        th #
+        th Username
+        th Type
+        th Options
+
+    each
+      tr
+        td.id= id
+        td.username= username
+        td.type= type
+        td.options
+          button.btn.btn-warning Edit
+          button.btn.btn-danger Delete

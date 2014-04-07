@@ -1,13 +1,13 @@
 (function() {
   "use strict";
   
-  App.AdminRoute = Ember.Route.extend({
+  App.AdminIndexRoute = Ember.Route.extend({
     model: function() {
       return this.store.findAll('user');
     }
   });
   
-  App.AdminController = Ember.ArrayController.extend({
+  App.AdminNewController = Ember.ArrayController.extend({
     userTypes: [ "User", "Controller", "Admin" ],
     selectedUserType: 'User',
     selectedUsername: '',
@@ -33,6 +33,8 @@
         
         this.set('selectedUsername', "");
         this.set('selectedPassword', "");
+        
+        this.transitionTo('admin');
       }
     }
   });
