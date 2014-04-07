@@ -37,8 +37,8 @@ The setup script should have created such a file for you, so before you first ru
 Use `grunt doc` and look in the `./doc/` directory.
 
 # Contributors
-* [sgade](https://github.com/sgade)
-* [jhbruhn](https://github.com/jhbruhn)
+* [@sgade](https://github.com/sgade)
+* [@jhbruhn](https://github.com/jhbruhn)
 
 # How to nginx.
 
