@@ -47,6 +47,7 @@ exports.getUser = function(req, res) {
           throw err;
         }
         
+        res.set('Content-Type', 'application/json');
         res.end(JSON.stringify(user));
       });
     } else {
