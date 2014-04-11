@@ -12,7 +12,8 @@ div.container-fluid
       div.collapse.navbar-collapse#nav-collapse
         ul.nav.navbar-nav
           li #{link-to 'index' | Home}
-          li #{link-to 'admin' | Admin}
+          if isPrivileged
+            li #{link-to 'admin' | Admin}
         ul.nav.navbar-nav.navbar-right
           li #{link-to 'about' | About}
           li

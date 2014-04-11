@@ -46,4 +46,32 @@ App = undefined;
     this.route('about');
     this.route('readme');
   });
+  
+  /*
+   * ==========
+   * Global controller
+   * ==========
+   * */
+   App.ApplicationController = Ember.ObjectController.extend({
+     _a: false,
+     isPrivileged: function() {
+       this.priviledgeUpdater();
+       return this.get('_a');
+     }.property('_a'),
+     
+     // updates the isPrivileged property based on the /user object.
+     priviledgeUpdater: function() {
+       var self = this;
+       
+       return Ember.$.get('/user').then(function(user) {
+         console.log("user:", user);
+         
+         var isUser = true;
+         if ( user && user.type ) {
+           isUser = ( user.type === 'user' );
+         }
+         self.set('_a', !isUser);
+       });
+     }
+   });
 }());
