@@ -76,6 +76,17 @@ var sampleData = function(callback) {
           password: crypt.encrypt('test'),
           type: 'user'
         }).success(function(testUser) {
+          
+          var pw = crypt.encrypt('test');
+          for ( var i = 0; i < 100; i++ ) {
+            var dummy = "Dummy User " + ( i + 1 );
+            db.User.findOrCreate({
+              username: dummy,
+              password: pw,
+              type: 'user'
+            });
+          }
+          
           callback();
         });
       });
