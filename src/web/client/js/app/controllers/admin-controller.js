@@ -24,7 +24,7 @@
         this.set('selectedUsername', "");
         this.set('selectedPassword', "");
         
-        this.transitionTo('admin');
+        this.transitionToRoute('admin');
       },
       createNewUser: function() {
         var username = this.get('selectedUsername');
@@ -42,7 +42,7 @@
         this.set('selectedUsername', "");
         this.set('selectedPassword', "");
         
-        this.transitionTo('admin');
+        this.transitionToRoute('admin');
       }
     }
   });
