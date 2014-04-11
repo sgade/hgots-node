@@ -1,29 +1,31 @@
-span.navbar-brand {
-  cursor: default;
-}
-a.active {
-  font-weight: bold;
-}
-
-#createNewUser .form-actions button {
-  width: 100%;
-}
-
-#admin-users {
-  // Table
-  .username {
+.app {
+  span.navbar-brand {
+    cursor: default;
+  }
+  a.active {
     font-weight: bold;
   }
-  
-  tr td button {
-    margin-left: 3px;
-    margin-right: 3px;
-    
-    &:first-child {
-      margin-left: 0px;
+
+  #createNewUser .form-actions button {
+    width: 100%;
+  }
+
+  #admin-users {
+    // Table
+    .username {
+      font-weight: bold;
     }
-    &:last-child {
-      margin-right: 0px;
+    
+    tr td button {
+      margin-left: 3px;
+      margin-right: 3px;
+      
+      &:first-child {
+        margin-left: 0px;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
     }
   }
 }
