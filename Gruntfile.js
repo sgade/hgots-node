@@ -184,7 +184,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
   
   grunt.registerTask('lint', [ 'jshint' ]);
-  grunt.registerTask('test', [ 'env', 'lint', 'mochaTest' ]);  
+  grunt.registerTask('test', [ 'env', 'lint', 'mochaTest' ]);
   grunt.registerTask('doc', [ 'jsdoc' ]);
   
 };
