@@ -52,25 +52,28 @@ App = undefined;
    * Global controller
    * ==========
    * */
+   // dirty:
    App.ApplicationController = Ember.ObjectController.extend({
-     _a: false,
+     _isPrivileged: null,
      isPrivileged: function() {
-       this.priviledgeUpdater();
-       return this.get('_a');
-     }.property('_a'),
+       if ( this.get('_isPrivileged') === null ) {
+         this.priviledgeUpdater();
+         this.set('_isPrivileged', false);
+       }
+       return this.get('_isPrivileged');
+     }.property('_isPrivileged'),
      
      // updates the isPrivileged property based on the /user object.
      priviledgeUpdater: function() {
        var self = this;
        
        return Ember.$.get('/user').then(function(user) {
-         console.log("user:", user);
-         
+         // check if the user objects is a user
          var isUser = true;
          if ( user && user.type ) {
            isUser = ( user.type === 'user' );
          }
-         self.set('_a', !isUser);
+         self.set('_isPrivileged', !isUser);
        });
      }
    });
