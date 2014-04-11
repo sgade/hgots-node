@@ -1,4 +1,6 @@
 / navs
+/ index
+link-to .btn 'admin.index' | User list
 / Create new user
 link-to .btn 'admin.new' | Create new User
 
