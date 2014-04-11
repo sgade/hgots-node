@@ -49,11 +49,14 @@ exports.createNewUser = function(req, res) {
         res.status(403).end();
       } else {
         var user = req.body.user;
-        var username = user.username,
-          password = user.password,
+        var username, password, type;
+        if ( user ) {
+          username = user.username;
+          password = user.password;
           type = user.type;
+        }
                 
-        if ( !username || !password || !type ) {
+        if ( !user || !username || !password || !type ) {
           res.status(400).end();
           return;
         }
