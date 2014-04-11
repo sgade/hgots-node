@@ -166,7 +166,7 @@ function Relais(port) {
     callback = callback || function() {};
     
     if ( !this.isOpen ) {
-      return callback();
+      return callback(null, new Array(4));
     }
   
     var buffer = new Array(4);
