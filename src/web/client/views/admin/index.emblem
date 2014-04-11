@@ -1,6 +1,3 @@
-/ Create new user
-link-to .btn.btn-default 'admin.new' | Create new User
-
 / User list
 div.panel.panel-default
   div.panel-heading

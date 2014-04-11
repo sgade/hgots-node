@@ -1,0 +1,5 @@
+/ navs
+/ Create new user
+link-to .btn 'admin.new' | Create new User
+
+=outlet
