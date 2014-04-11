@@ -203,7 +203,7 @@ describe('HGOTS Web Server', function() {
         it('should allow an admin to create a new user', function(done) {
           authenticatedAdminAgent
             .post(url)
-            .send({ username: "newTestUser1", password: defaultPasswordHash, type: "user" })
+            .send({user: { username: "newTestUser1", password: defaultPasswordHash, type: "user" } })
             .expect('Content-Type', /json/)
             .expect(200, done);
         });
@@ -211,7 +211,7 @@ describe('HGOTS Web Server', function() {
         it('should allow an admin to create a new controller', function(done) {
           authenticatedAdminAgent
             .post(url)
-            .send({ username: "newTestController1", password: defaultPasswordHash, type: "controller" })
+            .send({user: { username: "newTestController1", password: defaultPasswordHash, type: "controller" } })
             .expect('Content-Type', /json/)
             .expect(200, done);
         });
@@ -219,7 +219,7 @@ describe('HGOTS Web Server', function() {
         it('should allow an admin to create a new admin', function(done) {
           authenticatedAdminAgent
             .post(url)
-            .send({ username: "newTestAdmin1", password: defaultPasswordHash, type: "admin" })
+            .send({user: { username: "newTestAdmin1", password: defaultPasswordHash, type: "admin" } })
             .expect('Content-Type', /json/)
             .expect(200, done);
         });
@@ -227,7 +227,7 @@ describe('HGOTS Web Server', function() {
         it('should allow a controller to create a new user', function(done) {
           authenticatedControllerAgent
             .post(url)
-            .send({ username: "newTestUser2", password: defaultPasswordHash, type: "user" })
+            .send({user: { username: "newTestUser2", password: defaultPasswordHash, type: "user" } })
             .expect('Content-Type', /json/)
             .expect(200, done);
         });
@@ -235,7 +235,7 @@ describe('HGOTS Web Server', function() {
         it('should not allow a controller to create a new controller', function(done) {
           authenticatedControllerAgent
             .post(url)
-            .send({ username: "newTestController2", password: defaultPasswordHash, type: "controller" })
+            .send({user: { username: "newTestController2", password: defaultPasswordHash, type: "controller" } })
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
@@ -243,7 +243,7 @@ describe('HGOTS Web Server', function() {
         it('should not allow a controller to create a new admin', function(done) {
           authenticatedControllerAgent
             .post(url)
-            .send({ username: "newTestAdmin2", password: defaultPasswordHash, type: "admin" })
+            .send({user: { username: "newTestAdmin2", password: defaultPasswordHash, type: "admin" } })
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
@@ -251,7 +251,7 @@ describe('HGOTS Web Server', function() {
         it('should not allow a normal user to create a new user', function(done) {
           authenticatedUserAgent
             .post(url)
-            .send({ username: "newTestUser3", password: defaultPasswordHash, type: "user" })
+            .send({user: { username: "newTestUser3", password: defaultPasswordHash, type: "user" } })
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
@@ -259,7 +259,7 @@ describe('HGOTS Web Server', function() {
         it('should not allow a normal user to create a new controller', function(done) {
           authenticatedUserAgent
             .post(url)
-            .send({ username: "newTestController3", password: defaultPasswordHash, type: "controller" })
+            .send({user: { username: "newTestController3", password: defaultPasswordHash, type: "controller" } })
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
@@ -267,7 +267,7 @@ describe('HGOTS Web Server', function() {
         it('should not allow a normal user to create a new admin', function(done) {
           authenticatedUserAgent
             .post(url)
-            .send({ username: "newTestAdmin3", password: defaultPasswordHash, type: "admin" })
+            .send({user: { username: "newTestAdmin3", password: defaultPasswordHash, type: "admin" } })
             .expect('Content-Type', /json/)
             .expect(403, done);
         });
