@@ -1,5 +1,6 @@
 var assert = require('assert');
 var db = require('../../../../db/');
+var crypto = require('../../../../crypto/');
 
 exports.db = db;
 
@@ -20,6 +21,9 @@ exports.getUser = function(where, callback) {
   }).complete(callback);
 };
 exports.createUser = function(data, callback) {
+  if ( data && data.password ) {
+    data.password = crypto.encrypt(data.password);
+  }
   db.User.create(data).complete(callback);
 };
 exports.updateUser = function(id, data, callback) {
