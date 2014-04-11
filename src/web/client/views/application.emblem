@@ -8,7 +8,7 @@ div.container-fluid
           span.icon-bar
           span.icon-bar
           
-        a.navbar-brand href="#"= App.Globals.title
+        span.navbar-brand= App.Globals.title
       div.collapse.navbar-collapse#nav-collapse
         ul.nav.navbar-nav
           li #{link-to 'index' | Home}
