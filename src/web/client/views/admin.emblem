@@ -11,14 +11,12 @@ div.grid
       table.table#users
         thead
           tr
-            th #
             th Username
             th Type
             th Options
 
         each
           tr
-            td.id= id
             td.username= username
             td.type= type
             td.options
