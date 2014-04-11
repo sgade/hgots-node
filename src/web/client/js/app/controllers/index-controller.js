@@ -8,7 +8,7 @@ App.IndexController = Ember.ObjectController.extend({
       self.set('isLoading', true);
       self.set('isDisabled', true);
       
-      $.get('/open_door', function() {
+      Ember.$.get('/open_door', function() {
         self.set('isLoading', false);
         // prevent spamming:
         setTimeout(function() {
