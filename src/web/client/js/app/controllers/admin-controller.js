@@ -37,7 +37,7 @@
           username: username,
           password: password,
           type: type
-        });
+        }).save();
         
         this.set('selectedUsername', "");
         this.set('selectedPassword', "");

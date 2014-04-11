@@ -48,9 +48,10 @@ exports.createNewUser = function(req, res) {
       if ( !reqUser ) {
         res.status(403).end();
       } else {
-        var username = req.body.username,
-          password = req.body.password,
-          type = req.body.type;
+        var user = req.body.user;
+        var username = user.username,
+          password = user.password,
+          type = user.type;
                 
         if ( !username || !password || !type ) {
           res.status(400).end();
