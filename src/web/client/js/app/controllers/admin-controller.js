@@ -1,7 +1,7 @@
 (function() {
   "use strict";
   
-  App.AdminIndexRoute = Ember.Route.extend({
+  App.AdminRoute = Ember.Route.extend({
     model: function() {
       return this.store.findAll('user');
     }
