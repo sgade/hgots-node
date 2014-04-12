@@ -55,7 +55,7 @@
     userTypes: userTypes,
     
     userIsSelf: function() {
-      var shownUserUsername = this.get('model.username');
+      var shownUserUsername = this.get('model').get('username');
       
       var appController = this.get('controllers.application');
       var currentUser = appController.currentUser;
