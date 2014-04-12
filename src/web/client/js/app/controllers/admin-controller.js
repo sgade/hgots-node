@@ -57,6 +57,10 @@
     newPasswordRepeat: "",
     newType: null,
     
+    _onModelUpdater: function() {
+      this.set('newType', this.get('model.type'));
+    }.property('model'),
+    
     userIsSelf: function() {
       var shownUserUsername = this.get('model').get('username');
       

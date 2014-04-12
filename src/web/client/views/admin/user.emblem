@@ -7,6 +7,7 @@ else
       span.label.label-default This is you
 
 form.form-horizontal#editUser
+  input#edituser-id type="hidden" value=_onModelUpdater
   div.form-group
     label.control-label.col-sm-2 for="edituser-type" Type:
     div.col-sm-10
