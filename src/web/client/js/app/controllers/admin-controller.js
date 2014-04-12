@@ -102,7 +102,11 @@
         user.set('password', this.get('newPassword'));
         user.set('type', this.get('newType'));
         
-        user.save();
+        this.set('newPassword', '');
+        this.set('newPasswordRepeat', '');
+        this.set('newType', user.get('type'));
+        
+        user.save(); // returns promise
       },
       delete: function() {
         var user = this.get('model');
