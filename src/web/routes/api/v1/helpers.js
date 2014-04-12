@@ -53,7 +53,7 @@ exports.sendPublicUser = function(res, user) {
   assert(!!res, "Response object must be given.");
   assert(!!user, "User object must be given.");
   
-  var publicUser = user.getPublicModel();
+  var publicUser = { user :user.getPublicModel() };
   
   res.set('Content-Type', 'application/json').end(JSON.stringify(publicUser));
 };
