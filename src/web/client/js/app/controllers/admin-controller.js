@@ -53,6 +53,9 @@
     needs: [ 'application' ],
     
     userTypes: userTypes,
+    newPassword: "",
+    newPasswordRepeat: "",
+    newType: null,
     
     userIsSelf: function() {
       var shownUserUsername = this.get('model').get('username');
@@ -65,7 +68,7 @@
       
       return false;
     }.property('model', 'controllers.application.currentUser'),
-    canEditType: function() {
+    canSeverelyEditThisUser: function() {
       var appCtrl = this.get('controllers.application');
       if ( appCtrl.currentUser ) {
         var user = this.get('model');
@@ -75,11 +78,29 @@
       
       return false;
     }.property('model', 'controllers.application.currentUser'),
+    saveDisabled: function() {
+      if ( this.get('newType') === null ) {
+        this.set('newType', this.get('model.type'));
+      }
+      
+      // changed type
+      var isNewType = ( this.get('newType') !== this.get('model.type') );
+      // new password
+      var isNewPassword = false;
+      if ( this.get('newPassword') ) {
+        isNewPassword = ( this.get('newPassword') == this.get('newPasswordRepeat') );
+      }
+      
+      var changes = ( isNewType || isNewPassword );
+      return !changes;
+    }.property('newPassword', 'newPasswordRepeat', 'newType'),
     
     actions: {
       saveEdit: function() {
         var user = this.get('model');
-        console.log(user, user.get('type'));
+        
+        user.set('password', this.get('newPassword'));
+        user.set('type', this.get('newType'));
         
         user.save();
       },
