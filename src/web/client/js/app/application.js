@@ -61,7 +61,7 @@ App = undefined;
        
        var user = this.get('currentUser');
        if ( user && user.type ) {
-         status = ( user.type !== 'user' );
+         status = ( user.type !== 'User' );
        }
        
        return status;
