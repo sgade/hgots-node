@@ -64,7 +64,23 @@
       }
       
       return false;
-    }.property('model', 'controllers.application.currentUser')
+    }.property('model', 'controllers.application.currentUser'),
+    
+    actions: {
+      saveEdit: function() {
+        var user = this.get('model');
+        console.log(user, user.get('type'));
+        
+        user.save();
+      },
+      delete: function() {
+        var user = this.get('model');
+        
+        user.destroyRecord();
+        // TODO: only after promise returned
+        this.transitionToRoute('admin.index');
+      }
+    }
   });
   
 }());
