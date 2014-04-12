@@ -1,12 +1,20 @@
-p= App.Globals.title
-p
- | Version 
- span= App.Globals.version
+div.jumbotron
+  div.container.text-center
+    h1= App.Globals.title
+    
+    p.lead
+     | Version&nbsp;
+     span= App.Globals.version
 
-p
-  | By 
-  a href="https://github.com/sgade" Sören Gade.
-p
-  | Visit the repo at 
-  a href="https://github.com/sgade/hgots-node" Github
-  | .
+    hr
+    
+    p
+      | By&nbsp;
+      a href="https://github.com/sgade" Sören Gade
+      | &nbsp;with the help of&nbsp;
+      a href="https://github.com/sgade/hgots-node/blob/master/AUTHORS" these contributors
+      | .
+    p
+      | Visit the repo at&nbsp;
+      a href="https://github.com/sgade/hgots-node" Github
+      | .
