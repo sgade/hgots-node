@@ -68,6 +68,8 @@ App = undefined;
      }.property('currentUser'),
      
      init: function() {
+       this._super();
+       
        this.loadCurrentUser();
      },
      loadCurrentUser: function() {
