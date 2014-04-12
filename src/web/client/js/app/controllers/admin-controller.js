@@ -93,7 +93,7 @@
       
       var changes = ( isNewType || isNewPassword );
       return !changes;
-    }.property('newPassword', 'newPasswordRepeat', 'newType'),
+    }.property('newPassword', 'newPasswordRepeat', 'newType', 'model.type'),
     
     actions: {
       saveEdit: function() {
