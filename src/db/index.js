@@ -58,7 +58,7 @@ var sampleData = function(callback) {
   db.User.findOrCreate({
     username: 'test',
     password: crypt.encrypt('test'),
-    type: 'admin'
+    type: 'Admin'
   }).success(function(testAdmin) {
 
     db.Card.findOrCreate({
@@ -69,12 +69,12 @@ var sampleData = function(callback) {
       db.User.findOrCreate({
         username: 'test-controller',
         password: crypt.encrypt('test'),
-        type: 'controller'
+        type: 'Controller'
       }).success(function(testController) {
         db.User.findOrCreate({
           username: 'test-user',
           password: crypt.encrypt('test'),
-          type: 'user'
+          type: 'User'
         }).success(function(testUser) {
           
           var pw = crypt.encrypt('test');
@@ -83,7 +83,7 @@ var sampleData = function(callback) {
             db.User.findOrCreate({
               username: dummy,
               password: pw,
-              type: 'user'
+              type: 'User'
             });
           }
           

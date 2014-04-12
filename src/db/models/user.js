@@ -9,8 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     openid: Sequelize.STRING,
     type: {
       type: Sequelize.ENUM,
-      values: [ 'user', 'controller', 'admin' ],
-      defaultValue: 'user'
+      values: [ 'User', 'Controller', 'Admin' ],
+      defaultValue: 'User'
     }
   }, {
     classMethods: {
@@ -20,13 +20,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     instanceMethods: {
       isPrivileged: function() {
-        return lodash.contains(['controller', 'admin'], this.type);
+        return lodash.contains(['Controller', 'Admin'], this.type);
       },
       isAdmin: function() {
-        return this.type === 'admin';
+        return this.type === 'Admin';
       },
       isController: function() {
-        return this.type === 'controller';
+        return this.type === 'Controller';
       },
       getPublicModel: function() {
         return {
