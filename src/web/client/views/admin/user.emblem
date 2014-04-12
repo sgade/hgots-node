@@ -6,10 +6,12 @@ else
     span.small.pull-right
       span.label.label-default This is you
 
-form.form#editUser
+form.form-horizontal#editUser
   div.form-group
-    view Ember.Select content=userTypes value=type classNames="form-control"
+    label.control-label.col-sm-2 for="edituser-type" Type:
+    div.col-sm-10
+      view#edituser-type Ember.Select content=userTypes value=type classNames="form-control"
 
   div.form-actions
     div.row
-      button.btn.btn-success.col-md-12 click="saveEdit" Save changes
+      button.btn.btn-success.col-sm-12 click="saveEdit" Save changes
