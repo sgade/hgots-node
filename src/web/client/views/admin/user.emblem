@@ -10,9 +10,9 @@ form.form-horizontal#editUser
   div.form-group
     label.control-label.col-sm-2 for="edituser-type" Type:
     div.col-sm-10
-      view#edituser-type Ember.Select content=userTypes value=type classNames="form-control"
+      view#edituser-type Ember.Select content=userTypes value=type classNames="form-control" disabled=canEditType
 
   div.form-actions
     div.row
-      button.btn.btn-success.col-sm-6 click="saveEdit" Save changes
-      button.btn.btn-danger.col-sm-6 click="delete" DANGER: Delete user
+      button.btn.btn-success.col-sm-6 click="saveEdit" disabled=canEditType Save changes
+      button.btn.btn-danger.col-sm-6 click="delete" disabled=canEditType DANGER: Delete user

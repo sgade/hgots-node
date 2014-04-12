@@ -65,6 +65,16 @@
       
       return false;
     }.property('model', 'controllers.application.currentUser'),
+    canEditType: function() {
+      var appCtrl = this.get('controllers.application');
+      if ( appCtrl.currentUser ) {
+        var user = this.get('model');
+        
+        return ( user.get('username') == appCtrl.currentUser.username );
+      }
+      
+      return false;
+    }.property('model', 'controllers.application.currentUser'),
     
     actions: {
       saveEdit: function() {
