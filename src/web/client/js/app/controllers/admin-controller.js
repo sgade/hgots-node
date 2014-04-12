@@ -31,7 +31,7 @@
       createNewUser: function() {
         var username = this.get('selectedUsername');
         var password = this.get('selectedPassword');
-        var type = this.get('selectedUserType').toLowerCase();
+        var type = this.get('selectedUserType');
 
         console.log(username, password, type);
       
