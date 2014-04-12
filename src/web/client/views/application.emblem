@@ -19,4 +19,5 @@ div.app
           li
             a href="/logout" Logout
 
-  =outlet
+  div.container
+    =outlet
