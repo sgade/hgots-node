@@ -54,6 +54,8 @@ App = undefined;
    * */
    // dirty:
    App.ApplicationController = Ember.ObjectController.extend({
+     currentUser: null,
+     
      _isPrivileged: null,
      isPrivileged: function() {
        if ( this.get('_isPrivileged') === null ) {
@@ -68,6 +70,8 @@ App = undefined;
        var self = this;
        
        return Ember.$.get('/user').then(function(user) {
+         self.set('currentUser', user);
+         
          // check if the user objects is a user
          var isUser = true;
          if ( user && user.type ) {
