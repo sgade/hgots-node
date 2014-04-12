@@ -159,6 +159,8 @@ function exit(err) {
   // won't exit otherwise
   process.kill();
 }
-process.on('exit', exit);
 process.on('SIGINT', exit);
-process.on('uncaughtException', exit);
+if ( process.env.NODE_ENV !== 'development' ) {
+  process.on('exit', exit);
+  process.on('uncaughtException', exit);
+}
