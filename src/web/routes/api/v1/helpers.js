@@ -37,7 +37,7 @@ exports.updateUser = function(id, data, callback) {
       callback(err);
     } else {
       user.username = data.username || user.username;
-      user.password = data.password || user.password;
+      user.password = crypto.encrypt(data.password) || user.password;
       user.type = data.type || user.type;
       
       user.save().complete(function(err) {
