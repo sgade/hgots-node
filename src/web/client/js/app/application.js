@@ -56,7 +56,7 @@ App = undefined;
    App.ApplicationController = Ember.ObjectController.extend({
      currentUser: null,
      
-     isPrivileged: function() {
+     isCurrentUserPrivileged: function() {
        var status = false;
        
        var user = this.get('currentUser');
