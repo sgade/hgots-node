@@ -4,7 +4,7 @@ div.jumbotron
     
     p.lead
      | Version&nbsp;
-     span= App.Globals.version
+     span.label.label-primary= App.Globals.version
 
     hr
     
