@@ -162,15 +162,21 @@ exports.updateUser = function(req, res) {
                 }));
               } else {
                 
-                var username = req.body.username,
-                  password = req.body.password,
-                  type = req.body.type;
+                var updatedUser = req.body.user;
+                var username = updatedUser.username,
+                  password = updatedUser.password,
+                  type = updatedUser.type;
                 
-                helpers.updateUser(id, {
+                // only save password if a new one was set
+                updatedHash = {
                   username: username,
-                  password: password,
                   type: type
-                }, function(err, user) {
+                };
+                if ( password ) {
+                  updatedHash.password = password;
+                }
+                
+                helpers.updateUser(id, updatedHash, function(err, user) {
                   if ( err ) {
                     res.status(500).end();
                   } else {
