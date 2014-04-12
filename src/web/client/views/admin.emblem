@@ -20,8 +20,7 @@ div.grid
             td.username= username
             td.type= type
             td.options
-              link-to .btn.btn-warning  'admin.user' id | Edit
-              button.btn.btn-danger Delete
+              link-to .btn  'admin.user' id | Show
 
   div.col-md-5
     
