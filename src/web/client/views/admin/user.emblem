@@ -1,5 +1,5 @@
 unless userIsSelf
-  h1.page.header= username
+  h1.page-header= username
 else
   h1.page-header
     span= username
