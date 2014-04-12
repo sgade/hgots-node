@@ -1,6 +1,8 @@
 (function() {
   "use strict";
   
+  var userTypes = [ "User", "Controller", "Admin" ];
+  
   App.AdminRoute = Ember.Route.extend({
     model: function() {
       return this.store.findAll('user');
@@ -14,7 +16,7 @@
   });
   
   App.AdminNewController = Ember.ArrayController.extend({
-    userTypes: [ "User", "Controller", "Admin" ],
+    userTypes: userTypes,
     selectedUserType: 'User',
     selectedUsername: '',
     selectedPassword: '',
@@ -45,6 +47,24 @@
         this.transitionToRoute('admin');
       }
     }
+  });
+  
+  App.AdminUserController = Ember.ObjectController.extend({
+    needs: [ 'application' ],
+    
+    userTypes: userTypes,
+    
+    userIsSelf: function() {
+      var shownUserUsername = this.get('model.username');
+      
+      var appController = this.get('controllers.application');
+      var currentUser = appController.currentUser;
+      if ( currentUser ) {
+        return ( shownUserUsername == currentUser.username );
+      }
+      
+      return false;
+    }.property('model', 'controllers.application.currentUser')
   });
   
 }());

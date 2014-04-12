@@ -1,3 +1,14 @@
-h1= username
-div
-  i= type
+unless userIsSelf
+  h1.page.header= username
+else
+  h1.page-header
+    span= username
+    span.small.pull-right This is you
+
+form.form#editUser
+  div.form-group
+    view Ember.Select content=userTypes value=type classNames="form-control"
+
+  div.form-actions
+    div.row
+      button.btn.btn-success.col-md-12 click="saveEdit" Save changes
