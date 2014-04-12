@@ -3,7 +3,8 @@ unless userIsSelf
 else
   h1.page-header
     span= username
-    span.small.pull-right This is you
+    span.small.pull-right
+      span.label This is you
 
 form.form#editUser
   div.form-group
