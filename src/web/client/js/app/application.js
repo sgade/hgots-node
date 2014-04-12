@@ -56,28 +56,25 @@ App = undefined;
    App.ApplicationController = Ember.ObjectController.extend({
      currentUser: null,
      
-     _isPrivileged: null,
      isPrivileged: function() {
-       if ( this.get('_isPrivileged') === null ) {
-         this.priviledgeUpdater();
-         this.set('_isPrivileged', false);
+       var status = false;
+       
+       var user = this.get('currentUser');
+       if ( user && user.type ) {
+         status = ( user.type !== 'user' );
        }
-       return this.get('_isPrivileged');
-     }.property('_isPrivileged'),
+       
+       return status;
+     }.property('currentUser'),
      
-     // updates the isPrivileged property based on the /user object.
-     priviledgeUpdater: function() {
+     init: function() {
+       this.loadCurrentUser();
+     },
+     loadCurrentUser: function() {
        var self = this;
        
        return Ember.$.get('/user').then(function(user) {
          self.set('currentUser', user);
-         
-         // check if the user objects is a user
-         var isUser = true;
-         if ( user && user.type ) {
-           isUser = ( user.type === 'user' );
-         }
-         self.set('_isPrivileged', !isUser);
        });
      }
    });
