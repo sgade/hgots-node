@@ -6,7 +6,7 @@ div.grid
       div.panel-heading
         h3.panel-title Users
       / Create new user
-      link-to .btn 'admin.new' | Create new User
+      link-to .btn 'admin.new' | Create new Login
       table.table#users
         thead
           tr
