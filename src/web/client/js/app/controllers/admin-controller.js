@@ -1,7 +1,7 @@
 (function() {
   "use strict";
   
-  var userTypes = [ "User", "Controller", "Admin" ];
+  var userTypes = [ "user", "controller", "admin" ];
   
   App.AdminRoute = Ember.Route.extend({
     model: function() {
