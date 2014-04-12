@@ -163,6 +163,11 @@ exports.updateUser = function(req, res) {
               } else {
                 
                 var updatedUser = req.body.user;
+                if ( !updatedUser ) {
+                  res.status(400).end();
+                  return;
+                }
+                
                 var username = updatedUser.username,
                   password = updatedUser.password,
                   type = updatedUser.type;
