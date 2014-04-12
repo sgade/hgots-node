@@ -7,19 +7,10 @@ div.grid
         h3.panel-title Users
       / Create new user
       link-to .btn 'admin.new' | Create new Login
-      table.table#users
-        thead
-          tr
-            th Username
-            th Type
-            th Options
-
+      ul.list-group#users
         each
-          tr
-            td.username= username
-            td.type= type
-            td.options
-              link-to .btn  'admin.user' id | Show
+          li.list-group-item click="showUser id"
+            span.username= username
 
   div.col-md-8
     / right panel

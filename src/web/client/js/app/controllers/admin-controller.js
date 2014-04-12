@@ -9,6 +9,14 @@
     }
   });
   
+  App.AdminController = Ember.ArrayController.extend({
+    actions: {
+      showUser: function(id) {
+        this.transitionToRoute('admin.user', id);
+      }
+    }
+  });
+  
   App.AdminUserRoute = Ember.Route.extend({
     model: function(params) {
       return this.store.find('user', params.userid);
