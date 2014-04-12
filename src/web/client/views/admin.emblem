@@ -1,5 +1,5 @@
 div.grid
-  div.col-md-7
+  div.col-md-4
     
     / User list
     div.panel.panel-default
@@ -21,7 +21,6 @@ div.grid
             td.options
               link-to .btn  'admin.user' id | Show
 
-  div.col-md-5
-    
+  div.col-md-8
     / right panel
     =outlet
