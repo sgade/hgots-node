@@ -4,7 +4,7 @@ else
   h1.page-header
     span= username
     span.small.pull-right
-      span.label This is you
+      span.label.label-default This is you
 
 form.form#editUser
   div.form-group
