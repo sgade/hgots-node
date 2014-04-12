@@ -2,7 +2,7 @@ unless userIsSelf
   h1.page-header= username
 else
   h1.page-header
-    span= username
+    =username
     span.small.pull-right
       span.label.label-default This is you
 
