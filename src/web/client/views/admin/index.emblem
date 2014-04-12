@@ -1,7 +1,7 @@
 / Info/Help page for landing page
 
 div.jumbotron
-  div.container.text-justify
+  div.container.text-justify.bg-info
     h1 Welcome to the Administration Interface
     
     p This is your home for managing who has access to this system.
