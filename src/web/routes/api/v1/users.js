@@ -61,7 +61,7 @@ exports.createNewUser = function(req, res) {
           return;
         }
         
-        if ( reqUser.isAdmin() || ( reqUser.isController() && type == 'user' ) ) {
+        if ( reqUser.isAdmin() || ( reqUser.isController() && type == 'User' ) ) {
           
           helpers.createUser({
             username: username,
