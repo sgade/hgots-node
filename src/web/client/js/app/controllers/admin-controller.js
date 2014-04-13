@@ -43,11 +43,16 @@
 
         console.log(username, password, type);
       
-        this.store.createRecord('user', {
+        var newUser = this.store.createRecord('user', {
           username: username,
           password: password,
           type: type
-        }).save();
+        });
+        newUser.save().then(function() {
+          alert("Created new user.");
+        }, function() {
+          alert("Error creating user.");
+        });
         
         this.set('selectedUsername', "");
         this.set('selectedPassword', "");
@@ -111,6 +116,8 @@
       saveEdit: function() {
         var user = this.get('model');
         
+        var oldType = user.get('type');
+        
         user.set('password', this.get('newPassword'));
         user.set('type', this.get('newType'));
         
@@ -118,7 +125,15 @@
         this.set('newPasswordRepeat', '');
         this.set('newType', user.get('type'));
         
-        user.save(); // returns promise
+        var self = this;
+        user.save().then(function() {
+          alert("Changes saved.");
+        }, function() {
+          user.set('type', oldType);
+          self.set('newType', oldType);
+          
+          alert("Error saving changes.");
+        });
       },
       delete: function() {
         var user = this.get('model');
