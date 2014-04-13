@@ -10,7 +10,7 @@
   });
   
   App.AdminUsersListItemView = Ember.View.extend({
-    templateName: 'views/admin-users-listitem',
+    templateName: 'views/admin-users-listitem-view',
     id: function() {
       return this.get('user.id');
     }.property('user.id'),
