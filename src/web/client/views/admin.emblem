@@ -11,6 +11,8 @@ div.grid
         each
           li.list-group-item click="showUser id"
             link-to 'admin.user' id | #{ username }
+            div.pull-right
+              span.label.label-default= type
 
   div.col-md-8
     / right panel
