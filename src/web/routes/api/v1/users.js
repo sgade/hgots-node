@@ -148,7 +148,7 @@ exports.updateUser = function(req, res) {
         
         if ( reqUser.isPrivileged() ) {
           var id = req.params.id;
-          if ( id < 1 || id == reqUser.id ) {
+          if ( id < 1 ) {
             res.status(400).end();
             return;
           }
@@ -175,6 +175,10 @@ exports.updateUser = function(req, res) {
                 var username = updatedUser.username,
                   password = updatedUser.password,
                   type = updatedUser.type;
+                  
+                if ( reqUser.id == id ) {
+                  type = reqUser.id; // do not allow type change
+                }
                 
                 // only save password if a new one was set
                 updatedHash = {
