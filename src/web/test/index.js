@@ -182,12 +182,14 @@ describe('HGOTS Web Server', function() {
             .expect({users: users}, done);
         });
         
-        it('should return all users to a controller', function(done) {
+        it('should return only users to a controller', function(done) {
           authenticatedControllerAgent
             .get(url)
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({users: users}, done);
+            .expect({users: users.filter(function(user) {
+              return ( user.type == 'User' );
+            })}, done);
         });
         
         it('should return "403: Forbidden" to a user', function(done) {
