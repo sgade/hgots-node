@@ -10,7 +10,7 @@ div.grid
       ul.list-group#users
         each
           li.list-group-item click="showUser id"
-            span.username= username
+            link-to 'admin.user' id | #{ username }
 
   div.col-md-8
     / right panel
