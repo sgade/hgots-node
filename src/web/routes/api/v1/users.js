@@ -20,6 +20,10 @@ exports.getAllUsers = function(req, res) {
               
               var userList = [];
               users.forEach(function(user) {
+                if ( reqUser.isController() && user.isPrivileged() ) {
+                  return; // skip admins because controllers should not edit them
+                }
+                
                 userList.push(user.getPublicModel());
               });
               
