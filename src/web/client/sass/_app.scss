@@ -11,9 +11,25 @@
   }
 
   #users {
+    li {
+      
+      & a {
+        color: black;
+      }
+      &:hover {
+        background-color: #ccc;
+        cursor: pointer;
+        
+        a {
+          font-weight: bold;
+          &.active {
+            font-style: italic;
+          }
+        }
+      }
+    }
     li:hover {
-      background-color: #ccc;
-      cursor: pointer;
+      
     }
   }
 }
