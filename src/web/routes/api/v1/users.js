@@ -144,7 +144,7 @@ exports.updateUser = function(req, res) {
         
         if ( reqUser.isPrivileged() ) {
           var id = req.params.id;
-          if ( id < 1 ) {
+          if ( id < 1 || id == reqUser.id ) {
             res.status(400).end();
             return;
           }
