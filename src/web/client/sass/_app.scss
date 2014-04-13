@@ -26,6 +26,13 @@
         background-color: #ccc;
         cursor: pointer;
         
+        &.bg-primary {
+          background-color: #87ACCB;
+        }
+        &.bg-info {
+          background-color: #D3DDE2;
+        }
+        
         a {
           font-weight: bold;
         }
