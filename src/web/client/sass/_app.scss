@@ -11,6 +11,10 @@
   }
 
   #users {
+    .bg-primary > li,
+    .bg-info > li {
+      background-color: inherit;
+    }
     li {
       
       & a {
@@ -24,9 +28,6 @@
           font-weight: bold;
         }
       }
-    }
-    li:hover {
-      
     }
   }
 }

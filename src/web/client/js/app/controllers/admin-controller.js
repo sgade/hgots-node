@@ -21,6 +21,23 @@
       return this.get('user.type');
     }.property('user.type'),
     
+    classNameBindings: [ 'backgroundClass' ],
+    backgroundClass: function() {
+      var klass = '';
+      
+      var type = this.get('user.type');
+      if ( type ) {
+        if ( type == 'Admin' ) {
+          klass = 'bg-primary';
+        } else if ( type == 'Controller' )  {
+          klass = 'bg-info';
+        }
+      }
+      
+      return klass;
+    }.property('user.type'),
+    
+    
     click: function() {
       this.get('controller').transitionToRoute('admin.user', this.get('user.id'));
     }
