@@ -9,10 +9,7 @@ div.grid
       link-to .btn 'admin.new' | Create new Login
       ul.list-group#users
         each
-          li.list-group-item click="showUser id"
-            link-to 'admin.user' id | #{ username }
-            div.pull-right
-              span.label.label-default= type
+          App.AdminUsersListItemView user=this
 
   div.col-md-8
     / right panel
