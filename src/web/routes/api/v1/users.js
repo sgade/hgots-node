@@ -180,6 +180,10 @@ exports.updateUser = function(req, res) {
                 if ( password ) {
                   updatedHash.password = password;
                 }
+                if ( !reqUser.isAdmin() && type !== 'User' ) {
+                  res.status(400).end();
+                  return;
+                }
                 
                 helpers.updateUser(id, updatedHash, function(err, user) {
                   if ( err ) {
