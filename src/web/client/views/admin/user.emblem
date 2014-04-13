@@ -11,15 +11,15 @@ form.form-horizontal#editUser
   div.form-group
     label.control-label.col-sm-2 for="edituser-type" Type:
     div.col-sm-10
-      view#edituser-type Ember.Select content=userTypes value=newType classNames="form-control" disabled=canSeverelyEditThisUser
+      Ember.Select#edituser-type content=userTypes value=newType classNames="form-control" disabled=canSeverelyEditThisUser
   div.form-group
     label.control-label.col-sm-2 for="edituser-pw1" New password:
     div.col-sm-10
-      view#edituser-pw1 Ember.TextField type="password" classNames="form-control" value=newPassword placeholder="Super secret"
+      Ember.TextField#edituser-pw1 type="password" classNames="form-control" value=newPassword placeholder="Super secret"
   div.form-group
     label.control-label.col-sm-2 for="edituser-pw2" New password (repeat):
     div.col-sm-10
-      view#edituser-pw2 Ember.TextField type="password" classNames="form-control" value=newPasswordRepeat placeholder="Super secret (repeat)"
+      Ember.TextField#edituser-pw2 type="password" classNames="form-control" value=newPasswordRepeat placeholder="Super secret (repeat)"
 
   div.form-actions
     div.row
