@@ -1,13 +1,10 @@
 form.form#createNewUser
   div.form-group
-    / label for="newuser-username" Username
     Ember.TextField type="text" value=selectedUsername classNames="form-control" placeholder="Username"
   div.form-group
-    / label for="newuser-password" Password
     Ember.TextField type="password" value=selectedPassword classNames="form-control" placeholder="Password"
   div.form-group
     Ember.Select content=userTypes value=selectedUserType classNames="form-control"
-    / label for="newuser-type" Type
   
   div.form-actions
     div.row
