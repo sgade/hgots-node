@@ -8,6 +8,11 @@
       return this.store.findAll('user');
     }
   });
+  App.AdminController = Ember.ArrayController.extend({
+    /* Not working yet */
+    sortProperties: [ 'type', 'username' ],
+    sortAscending: false
+  });
   
   App.AdminUsersListItemView = Ember.View.extend({
     templateName: 'views/admin-users-listitem-view',
