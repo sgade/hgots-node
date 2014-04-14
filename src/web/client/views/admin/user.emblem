@@ -15,7 +15,7 @@ form.form-horizontal#editUser
   div.form-group
     label.control-label.col-sm-2 for="edituser-pw1" New password:
     div.col-sm-10
-      Ember.TextField#edituser-pw1 type="password" classNames="form-control" value=newPassword placeholder="Super secret"
+      App.PasswordStrengthView#edituser-pw1 password=newPassword passwordPlaceholder="Super secret"
   div.form-group
     label.control-label.col-sm-2 for="edituser-pw2" New password (repeat):
     div.col-sm-10
