@@ -14,6 +14,31 @@
     sortAscending: false
   });
   
+  App.PasswordStrengthView = Ember.View.extend({
+    templateName: 'views/password-strength-view',
+    
+    password: '',
+    passwordPlaceholder: '',
+    
+    _passwordScore: 0,
+    strengthUpdater: function() {
+      var calc = function(pw) {
+        return ( Math.random() * 4 + 1 ); // TODO: add zxcvbn
+      };
+      
+      var strength = calc(this.get('password'));
+      this.set('_passwordScore', strength);
+      
+      return strength;
+    }.property('controllers.AdminNewController.selectedPassword'),
+    
+    
+    barClass: function() {
+      var score = this.get('_passwordScore');
+      return 'score-' + score;
+    }.property('_passwordScore')
+  });
+  
   App.AdminUsersListItemView = Ember.View.extend({
     templateName: 'views/admin-users-listitem-view',
     id: function() {
@@ -44,7 +69,9 @@
     
     
     click: function() {
-      this.get('controller').transitionToRoute('admin.user', this.get('user.id'));
+      var userId = this.get('user.id');
+      this.get('controller').send('showUser', userId);
+      // this.get('controller').transitionToRoute('admin.user', this.get('user.id'));
     }
   });
   
@@ -66,7 +93,7 @@
     userTypes: userTypes,
     selectedUserType: 'User',
     selectedUsername: '',
-    selectedPassword: '',
+    selectedPassword: 'test',
         
     actions: {
       cancelNewUser: function() {
