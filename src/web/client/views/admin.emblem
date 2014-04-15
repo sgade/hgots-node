@@ -4,9 +4,10 @@ div.grid
     / User list
     div.panel.panel-default
       div.panel-heading
-        h3.panel-title Users
-      / Create new user
-      link-to .btn 'admin.new' | Create new Login
+        h3.panel-title
+          | Users
+          / Create new user
+          link-to .btn.btn-xs.pull-right 'admin.new' | Create new Login
       ul.list-group#users
         each
           App.AdminUsersListItemView user=this
