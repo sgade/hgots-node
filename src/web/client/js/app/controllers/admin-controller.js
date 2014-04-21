@@ -8,6 +8,16 @@
       return this.store.findAll('user');
     }
   });
+  App.AdminController = Ember.ArrayController.extend({
+    sortProperties: [ 'type', 'username' ],
+    sortAscending: true,
+    
+    actions: {
+      showUser: function(id) {
+        this.transitionToRoute('admin.user', id);
+      }
+    }
+  });
   
   App.AdminUsersListItemView = Ember.View.extend({
     templateName: 'views/admin-users-listitem-view',
@@ -40,17 +50,6 @@
     
     click: function() {
       this.get('controller').transitionToRoute('admin.user', this.get('user.id'));
-    }
-  });
-  
-  App.AdminController = Ember.ArrayController.extend({
-    sortProperties: [ 'type', 'username' ],
-    sortAscending: true,
-    
-    actions: {
-      showUser: function(id) {
-        this.transitionToRoute('admin.user', id);
-      }
     }
   });
   
