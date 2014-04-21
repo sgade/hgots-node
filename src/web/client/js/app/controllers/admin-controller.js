@@ -12,6 +12,23 @@
     sortProperties: [ 'type', 'username' ],
     sortAscending: true,
     
+    rightPanelTop: 0,
+    rightPanelStyle: function() {
+      return "margin-top: " + this.get('rightPanelTop') + "px";
+    }.property("rightPanelTop"),
+    
+    init: function() {
+      this._super();
+      this.registerScrollHandler();
+    },
+    registerScrollHandler: function() {
+      var self = this;
+      $(window).on('scroll', function() {
+        var offset = window.scrollY;
+        self.set('rightPanelTop', offset);
+      });
+    },
+    
     actions: {
       showUser: function(id) {
         this.transitionToRoute('admin.user', id);

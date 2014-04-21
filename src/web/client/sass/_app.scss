@@ -5,6 +5,11 @@
   a.active {
     font-weight: bold;
   }
+  
+  .admin-scroll-right {
+    transition: margin 0.25s;
+    -webkit-transition: margin 0.25s;
+  }
 
   #createNewUser .form-actions button {
     width: 100%;
