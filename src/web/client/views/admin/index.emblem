@@ -17,4 +17,4 @@ div.jumbotron
           li Controller: Has rights to create new users. Can open the door.
           li User: Can open the door.
       
-    p If you have any questions, see the #{link-to 'about' | About page }.
+    p If you have any questions, see the #{link-to 'about' | About page}.
