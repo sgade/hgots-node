@@ -6,7 +6,6 @@ module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     username: Sequelize.STRING,
     password: Sequelize.STRING,
-    openid: Sequelize.STRING,
     type: {
       type: Sequelize.ENUM,
       values: [ 'User', 'Controller', 'Admin' ],
