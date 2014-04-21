@@ -9,6 +9,10 @@
   .admin-scroll-right {
     transition: margin 0.25s;
     -webkit-transition: margin 0.25s;
+    
+    h1 {
+      margin-top: 0;
+    }
   }
 
   #createNewUser .form-actions button {
