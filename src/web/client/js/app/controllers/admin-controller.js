@@ -24,7 +24,10 @@
     registerScrollHandler: function() {
       var self = this;
       $(window).on('scroll', function() {
-        var offset = window.scrollY;
+        var navbarHeight = $(".navbar").height();
+        var scrollY = window.scrollY;
+        var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
+        
         self.set('rightPanelTop', offset);
       });
     },
