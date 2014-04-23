@@ -4,12 +4,20 @@ div.grid
     / User list
     div.panel.panel-default
       div.panel-heading
-        h3.panel-title
-          | Users
-          / Create new user
-          link-to .btn.btn-xs.pull-right 'admin.new' | Create new Login
+        h3.panel-title.grid
+          div.row
+            div.col-sm-5
+              / Header
+              | Users
+            div.col-sm-7
+              / Search
+              Ember.TextField type="text" value=searchText
+          div.row style="margin-top: 3px;"
+            div.col-sm-12
+              / Create new user
+              link-to .btn.btn-xs.pull-right 'admin.new' | Create new Login
       ul.list-group#users
-        each
+        each filteredModel
           App.AdminUsersListItemView user=this
 
   div.col-md-8

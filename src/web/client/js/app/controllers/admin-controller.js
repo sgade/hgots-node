@@ -12,6 +12,8 @@
     sortProperties: [ 'type', 'username' ],
     sortAscending: true,
     
+    searchText: '',
+    
     rightPanelTop: 0,
     rightPanelStyle: function() {
       return "margin-top: " + this.get('rightPanelTop') + "px";
@@ -31,6 +33,19 @@
         self.set('rightPanelTop', offset);
       });
     },
+    
+    filteredModel: function() {
+      var search = this.get('searchText');
+      if ( search ) {
+        search = search.toLowerCase();
+        return this.get('content').filter(function(item, index, enumerable) {
+          var username = item.get('username').toLowerCase();
+          return username.indexOf(search) != -1;
+        });
+      } else {
+        return this.get('content');
+      }
+    }.property('searchText', 'content.@each'),
     
     actions: {
       showUser: function(id) {
