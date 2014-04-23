@@ -4,7 +4,7 @@ div.grid
     / User list
     div.panel.panel-default
       div.panel-heading
-        h3.panel-title.grid
+        h3.panel-title
           div.row
             div.col-sm-5
               / Header
