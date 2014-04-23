@@ -177,7 +177,7 @@ exports.updateUser = function(req, res) {
                   type = updatedUser.type;
                   
                 if ( reqUser.id == id ) {
-                  type = reqUser.id; // do not allow type change
+                  type = reqUser.type; // do not allow type change
                 }
                 
                 // only save password if a new one was set

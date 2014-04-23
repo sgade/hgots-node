@@ -109,43 +109,6 @@ function configurePassport() {
       done(err, user);
     });
   });
-
-  // openID based authentication
-  configurePassportOpenID();
-}
-function configurePassportOpenID() {
-  var host = config.openid.hostURL;
-  passport.use(new PassportOpenID({
-      returnURL: host + '/auth/openid/return',
-      realm: host,
-      profile: true
-    }, function(identifier, profile, done) {
-      var displayName = "";
-      if(typeof profile.displayName !== 'undefined') {
-        displayName = profile.displayName;
-      }
-      db.User.findOrCreate({
-        openid: identifier
-      }).complete(function(err, user) {
-        if ( err ) {
-          if ( profile ) {
-            console.log("Although we are going to crash,", profile.displayName, "authenticated!");
-          }
-          throw err; // TODO: handle error
-        }
-        console.log(profile.displayName, "authenticated using openID.");
-        user.username = profile.displayName;
-        user.save();
-        done(err, user);
-      });
-    }
-  ));
-
-  app.post('/auth/openid', passport.authenticate('openid'));
-  app.get('/auth/openid/return', passport.authenticate('openid', {
-    successRedirect: '/app',
-    failureRedirect: '/login'
-  }));
 }
 function configureRoutes() {
   // Routes for login

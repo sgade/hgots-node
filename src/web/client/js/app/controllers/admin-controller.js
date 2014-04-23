@@ -9,9 +9,49 @@
     }
   });
   App.AdminController = Ember.ArrayController.extend({
-    /* Not working yet */
     sortProperties: [ 'type', 'username' ],
-    sortAscending: false
+    sortAscending: true,
+    
+    searchText: '',
+    
+    rightPanelTop: 0,
+    rightPanelStyle: function() {
+      return "margin-top: " + this.get('rightPanelTop') + "px";
+    }.property("rightPanelTop"),
+    
+    init: function() {
+      this._super();
+      this.registerScrollHandler();
+    },
+    registerScrollHandler: function() {
+      var self = this;
+      $(window).on('scroll', function() {
+        var navbarHeight = $(".navbar").height();
+        var scrollY = window.scrollY;
+        var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
+        
+        self.set('rightPanelTop', offset);
+      });
+    },
+    
+    filteredModel: function() {
+      var search = this.get('searchText');
+      if ( search ) {
+        search = search.toLowerCase();
+        return this.get('content').filter(function(item, index, enumerable) {
+          var username = item.get('username').toLowerCase();
+          return username.indexOf(search) != -1;
+        });
+      } else {
+        return this.get('content');
+      }
+    }.property('searchText', 'content.@each'),
+    
+    actions: {
+      showUser: function(id) {
+        this.transitionToRoute('admin.user', id);
+      }
+    }
   });
   
   App.PasswordStrengthView = Ember.View.extend({
@@ -72,14 +112,6 @@
       var userId = this.get('user.id');
       this.get('controller').send('showUser', userId);
       // this.get('controller').transitionToRoute('admin.user', this.get('user.id'));
-    }
-  });
-  
-  App.AdminController = Ember.ArrayController.extend({
-    actions: {
-      showUser: function(id) {
-        this.transitionToRoute('admin.user', id);
-      }
     }
   });
   
