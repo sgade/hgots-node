@@ -66,11 +66,13 @@
         return ( Math.random() * 4 + 1 ); // TODO: add zxcvbn
       };
       
+      console.log(this.get('password'));
+      
       var strength = calc(this.get('password'));
       this.set('_passwordScore', strength);
       
       return strength;
-    }.property('controllers.AdminNewController.selectedPassword'),
+    }.property('password'),
     
     
     barClass: function() {
