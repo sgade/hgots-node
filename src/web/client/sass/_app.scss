@@ -6,6 +6,10 @@
     font-weight: bold;
   }
   
+  .panel .ember-view {
+    width: 100%;
+  }
+  
   .admin-scroll-right {
     transition: margin 0.25s;
     -webkit-transition: margin 0.25s;
