@@ -60,24 +60,17 @@
     password: '',
     passwordPlaceholder: '',
     
-    _passwordScore: 0,
-    strengthUpdater: function() {
+    _passwordScore: function() {
       var calc = function(pw) {
-        return ( Math.random() * 4 + 1 ); // TODO: add zxcvbn
+        return Math.floor( Math.random() * 4 + 1 ); // TODO: add zxcvbn
       };
       
-      console.log(this.get('password'));
-      
-      var strength = calc(this.get('password'));
-      this.set('_passwordScore', strength);
-      
-      return strength;
+      return calc(this.get('password'));
     }.property('password'),
-    
     
     barClass: function() {
       var score = this.get('_passwordScore');
-      return 'score-' + score;
+      return 'strength-bar score-' + score;
     }.property('_passwordScore')
   });
   
