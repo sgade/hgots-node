@@ -1,0 +1,30 @@
+.password-strength-view {
+  .strength-bar {
+    height: 3px;
+    border-radius: 1px;
+    
+    width: 0%;
+    background-color: blue;
+    
+    &.score-0 {
+      width: 10%;
+      background-color: red;
+    }
+    &.score-1 {
+      width: 25%;
+      background-color: red;
+    }
+    &.score-2 {
+      width: 50%;
+      background-color: yellow;
+    }
+    &.score-3 {
+      width: 75%;
+      background-color: yellow;
+    }
+    &.score-4 {
+      width: 100%;
+      background-color: green;
+    }
+  }
+}

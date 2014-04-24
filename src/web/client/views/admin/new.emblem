@@ -2,7 +2,7 @@ form.form#createNewUser
   div.form-group
     Ember.TextField type="text" value=selectedUsername classNames="form-control" placeholder="Username"
   div.form-group
-    Ember.TextField type="password" value=selectedPassword classNames="form-control" placeholder="Password"
+    App.PasswordStrengthView password=selectedPassword passwordPlaceholder="Password"
   div.form-group
     Ember.Select content=userTypes value=selectedUserType classNames="form-control"
   
