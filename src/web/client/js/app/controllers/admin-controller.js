@@ -62,7 +62,8 @@
     
     _passwordScore: function() {
       var calc = function(pw) {
-        return Math.floor( Math.random() * 4 + 1 ); // TODO: add zxcvbn
+        var estimate = zxcvbn(pw);
+        return estimate.score;
       };
       
       return calc(this.get('password'));
