@@ -121,7 +121,7 @@
     userTypes: userTypes,
     selectedUserType: 'User',
     selectedUsername: '',
-    selectedPassword: 'test',
+    selectedPassword: '',
         
     actions: {
       cancelNewUser: function() {
