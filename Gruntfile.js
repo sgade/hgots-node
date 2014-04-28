@@ -18,7 +18,7 @@ module.exports = function(grunt) {
      * */
     jshint: {
       self: [ './*.js', './*.json' ],
-      src: [ './src/**/*.js', '!./src/web/public/**/*.js' ]
+      src: [ './src/**/*.js', '!./src/web/public/**/*.js', '!./src/web/client/js/app/lib/**/*.js' ]
     },
     env: {
       test: {
