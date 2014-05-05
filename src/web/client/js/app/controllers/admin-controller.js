@@ -34,18 +34,33 @@
       });
     },
     
-    filteredModel: function() {
+    _filterModel: function() {
+      var model = null;
+      
       var search = this.get('searchText');
       if ( search ) {
         search = search.toLowerCase();
-        return this.get('content').filter(function(item, index, enumerable) {
+        model = this.get('content').filter(function(item, index, enumerable) {
           var username = item.get('username').toLowerCase();
           return username.indexOf(search) != -1;
         });
       } else {
-        return this.get('content');
+        model = this.get('content');
       }
-    }.property('searchText', 'content.@each'),
+      
+      this.set('filteredModel', model);
+      
+      return model;
+    },
+    onFilteredModelBaseChange: function() {
+      if ( this.get('filteredModel') === null ) {
+        this._filterModel();
+      } else {
+        console.log("debounce");
+        Ember.run.debounce(this, this._filterModel, 250);
+      }
+    }.observes('searchText', 'content.@each'),
+    filteredModel: null,
     
     actions: {
       showUser: function(id) {
