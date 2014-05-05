@@ -26,7 +26,7 @@
     registerScrollHandler: function() {
       var self = this;
       $(window).on('scroll', function() {
-        if ( window.width >= 992 ) {
+        if ( window.innerWidth >= 992 ) {
           var navbarHeight = $(".navbar").height();
           var scrollY = window.scrollY;
           var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
