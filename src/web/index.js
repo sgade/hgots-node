@@ -129,6 +129,9 @@ function configureRoutes() {
 
   // configure api
   require('./routes/api/')(app);
+  
+  // initial setup
+  app.get('/setup', routes.setup);
 }
 
 /**
