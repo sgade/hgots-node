@@ -3,6 +3,7 @@
  * */
 
 var helpers = require('./helpers');
+var pkg = require('./../../../package');
 
 /* Default route: Login */
 exports.index = function(req, res) {
@@ -12,7 +13,7 @@ exports.index = function(req, res) {
       res.redirect("/app");
     } else {
       res.render('index', {
-        title: 'hgots-node'
+        title: pkg.name
       });
     }
     
@@ -27,7 +28,7 @@ exports.app = function(req, res) {
       res.redirect('/');
     } else {
       res.render('app', {
-        title: 'hgots-node'
+        title: pkg.name
       });
     }
     
