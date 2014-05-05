@@ -6,27 +6,78 @@ block content
     
     p This is the first time you are using #{title}. To make sure everything is working the way you want it to, you're guided through this little assistant.
     
-    .well
-      h3 #1: Admin user
-      p There is no admin user yet. This type of user is able to change everything, including the system's configuration and the list of users, that have access to the room.
-      p You should now specify a unique yet simple username for the admin user and a <b>strong</b> password only you know.
-      
-      .panel.panel-default
-        .panel-heading Admin User
-        .panel-body
-          form.form.form-horizontal
-            .form-group
-              label.control-label.col-sm-3(for="setup-admin-username") Username
-              .col-sm-9
-                input.form-control(type="text", id="setup-admin-username", placeholder="Username")
-            .form-group
-              label.control-label.col-sm-3(for="setup-admin-password") Password
-              .col-sm-9
-                input.form-control(type="password", id="setup-admin-password", placeholder="Strong password")
-            .form-group
-              label.control-label.col-sm-3(for="setup-admin-password-repeat") Repeat password
-              .col-sm-9
-                input.form-control(type="password", id="setup-admin-password-repeat", placeholder="Repeat the strong password")
-  
+    ul.steps.list-unstyled
+      // Admin user
+      li.well
+        h3 #1: Admin user
+        p There is no admin user yet. This type of user is able to change everything, including the system's configuration and the list of users, that have access to the room.
+        p You should now specify a unique yet simple username for the admin user and a <b>strong</b> password only you know.
+        
+        .panel.panel-default
+          .panel-heading Admin User
+          .panel-body
+            form.form.form-horizontal
+              .form-group
+                label.control-label.col-sm-3(for="setup-admin-username") Username
+                .col-sm-9
+                  input.form-control(type="text", id="setup-admin-username", placeholder="Username")
+              .form-group
+                label.control-label.col-sm-3(for="setup-admin-password") Password
+                .col-sm-9
+                  input.form-control(type="password", id="setup-admin-password", placeholder="Strong password")
+              .form-group
+                label.control-label.col-sm-3(for="setup-admin-password-repeat") Repeat password
+                .col-sm-9
+                  input.form-control(type="password", id="setup-admin-password-repeat", placeholder="Repeat the strong password")
+                  
+              .form-group
+                span.help-block Enter the text you defined to identify as the system admin:
+                label.control-label.col-sm-3(for="setup-admin-control") Control text
+                .col-sm-9
+                  input.form-control(type="text", id="setup-admin-control", placeholder="Control text")
+              
+              .form-actions
+                btn#setup-save-admin.btn.btn-default Next Step
+      // Initial settings
+      li.well
+        h3 #2: General settings
+        p Great!
+        p Now that you can log into the application, why don't we set the settings right away so you can focus on using the application right away?
+        p Right, here are some options for you:
+        
+        .panel.panel-default
+          .panel-heading Settings
+          .panel-body
+            form.form.form-horizontal
+              h4.help-block Database
+              .form-group
+                label.control-label.col-sm-3(for="setup-db-name") Database name
+                .col-sm-9
+                  input.form-control(type="text", id="setup-db-name", placeholder="db.sqlite")
+              .form-group
+                label.control-label.col-sm-3(for="setup-db-username") Database username
+                .col-sm-9
+                  input.form-control(type="text", id="setup-db-name", placeholder="admin")
+              .form-group
+                label.control-label.col-sm-3(for="setup-db-password") Database password
+                .col-sm-9
+                  input.form-control(type="text", id="setup-db-password", placeholder="admin")
+                  
+              // TODO: add way more settings, and validate if the database settings are even needed
+              
+              .form-actions
+                btn#setup-back-admin.btn.btn-default Back
+                btn#setup-save-settings.btn.btn-default Finish setup
+                
+      // Save settings, then redirect
+      li.well
+        h3 #3: Send new defaults
+        p Just a second and you'll be ready to go!
+        p We are currently uploading the new settings to the server who is then processing it.
+        
+        p If everything is ready, click this button:
+        
+        a#setup-end.btn.btn-success(href="/") Go to login page!
+    
   
   script(src="/js/setup.js")
