@@ -65,7 +65,7 @@ module.exports = function(grunt) {
         dest: './src/web/public/js/templates.js'
       },
       setup: {
-        src: [ './src/web/client/js/setup/**/*.js' ],
+        src: [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/setup/**/*.js' ],
         dest: './src/web/public/js/setup.js'
       }
     },
