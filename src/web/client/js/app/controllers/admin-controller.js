@@ -26,11 +26,15 @@
     registerScrollHandler: function() {
       var self = this;
       $(window).on('scroll', function() {
-        var navbarHeight = $(".navbar").height();
-        var scrollY = window.scrollY;
-        var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
-        
-        self.set('rightPanelTop', offset);
+        if ( window.width >= 992 ) {
+          var navbarHeight = $(".navbar").height();
+          var scrollY = window.scrollY;
+          var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
+          
+          self.set('rightPanelTop', offset);
+        } else {
+          self.set('rightPanelTop', 0);
+        }
       });
     },
     
