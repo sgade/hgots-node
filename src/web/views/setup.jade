@@ -1,7 +1,32 @@
 extends layout
 
 block content
-  h1 Welcome to #{title}
+  .container
+    h1 Welcome to #{title}
+    
+    p This is the first time you are using #{title}. To make sure everything is working the way you want it to, you're guided through this little assistant.
+    
+    .well
+      h3 #1: Admin user
+      p There is no admin user yet. This type of user is able to change everything, including the system's configuration and the list of users, that have access to the room.
+      p You should now specify a unique yet simple username for the admin user and a <b>strong</b> password only you know.
+      
+      .panel.panel-default
+        .panel-heading Admin User
+        .panel-body
+          form.form.form-horizontal
+            .form-group
+              label.control-label.col-sm-3(for="setup-admin-username") Username
+              .col-sm-9
+                input.form-control(type="text", id="setup-admin-username", placeholder="Username")
+            .form-group
+              label.control-label.col-sm-3(for="setup-admin-password") Password
+              .col-sm-9
+                input.form-control(type="password", id="setup-admin-password", placeholder="Strong password")
+            .form-group
+              label.control-label.col-sm-3(for="setup-admin-password-repeat") Repeat password
+              .col-sm-9
+                input.form-control(type="password", id="setup-admin-password-repeat", placeholder="Repeat the strong password")
   
   
   script(src="/js/setup.js")
