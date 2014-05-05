@@ -63,6 +63,10 @@ module.exports = function(grunt) {
       templates: {
         src: [ './src/web/public/js/templates-handlebars.js', './src/web/public/js/templates-emblem.js'],
         dest: './src/web/public/js/templates.js'
+      },
+      setup: {
+        src: [ './src/web/client/js/setup/**/*.js' ],
+        dest: './src/web/public/js/setup.js'
       }
     },
     /* Build */
@@ -84,6 +88,11 @@ module.exports = function(grunt) {
       templates: {
         files: {
           './src/web/public/js/templates.js': [ './src/web/public/js/templates.js' ]
+        }
+      },
+      setup: {
+        files: {
+          './src/web/public/js/setup.js': [ './src/web/public/js/setup.js' ]
         }
       }
     },
@@ -120,6 +129,10 @@ module.exports = function(grunt) {
       jsapp: {
         files: [ './src/web/client/js/app/**/*.js' ],
         tasks: [ 'build-dev-js-app' ]
+      },
+      jsSetup: {
+        files: [ './src/web/client/js/setup/**/*.js' ],
+        tasks: [  ]
       },
       
       css: {
@@ -171,15 +184,17 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', [ 'build-dev', 'watch' ]);
   /* Single purpose tasks */
   grunt.registerTask('build-dev', [ 'clean', 'build-dev-js', 'build-css' ]);
-  grunt.registerTask('build-dev-js', [ 'build-dev-js-app', 'build-dev-js-index', 'build-dev-js-templates' ]);
+  grunt.registerTask('build-dev-js', [ 'build-dev-js-app', 'build-dev-js-index', 'build-dev-js-templates', 'build-dev-js-setup' ]);
   grunt.registerTask('build-dev-js-index', [ 'concat:index' ]);
   grunt.registerTask('build-dev-js-app', [ 'concat:app' ]);
+  grunt.registerTask('build-dev-js-setup', [ 'concat:setup' ]);
   grunt.registerTask('build-dev-js-templates', [ 'emberTemplates', 'emblem', 'concat:templates' ]);
   
   grunt.registerTask('build', [ 'clean', 'build-js', 'build-css' ]);
-  grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index', 'build-js-templates' ]);
+  grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index', 'build-js-templates', 'build-js-setup' ]);
   grunt.registerTask('build-js-index', [ 'build-dev-js-index', 'uglify:index' ]);
   grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
+  grunt.registerTask('build-js-setup', [ 'build-dev-js-setup', 'uglify:setup' ]);
   grunt.registerTask('build-js-templates', [ 'build-dev-js-templates', 'uglify:templates' ]);
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
   
