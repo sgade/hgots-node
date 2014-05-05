@@ -132,7 +132,7 @@ module.exports = function(grunt) {
       },
       jsSetup: {
         files: [ './src/web/client/js/setup/**/*.js' ],
-        tasks: [  ]
+        tasks: [ 'build-dev-js-setup' ]
       },
       
       css: {
