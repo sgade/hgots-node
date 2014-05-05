@@ -9,7 +9,7 @@ div.jumbotron
     ul
       li All the users that have access to this system are listed on the left.
       / We assume that user 1 must exist because we have at least one user to view this!
-      li You can #{link-to 'admin.new' | create } new users and #{link-to 'admin.user' 1 | edit } existing ones.
+      li You can #{link-to 'admin.new' | create } new users and edit existing ones on the left.
       li
         | There are three different user types:
         ol
