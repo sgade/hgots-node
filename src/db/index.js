@@ -45,7 +45,8 @@ var initDB = function(done) {
       }
     
       if(process.env.NODE_ENV !== 'test') {
-        sampleData(done);
+        //sampleData(done);
+        done();
       } else {
         done();
       }
