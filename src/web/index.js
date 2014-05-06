@@ -16,7 +16,8 @@ var expressBodyParser = require('body-parser'),
   expressFavicon = require('serve-favicon'),
   expressCompress = require('compression'),
   expressMethodOverride = require('method-override'),
-  expressErrorHandler = require('errorhandler');
+  expressErrorHandler = require('errorhandler'),
+  expressStatic = require('serve-static');
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy,
   PassportOpenID = require('passport-openid').Strategy;
@@ -69,7 +70,7 @@ function configure(port) {
   configurePassport();
 
   if(typeof PhusionPassenger === 'undefined') { // only serve static files if not using Passenger
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(expressStatic(path.join(__dirname, 'public')));
   }
 
   // development only
