@@ -118,6 +118,12 @@ function configurePassport() {
   });
 }
 function configureRoutes() {
+  // info about app
+  app.get('/info', function(req, res) {
+    var pkg = require('./../../package');
+    res.set('Content-Type', 'application/json');
+    res.end(JSON.stringify(pkg));
+  });
   // Routes for login
   app.get('/', routes.index);
   app.get('/logout', routes.logout);
