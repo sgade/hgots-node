@@ -4,7 +4,7 @@ div.jumbotron
     
     p.lead
      | Version&nbsp;
-     a.label.label-primary href=versionLinkToGithub= pkg.version
+     a.label.label-primary title="Go to the release page of this version on Github" href=versionLinkToGithub= pkg.version
 
     hr
     
