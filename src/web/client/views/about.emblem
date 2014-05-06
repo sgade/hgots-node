@@ -1,10 +1,10 @@
 div.jumbotron
   div.container.text-center
-    h1= App.Globals.title
+    h1= pkg.name
     
     p.lead
      | Version&nbsp;
-     span.label.label-primary= App.Globals.version
+     span.label.label-primary= pkg.version
 
     hr
     
