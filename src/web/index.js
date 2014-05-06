@@ -60,7 +60,7 @@ function configure(port) {
   app.set('port', port || process.env.PORT || 3000);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
-  app.use(expressFavicon(__dirname + '/client/favicon.ico'));
+  app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico')));
   app.use(expressCompress());
   app.use(expressBodyParser());
   app.use(expressMethodOverride());
