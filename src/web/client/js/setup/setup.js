@@ -1,12 +1,24 @@
 (function() {
   "use strict";
   
+  function nextStep() {
+    var currentIndex = $(".steps").attr('data-current');
+    console.log(currentIndex);
+    currentIndex++;
+    setStep(currentIndex);
+  }
+  function prevStep() {
+    var currentIndex = $(".steps").attr('data-current');
+    currentIndex--;
+    setStep(currentIndex);
+  }
   function setStep(index) {
-    var currentIndex = $(".steps").data('current');
+    var currentIndex = $(".steps").attr('data-current');
     if ( currentIndex === undefined ) {
       console.log("inital step:", index);
       $(".steps li").fadeOut(0);
       $(".steps li").eq(index).fadeIn(0);
+      $(".steps").attr('data-current', index);
     } else {
       
       if ( currentIndex == index ) {
@@ -15,7 +27,7 @@
       console.log("set index", index, "with current index", currentIndex);
       
       $(".steps li").fadeOut(250).eq(index).fadeIn();
-      $(".steps").data('current', index);
+      $(".steps").attr('data-current', index);
     }
   }
   
@@ -32,14 +44,17 @@
     });
   }
   
+  $("#setup-begin").click(function() {
+    nextStep();
+  });
   $("#setup-save-admin").click(function() {
-    setStep(1);
+    nextStep();
   });
   $("#setup-back-admin").click(function() {
-    setStep(0);
+    prevStep();
   });
   $("#setup-save-settings").click(function() {
-    setStep(2);
+    nextStep();
     submitData();
   });
   
