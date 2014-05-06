@@ -7,15 +7,6 @@ App = undefined;
   App = Ember.Application.create();
 
   /* ==========
-   * Globals
-   * ==========
-   * */
-  App.Globals = {
-    title: "HGO Türschloss",
-    version: "0.1.1"
-  };
-
-  /* ==========
    * Store
    * ==========
    * */
@@ -54,8 +45,22 @@ App = undefined;
    * */
    // dirty:
    App.ApplicationController = Ember.ObjectController.extend({
-     currentUser: null,
+     // init, load things
+     init: function() {
+       this._super();
+       
+       this.loadCurrentUser();
+       this.loadPackageInfo();
+     },
      
+     // properties that get filled in
+     currentUser: null,
+     pkg: {
+       name: "...",
+       version: "0.0.0"
+     },
+     
+     // getters
      isCurrentUserPrivileged: function() {
        var status = false;
        
@@ -67,16 +72,22 @@ App = undefined;
        return status;
      }.property('currentUser'),
      
-     init: function() {
-       this._super();
-       
-       this.loadCurrentUser();
-     },
+     /* ***********
+      * ajax calls
+      * ***********
+      * */
      loadCurrentUser: function() {
        var self = this;
        
        return Ember.$.get('/user').then(function(user) {
          self.set('currentUser', user);
+       });
+     },
+     loadPackageInfo: function() {
+       var self = this;
+       
+       return Ember.$.get('/info').then(function(pkg) {
+         self.set('pkg', pkg);
        });
      }
    });

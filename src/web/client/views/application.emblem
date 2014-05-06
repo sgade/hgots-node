@@ -8,7 +8,7 @@ div.app
           span.icon-bar
           span.icon-bar
           
-        span.navbar-brand= App.Globals.title
+        span.navbar-brand= pkg.name
       div.collapse.navbar-collapse#nav-collapse
         ul.nav.navbar-nav
           li #{link-to 'index' | Home}
