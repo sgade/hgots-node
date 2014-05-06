@@ -12,7 +12,7 @@ App = undefined;
    * */
   App.Globals = {
     title: "HGO Türschloss",
-    version: "0.1.0"
+    version: "0.1.1"
   };
 
   /* ==========
