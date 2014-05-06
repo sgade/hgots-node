@@ -2,11 +2,15 @@ extends layout
 
 block content
   .container
-    h1 Welcome to #{title}
-    
-    p This is the first time you are using #{title}. To make sure everything is working the way you want it to, you're guided through this little assistant.
+    h1 Welcome to #{title}!
     
     ul.steps.list-unstyled
+      // Welcome
+      li.well
+        p This is the first time you are accessing #{title}. To make sure everything is working the way you want it to, you're guided through this little assistant.
+        p It will walk you through setting up an admin account and will enable you to adjust defaults.
+        
+        btn#setup-begin.btn.btn-success Begin Setup
       // Admin user
       li.well
         h3 #1: Admin user
