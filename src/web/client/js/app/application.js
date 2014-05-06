@@ -54,7 +54,7 @@ App = undefined;
      },
      
      // properties that get filled in
-     currentUser: null,
+     currentUser: {},
      pkg: {
        name: "...",
        version: "0.0.0"
