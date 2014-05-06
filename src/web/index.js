@@ -9,6 +9,14 @@
  */
 var config = require('../config');
 var express = require('express');
+// middleware
+var expressBodyParser = require('body-parser'),
+  expressCookieParser = require('cookie-parser'),
+  expressSession = require('express-session'),
+  expressFavicon = require('serve-favicon'),
+  expressCompress = require('compression'),
+  expressMethodOverride = require('method-override'),
+  expressErrorHandler = require('errorhandler');
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy,
   PassportOpenID = require('passport-openid').Strategy;
@@ -52,15 +60,13 @@ function configure(port) {
   app.set('port', port || process.env.PORT || 3000);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
-  app.use(express.favicon());
-  app.use(express.compress());
-  app.use(express.urlencoded());
-  app.use(express.json());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser('your secret here'));
-  app.use(express.session());
+  app.use(expressFavicon(__dirname + '/client/favicon.ico'));
+  app.use(expressCompress());
+  app.use(expressBodyParser());
+  app.use(expressMethodOverride());
+  app.use(expressCookieParser('your secret here'));
+  app.use(expressSession());
   configurePassport();
-  app.use(app.router);
 
   if(typeof PhusionPassenger === 'undefined') { // only serve static files if not using Passenger
     app.use(express.static(path.join(__dirname, 'public')));
@@ -68,7 +74,7 @@ function configure(port) {
 
   // development only
   if ('development' === app.get('env')) {
-    app.use(express.errorHandler());
+    app.use(expressErrorHandler());
     // app.use(express.logger('dev'));
   }
 
