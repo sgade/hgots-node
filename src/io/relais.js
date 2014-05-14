@@ -249,6 +249,8 @@ function Relais(port) {
             self.relaisID = data[RelaisByteNames.Address];
         
             callback(true);
+          } else {
+            callback(false);
           }
         
         }
