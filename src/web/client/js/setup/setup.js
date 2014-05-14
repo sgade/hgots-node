@@ -73,9 +73,8 @@
       var username = $("#setup-admin-username").val();
       var password = $("#setup-admin-password").val();
       var passwordRepeat = $("#setup-admin-password-repeat").val();
-      var setupCode = $("#setup-admin-control").val();
       
-      var nextOK = !!username && !!password && !!passwordRepeat && !!setupCode && password === passwordRepeat;
+      var nextOK = !!username && !!password && !!passwordRepeat && password === passwordRepeat;
       if ( nextOK ) {
         $("#setup-save-admin").removeAttr('disabled');
       } else {
