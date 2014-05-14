@@ -18,7 +18,8 @@ var sequelize = new Sequelize(config.db.name, config.db.username, config.db.pass
   dialect: 'sqlite',
   storage: config.db.name,
   
-  logging: ( lodash.contains(['production', 'test'], process.env.NODE_ENV) ) ? false : console.log
+  //logging: ( lodash.contains(['production', 'test'], process.env.NODE_ENV) ) ? false : console.log
+  logging: false
 });
 
 var dirname = path.join(__dirname, "models");
