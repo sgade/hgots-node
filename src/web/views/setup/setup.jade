@@ -1,6 +1,6 @@
 extends layout
 
-block content
+block setup-content
   .container
     h1 Welcome to #{title}!
     
@@ -82,6 +82,3 @@ block content
         p If everything is ready, click this button:
         
         a#setup-end.btn.btn-success(href="/") Go to login page!
-    
-  
-  script(src="/js/setup.js")
