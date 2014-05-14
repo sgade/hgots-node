@@ -84,7 +84,7 @@ function Relais(port) {
    * The id our card has.
    * @instance
    * */
-  var relaisID = 0;
+  this.relaisID = 0;
   
   // our custom parser
   // emit after 4 bytes each
