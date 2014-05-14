@@ -20,7 +20,7 @@ block content
         .panel.panel-default
           .panel-heading Admin User
           .panel-body
-            form.form.form-horizontal
+            form.form.form-horizontal#setup-admin
               .form-group
                 label.control-label.col-sm-3(for="setup-admin-username") Username
                 .col-sm-9
@@ -36,7 +36,7 @@ block content
                   
               .form-group
                 span.help-block Enter the text you defined to identify as the system admin:
-                label.control-label.col-sm-3(for="setup-admin-control") Control text
+                label.control-label.col-sm-3(for="setup-admin-control") Setup code
                 .col-sm-9
                   input.form-control(type="text", id="setup-admin-control", placeholder="Control text")
               

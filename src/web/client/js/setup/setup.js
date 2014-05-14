@@ -47,6 +47,19 @@
   $("#setup-begin").click(function() {
     nextStep();
   });
+  $("#setup-admin input").keyup(function() {
+    var username = $("#setup-admin-username").val();
+    var password = $("#setup-admin-password").val();
+    var passwordRepeat = $("#setup-admin-password-repeat").val();
+    var setupCode = $("#setup-admin-control").val();
+    
+    var nextOK = !!username && !!password && !!passwordRepeat && !!setupCode && password === passwordRepeat;
+    if ( nextOK ) {
+      $("#setup-save-admin").removeAttr('disabled');
+    } else {
+      $("#setup-save-admin").attr('disabled', true);
+    }
+  });
   $("#setup-save-admin").click(function() {
     nextStep();
   });
@@ -59,5 +72,6 @@
   });
   
   setStep(0);
+  $("#setup-save-admin").attr('disabled', true);
   $("#setup-end").attr('disabled', true);
 }());
