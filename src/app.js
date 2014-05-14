@@ -140,7 +140,7 @@ function initRelais() {
       console.log("Error opening connection to relais card:", err);
     } else {
       relais.setup(function(err, ok) {
-        if ( err ) {
+        if ( !!err ) {
           console.log("Error setting up relais card:", err);
         } else {
           if ( !ok ) {
