@@ -61,9 +61,14 @@ function web_OpenDoor(callback) {
     } else {
       
       setTimeout(function() {
-        relais.delSingle(config.relaisport.door, function() {
-          console.log("door closed.");
-          callback();
+        relais.delSingle(config.relaisport.door, function(err) {
+          if ( !!err ) {
+            console.log("Door could not be closed!");
+            callback(err);
+          } else {
+            console.log("door closed.");
+            callback(null);
+          }
         });
       }, config.web.doorOpenTime);
       
