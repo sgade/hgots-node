@@ -134,6 +134,7 @@ function Relais(port) {
       
       }, function(err) {
         if ( err ) {
+          callback(err);
           throw err;
         }
         // done
