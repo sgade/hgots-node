@@ -136,7 +136,7 @@ function initRelais() {
     } else {
       relais.setup(function(ok) {
         if ( !ok ) {
-          console.log("Error opening connection to relais card:", err);
+          console.log("Error opening connection to relais card.");
         } else {
           console.log("Connection to relais card opened (" + port + ").");
           
