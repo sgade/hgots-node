@@ -154,8 +154,12 @@ function Serial(port, options) {
         return callback(err);
       }
       
+      this.isOpen = true;
+      
+      // call callbacks
       callback();
       _onOpen.call(self, err);
+      // add handler
       self.serialPort.on('data', function(data) {
         _onData.call(self, data);
       });
@@ -175,6 +179,9 @@ function Serial(port, options) {
         throw err; // TODO: handle error
       }
       
+      this.isOpen = false;
+      
+      // call callbacks
       callback(err);
       _onClose.call(self, err);
     });
