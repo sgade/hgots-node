@@ -54,13 +54,19 @@ function web_OpenDoor(callback) {
   console.log("Opening door...");
   
   // TODO: Try out if it really works in real environments
-  relais.setSingle(config.relaisport.door, function() {
-    setTimeout(function() {
-      relais.delSingle(config.relaisport.door, function() {
-        console.log("door closed.");
-        callback();
-      });
-    }, config.web.doorOpenTime);
+  relais.setSingle(config.relaisport.door, function(err) {
+    if ( err ) {
+      console.log("Error opening the door.");
+    } else {
+      
+      setTimeout(function() {
+        relais.delSingle(config.relaisport.door, function() {
+          console.log("door closed.");
+          callback();
+        });
+      }, config.web.doorOpenTime);
+      
+    }
   });
 }
 
