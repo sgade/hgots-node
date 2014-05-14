@@ -10,7 +10,7 @@
   }
   
   function authenticate() {
-    if ( $("#setup-begin").length == 0 ) {
+    if ( $("#setup-begin").length === 0 ) {
       return false;
     }
     
