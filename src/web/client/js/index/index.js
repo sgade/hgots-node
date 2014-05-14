@@ -13,19 +13,12 @@ $(function() {
     var val = $("#login-password").val();
     return CryptoJS.SHA256(val).toString(CryptoJS.enc.hex);
   }
-  function getOpenID() {
-    return $("#login-openid-id").val();
-  }
   
   function setButtonState() {
     var username = getUsername();
     var password = $("#login-password").val();
     
     setState($("#login"), !!username && !!password);
-    
-    var openid = getOpenID();
-    
-    setState($("#login-openid"), !!openid);
   }
   setButtonState();
   
