@@ -149,9 +149,10 @@ function Serial(port, options) {
         if ( process.env.NODE_ENV !== 'production' ) {
           throw err; // TODO: handle error
         }
-        return;
+        return callback(err);
       }
       
+      callback();
       _onOpen.call(self, err);
       self.serialPort.on('data', function(data) {
         _onData.call(self, data);
