@@ -20,5 +20,6 @@
   },
   "openid": {
     "hostURL": "http://example.com"
-  }
+  },
+  "setupCode": "your secret code here"
 }

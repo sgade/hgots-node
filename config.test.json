@@ -20,5 +20,6 @@
   },
   "openid": {
     "hostURL": "http://localhost:3000/"
-  }
+  },
+  "setupCode": "your secret code here"
 }
