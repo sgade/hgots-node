@@ -12,6 +12,8 @@ This application is still in very early development.
 
 This will setup everything you need, including running `npm install` and installing `grunt` and `bower`.
 
+To use every feature, you need [this relais card](http://www.conrad.de/ce/de/product/197720/Conrad-8fach-Relaiskarte-Baustein-12-24-VDC-8-Relaisausgaenge) and a RFID reader that simply sends data via serial ports.
+
 ### The central configuration
 
 Everything important is defined in the file named `config.json` which is located in the root of the project.
