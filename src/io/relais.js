@@ -165,7 +165,7 @@ function Relais(port) {
     var self = this;
     callback = callback || function() {};
     
-    if ( !this.isOpen ) {
+    if ( !self.isOpen ) {
       return callback(null, new Array(4));
     }
   
@@ -244,10 +244,10 @@ function Relais(port) {
         if ( err ) {
           callback(false);
         } else {
-       
+          
           if ( data[RelaisByteNames.Command] === ( 255 - Commands.Setup ) ) {
             self.relaisID = data[RelaisByteNames.Address];
-        
+            
             callback(true);
           } else {
             callback(false);
