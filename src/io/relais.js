@@ -166,7 +166,7 @@ function Relais(port) {
     callback = callback || function() {};
     
     if ( !self.isOpen ) {
-      return callback(null, new Array(4));
+      return callback(new Error('Relais port is closed.'), new Array(4));
     }
   
     var buffer = new Array(4);
