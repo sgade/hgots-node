@@ -69,9 +69,6 @@
       });
     }
     
-    $("#setup-begin").click(function() {
-      nextStep();
-    });
     $("#setup-admin input").keyup(function() {
       var username = $("#setup-admin-username").val();
       var password = $("#setup-admin-password").val();
