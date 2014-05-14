@@ -134,9 +134,15 @@ function initRelais() {
     if ( !!err ) {
       console.log("Error opening connection to relais card:", err);
     } else {
-      console.log("Connection to relais card opened (" + port + ").");
-      
-      relais.deactivateAll();
+      relais.setup(function(err) {
+        if ( !!err ) {
+          console.log("Error opening connection to relais card:", err);
+        } else {
+          console.log("Connection to relais card opened (" + port + ").");
+          
+          relais.deactivateAll();
+        }
+      });
     }
   });
 }
