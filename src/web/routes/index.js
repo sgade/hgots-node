@@ -60,12 +60,14 @@ exports.setup = function(req, res) {
       
       // if no entries are in the db, then we want the setup
       var config = require('./../../config');
-      if ( !req.session.setupCode || req.session.setupCode !== config ) {
+      if ( !req.session.setupCode || req.session.setupCode !== config.setupCode ) {
+        // authenticate with setup code
         res.render('setup/authenticate', {
           title: pkg.name
         });
       } else {
-        res.render('setup', {
+        // set preferences
+        res.render('setup/setup', {
           title: pkg.name
         });
       }
