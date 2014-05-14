@@ -11,7 +11,7 @@ div.grid
               | Users
             div.col-sm-7
               / Search
-              Ember.TextField type="text" value=searchText
+              Ember.TextField type="text" value=searchText placeholder="Search"
           div.row style="margin-top: 3px;"
             div.col-sm-12
               / Create new user
