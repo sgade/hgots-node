@@ -78,7 +78,7 @@ var sampleData = function(callback) {
         }).success(function(testUser) {
           
           var pw = crypt.encrypt('test');
-          for ( var i = 0; i < 100; i++ ) {
+          for ( var i = 0; i < 10; i++ ) {
             var dummy = "Dummy User " + ( i + 1 );
             db.User.findOrCreate({
               username: dummy,
