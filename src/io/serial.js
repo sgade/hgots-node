@@ -140,7 +140,7 @@ function Serial(port, options) {
     var self = this;
     callback = callback || function() {};
     
-    if ( this.isOpen ) {
+    if ( self.isOpen ) {
       return callback();
     }
     
@@ -154,7 +154,7 @@ function Serial(port, options) {
         return callback(err);
       }
       
-      this.isOpen = true;
+      self.isOpen = true;
       
       // call callbacks
       callback();
@@ -170,7 +170,7 @@ function Serial(port, options) {
     var self = this;
     callback = callback || function() {};
     
-    if ( !this.isOpen ) {
+    if ( !self.isOpen ) {
       return callback();
     }
     
@@ -179,7 +179,7 @@ function Serial(port, options) {
         throw err; // TODO: handle error
       }
       
-      this.isOpen = false;
+      self.isOpen = false;
       
       // call callbacks
       callback(err);
@@ -195,7 +195,7 @@ function Serial(port, options) {
     var self = this;
     callback = callback || function() {};
     
-    if ( !this.isOpen ) {
+    if ( !self.isOpen ) {
       return callback();
     }
     
