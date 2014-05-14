@@ -139,13 +139,17 @@ function initRelais() {
     if ( !!err ) {
       console.log("Error opening connection to relais card:", err);
     } else {
-      relais.setup(function(ok) {
-        if ( !ok ) {
-          console.log("Error opening connection to relais card.");
+      relais.setup(function(err, ok) {
+        if ( err ) {
+          console.log("Error setting up relais card:", err);
         } else {
-          console.log("Connection to relais card opened (" + port + ").");
-          
-          relais.deactivateAll();
+          if ( !ok ) {
+            console.log("Could not open connection to relais card.");
+          } else {
+            console.log("Connection to relais card opened (" + port + ").");
+            
+            relais.deactivateAll();
+          }
         }
       });
     }

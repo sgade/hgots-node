@@ -255,7 +255,7 @@ function Relais(port) {
         }
       });
     } else {
-      callback(false);
+      callback(null, false);
     }
   };
 
