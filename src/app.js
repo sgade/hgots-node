@@ -109,8 +109,12 @@ function initRFIDReader() {
   });
   
   // open connection
-  rfidReader.open(function() {
-    console.log("Connection to RFID reader opened (" + port + ").");
+  rfidReader.open(function(err) {
+    if ( !!err ) {
+      console.log("Error opening connection to rfid reader:", err);
+    } else {
+      console.log("Connection to RFID reader opened (" + port + ").");
+    }
   });
 }
 /**
@@ -125,10 +129,14 @@ function initRelais() {
   
   relais = new Relais(port);
   
-  relais.open(function() {
-    console.log("Connection to relais card opened (" + port + ").");
-    
-    relais.deactivateAll();
+  relais.open(function(err) {
+    if ( !!err ) {
+      console.log("Error opening connection to relais card:", err);
+    } else {
+      console.log("Connection to relais card opened (" + port + ").");
+      
+      relais.deactivateAll();
+    }
   });
 }
 
