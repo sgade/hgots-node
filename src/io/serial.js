@@ -3,6 +3,13 @@
  * @module io/serial
  * @author Sören Gade
  * */
+ 
+/**
+ * A callback that only contains an error object.
+ * @callback Callback
+ * @param {Exception} err - The exception that was raised or null.
+ * @param {Object} data - The resulting data. May be anything. Only set if err is null.
+ * */
 
 var assert = require('assert');
 var util = require('util');
@@ -10,14 +17,8 @@ var events = require('events');
 var serialport = require('serialport');
 
 /**
- * A callback that is called with two parameters.
- * @callback ErrorResultCallback
- * @param {Exception} err - Is an error object or null.
- * @param {Object} object - The resulting data.
- * */
-/**
  * Lists all serial ports found on the device.
- * @param {ErrorResultCallback} callback - A callback that is called upon finish or error.
+ * @param {Callback} callback - A callback that is called upon finish or error.
  * */
 exports.list = function(callback) {
   serialport.list(callback);
@@ -188,20 +189,20 @@ function Serial(port, options) {
   /**
    * Writes the data to the serial port.
    * @param {Buffer} buffer
-   * @param {ErrorSuccessCallback} callback
+   * @param {Callback} callback
    * */
   this.write = function(buffer, callback) {
     var self = this;
     callback = callback || function() {};
     
     if ( !self.isOpen ) {
-      return callback();
+      return callback(new Error("Serial port is closed."));
     }
     
     self.serialPort.write(buffer, function(err) {
       _onWritten.call(self, err, buffer);
       
-      callback(err);
+      callback(err, buffer);
     });
   };
   
@@ -220,9 +221,3 @@ function Serial(port, options) {
 util.inherits(Serial, events.EventEmitter);
 
 module.exports.Serial = Serial;
-
-/**
- * A callback that only contains an error object.
- * @callback ErrorCallback
- * @param {Exception} err - Is an error object or null.
- * */
