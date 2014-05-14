@@ -56,7 +56,8 @@ function web_OpenDoor(callback) {
   // TODO: Try out if it really works in real environments
   relais.setSingle(config.relaisport.door, function(err) {
     if ( err ) {
-      console.log("Error opening the door.");
+      console.log("Error opening the door:", err);
+      callback();
     } else {
       
       setTimeout(function() {
