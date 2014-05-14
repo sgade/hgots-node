@@ -150,7 +150,6 @@ function Serial(port, options) {
         if ( process.env.NODE_ENV === 'production' ) {
           throw err; // TODO: handle error
         }
-        console.log(err);
         return callback(err);
       }
       
