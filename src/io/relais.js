@@ -115,9 +115,7 @@ function Relais(port) {
    * */
   var _iterateAllRelais = function(delay, relaisOperation, callback) {
     var self = this;
-    if ( !delay ) {
-      delay = 0;
-    }
+    delay = delay || 0;
     callback = callback || function() {};
   
     if ( delay === 0 ) {
