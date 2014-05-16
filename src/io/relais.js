@@ -168,7 +168,7 @@ function Relais(port) {
       return callback(new Error('Relais port is closed.'), new Array(4));
     }
   
-    var buffer = new Array(4);
+    var buffer = new Buffer(4);
     buffer[RelaisByteNames.Command] = command;
     buffer[RelaisByteNames.Address] = self.relaisID;
     buffer[RelaisByteNames.DataByte] = data;
