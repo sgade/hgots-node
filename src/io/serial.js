@@ -212,7 +212,7 @@ function Serial(port, options) {
    * */
   events.EventEmitter.call(this);
   options = _combineProperties(SERIAL_OPTIONS, options);
-  this.serialPort = new SerialPort(port, SERIAL_OPTIONS, false);
+  this.serialPort = new SerialPort(port, options, false);
   
   // checks
   assert(port !== '/dev/null', "Caution: Do not use /dev/null for serial ports!");
