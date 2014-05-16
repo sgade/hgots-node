@@ -155,14 +155,14 @@ function Serial(port, options) {
       }
       
       self.isOpen = true;
-      
-      // call callbacks
-      callback();
-      _onOpen.call(self, err);
       // add handler
       self.serialPort.on('data', function(data) {
         _onData.call(self, data);
       });
+      
+      // call callbacks
+      _onOpen.call(self, err);
+      callback(err);
     });
   };
   
@@ -182,8 +182,8 @@ function Serial(port, options) {
       self.isOpen = false;
       
       // call callbacks
-      callback(err);
       _onClose.call(self, err);
+      callback(err);
     });
   };
   /**
