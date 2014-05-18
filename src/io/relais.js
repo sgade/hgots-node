@@ -191,7 +191,7 @@ function Relais(port) {
       
     });
   
-    self.write(buffer, function(err) {
+    return self.write(buffer, function(err) {
       if ( err ) {
         callback(err);
       }
@@ -221,7 +221,7 @@ function Relais(port) {
     var self = this;
     callback = callback || function() {};
   
-    self.send(Commands.NoOperation, 0, function(err, data) {
+    return self.send(Commands.NoOperation, 0, function(err, data) {
       if ( err ) {
         callback(err);
       } else {
@@ -236,7 +236,7 @@ function Relais(port) {
    * @param {Callback} callback
    * */
   this.NOP = function(callback) {
-    this.noOperation(callback);
+    return this.noOperation(callback);
   };
 
   /**
