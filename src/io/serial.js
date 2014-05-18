@@ -91,12 +91,18 @@ function Serial(port, options) {
    * @fires Serial#open
    * */
   var _onOpen = function(err) {
+    var self = this;
+    // add event listener
+    self.serialPort.on('data', function(data) {
+      _onData.call(self, data);
+    });
+    
     /**
      * Open event.
      * @event Serial#open
      * @type {Error}
      * */
-    this.emit('open', err);
+    self.emit('open', err);
   };
   var _onClose = function(err) {
     /**
@@ -155,10 +161,6 @@ function Serial(port, options) {
       }
       
       self.isOpen = true;
-      // add handler
-      self.serialPort.on('data', function(data) {
-        _onData.call(self, data);
-      });
       
       // call callbacks
       _onOpen.call(self, err);
