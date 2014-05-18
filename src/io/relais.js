@@ -157,12 +157,17 @@ function Relais(port) {
    * */
   /**
    * @param {byte} command
-   * @param {byte} data
+   * @param {byte} [data]
    * @param {Callback} callback - Callback for Relais#write (Error) and Relais#read (Result).
    * */
   this.send = function(command, data, callback) {
     var self = this;
-    callback = callback || function() {};
+    if ( !callback ) {
+      if ( typeof data !== "function" ) {
+        callback = data;
+        data = 0;
+      }
+    }
     
     if ( !self.isOpen ) {
       return callback(new Error('Relais port is closed.'));
