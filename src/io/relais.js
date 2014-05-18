@@ -93,7 +93,7 @@ function Relais(port) {
     var data = new Buffer(0);
     
     return function(emitter, buffer) {
-      data += buffer;
+      data = new Buffer( data + buffer );
       
       var numParts = data.length / blockSize;
       var numRest = data.length % blockSize;
