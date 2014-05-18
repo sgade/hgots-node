@@ -178,7 +178,7 @@ function Relais(port) {
     self.serialPort.once('data', function(data) {
       
       console.log("Response from relais card:", data);
-      if ( typeof data !== "Buffer" ) {
+      if ( typeof data !== "object" ) { // should be "Buffer"
         throw new Error("Invalid response data from relais card:", data);
       } else {
         
