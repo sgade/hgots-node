@@ -180,18 +180,15 @@ function Relais(port) {
       console.log("Response from relais card:", data);
       if ( typeof data !== "object" ) { // should be "Buffer"
         throw new Error("Invalid response data from relais card:", data);
-      } else {
-        
-        var responseCommand = data[RelaisByteNames.Command];
-        if ( responseCommand !== ( 255 - command ) ) {
-          throw new Error("Invalid response command. Expected", ( 255 - command ), "got", responseCommand);
-        } else {
-          
-          callback(null, data);
-          
-        }
-        
       }
+        
+      var responseCommand = data[RelaisByteNames.Command];
+      if ( responseCommand !== ( 255 - command ) ) {
+        throw new Error("Invalid response command. Expected", ( 255 - command ), "got", responseCommand);
+      }
+      
+      callback(null, data);
+      
     });
   
     self.write(buffer, function(err) {
