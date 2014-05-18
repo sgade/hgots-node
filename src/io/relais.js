@@ -203,8 +203,14 @@ function Relais(port) {
       if ( typeof data !== "object" ) { // should be "Buffer"
         throw new Error("Invalid response data from relais card:", data);
       }
-        
+      
       var responseCommand = data[RelaisByteNames.Command];
+      var responseAddress = data[RelaisByteNames.Address];
+      if ( responseCommand === 255 ) { // error
+        var err = new Error("Error from Relais card " + responseAddress + ".");
+        return callback(err);
+      }
+      
       if ( responseCommand !== ( 255 - command ) ) {
         throw new Error("Invalid response command. Expected " + ( 255 - command ) + " got " + responseCommand);
       }
