@@ -180,9 +180,11 @@ function Relais(port) {
   this.send = function(command, data, callback) {
     var self = this;
     if ( !callback ) {
-      if ( typeof data !== "function" ) {
+      if ( typeof data === "function" ) {
         callback = data;
         data = 0;
+      } else {
+        callback = function() {};
       }
     }
     
