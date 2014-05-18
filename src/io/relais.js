@@ -250,26 +250,22 @@ function Relais(port) {
   this.setup = function(callback) {
     var self = this;
     callback = callback || function() {};
-  
-    if ( self.relaisID === 0 ) {
-      self.send(Commands.Setup, 0, function(err, data) {
-        if ( err ) {
-          callback(err);
-        } else {
-          
-          if ( data[RelaisByteNames.Command] === ( 255 - Commands.Setup ) ) {
-            self.relaisID = data[RelaisByteNames.Address];
-            
-            callback(err, true);
-          } else {
-            callback(err, false);
-          }
-        
-        }
-      });
-    } else {
-      callback(null, false);
+    
+    if ( self.relaisID !== 0 ) {
+      return callback(new Error("Relais ID is already set to", self.relaisID));
     }
+    
+    return self.send(Commands.Setup, function(err, data) {
+      if ( !!err ) {
+        return callback(err);
+      }
+      
+      // set relais id according to response from relais card
+      self.relaisID = data[RelaisByteNames.Address];
+      
+      callback(err, true);
+      
+    });
   };
 
   /**
