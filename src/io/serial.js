@@ -164,8 +164,8 @@ function Serial(port, options) {
       self.isOpen = true;
       
       // call callbacks
-      _onOpen.call(self, err);
       callback(err);
+      _onOpen.call(self, err);
     });
   };
   
@@ -185,8 +185,8 @@ function Serial(port, options) {
       self.isOpen = false;
       
       // call callbacks
-      _onClose.call(self, err);
       callback(err);
+      _onClose.call(self, err);
     });
   };
   /**
@@ -203,9 +203,9 @@ function Serial(port, options) {
     }
     
     self.serialPort.write(buffer, function(err) {
-      _onWritten.call(self, err, buffer);
-      
+      // call callbacks
       callback(err, buffer);
+      _onWritten.call(self, err, buffer);
     });
   };
   
