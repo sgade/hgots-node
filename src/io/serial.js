@@ -148,7 +148,7 @@ function Serial(port, options) {
     callback = callback || function() {};
     
     if ( self.isOpen ) {
-      var err = new Error("Serial port already openend.");
+      var err = new Error("Serial port is openend.");
       return callback(err);
     }
     
