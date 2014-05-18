@@ -89,15 +89,32 @@ function Relais(port) {
   // our custom parser
   // emit after 4 bytes each
   SERIAL_OPTIONS.parser = (function() {
-    var data = "";
+    var blockSize = 4;
+    var data = new Buffer(0);
     
     return function(emitter, buffer) {
-      data += buffer.toString();
+      data += buffer;
       
-      var parts = data.match(/.{1,4}/g);
-      data = parts.pop();
-      parts.forEach(function(part) {
-        emitter.emit('data', part);
+      var numParts = data.length / blockSize;
+      var numRest = data.length % blockSize;
+      
+      var parts = [];
+      for ( var i = 0; i < numParts; i++ ) {
+        var buf = new Buffer(blockSize);
+        data.copy(buf, 0, i * blockSize, blockSize);
+        
+        parts.push(buf);
+      }
+      if ( numRest <= 0 ) {
+        data = new Buffer(0);
+      } else {
+        var tmp = new Buffer(numRest);
+        data.copy(tmp, 0, data.length - 1 - numRest, blockSize);
+        data = tmp;
+      }
+      
+      parts.forEach(function(bufferPart) {
+        emitter.emit('data', bufferPart);
       });
     };
     
