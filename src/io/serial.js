@@ -178,7 +178,7 @@ function Serial(port, options) {
     }
     
     self.serialPort.close(function(err) {
-      if ( err ) {
+      if ( !!err ) {
         throw err; // TODO: handle error
       }
       
