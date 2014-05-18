@@ -220,7 +220,7 @@ function Relais(port) {
   };
   
   /**
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.noOperation = function(callback) {
     var self = this;
@@ -238,14 +238,14 @@ function Relais(port) {
     });
   };
   /**
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.NOP = function(callback) {
     return this.noOperation(callback);
   };
 
   /**
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.setup = function(callback) {
     var self = this;
@@ -273,7 +273,7 @@ function Relais(port) {
   };
 
   /**
-   * @param {Callback}
+   * @param {Callback} [callback]
    * */
   this.getPort = function(callback) {
     var self = this;
@@ -303,7 +303,7 @@ function Relais(port) {
   };
 
   /**
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.getOption = function(callback) {
     var self = this;
@@ -334,7 +334,7 @@ function Relais(port) {
 
   /**
    * @param {byte} relais
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.setSingle = function(relais, callback) {
     var self = this;
@@ -358,7 +358,7 @@ function Relais(port) {
 
   /**
    * @param {byte} relais
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.delSingle = function(relais, callback) {
     var self = this;
@@ -382,7 +382,7 @@ function Relais(port) {
 
   /**
    * @param {byte} relais
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.toggle = function(relais, callback) {
     var self = this;
@@ -406,7 +406,7 @@ function Relais(port) {
 
   /**
    * @param {int} delay
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.activateAll = function(delay, callback) {
     _iterateAllRelais.call(this, delay, this.setSingle, callback);
@@ -414,7 +414,7 @@ function Relais(port) {
 
   /**
    * @param {int} delay
-   * @param {Callback} callback
+   * @param {Callback} [callback]
    * */
   this.deactivateAll = function(delay, callback) {
     _iterateAllRelais.call(this, delay, this.delSingle, callback);
