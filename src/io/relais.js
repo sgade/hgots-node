@@ -226,15 +226,14 @@ function Relais(port) {
     var self = this;
     callback = callback || function() {};
   
-    return self.send(Commands.NoOperation, 0, function(err, data) {
-      if ( err ) {
+    return self.send(Commands.NoOperation, function(err, data) {
+      if ( !!err ) {
         callback(err);
-      } else {
-      
-        var ok = ( data[RelaisByteNames.Command] === 255 );
-        callback(err, ok);
-      
       }
+      
+      var ok = ( data[RelaisByteNames.Command] === 255 );
+      callback(err, ok);
+      
     });
   };
   /**
