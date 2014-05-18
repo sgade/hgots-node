@@ -210,12 +210,12 @@ function Relais(port) {
       var responseAddress = data[RelaisByteNames.Address];
       if ( responseCommand === 255 ) { // error
         var err1 = new Error("Error from Relais card " + responseAddress + ".");
-        return callback(err);
+        return callback(err1);
       }
       
       if ( responseCommand !== ( 255 - command ) ) {
         var err2 = new Error("Invalid response command. Expected " + ( 255 - command ) + " got " + responseCommand);
-        return callback(err);
+        return callback(err2);
       }
       
       callback(null, data);
