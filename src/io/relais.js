@@ -101,7 +101,7 @@ function Relais(port) {
       var parts = [];
       for ( var i = 0; i < numParts; i++ ) {
         var buf = new Buffer(blockSize);
-        data.copy(buf, 0, i * blockSize, blockSize);
+        data.copy(buf, 0, i * blockSize, i * blockSize + blockSize);
         
         parts.push(buf);
       }
@@ -109,7 +109,7 @@ function Relais(port) {
         data = new Buffer(0);
       } else {
         var tmp = new Buffer(numRest);
-        data.copy(tmp, 0, data.length - 1 - numRest, blockSize);
+        data.copy(tmp, 0, data.length - 1 - numRest, data.length - 1 - numRest + blockSize);
         data = tmp;
       }
       
