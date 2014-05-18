@@ -206,7 +206,7 @@ function Relais(port) {
         
       var responseCommand = data[RelaisByteNames.Command];
       if ( responseCommand !== ( 255 - command ) ) {
-        throw new Error("Invalid response command. Expected", ( 255 - command ), "got", responseCommand);
+        throw new Error("Invalid response command. Expected " + ( 255 - command ) + " got " + responseCommand);
       }
       
       callback(null, data);
