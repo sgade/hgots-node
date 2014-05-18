@@ -212,7 +212,8 @@ function Relais(port) {
       }
       
       if ( responseCommand !== ( 255 - command ) ) {
-        throw new Error("Invalid response command. Expected " + ( 255 - command ) + " got " + responseCommand);
+        var err = new Error("Invalid response command. Expected " + ( 255 - command ) + " got " + responseCommand);
+        return callback(err);
       }
       
       callback(null, data);
