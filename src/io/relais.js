@@ -176,11 +176,22 @@ function Relais(port) {
   
     // call callback after write
     self.serialPort.once('data', function(data) {
-      // TODO: maybe validate the data, use ArrayBuffer or similar
-      data = data.toString();
-      data = data.match(/.{1,1}/g);
-    
-      callback(null, data);
+      
+      console.log("Response from relais card:", data);
+      if ( typeof data !== "Buffer" ) {
+        throw new Error("Invalid response data from relais card:", data);
+      } else {
+        
+        var responseCommand = data[RelaisByteNames.Command];
+        if ( responseCommand !== ( 255 - command ) ) {
+          throw new Error("Invalid response command. Expected", ( 255 - command ), "got", responseCommand);
+        } else {
+          
+          callback(null, data);
+          
+        }
+        
+      }
     });
   
     self.write(buffer, function(err) {
