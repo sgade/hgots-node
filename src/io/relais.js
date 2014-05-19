@@ -280,6 +280,9 @@ function Relais(port) {
       return callback(new Error("Relais ID is already set to", self.relaisID));
     }
     
+    // relais ID should be send to 0x01
+    self.relaisID = 0x01;
+    
     return self.send(Commands.Setup, function(err, data) {
       if ( !!err ) {
         return callback(err);
