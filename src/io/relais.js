@@ -114,7 +114,7 @@ function Relais(port) {
         data = new Buffer(0);
       } else {
         var tmp = new Buffer(numRest);
-        data.copy(tmp, 0, data.length - 1 - numRest, data.length - 1 - numRest + blockSize);
+        data.copy(tmp, 0, data.length - 1 - numRest, data.length - 1);
         data = tmp;
       }
       
