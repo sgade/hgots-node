@@ -45,6 +45,7 @@ function startWeb() {
     });
   });
 }
+// callbacks for web requests
 function web_RFIDRequest(callback) {
   rfidReader.on('data', function(data) {
     callback(data);
@@ -53,27 +54,7 @@ function web_RFIDRequest(callback) {
 function web_OpenDoor(callback) {
   console.log("Opening door...");
   
-  // TODO: Try out if it really works in real environments
-  relais.setSingle(config.relaisport.door, function(err) {
-    if ( err ) {
-      console.log("Error opening the door:", err);
-      callback();
-    } else {
-      
-      setTimeout(function() {
-        relais.delSingle(config.relaisport.door, function(err) {
-          if ( !!err ) {
-            console.log("Door could not be closed!");
-            callback(err);
-          } else {
-            console.log("door closed.");
-            callback(null);
-          }
-        });
-      }, config.web.doorOpenTime);
-      
-    }
-  });
+  openDoor(callback);
 }
 
 /**
@@ -153,6 +134,29 @@ function initRelais() {
         }
       });
     }
+  });
+}
+
+function openDoor(callback) {
+  // TODO: Try out if it really works in real environments
+  relais.setSingle(config.relaisport.door, function(err) {
+    if ( !!err ) {
+      console.log("Error opening the door:", err);
+      return callback(err);
+    }
+    
+    setTimeout(function() {
+      relais.delSingle(config.relaisport.door, function(err) {
+        if ( !!err ) {
+          console.log("Door could not be closed!");
+          return callback(err);
+        }
+        
+        console.log("door closed.");
+        return callback(null);
+      });
+    }, config.web.doorOpenTime);
+    
   });
 }
 
