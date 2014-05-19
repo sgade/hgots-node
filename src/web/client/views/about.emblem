@@ -1,13 +1,15 @@
 div.jumbotron
   div.container.text-center
     h1= pkg.name
-    
+
     p.lead
      | Version&nbsp;
      a.label.label-primary title="Go to the release page of this version on Github" href=versionLinkToGithub= pkg.version
 
+     t "ulf"
+
     hr
-    
+
     p
       | By&nbsp;
       a href="https://github.com/sgade" Sören Gade

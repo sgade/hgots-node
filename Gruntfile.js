@@ -96,11 +96,6 @@ module.exports = function(grunt) {
         files: {
           './src/web/public/js/templates.js': [ './src/web/public/js/templates.js' ]
         }
-      },
-      i18n: {
-        files: {
-          './src/web/public/js/i18n.js': [ './src/web/public/js/i18n.js' ]
-        }
       }
     },
     sass: {
@@ -179,7 +174,8 @@ module.exports = function(grunt) {
     ember_i18n_include: {
       task: {
         files: {
-          './src/web/public/js/i18n.js': './src/web/client/translations/i18n.js',
+          './src/web/public/js/languages/de.js': './src/web/client/translations/de.js',
+          './src/web/public/js/languages/en.js': './src/web/client/translations/en.js'
         }
       }
     },
@@ -206,7 +202,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [ 'clean', 'build-js', 'build-css' ]);
   grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index', 'build-js-templates' ]);
-  grunt.registerTask('build-js-i18n', [ 'build-dev-js-i18n', 'uglify:i18n' ]);
+  grunt.registerTask('build-js-i18n', [ 'build-dev-js-i18n' ]);
   grunt.registerTask('build-js-index', [ 'build-dev-js-index', 'uglify:index' ]);
   grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
   grunt.registerTask('build-js-templates', [ 'build-dev-js-templates', 'uglify:templates' ]);
