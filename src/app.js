@@ -89,6 +89,15 @@ function initRFIDReader() {
             console.log("no user found");
           } else {
             console.log("user is", user.username);
+            
+            openDoor(function(err) {
+              if ( !!err ) {
+                console.log("Error opening door:", err);
+                return;
+              }
+              
+              console.log("Door had been opened.");
+            });
           }
         });
       }
