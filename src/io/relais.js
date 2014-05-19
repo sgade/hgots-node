@@ -225,6 +225,10 @@ function Relais(port) {
         var err1 = new Error("Error from Relais card " + responseAddress + ".");
         return callback(err1);
       }
+      if ( responseCommand === 1 ) { // setup for other relais cards
+        return callback(null); // ignore
+      }
+      
       
       if ( responseCommand !== ( 255 - command ) ) {
         var err2 = new Error("Invalid response command. Expected " + ( 255 - command ) + " got " + responseCommand);
