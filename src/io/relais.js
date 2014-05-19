@@ -93,31 +93,41 @@ function Relais(port) {
     var data = new Buffer(0);
     
     return function(emitter, buffer) {
-      var oldDataSize = data.length;
-      
+      // new tmp buffer
       var newData = new Buffer(data.length + buffer.length);
+      // copy old data into it
       data.copy(newData, 0, 0, data.length);
-      buffer.copy(newData, oldDataSize, 0, buffer.length);
+      // append new buffer data
+      buffer.copy(newData, data.length, 0, buffer.length);
+      // set new buffer to old variable
       data = newData;
       
+      // get number of parts that will be emitted
       var numParts = data.length / blockSize;
+      // get number of bytes that will stay until new data arrives
       var numRest = data.length % blockSize;
       
+      // break up data into parts
       var parts = [];
       for ( var i = 0; i < numParts; i++ ) {
+        // a part
         var buf = new Buffer(blockSize);
+        // copy a certain part into the array
         data.copy(buf, 0, i * blockSize, i * blockSize + blockSize);
         
         parts.push(buf);
       }
       if ( numRest <= 0 ) {
+        // we do not have anything left: 0
         data = new Buffer(0);
       } else {
+        // we do have something left: make buffer and copy that.
         var tmp = new Buffer(numRest);
         data.copy(tmp, 0, data.length - 1 - numRest, data.length - 1);
         data = tmp;
       }
       
+      // emit each part as separate message
       parts.forEach(function(bufferPart) {
         emitter.emit('data', bufferPart);
       });
