@@ -151,7 +151,7 @@ function Relais(port) {
     callback = callback || function() {};
   
     if ( delay === 0 ) {
-      relaisOperation.call(self, self.getAllRelais());
+      relaisOperation.call(self, self.getAllRelais(), callback);
     } else {
       var relaisNums = [ 1, 2, 4, 8, 16, 32, 64, 128 ];
     
