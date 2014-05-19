@@ -48,7 +48,6 @@ exports.app = function(req, res) {
 /* Special stuff for i18n */
 exports.i18n = function(req, res) {
   var language = req.acceptsLanguage(availableLanguages);
-  console.log(__dirname + '/../public/js/languages/' + language + '.js');
   fs.createReadStream(__dirname + '/../public/js/languages/' + language + '.js').pipe(res);
 }
 exports.logout = function(req, res) {

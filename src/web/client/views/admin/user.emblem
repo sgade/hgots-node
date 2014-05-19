@@ -4,7 +4,7 @@ else
   h1.page-header
     =username
     span.small.pull-right
-      span.label.label-default This is you
+      span.label.label-default=t admin.user.you
 
 form.form-horizontal#editUser
   input#edituser-id type="hidden" value=_onModelUpdater
@@ -13,15 +13,15 @@ form.form-horizontal#editUser
     div.col-sm-10
       Ember.Select#edituser-type content=userTypes value=newType classNames="form-control" disabled=canSeverelyEditThisUser
   div.form-group
-    label.control-label.col-sm-2 for="edituser-pw1" New password:
+    label.control-label.col-sm-2 for="edituser-pw1"=t admin.user.newPassword
     div.col-sm-10
       App.PasswordStrengthView#edituser-pw1 password=newPassword passwordPlaceholder="Super secret"
   div.form-group
-    label.control-label.col-sm-2 for="edituser-pw2" New password (repeat):
+    label.control-label.col-sm-2 for="edituser-pw2"=t admin.user.newPasswordRepeat
     div.col-sm-10
       Ember.TextField#edituser-pw2 type="password" classNames="form-control" value=newPasswordRepeat placeholder="Super secret (repeat)"
 
   div.form-actions
     div.row
-      button.btn.btn-success.col-sm-6 click="saveEdit" disabled=saveDisabled Save changes
-      button.btn.btn-danger.col-sm-6 click="delete" disabled=canSeverelyEditThisUser Delete user
+      button.btn.btn-success.col-sm-6 click="saveEdit" disabled=saveDisabled=t admin.user.save
+      button.btn.btn-danger.col-sm-6 click="delete" disabled=canSeverelyEditThisUser=t admin.user.delete
