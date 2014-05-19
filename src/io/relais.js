@@ -214,7 +214,7 @@ function Relais(port) {
     buffer[RelaisByteNames.CheckSum] = ( command ^ self.relaisID ^ data );
   
     // call callback after write
-    self.serialPort.once('data', function(data) {
+    var dataCheck = function(data) {
       if ( typeof data !== "object" ) { // should be "Buffer"
         throw new Error("Invalid response data from relais card:" + data);
       }
@@ -226,9 +226,10 @@ function Relais(port) {
         return callback(err1);
       }
       if ( responseCommand === 1 ) { // setup for other relais cards
-        return callback(null); // ignore
+        self.serialPort.once('data', dataCheck);
+        // ignore
+        return;
       }
-      
       
       if ( responseCommand !== ( 255 - command ) ) {
         var err2 = new Error("Invalid response command. Expected " + ( 255 - command ) + " got " + responseCommand);
@@ -236,8 +237,8 @@ function Relais(port) {
       }
       
       callback(null, data);
-      
-    });
+    };
+    self.serialPort.once('data', dataCheck);
   
     return self.write(buffer, function(err) {
       if ( err ) {
