@@ -203,7 +203,7 @@ function Relais(port) {
       
       console.log("Response from relais card:", data);
       if ( typeof data !== "object" ) { // should be "Buffer"
-        throw new Error("Invalid response data from relais card:", data);
+        throw new Error("Invalid response data from relais card:" + data);
       }
       
       var responseCommand = data[RelaisByteNames.Command];
