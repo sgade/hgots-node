@@ -272,11 +272,11 @@ function Relais(port) {
   
     return self.send(Commands.NoOperation, function(err, data) {
       if ( !!err ) {
-        callback(err);
+        return callback(err);
       }
       
       var ok = ( data[RelaisByteNames.Command] === 255 );
-      callback(err, ok);
+      return callback(err, ok);
       
     });
   };
@@ -309,7 +309,7 @@ function Relais(port) {
       // set relais id according to response from relais card
       self.relaisID = data[RelaisByteNames.Address];
       
-      callback(err, true);
+      return callback(err, true);
       
     });
   };
@@ -321,27 +321,23 @@ function Relais(port) {
     var self = this;
     callback = callback || function() {};
   
-    self.send(Commands.GetPort, 0, function(err, data) {
-      if ( err ) {
-        callback(err);
-      } else {
-     
-        if ( data[RelaisByteNames.Command] === ( 255 - Commands.GetPort ) ) {
-          var port = data[RelaisByteNames.DataByte];
-          callback(err, port);
-        } else {
-          callback(err, 0);
-        }
-      
+    return self.send(Commands.GetPort, function(err, data) {
+      if ( !!err ) {
+        return callback(err);
       }
+      
+      var port = data[RelaisByteNames.DataByte];
+      
+      return callback(err, port);
+      
     });
   };
 
   /**
    * @param {byte} relais
    * */
-  this.setPort = function(relais) {
-    this.send(Commands.SetPort, relais);
+  this.setPort = function(relais, callback) {
+    return this.send(Commands.SetPort, relais, callback);
   };
 
   /**
@@ -350,28 +346,23 @@ function Relais(port) {
   this.getOption = function(callback) {
     var self = this;
     callback = callback || function() {};
-  
-    self.send(Commands.GetOption, 0, function(err, data) {
-      if ( err ) {
-        callback(err);
-      } else {
-      
-        if ( data[RelaisByteNames.Command] === ( 255 - Commands.GetOption) ) {
-          var dataByte = data[RelaisByteNames.DataByte];
-          callback(err, dataByte);
-        } else {
-          callback(err, 0);
-        }
-      
+    
+    return self.send(Commands.GetOption, function(err, data) {
+      if ( !!err ) {
+        return callback(err);
       }
+        
+      var dataByte = data[RelaisByteNames.DataByte];
+      return callback(err, dataByte);
+      
     });
   };
 
   /**
    * @param {byte} option
    * */
-  this.setOption = function(option) {
-    this.send(Commands.SetOption, option);
+  this.setOption = function(option, callback) {
+    return this.send(Commands.SetOption, option, callback);
   };
 
   /**
@@ -382,19 +373,14 @@ function Relais(port) {
     var self = this;
     callback = callback || function() {};
   
-    self.send(Commands.SetSingle, relais, function(err, data) {
-      if ( err ) {
-        callback(err);
-      } else {
-      
-        if ( data[RelaisByteNames.Command] === ( 255 - Commands.SetSingle ) ) {
-          var single = data[RelaisByteNames.DataByte];
-          callback(err, single);
-        } else {
-          callback(err, 0);
-        }
-      
+    return self.send(Commands.SetSingle, relais, function(err, data) {
+      if ( !!err ) {
+        return callback(err);
       }
+      
+      var single = data[RelaisByteNames.DataByte];
+      return callback(err, single);
+      
     });
   };
 
@@ -407,18 +393,13 @@ function Relais(port) {
     callback = callback || function() {};
   
     self.send(Commands.DelSingle, relais, function(err, data) {
-      if ( err ) {
-        callback(err);
-      } else {
-      
-        if ( data[RelaisByteNames.Command] === ( 255 - Commands.DelSingle ) ) {
-          var single = data[RelaisByteNames.DataByte];
-          callback(err, single);
-        } else {
-          callback(err, 0);
-        }
-      
+      if ( !!err ) {
+        return callback(err);
       }
+      
+      var single = data[RelaisByteNames.DataByte];
+      return callback(err, single);
+      
     });
   };
 
@@ -431,18 +412,13 @@ function Relais(port) {
     callback = callback || function() {};
   
     self.send(Commands.Toggle, relais, function(err, data) {
-      if ( err ) {
-        callback(err);
-      } else {
-      
-        if ( data[RelaisByteNames.Command] === ( 255 - Commands.Toggle ) ) {
-          var resp = data[RelaisByteNames.DataByte];
-          callback(err, resp);
-        } else {
-          callback(err, 0);
-        }
-      
+      if ( !!err ) {
+        return callback(err);
       }
+      
+      var resp = data[RelaisByteNames.DataByte];
+      return callback(err, resp);
+      
     });
   };
 
@@ -451,7 +427,7 @@ function Relais(port) {
    * @param {Callback} [callback]
    * */
   this.activateAll = function(delay, callback) {
-    _iterateAllRelais.call(this, delay, this.setSingle, callback);
+    return _iterateAllRelais.call(this, delay, this.setSingle, callback);
   };
 
   /**
@@ -459,7 +435,7 @@ function Relais(port) {
    * @param {Callback} [callback]
    * */
   this.deactivateAll = function(delay, callback) {
-    _iterateAllRelais.call(this, delay, this.delSingle, callback);
+    return _iterateAllRelais.call(this, delay, this.delSingle, callback);
   };
 }
 util.inherits(Relais, Serial);
