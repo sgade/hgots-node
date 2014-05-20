@@ -201,7 +201,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build-dev-js-templates', [ 'emberTemplates', 'emblem', 'concat:templates' ]);
 
   grunt.registerTask('build', [ 'clean', 'build-js', 'build-css' ]);
-  grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index', 'build-js-templates' ]);
+  grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index', 'build-js-templates', 'build-js-i18n' ]);
   grunt.registerTask('build-js-i18n', [ 'build-dev-js-i18n' ]);
   grunt.registerTask('build-js-index', [ 'build-dev-js-index', 'uglify:index' ]);
   grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
