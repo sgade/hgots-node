@@ -67,15 +67,28 @@
       return data;
     }
     function sendData(data, callback) {
-      $.post("/api/v1/setup", data, function(response) {
-        console.log("response:", response);
+      $.ajax({
+        url: "/api/v1/setup",
+        method: "POST",
+        data: data,
         
-        callback();
+        success: function() {
+          callback(null);
+        },
+        failure: function() {
+          callback({});
+        }
       });
     }
     function submitData() {
       var data = collectData();
-      sendData(data, function() {
+      sendData(data, function(err) {
+        if ( !!err ) {
+          window.alert("Something went wrong. Please try again.");
+          window.location.reload();
+          return;
+        }
+        
         $("#setup-end").removeAttr('disabled');
       });
     }
