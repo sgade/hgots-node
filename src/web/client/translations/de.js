@@ -50,8 +50,8 @@ Em.I18n.translations = {
   "about": {
     "version": "Version ",
     "by": "Von ",
-    "contributors": " mit Unterstützung von ",
-    "these": "diesen",
+    "contributors": " und ",
+    "these": "diesen Unterstützern",
     "visit": "Besuchen Sie die Projektseite auf "
   },
   "index": {
