@@ -7,17 +7,23 @@ div.app
           span.icon-bar
           span.icon-bar
           span.icon-bar
-          
+        
         span.navbar-brand= pkg.name
       div.collapse.navbar-collapse#nav-collapse
         ul.nav.navbar-nav
-          li #{link-to 'index' | Home}
-          if isCurrentUserPrivileged
-            li #{link-to 'admin' | Admin}
-        ul.nav.navbar-nav.navbar-right
-          li #{link-to 'about' | About}
           li
-            a href="/logout" Logout
-
+            link-to 'index'
+              = t nav.home
+          if isCurrentUserPrivileged
+            li
+              link-to 'admin'
+                = t nav.admin
+        ul.nav.navbar-nav.navbar-right
+          li
+            link-to 'about'
+              = t nav.about
+          li
+            a href="/logout" = t nav.logout
+  
   div.container
     =outlet

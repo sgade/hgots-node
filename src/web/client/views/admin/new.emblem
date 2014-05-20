@@ -9,6 +9,6 @@ form.form#createNewUser
   div.form-actions
     div.row
       div.col-md-6
-        button.btn.btn-danger click="cancelNewUser" Cancel
+        button.btn.btn-danger click="cancelNewUser"=t admin.actions.cancel
       div.col-md-6
-        button.btn.btn-success click="createNewUser" Create
+        button.btn.btn-success click="createNewUser"=t admin.actions.create

@@ -2,19 +2,25 @@
 
 div.jumbotron
   div.container.text-justify
-    h1 Welcome to the Administration Interface
+    h1=t admin.welcome.title
     
-    p This is your home for managing who has access to this system.
-
+    p=t admin.welcome.description
+    
     ul
-      li All the users that have access to this system are listed on the left.
+      li=t admin.functions.users
       / We assume that user 1 must exist because we have at least one user to view this!
-      li You can #{link-to 'admin.new' | create } new users and edit existing ones on the left.
       li
-        | There are three different user types:
+        =t admin.functions.createUser.partOne
+        =link-to 'admin.new' | {{t 'admin.functions.createUser.create'}}
+        =t admin.functions.createUser.partTwo
+      li
+        =t admin.functions.userTypes.intro
         ol
-          li Admin: Has full rights. He can create new users, controllers and admins. Can open the door.
-          li Controller: Has rights to create new users. Can open the door.
-          li User: Can open the door.
-      
-    p If you have any questions, see the #{link-to 'about' | About page}.
+          li=t admin.functions.userTypes.admin
+          li=t admin.functions.userTypes.controller
+          li=t admin.functions.userTypes.user
+    
+    p
+      =t admin.welcome.questions.partOne
+      =link-to 'about' | {{t 'admin.welcome.questions.aboutPage'}}
+      =t admin.welcome.questions.partTwo

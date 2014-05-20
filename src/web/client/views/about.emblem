@@ -3,18 +3,19 @@ div.jumbotron
     h1= pkg.name
     
     p.lead
-     | Version&nbsp;
+     =t about.version
      a.label.label-primary title="Go to the release page of this version on Github" href=versionLinkToGithub= pkg.version
-
+    
     hr
     
     p
-      | By&nbsp;
+      = t about.by
       a href="https://github.com/sgade" Sören Gade
-      | &nbsp;with the help of&nbsp;
-      a href="https://github.com/sgade/hgots-node/blob/master/AUTHORS" these contributors
+      = t about.contributors
+      a href="https://github.com/sgade/hgots-node/blob/master/AUTHORS"
+        =t about.these
       | .
     p
-      | Visit the repo at&nbsp;
+      =t about.visit
       a href="https://github.com/sgade/hgots-node" Github
       | .

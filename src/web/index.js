@@ -125,6 +125,7 @@ function configureRoutes() {
   });
   // Routes for login
   app.get('/', routes.index);
+  app.get('/i18n.js', routes.i18n);
   app.get('/logout', routes.logout);
   app.get('/login', function(req, res) {
     res.redirect('/');
