@@ -6,4 +6,5 @@ before_install:
   - npm install -g bower
   - gem install sass
 install:
+  - npm install
   - bower install
