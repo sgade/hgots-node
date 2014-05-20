@@ -21,5 +21,5 @@ module.exports = function(app) {
   app.delete(prefix + '/users/:userid/card/:id', cards.deleteCard);
   
   app.post(prefix + '/setup-auth', setup.authenticate);
-  app.post(prefix + '/setup', setup.setPreferences);
+  app.post(prefix + '/setup', setup.doSetup);
 };

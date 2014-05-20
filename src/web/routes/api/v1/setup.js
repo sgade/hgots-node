@@ -8,6 +8,6 @@ exports.authenticate = function(req, res) {
   res.redirect('/');
 };
 
-exports.setPreferences = function(req, res) {
-  throw new Exception("Not implemted.");
+exports.doSetup = function(req, res) {
+  throw new Error("Not implemented.");
 };
