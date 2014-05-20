@@ -57,10 +57,21 @@
     }
     
     function collectData() {
-      return {};
+      var data = {};
+      
+      data.admin = {};
+      data.admin.username = $("#setup-admin-username").val();
+      data.admin.password = $("#setup-admin-password").val();
+      data.admin.passwordRepeat = $("#setup-admin-password-repeat").val();
+      
+      return data;
     }
     function sendData(data, callback) {
-      setTimeout(callback, 1000);
+      $.post("/api/v1/setup", data, function(response) {
+        console.log("response:", response);
+        
+        callback();
+      });
     }
     function submitData() {
       var data = collectData();
