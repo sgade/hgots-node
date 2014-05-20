@@ -2,6 +2,8 @@ var assert = require('assert');
 // routes
 var users = require('./users');
 var cards = require('./cards');
+// setup
+var setup = require('./setup');
 
 module.exports = function(app) {
   var prefix = '/api/v1';
@@ -17,4 +19,7 @@ module.exports = function(app) {
   app.get(prefix + '/users/:id/cards', cards.getCardsOfUser);
   app.post(prefix + '/users/:id/cards', cards.createNewCard);
   app.delete(prefix + '/users/:userid/card/:id', cards.deleteCard);
+  
+  app.post(prefix + '/setup-auth', setup.authenticate);
+  app.post(prefix + '/setup', setup.doSetup);
 };

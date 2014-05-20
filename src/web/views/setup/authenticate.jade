@@ -1,0 +1,16 @@
+extends setup-layout
+
+block setup-content
+  div.well
+    p This is the first time you are accessing #{title}. To make sure everything is working the way you want it to, you're guided through this little assistant.
+    p It will walk you through setting up an admin account and will enable you to adjust defaults.
+    
+    .panel.panel-default
+      .panel-heading Authentication
+      .panel-body
+        form.form-horizontal(method="post", action="/api/v1/setup-auth")
+          p.help-block Please enter your setup code to authenticate as the admin:
+          input#setup-admin-code.form-control(type="password", placeholder="Setup code", autofocus=true, name="code")
+          
+          btn#setup-begin.btn.btn-success(type="submit") Begin Setup
+    

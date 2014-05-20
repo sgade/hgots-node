@@ -58,3 +58,28 @@ exports.logout = function(req, res) {
   
   res.redirect('/');
 };
+
+/* Initial setup route */
+exports.setup = function(req, res) {
+  db.User.count().complete(function(err, count) {
+    if ( err || count ) {
+      res.redirect('/');
+    } else {
+      
+      // if no entries are in the db, then we want the setup
+      var config = require('./../../config');
+      if ( !req.session.setupCode || req.session.setupCode !== config.setupCode ) {
+        // authenticate with setup code
+        res.render('setup/authenticate', {
+          title: pkg.name
+        });
+      } else {
+        // set preferences
+        res.render('setup/setup', {
+          title: pkg.name
+        });
+      }
+      
+    }
+  });
+};

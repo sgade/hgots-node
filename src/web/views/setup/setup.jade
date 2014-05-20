@@ -1,0 +1,64 @@
+extends setup-layout
+
+block setup-content
+  ul.steps.list-unstyled
+    // Admin user
+    li.well
+      h3 #1: Admin user
+      p There is no admin user yet. This type of user is able to change everything, including the system's configuration and the list of users, that have access to the room.
+      p You should now specify a unique yet simple username for the admin user and a <b>strong</b> password only you know.
+      
+      .panel.panel-default
+        .panel-heading Admin User
+        .panel-body
+          form.form.form-horizontal#setup-admin
+            .form-group
+              label.control-label.col-sm-3(for="setup-admin-username") Username
+              .col-sm-9
+                input.form-control(type="text", id="setup-admin-username", placeholder="Username", autofocus="true")
+            .form-group
+              label.control-label.col-sm-3(for="setup-admin-password") Password
+              .col-sm-9
+                input.form-control(type="password", id="setup-admin-password", placeholder="Strong password")
+            .form-group
+              label.control-label.col-sm-3(for="setup-admin-password-repeat") Repeat password
+              .col-sm-9
+                input.form-control(type="password", id="setup-admin-password-repeat", placeholder="Repeat the strong password")
+            
+            .form-actions
+              btn#setup-save-admin.btn.btn-success.pull-right Finish setup
+    // Initial settings
+      li.well
+        h3 #2: General settings
+        p Great!
+        p Now that you can log into the application, why don't we set the settings right away so you can focus on using the application right away?
+        p Right, here are some options for you:
+        
+        .panel.panel-default
+          .panel-heading Settings
+          .panel-body
+            form.form.form-horizontal#setup-preferences
+              h4.help-block Peripherals
+              p.help-block Enter the device position that map to the serial hardware:
+              .form-group
+                label.control-label.col-sm-3(for="setup-ports-relais") Relais card port
+                .col-sm-9
+                  input.form-control(type="text", id="setup-ports-relais", placeholder="/dev/ttyUSB0", autofocus="true")
+              .form-group
+                label.control-label.col-sm-3(for="setup-port-rfid") RFID reader port
+                .col-sm-9
+                  input.form-control(type="text", id="setup-port-rfid", placeholder="/dev/ttyUSB1")
+              
+              .form-actions
+                btn#setup-back-admin.btn.btn-default Back
+                btn#setup-save-settings.btn.btn-default.pull-right Finish setup
+              
+    // Save settings, then redirect
+    li.well
+      h3 #2: Send new defaults
+      p Just a second and you'll be ready to go!
+      p We are currently uploading the new settings to the server who is then processing it.
+      
+      p If everything is ready, click this button:
+      
+      a#setup-end.btn.btn-success(href="/") Go to login page!
