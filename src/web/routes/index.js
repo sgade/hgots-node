@@ -48,6 +48,8 @@ exports.app = function(req, res) {
 /* Special stuff for i18n */
 exports.i18n = function(req, res) {
   var language = req.acceptsLanguage(availableLanguages);
+  
+  res.set('Content-Type', 'text/javascript');
   fs.createReadStream(__dirname + '/../public/js/languages/' + language + '.js').pipe(res);
 };
 
