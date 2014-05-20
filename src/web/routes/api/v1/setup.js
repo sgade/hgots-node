@@ -36,6 +36,6 @@ exports.doSetup = function(req, res) {
       return res.status(400).end();
     }
     
-    req.user = user;
+    res.status(200).end();
   });
 };
