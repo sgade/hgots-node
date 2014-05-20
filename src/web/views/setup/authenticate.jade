@@ -10,7 +10,7 @@ block setup-content
       .panel-body
         form.form-horizontal(method="post", action="/api/v1/setup-auth")
           p.help-block Please enter your setup code to authenticate as the admin:
-          input#setup-admin-code.form-control(type="text", placeholder="Setup code", autofocus=true, name="code")
+          input#setup-admin-code.form-control(type="password", placeholder="Setup code", autofocus=true, name="code")
           
           btn#setup-begin.btn.btn-success(type="submit") Begin Setup
     
