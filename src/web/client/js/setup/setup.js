@@ -94,6 +94,10 @@
     });
     $("#setup-save-admin").click(function() {
       nextStep();
+      submitData();
+    });
+    /* $("#setup-save-admin").click(function() {
+      nextStep();
     });
     $("#setup-back-admin").click(function() {
       prevStep();
@@ -101,11 +105,11 @@
     $("#setup-save-settings").click(function() {
       nextStep();
       submitData();
-    });
+    }); */
     
     setStep(0);
     setButtonState($("#setup-save-admin"), false);
-    setButtonState($("#setup-save-settings"), false);
+    //setButtonState($("#setup-save-settings"), false);
     $("#setup-end").attr('disabled', true);
   }
   

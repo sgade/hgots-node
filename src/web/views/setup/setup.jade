@@ -26,41 +26,36 @@ block setup-content
                 input.form-control(type="password", id="setup-admin-password-repeat", placeholder="Repeat the strong password")
             
             .form-actions
-              btn#setup-save-admin.btn.btn-default.pull-right Next Step
+              btn#setup-save-admin.btn.btn-success.pull-right Finish setup
     // Initial settings
-    li.well
-      h3 #2: General settings
-      p Great!
-      p Now that you can log into the application, why don't we set the settings right away so you can focus on using the application right away?
-      p Right, here are some options for you:
-      
-      .panel.panel-default
-        .panel-heading Settings
-        .panel-body
-          form.form.form-horizontal
-            h4.help-block Database
-            .form-group
-              label.control-label.col-sm-3(for="setup-db-name") Database name
-              .col-sm-9
-                input.form-control(type="text", id="setup-db-name", placeholder="db.sqlite")
-            .form-group
-              label.control-label.col-sm-3(for="setup-db-username") Database username
-              .col-sm-9
-                input.form-control(type="text", id="setup-db-name", placeholder="admin")
-            .form-group
-              label.control-label.col-sm-3(for="setup-db-password") Database password
-              .col-sm-9
-                input.form-control(type="text", id="setup-db-password", placeholder="admin")
-                
-            // TODO: add way more settings, and validate if the database settings are even needed
-            
-            .form-actions
-              btn#setup-back-admin.btn.btn-default Back
-              btn#setup-save-settings.btn.btn-default.pull-right Finish setup
+      li.well
+        h3 #2: General settings
+        p Great!
+        p Now that you can log into the application, why don't we set the settings right away so you can focus on using the application right away?
+        p Right, here are some options for you:
+        
+        .panel.panel-default
+          .panel-heading Settings
+          .panel-body
+            form.form.form-horizontal#setup-preferences
+              h4.help-block Peripherals
+              p.help-block Enter the device position that map to the serial hardware:
+              .form-group
+                label.control-label.col-sm-3(for="setup-ports-relais") Relais card port
+                .col-sm-9
+                  input.form-control(type="text", id="setup-ports-relais", placeholder="/dev/ttyUSB0")
+              .form-group
+                label.control-label.col-sm-3(for="setup-port-rfid") RFID reader port
+                .col-sm-9
+                  input.form-control(type="text", id="setup-port-rfid", placeholder="/dev/ttyUSB1")
+              
+              .form-actions
+                btn#setup-back-admin.btn.btn-default Back
+                btn#setup-save-settings.btn.btn-default.pull-right Finish setup
               
     // Save settings, then redirect
     li.well
-      h3 #3: Send new defaults
+      h3 #2: Send new defaults
       p Just a second and you'll be ready to go!
       p We are currently uploading the new settings to the server who is then processing it.
       
