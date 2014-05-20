@@ -104,7 +104,8 @@
     });
     
     setStep(0);
-    $("#setup-save-admin").attr('disabled', true);
+    setButtonState($("#setup-save-admin"), false);
+    setButtonState($("#setup-save-settings"), false);
     $("#setup-end").attr('disabled', true);
   }
   
