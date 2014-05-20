@@ -1,4 +1,5 @@
 Em.I18n.translations = {
+  // English
   "nav": {
     "home": "Home",
     "admin": "Admin",

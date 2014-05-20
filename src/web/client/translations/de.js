@@ -1,59 +1,60 @@
 Em.I18n.translations = {
+  // German
   "nav": {
-    "home": "Home",
+    "home": "Start",
     "admin": "Admin",
-    "about": "About",
-    "logout": "Logout"
+    "about": "Über",
+    "logout": "Ausloggen"
   },
   "admin": {
-    "users": "Users",
-    "createNewLogin": "Create new Login",
+    "users": "Benutzer",
+    "createNewLogin": "Neuer Benutzer",
     "actions": {
-      "create": "Create",
-      "cancel": "Cancel"
+      "create": "Erstellen",
+      "cancel": "Abbrechen"
     },
     "fields": {
-      "password": "Password"
+      "password": "Passwort"
     },
     "welcome": {
-      'title': "Welcome to the Administration Interface",
-      'description': "This is your home for managing who has access to this system.",
+      'title': "Willkommen im Administrationsbereich",
+      'description': "Dies ist Ihr Bereich, um zu verwalten, wer Zutritt zum System hat.",
       "questions": {
-        "partOne": "If you have any questions, see the ",
-        "aboutPage": "About page",
+        "partOne": "Sollten Sie Fragen haben, gucken Sie auf die ",
+        "aboutPage": "\"Über\" Seite",
         "partTwo": "."
       }
     },
     "functions": {
-      "users":"All the users that have access to this system are listed on the left.",
+      "users":"Alle Benutzer, die Zutritt zum System haben, sind links aufgelistet.",
       "createUser": {
-        "partOne": "You can ",
-        "create": "create ",
-        "partTwo": "new users and edit existing ones on the left."
+        "partOne": "Sie können Benutzer ",
+        "create": "neu erstellen ",
+        "partTwo": "und Existierende links editieren."
       },
       "userTypes": {
-        "intro": "There are three different user types:",
-        "admin": "Admin: Has full rights. He can create new users, controllers and admins. Can open the door.",
-        "controller": "Controller: Has rights to create new users. Can open the door.",
-        "user": "User: Can open the door."
+        "intro": "Es gibt drei verschiedene Benutzerarten:",
+        "admin": "Admin: Hat vollen Zugriff. Er kann neue Benutzer, Verwalter und Admins erstellen. Er kann die Tür öffnen.",
+        "controller": "Verwalter: Hat das Recht, neue Benutzer hinzuzufügen. Kann die Tür öffnen.",
+        "user": "Benutzer: Kann die Tür öffnen."
       }
     },
     "user": {
-      "you": "This is you",
-      "newPassword": "New Password:",
-      "newPasswordRepeat": "New Password (Repeat):",
-      "save": "Save Changes",
-      "delete": "Delete User"
+      "you": "Das sind Sie",
+      "newPassword": "Neues Passwort:",
+      "newPasswordRepeat": "Neues Passwort wiederholen:",
+      "save": "Änderungen speichern",
+      "delete": "Benutzer löschen"
     }
   },
   "about": {
     "version": "Version ",
-    "by": "By ",
-    "contributors": " with the help of ",
-    "these": "these contributors",
-    "visit": "Visit the repo at "
+    "by": "Von ",
+    "contributors": " mit Unterstützung von ",
+    "these": "diesen",
+    "visit": "Besuchen Sie die Projektseite auf "
   },
   "index": {
-    "openDoor": "Open Door"
+    "openDoor": "Tür öffnen"
   }
 };
