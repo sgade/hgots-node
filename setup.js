@@ -33,9 +33,20 @@ function copyFileSync(src, dest) {
  * */
 function isInstalled(app, callback) {
   var cmd = "which " + app; // use 'which' to determine path => it then is installed
-  exec(cmd, function(err, stdout, stderr) {
+  exec(cmd, function(err) {
     var isInstalled = !err;
     callback(isInstalled);
+  });
+}
+function ensureCLI(app, installCommand, callback) {
+  callback = callback || function() {};
+  isInstalled(app, function(isInstalled) {
+    if ( !isInstalled ) {
+      return exec(installCommand, function(err) {
+        callback(err);
+      });
+    }
+    return callback(null);
   });
 }
 
@@ -48,7 +59,7 @@ function isInstalled(app, callback) {
  * @param {ErrorCallback} callback - A callback that is called once the operation finished.
  * */
 function npmInstall(callback) {
-  exec("npm install", function(err, stdout, stderr) {
+  exec("npm install", function(err) {
     callback(err);
   });
 }
@@ -57,7 +68,7 @@ function npmInstall(callback) {
  * @param {ErrorCallback} callback - A callback that is called once the operation finished.
  * */
 function bowerInstall(callback) {
-  exec("bower install", function(err, stdout, stderr) {
+  exec("bower install", function(err) {
     callback(err);
   });
 }
@@ -67,32 +78,14 @@ function bowerInstall(callback) {
  * @param {ErrorCallback} callback - A callback that is called once the operation finished.
  * */
 function ensureGrunt(callback) {
-  callback = callback || function() {};
-  isInstalled("grunt", function(isInstalled) {
-    if ( !isInstalled ) {
-      exec("npm install -g grunt-cli", function(err, stdout, stderr) {
-        callback(err);
-      });
-    } else {
-      callback();
-    }
-  });
+  ensureCLI("grunt", "npm install -g grunt-cli", callback);
 }
 /**
  * Ensures that bower is installed.
  * @param {ErrorCallback} callback - A callback that is called once the operation finished.
  * */
 function ensureBower(callback) {
-  callback = callback || function() {};
-  isInstalled("bower", function(isInstalled) {
-    if ( !isInstalled ) {
-      exec("npm install -g bower", function(err, stdout, stderr) {
-        callback(err);
-      });
-    } else {
-      callback();
-    }
-  });
+  ensureCLI("bower", "npm install -g bower", callback);
 }
 
 // First, check if there is a config.json
