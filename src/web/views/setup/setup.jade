@@ -15,7 +15,7 @@ block setup-content
             .form-group
               label.control-label.col-sm-3(for="setup-admin-username") Username
               .col-sm-9
-                input.form-control(type="text", id="setup-admin-username", placeholder="Username")
+                input.form-control(type="text", id="setup-admin-username", placeholder="Username", autofocus="true")
             .form-group
               label.control-label.col-sm-3(for="setup-admin-password") Password
               .col-sm-9
@@ -43,7 +43,7 @@ block setup-content
               .form-group
                 label.control-label.col-sm-3(for="setup-ports-relais") Relais card port
                 .col-sm-9
-                  input.form-control(type="text", id="setup-ports-relais", placeholder="/dev/ttyUSB0")
+                  input.form-control(type="text", id="setup-ports-relais", placeholder="/dev/ttyUSB0", autofocus="true")
               .form-group
                 label.control-label.col-sm-3(for="setup-port-rfid") RFID reader port
                 .col-sm-9
