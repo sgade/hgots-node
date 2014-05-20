@@ -1,16 +1,16 @@
 module.exports = function(grunt) {
-
+  
   // track time spent doing specific tasks
   require('time-grunt')(grunt);
   // load all grunt modules
   require('load-grunt-tasks')(grunt);
-
-
+  
+  
   var BANNER = "/*! <%= pkg.name %> v<%= pkg.version %> - Copyright (c) 2014 Sören Gade - see <%= pkg.repository.url %> */";
-
+  
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
+    
     /*
      * ==========
      * Test
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         NODE_ENV: 'test'
       }
     },
-
+    
     /*
      * ==========
      * Documentation
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
       doc: [ "./doc/" ],
       client: [ './src/web/public/' ]
     },
-
+    
     /*
      * ==========
      * Webserver
@@ -189,7 +189,7 @@ module.exports = function(grunt) {
       }
     }
   });
-
+  
   grunt.registerTask('default', [ 'lint', 'build' ]);
   grunt.registerTask('dev', [ 'build-dev', 'watch' ]);
   /* Single purpose tasks */
@@ -199,7 +199,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build-dev-js-index', [ 'concat:index' ]);
   grunt.registerTask('build-dev-js-app', [ 'concat:app' ]);
   grunt.registerTask('build-dev-js-templates', [ 'emberTemplates', 'emblem', 'concat:templates' ]);
-
+  
   grunt.registerTask('build', [ 'clean', 'build-js', 'build-css' ]);
   grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index', 'build-js-templates', 'build-js-i18n' ]);
   grunt.registerTask('build-js-i18n', [ 'build-dev-js-i18n' ]);
@@ -207,9 +207,9 @@ module.exports = function(grunt) {
   grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
   grunt.registerTask('build-js-templates', [ 'build-dev-js-templates', 'uglify:templates' ]);
   grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
-
+  
   grunt.registerTask('lint', [ 'jshint' ]);
   grunt.registerTask('test', [ 'env', 'lint', 'build', 'mochaTest' ]);
   grunt.registerTask('doc', [ 'jsdoc' ]);
-
+  
 };

@@ -1,6 +1,6 @@
 div.grid
   div.col-md-4
-
+    
     / User list
     div.panel.panel-default
       div.panel-heading
@@ -20,7 +20,7 @@ div.grid
       ul.list-group#users
         each filteredModel
           App.AdminUsersListItemView user=this
-
+  
   div.col-md-8
     / right panel
     div.admin-scroll-right style=rightPanelStyle

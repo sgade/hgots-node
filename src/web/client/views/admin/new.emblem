@@ -5,7 +5,7 @@ form.form#createNewUser
     App.PasswordStrengthView password=selectedPassword passwordPlaceholder="Password"
   div.form-group
     Ember.Select content=userTypes value=selectedUserType classNames="form-control"
-
+  
   div.form-actions
     div.row
       div.col-md-6

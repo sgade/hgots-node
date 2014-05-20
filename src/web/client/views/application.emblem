@@ -7,7 +7,7 @@ div.app
           span.icon-bar
           span.icon-bar
           span.icon-bar
-
+        
         span.navbar-brand= pkg.name
       div.collapse.navbar-collapse#nav-collapse
         ul.nav.navbar-nav
@@ -24,6 +24,6 @@ div.app
               = t nav.about
           li
             a href="/logout" = t nav.logout
-
+  
   div.container
     =outlet

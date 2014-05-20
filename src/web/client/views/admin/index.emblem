@@ -3,9 +3,9 @@
 div.jumbotron
   div.container.text-justify
     h1=t admin.welcome.title
-
+    
     p=t admin.welcome.description
-
+    
     ul
       li=t admin.functions.users
       / We assume that user 1 must exist because we have at least one user to view this!
@@ -19,7 +19,7 @@ div.jumbotron
           li=t admin.functions.userTypes.admin
           li=t admin.functions.userTypes.controller
           li=t admin.functions.userTypes.user
-
+    
     p
       =t admin.welcome.questions.partOne
       =link-to 'about' | {{t 'admin.welcome.questions.aboutPage'}}

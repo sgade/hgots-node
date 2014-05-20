@@ -16,24 +16,24 @@ for(var i = 0; i < availableLanguages.length; i++)
 /* Default route: Login */
 exports.index = function(req, res) {
   helpers.validateAuthenticatedRequest(req, function(ok) {
-
+    
     if ( ok ) {
       res.redirect("/app");
     } else {
-
+      
       res.render('index', {
         title: pkg.name
       });
-
+      
     }
-
+    
   });
 };
 
 /* Default route: App */
 exports.app = function(req, res) {
   helpers.validateAuthenticatedRequest(req, function(ok) {
-
+    
     if ( !ok ) {
       res.redirect('/');
     } else {
@@ -41,7 +41,7 @@ exports.app = function(req, res) {
         title: pkg.name
       });
     }
-
+    
   });
 };
 
@@ -53,6 +53,6 @@ exports.i18n = function(req, res) {
 
 exports.logout = function(req, res) {
   req.logout();
-
+  
   res.redirect('/');
 };
