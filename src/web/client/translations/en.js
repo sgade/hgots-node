@@ -56,4 +56,4 @@ Em.I18n.translations = {
   "index": {
     "openDoor": "Open Door"
   }
-}
+};
