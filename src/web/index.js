@@ -125,7 +125,6 @@ function configureRoutes() {
   });
   // Routes for login
   app.get('/', routes.index);
-  app.get('/i18n.js', routes.i18n);
   app.get('/logout', routes.logout);
   app.get('/login', function(req, res) {
     res.redirect('/');
@@ -136,6 +135,7 @@ function configureRoutes() {
   }));
   // Routes for app
   app.get('/app', routes.app);
+  app.get('/js/i18n.js', routes.i18n);
   app.get('/get_rfid', queries.getRFID);
   app.get('/open_door', queries.openDoor);
   app.get('/user', queries.getUser);
