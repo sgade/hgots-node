@@ -182,9 +182,11 @@
     newPassword: "",
     newPasswordRepeat: "",
     newType: null,
+    newUsername: null,
     
     _onModelUpdater: function() {
       this.set('newType', this.get('model.type'));
+      this.set('newUsername', this.get('model.username'));
     }.property('model'),
     
     userIsSelf: function() {
@@ -212,6 +214,9 @@
       if ( this.get('newType') === null ) {
         this.set('newType', this.get('model.type'));
       }
+      if ( this.get('newUsername') === null ) {
+        this.set('newUsername', this.get('model.username'));
+      }
       
       // changed type
       var isNewType = ( this.get('newType') !== this.get('model.type') );
@@ -220,20 +225,25 @@
       if ( this.get('newPassword') ) {
         isNewPassword = ( this.get('newPassword') == this.get('newPasswordRepeat') );
       }
+      // new username
+      var isNewUsername = ( this.get('newUsername') !== this.get('model.username') );
       
-      var changes = ( isNewType || isNewPassword );
+      var changes = ( isNewType || isNewPassword || isNewUsername );
       return !changes;
-    }.property('newPassword', 'newPasswordRepeat', 'newType', 'model.type'),
+    }.property('newPassword', 'newPasswordRepeat', 'newType', 'model.type', 'newUsername', 'model.username'),
     
     actions: {
       saveEdit: function() {
         var user = this.get('model');
         
+        var oldUsername = user.get('username');
         var oldType = user.get('type');
         
+        user.set('username', this.get('newUsername'));
         user.set('password', this.get('newPassword'));
         user.set('type', this.get('newType'));
         
+        this.set('newUsername', user.get('username'));
         this.set('newPassword', '');
         this.set('newPasswordRepeat', '');
         this.set('newType', user.get('type'));
@@ -242,6 +252,8 @@
         user.save().then(function() {
           alert("Changes saved.");
         }, function() {
+          user.set('username', oldUsername);
+          self.set('newUsername', oldUsername);
           user.set('type', oldType);
           self.set('newType', oldType);
           

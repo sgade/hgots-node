@@ -9,6 +9,10 @@ else
 form.form-horizontal#editUser
   input#edituser-id type="hidden" value=_onModelUpdater
   div.form-group
+    label.control-label.col-sm-2 for="edituser-name" Name:
+    div.col-sm-10
+      Ember.TextField#edituser-name type="text" classNames="form-control" value=newUsername placeholder="Username"
+  div.form-group
     label.control-label.col-sm-2 for="edituser-type" Type:
     div.col-sm-10
       Ember.Select#edituser-type content=userTypes value=newType classNames="form-control" disabled=canSeverelyEditThisUser
