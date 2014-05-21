@@ -178,6 +178,7 @@
   App.AdminUserController = Ember.ObjectController.extend({
     needs: [ 'application' ],
     
+    // user info
     userTypes: userTypes,
     newPassword: "",
     newPasswordRepeat: "",
@@ -231,6 +232,11 @@
       var changes = ( isNewType || isNewPassword || isNewUsername );
       return !changes;
     }.property('newPassword', 'newPasswordRepeat', 'newType', 'model.type', 'newUsername', 'model.username'),
+    
+    // cards
+    usersCards: function() {
+      return this.get('model.cards');
+    }.property('model.cards'),
     
     actions: {
       saveEdit: function() {

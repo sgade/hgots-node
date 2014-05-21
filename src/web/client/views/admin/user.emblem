@@ -6,26 +6,42 @@ else
     span.small.pull-right
       span.label.label-default=t admin.user.you
 
-form.form-horizontal#editUser
-  input#edituser-id type="hidden" value=_onModelUpdater
-  div.form-group
-    label.control-label.col-sm-2 for="edituser-name" Name:
-    div.col-sm-10
-      Ember.TextField#edituser-name type="text" classNames="form-control" value=newUsername placeholder="Username"
-  div.form-group
-    label.control-label.col-sm-2 for="edituser-type" Type:
-    div.col-sm-10
-      Ember.Select#edituser-type content=userTypes value=newType classNames="form-control" disabled=canSeverelyEditThisUser
-  div.form-group
-    label.control-label.col-sm-2 for="edituser-pw1"=t admin.user.newPassword
-    div.col-sm-10
-      App.PasswordStrengthView#edituser-pw1 password=newPassword passwordPlaceholder="Super secret"
-  div.form-group
-    label.control-label.col-sm-2 for="edituser-pw2"=t admin.user.newPasswordRepeat
-    div.col-sm-10
-      Ember.TextField#edituser-pw2 type="password" classNames="form-control" value=newPasswordRepeat placeholder="Super secret (repeat)"
+ul.nav.nav-pills
+  li.active
+    a href="#edituser-tab-info" data-toggle="tab" User details
+  li
+    a href="#edituser-tab-cards" data-toggle="tab" Cards
 
-  div.form-actions
-    div.row
-      button.btn.btn-success.col-sm-6 click="saveEdit" disabled=saveDisabled=t admin.user.save
-      button.btn.btn-danger.col-sm-6 click="delete" disabled=canSeverelyEditThisUser=t admin.user.delete
+div.tab-content
+  div.tab-pane.fade#edituser-tab-info.active.in
+  
+    form.form-horizontal#editUser
+      input#edituser-id type="hidden" value=_onModelUpdater
+      div.form-group
+        label.control-label.col-sm-2 for="edituser-name" Name:
+        div.col-sm-10
+          Ember.TextField#edituser-name type="text" classNames="form-control" value=newUsername placeholder="Username"
+      div.form-group
+        label.control-label.col-sm-2 for="edituser-type" Type:
+        div.col-sm-10
+          Ember.Select#edituser-type content=userTypes value=newType classNames="form-control" disabled=canSeverelyEditThisUser
+      div.form-group
+        label.control-label.col-sm-2 for="edituser-pw1"=t admin.user.newPassword
+        div.col-sm-10
+          App.PasswordStrengthView#edituser-pw1 password=newPassword passwordPlaceholder="Super secret"
+      div.form-group
+        label.control-label.col-sm-2 for="edituser-pw2"=t admin.user.newPasswordRepeat
+        div.col-sm-10
+          Ember.TextField#edituser-pw2 type="password" classNames="form-control" value=newPasswordRepeat placeholder="Super secret (repeat)"
+
+      div.form-actions
+        div.row
+          button.btn.btn-success.col-sm-6 click="saveEdit" disabled=saveDisabled=t admin.user.save
+          button.btn.btn-danger.col-sm-6 click="delete" disabled=canSeverelyEditThisUser=t admin.user.delete
+
+  div.tab-pane.fade#edituser-tab-cards
+    ul
+      each usersCards
+        li= this.uid
+      else
+        li No cards connected.
