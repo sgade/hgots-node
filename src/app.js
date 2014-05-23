@@ -81,7 +81,20 @@ function initRFIDReader() {
       }
     }).success(function(card) {
       if ( !card ) {
-        console.log("no card found.");
+        console.log("No card found.");
+        
+        // switch yellow off, red on
+        relais.setSingle(config.relaisport.red, function(err) {
+          relais.setSingle(config.relaisport.yellow, function(err) {
+            
+            setTimeout(function() {
+              // switch yellow on, red off
+              relais.delSingle(config.relaisport.red, function(err) {
+                relais.delSingle(config.relaisport.yellow);
+              });
+            }, 1500);
+          });
+        });
       } else {
         console.log("Card found.");
         card.getUser().success(function(user) {
