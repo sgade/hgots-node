@@ -236,8 +236,9 @@ function Relais(port) {
         return callback(err2);
       }
       
-      // on success run after some short time, because other commands may overload the card?
-      setImmediate(function() {
+      // only call into our other code after some time because execution of other relais commands
+      // may overload the card an cause errors (255)
+      // 10 ms seems to be a good time, for both users and relais card itself
       setTimeout(function() {
         callback(null, data);
       }, 10);
