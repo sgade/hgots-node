@@ -180,7 +180,7 @@ function openDoor(callback) {
         }
         
         // switch green off, yellow on
-        relais.delSingle(conig.relaisport.green, function(err) {
+        relais.delSingle(config.relaisport.green, function(err) {
           relais.delSingle(config.relaisport.yellow);
         });
         
