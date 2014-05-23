@@ -108,8 +108,6 @@ function initRFIDReader() {
                 console.log("Error opening door:", err);
                 return;
               }
-              
-              console.log("Door had been opened.");
             });
           }
         });
