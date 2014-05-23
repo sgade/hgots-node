@@ -96,12 +96,11 @@ function initRFIDReader() {
           });
         });
       } else {
-        console.log("Card found.");
         card.getUser().success(function(user) {
           if ( !user ) {
-            console.log("no user found");
+            throw new Error("No user found for rfid card in database!");
           } else {
-            console.log("user is", user.username);
+            console.log("User is", user.username);
             
             openDoor(function(err) {
               if ( !!err ) {
