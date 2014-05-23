@@ -81,22 +81,32 @@ function initRFIDReader() {
       }
     }).success(function(card) {
       if ( !card ) {
-        console.log("no card found.");
+        console.log("No card found.");
+        
+        // switch yellow off, red on
+        relais.setSingle(config.relaisport.red, function(err) {
+          relais.setSingle(config.relaisport.yellow, function(err) {
+            
+            setTimeout(function() {
+              // switch yellow on, red off
+              relais.delSingle(config.relaisport.red, function(err) {
+                relais.delSingle(config.relaisport.yellow);
+              });
+            }, 1500);
+          });
+        });
       } else {
-        console.log("Card found.");
         card.getUser().success(function(user) {
           if ( !user ) {
-            console.log("no user found");
+            throw new Error("No user found for rfid card in database!");
           } else {
-            console.log("user is", user.username);
+            console.log("User is", user.username);
             
             openDoor(function(err) {
               if ( !!err ) {
                 console.log("Error opening door:", err);
                 return;
               }
-              
-              console.log("Door had been opened.");
             });
           }
         });
@@ -154,12 +164,22 @@ function openDoor(callback) {
       return callback(err);
     }
     
+    // switch green on, yellow off
+    relais.setSingle(config.relaisport.green, function(err) {
+      relais.setSingle(config.relaisport.yellow);
+    });
+    
     setTimeout(function() {
       relais.delSingle(config.relaisport.door, function(err) {
         if ( !!err ) {
           console.log("Door could not be closed!");
           return callback(err);
         }
+        
+        // switch green off, yellow on
+        relais.delSingle(config.relaisport.green, function(err) {
+          relais.delSingle(config.relaisport.yellow);
+        });
         
         console.log("Door closed.");
         return callback(null);
