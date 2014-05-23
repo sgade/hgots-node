@@ -13,14 +13,19 @@ which grunt > /dev/null || ( echo "Installing grunt..." && ( npm install -g grun
 which bower > /dev/null || ( echo "Installing bower..." && ( npm install -g bower     || sudo npm install -g bower     ) )
 
 # Running installs
+echo "Now installing required packages."
+# NPM
 echo "Running npm install... This might take multiple minutes!"
 npm install --production
-
+# BOWER
 echo "Running bower install. This should be fairly quick."
 bower install
 
-echo "Running first build..."
+echo "Running production build..."
+echo "NOTE: The build process may seem to pause for multiple minutes."
 grunt build
 
 echo "Everything is setup for production."
 echo "If you want to develop with this instance, please run 'npm install' again by yourself to install development tools."
+echo ""
+echo "To start the application, run 'node src/app'."
