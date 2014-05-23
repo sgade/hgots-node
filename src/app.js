@@ -161,7 +161,7 @@ function openDoor(callback) {
           return callback(err);
         }
         
-        console.log("door closed.");
+        console.log("Door closed.");
         return callback(null);
       });
     }, config.web.doorOpenTime);
