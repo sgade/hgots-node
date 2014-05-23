@@ -236,7 +236,11 @@ function Relais(port) {
         return callback(err2);
       }
       
-      callback(null, data);
+      // on success run after some short time, because other commands may overload the card?
+      setImmediate(function() {
+      setTimeout(function() {
+        callback(null, data);
+      }, 10);
     };
     self.serialPort.once('data', dataCheck);
   
