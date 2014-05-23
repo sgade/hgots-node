@@ -167,12 +167,22 @@ function openDoor(callback) {
       return callback(err);
     }
     
+    // switch green on, yellow off
+    relais.setSingle(conig.relaisport.green, function(err) {
+      relais.setSingle(config.relaisport.yellow);
+    });
+    
     setTimeout(function() {
       relais.delSingle(config.relaisport.door, function(err) {
         if ( !!err ) {
           console.log("Door could not be closed!");
           return callback(err);
         }
+        
+        // switch green off, yellow on
+        relais.delSingle(conig.relaisport.green, function(err) {
+          relais.delSingle(config.relaisport.yellow);
+        });
         
         console.log("Door closed.");
         return callback(null);
