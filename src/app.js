@@ -81,7 +81,7 @@ function initRFIDReader() {
       }
     }).success(function(card) {
       if ( !card ) {
-        console.log("no card found.");
+        console.log("No card found.");
       } else {
         console.log("Card found.");
         card.getUser().success(function(user) {
