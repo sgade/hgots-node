@@ -49,13 +49,35 @@ exports.updateUser = function(id, data, callback) {
 exports.deleteUserObject = function(user, callback) {
   user.destroy().complete(callback);
 };
+exports.getPublicUserWithCards = function(user, callback) {
+  user.getCards().complete(function(err, cards) {
+    if ( !!err ) {
+      return callback(err);
+    }
+    
+    var public = user.getPublicModel();
+    var cardsList = [];
+    cards.forEach(function(card) {
+      cardsList.push(card.getPublicModel());
+    });
+    
+    callback(null, {
+      user: public,
+      cards: cardsList
+    });
+  });
+};
 exports.sendPublicUser = function(res, user) {
   assert(!!res, "Response object must be given.");
   assert(!!user, "User object must be given.");
   
-  var publicUser = { user :user.getPublicModel() };
-  
-  res.set('Content-Type', 'application/json').end(JSON.stringify(publicUser));
+  exports.getPublicUserWithCards(user, function(err, publicUser) {
+    if ( !!err ) {
+      return res.status(500).end();
+    }
+    
+    res.set('Content-Type', 'application/json').end(JSON.stringify(publicUser));
+  });
 };
 
 /* Cards */
