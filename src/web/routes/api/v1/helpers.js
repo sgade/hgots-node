@@ -61,10 +61,9 @@ exports.getPublicUserWithCards = function(user, callback) {
       cardsList.push(card.getPublicModel());
     });
     
-    return callback(null, {
-      user: public,
-      cards: cardsList
-    });
+    public.cards = cardsList;
+    
+    return callback(null, public);
   });
 };
 exports.sendPublicUser = function(res, user) {
