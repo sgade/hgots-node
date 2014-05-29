@@ -3,6 +3,9 @@
 # Check for node and npm
 which node > /dev/null || ( echo "You need Node.js installed to use this application. See https://nodejs.org for more details." && exit )
 which npm > /dev/null  || ( echo "You need npm installed to use this application. Please install a version that is compatible with your nodejs version." && exit )
+# Check for ruby (->sass)
+which ruby > /dev/null || ( echo "You need ruby installed to use this application. Please install a current version from https://www.ruby-lang.org/de/downloads/." && exit )
+which gem > /dev/null || ( echo "Ruby's 'gem' command could not be found. Please verify your ruby installation." && exit )
 
 # WORK!
 echo "INFO: This script might require admin rights to install some applications."
@@ -11,6 +14,8 @@ echo "INFO: This script might require admin rights to install some applications.
 which grunt > /dev/null || ( echo "Installing grunt..." && ( npm install -g grunt-cli || sudo npm install -g grunt-cli ) )
 # Check for bower
 which bower > /dev/null || ( echo "Installing bower..." && ( npm install -g bower     || sudo npm install -g bower     ) )
+# Check for sass
+which sass > /dev/null || ( echo "Installing sass..." && ( gem install sass || sudo gem install sass ) )
 
 # Running installs
 echo "Now installing required packages."
