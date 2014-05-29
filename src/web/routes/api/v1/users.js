@@ -26,20 +26,20 @@ exports.getAllUsers = function(req, res) {
                   return callback(); // skip admins because controllers should not edit them
                 }
                 
-                helpers.getPublicUserWithCards(user, function(err, publicUser, publicCards) {
+                helpers.getPublicUserWithCards(user, function(err, publicUserAndCards) {
                   if ( !!err ) {
                     return callback(err);
                   }
                   
                   var cardIDs = [];
-                  if ( publicCards.length > 0 ) {
-                    publicCards.forEach(function(publicCard) {
+                  if ( publicUserAndCards.cards.length > 0 ) {
+                    publicUserAndCards.cards.forEach(function(publicCard) {
                       cardsList.push(publicCard);
                       cardIDs.push(publicCard.id);
                     });
                   }
-                  publicUser.cards = cardIDs;
-                  userList.push(publicUser);
+                  publicUserAndCards.user.cards = cardIDs;
+                  userList.push(publicUserAndCards.user);
                   
                   callback();
                 });

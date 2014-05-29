@@ -61,22 +61,22 @@ exports.getPublicUserWithCards = function(user, callback) {
       cardsList.push(card.getPublicModel());
     });
     
-    return callback(null, publicUser, cardsList);
+    return callback(null, {
+      user: publicUser,
+      cards: cardsList
+    });
   });
 };
 exports.sendPublicUser = function(res, user) {
   assert(!!res, "Response object must be given.");
   assert(!!user, "User object must be given.");
   
-  exports.getPublicUserWithCards(user, function(err, publicUser, publicCards) {
+  exports.getPublicUserWithCards(user, function(err, userAndCards) {
     if ( !!err ) {
       return res.status(500).end();
     }
     
-    res.set('Content-Type', 'application/json').end(JSON.stringify({
-      user: publicUser,
-      cards: publicCards
-    }));
+    res.set('Content-Type', 'application/json').end(JSON.stringify(userAndCards));
   });
 };
 
