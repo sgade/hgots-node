@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Welcome to the setup routine of hgots-node."
+echo "This script will notify you about required software and may also install required dependencies for production."
 # Check for node and npm
 which node > /dev/null || ( echo "You need Node.js installed to use this application. See https://nodejs.org for more details." && exit )
 which npm > /dev/null  || ( echo "You need npm installed to use this application. Please install a version that is compatible with your nodejs version." && exit )
