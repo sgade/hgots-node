@@ -20,17 +20,26 @@ exports.getAllUsers = function(req, res) {
             } else {
               
               var userList = [];
+              var cardsList = [];
               async.each(users, function(user, callback) {
                 if ( reqUser.isController() && user.isPrivileged() ) {
                   return callback(); // skip admins because controllers should not edit them
                 }
                 
-                helpers.getPublicUserWithCards(user, function(err, publicModel) {
+                helpers.getPublicUserWithCards(user, function(err, publicUser, publicCards) {
                   if ( !!err ) {
                     return callback(err);
                   }
                   
-                  userList.push(publicModel);
+                  var cardIDs = [];
+                  if ( publicCards.length > 0 ) {
+                    publicCards.forEach(function(publicCard) {
+                      cardsList.push(publicCard);
+                      cardIDs.push(publicCard.id);
+                    });
+                  }
+                  publicUser.cards = cardIDs;
+                  userList.push(publicUser);
                   
                   callback();
                 });
@@ -40,9 +49,12 @@ exports.getAllUsers = function(req, res) {
                   throw err; // TODO: handle?
                 }
                 
+                console.log("cards:", cardsList);
+                
                 res.set('Content-Type', 'application/json');
                 res.end(JSON.stringify({
-                  users: userList
+                  users: userList,
+                  cards: cardsList
                 }));
               });
             
