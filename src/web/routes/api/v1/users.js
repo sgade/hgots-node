@@ -49,8 +49,6 @@ exports.getAllUsers = function(req, res) {
                   throw err; // TODO: handle?
                 }
                 
-                console.log("cards:", cardsList);
-                
                 res.set('Content-Type', 'application/json');
                 res.end(JSON.stringify({
                   users: userList,
