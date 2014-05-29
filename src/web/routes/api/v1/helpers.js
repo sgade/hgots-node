@@ -76,6 +76,12 @@ exports.sendPublicUser = function(res, user) {
       return res.status(500).end();
     }
     
+    var cardIDs = [];
+    userAndCards.cards.forEach(function(publicCard) {
+      cardIDs.push(publicCard.id);
+    });
+    userAndCards.user.cards = cardIDs;
+    
     res.set('Content-Type', 'application/json').end(JSON.stringify(userAndCards));
   });
 };
