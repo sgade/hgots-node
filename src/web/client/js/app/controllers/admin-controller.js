@@ -239,6 +239,7 @@
     }.property('model.cards'),
     
     actions: {
+      // user info
       saveEdit: function() {
         var user = this.get('model');
         
@@ -272,6 +273,17 @@
         user.destroyRecord();
         // TODO: only after promise returned
         this.transitionToRoute('admin.index');
+      },
+      
+      // cards
+      removeCardAssociation: function(card) {
+        card.destroyRecord().complete(function(err) {
+          if ( !!err ) {
+            return console.log(err);
+          }
+          
+          alert("Relationship removed.");
+        });
       }
     }
   });

@@ -44,6 +44,6 @@ div.tab-content
       each usersCards
         li.card.list-group-item.grid
           b= this.uid
-          button.btn.btn-danger.pull-right Remove card from this user
+          button.btn.btn-danger.pull-right click="removeCardAssociation this" Remove card from this user
       else
         li.list-group-item No cards connected.
