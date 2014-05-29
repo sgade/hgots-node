@@ -11,11 +11,11 @@ which gem > /dev/null || ( echo "Ruby's 'gem' command could not be found. Please
 echo "INFO: This script might require admin rights to install some applications."
 
 # Check for grunt
-which grunt > /dev/null || ( echo "Installing grunt..." && ( npm install -g grunt-cli || sudo npm install -g grunt-cli ) )
+which grunt > /dev/null || ( echo "Installing grunt..." && ( ( npm install -g grunt-cli || sudo npm install -g grunt-cli ) || ( echo "Installing grunt failed." && exit ) ) )
 # Check for bower
-which bower > /dev/null || ( echo "Installing bower..." && ( npm install -g bower     || sudo npm install -g bower     ) )
+which bower > /dev/null || ( echo "Installing bower..." && ( ( npm install -g bower     || sudo npm install -g bower     ) || ( echo "Installing bower failed." && exit ) ) )
 # Check for sass
-which sass > /dev/null || ( echo "Installing sass..." && ( gem install sass || sudo gem install sass ) )
+which sass > /dev/null || ( echo "Installing sass..."   && ( ( gem install sass         || sudo gem install sass         ) || ( echo "Installing sass failed." && exit ) ) )
 
 # Running installs
 echo "Now installing required packages."
