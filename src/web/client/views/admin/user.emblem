@@ -40,8 +40,10 @@ div.tab-content
           button.btn.btn-danger.col-sm-6 click="delete" disabled=canSeverelyEditThisUser=t admin.user.delete
 
   div.tab-pane.fade#edituser-tab-cards
-    ul
+    ul.list-group
       each usersCards
-        li= this.uid
+        li.card.list-group-item.grid
+          b= this.uid
+          button.btn.btn-danger.pull-right Remove card from this user
       else
-        li No cards connected.
+        li.list-group-item No cards connected.
