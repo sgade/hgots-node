@@ -47,6 +47,55 @@ exports.getCardsOfUser = function(req, res) {
   });
 };
 
+/* GET /card/:id */
+exports.getCard = function(req, res) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
+    if ( err ) {
+      res.status(500).end();
+    } else {
+      
+      if ( !reqUser ) {
+        res.status(403).end();
+      } else {
+        var id = req.params.id;
+
+        if ( reqUser.isPrivileged() ) {
+          helpers.getCard({
+            id: id
+          }).complete(function(err, card) {
+            if ( !!err ) {
+              return res.status(500).end();
+            }
+            if ( !card ) {
+              return res.status(400).end();
+            }
+            
+            card.getUser().complete(function(err, user) {
+              if ( !!err ) {
+                return res.status(500).end();
+              }
+              if ( !user ) {
+                return res.status(400).end();
+              }
+              
+              var publicCard = card.getPublicModel();
+              publicCard.user = user.id;
+              
+              res.set('Content-Type', 'application/json');
+              res.end(JSON.stringify(publicCard));
+            });
+          });
+          
+        } else {
+          res.status(403).end();
+        }
+        
+      }
+      
+    }
+  });
+};
+
 /* POST /user/:id/card */
 exports.createNewCard = function(req, res) {
   helpers.getRequestingUser(req, function(err, reqUser) {
