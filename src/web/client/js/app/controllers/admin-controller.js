@@ -294,7 +294,10 @@
       getRFIDFromServer: function() {
         var self = this;
         
+        $("#button-getRFID").button('loading');
         return Ember.$.get('/get_rfid', function(data) {
+          $("#button-getRFID").button('reset');
+          
           self.set('newRFID', data);
         });
       },

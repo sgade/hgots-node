@@ -43,7 +43,7 @@ div.tab-content
     ul.list-group
       li.list-group-item
         Ember.TextField classNames="form-control" placeholder="Add new card with id..." value=newRFID
-        button.btn.btn-default click="getRFIDFromServer" Get from RFID Reader
+        button.btn.btn-default#button-getRFID click="getRFIDFromServer" data-loading-text="Please put your card in front of the reader..." Get from RFID Reader
         button.btn.btn-success.pull-right click="addRFIDCard" disabled=addCardDisabled Add Card
       each usersCards
         li.card.list-group-item
