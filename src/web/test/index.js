@@ -245,7 +245,36 @@ describe('HGOTS Server Specs', function() {
             }, done);
         });
         
+        it('should return only users to a controller', function(done) {
+          authenticatedControllerAgent
+            .get(url)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({
+              users: users.filter(function(user) {
+                return ( user.type === "User" );
+              })
+            }, done);
+        });
+        
+        it('should be forbidden for users', function(done) {
+          authenticatedUserAgent
+            .get(url)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should be forbidden for everyone else', function(done) {
+          request(expressApp)
+            .get(url)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
       });
+      
     });
   });
 });
