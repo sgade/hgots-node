@@ -75,14 +75,17 @@ exports.getPublicModels = function(modelList, callback) {
   });
   return callback(null, retVal);
 };
-exports.sendPublicModels = function(res, modelList, wrapper) {
+exports.sendPublicModels = function(res, publicModels, wrapper) {
+  var response = {};
+  response[wrapper] = publicModels;
+  return exports.sendStatusMessage(res, 200, response);
+};
+exports.sendModels = function(res, modelList, wrapper) {
   exports.getPublicModels(modelList, function(err, models) {
     if ( !!err ) {
       return exports.sendInternalServerError(res);
     }
     
-    var response = {};
-    response[wrapper] = models;
-    return exports.sendStatusMessage(res, 200, response);
+    exports.sendPublicModels(res, models, wrapper);
   });
 };
