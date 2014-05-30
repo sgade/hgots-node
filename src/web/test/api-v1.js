@@ -1,3 +1,44 @@
+/* Fixtures */
+/*var defaultPasswordHash = "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb";
+var users = [ {
+  id: 1,
+  username: "testAdmin",
+  type: "Admin",
+  cards: [ 1, 2 ]
+}, {
+  id: 2,
+  username: "testController",
+  type: "Controller",
+  cards: [ 3 ]
+}, {
+  id: 3,
+  username: "testUser",
+  type: "User",
+  cards: [ 4 ]
+}, {
+  id: 4,
+  username: "foo",
+  type: "User",
+  cards: []
+} ];
+var cards = [ {
+  "UserId": 1,
+  "id": 1,
+  "uid": "0123456789"
+}, {
+  "UserId": 1,
+  "id": 2,
+  "uid": "1234567890"
+}, {
+  "UserId": 2,
+  "id": 3,
+  "uid": "2345678901"
+}, {
+  "UserId": 3,
+  "id": 4,
+  "uid": "3456789012"
+} ]; */
+
 // v1
 /*describe('v1', function() {
   var prefix = apiPrefix + '/v1';
