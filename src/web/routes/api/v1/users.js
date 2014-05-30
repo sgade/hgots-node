@@ -1,4 +1,5 @@
 var helpers = require('./helpers');
+var async = require('async');
 
 /* GET /users */
 exports.getAllUsers = function(req, res) {
@@ -19,18 +20,41 @@ exports.getAllUsers = function(req, res) {
             } else {
               
               var userList = [];
-              users.forEach(function(user) {
+              var cardsList = [];
+              async.each(users, function(user, callback) {
                 if ( reqUser.isController() && user.isPrivileged() ) {
-                  return; // skip admins because controllers should not edit them
+                  return callback(); // skip admins because controllers should not edit them
                 }
                 
-                userList.push(user.getPublicModel());
+                helpers.getPublicUserWithCards(user, function(err, publicUserAndCards) {
+                  if ( !!err ) {
+                    return callback(err);
+                  }
+                  
+                  var cardIDs = [];
+                  if ( publicUserAndCards.cards.length > 0 ) {
+                    publicUserAndCards.cards.forEach(function(publicCard) {
+                      cardsList.push(publicCard);
+                      cardIDs.push(publicCard.id);
+                    });
+                  }
+                  publicUserAndCards.user.cards = cardIDs;
+                  userList.push(publicUserAndCards.user);
+                  
+                  callback();
+                });
+                
+              }, function(err) {
+                if ( !!err ) {
+                  throw err; // TODO: handle?
+                }
+                
+                res.set('Content-Type', 'application/json');
+                res.end(JSON.stringify({
+                  users: userList,
+                  cards: cardsList
+                }));
               });
-              
-              res.set('Content-Type', 'application/json');
-              res.end(JSON.stringify({
-                users: userList
-              }));
             
             }
           });

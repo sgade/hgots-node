@@ -17,8 +17,9 @@ module.exports = function(app) {
   app.delete(prefix + '/users/:id', users.deleteUser);
   
   app.get(prefix + '/users/:id/cards', cards.getCardsOfUser);
-  app.post(prefix + '/users/:id/cards', cards.createNewCard);
-  app.delete(prefix + '/users/:userid/card/:id', cards.deleteCard);
+  app.get(prefix + '/cards/:id', cards.getCard);
+  app.post(prefix + '/cards', cards.createNewCard);
+  app.delete(prefix + '/cards/:id', cards.deleteCard);
   
   app.post(prefix + '/setup-auth', setup.authenticate);
   app.post(prefix + '/setup', setup.doSetup);

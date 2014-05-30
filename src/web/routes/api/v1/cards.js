@@ -47,7 +47,56 @@ exports.getCardsOfUser = function(req, res) {
   });
 };
 
-/* POST /user/:id/card */
+/* GET /card/:id */
+exports.getCard = function(req, res) {
+  helpers.getRequestingUser(req, function(err, reqUser) {
+    if ( err ) {
+      res.status(500).end();
+    } else {
+      
+      if ( !reqUser ) {
+        res.status(403).end();
+      } else {
+        var id = req.params.id;
+
+        if ( reqUser.isPrivileged() ) {
+          helpers.getCard({
+            id: id
+          }).complete(function(err, card) {
+            if ( !!err ) {
+              return res.status(500).end();
+            }
+            if ( !card ) {
+              return res.status(400).end();
+            }
+            
+            card.getUser().complete(function(err, user) {
+              if ( !!err ) {
+                return res.status(500).end();
+              }
+              if ( !user ) {
+                return res.status(400).end();
+              }
+              
+              var publicCard = card.getPublicModel();
+              publicCard.user = user.id;
+              
+              res.set('Content-Type', 'application/json');
+              res.end(JSON.stringify(publicCard));
+            });
+          });
+          
+        } else {
+          res.status(403).end();
+        }
+        
+      }
+      
+    }
+  });
+};
+
+/* POST /cards */
 exports.createNewCard = function(req, res) {
   helpers.getRequestingUser(req, function(err, reqUser) {
     if ( err ) {
@@ -58,8 +107,12 @@ exports.createNewCard = function(req, res) {
       } else {
         
         if ( reqUser.isPrivileged() ) {
-          var id = req.params.id;
-          var uid = req.body.uid;
+          var cardBody = req.body.card;
+          if ( !cardBody ) {
+            return res.status(400).end();
+          }
+          var id = cardBody.user;
+          var uid = cardBody.uid;
           
           helpers.getUser({
             id: id
@@ -79,7 +132,12 @@ exports.createNewCard = function(req, res) {
                   } else {
                     card.setUser(user);
                     
-                    res.set('Content-Type', 'application/json').end(JSON.stringify(card.getPublicModel()));
+                    var publicCard = card.getPublicModel();
+                    publicCard.user = user.id;
+                    
+                    res.set('Content-Type', 'application/json').end(JSON.stringify({
+                      card: publicCard
+                    }));
                   }
                 });
                 
@@ -108,8 +166,7 @@ exports.deleteCard = function(req, res) {
         
         if ( reqUser.isPrivileged() ) {
           
-          var userId = req.params.userid,
-            cardId = req.params.id;
+          var cardId = req.params.id;
           
           helpers.getCard({
             id: cardId
@@ -118,21 +175,11 @@ exports.deleteCard = function(req, res) {
               res.status(500).end();
             } else {
               
-              card.getUser().complete(function(err, user) {
-                if ( err ) {
+              card.destroy().complete(function(err) {
+                if ( !!err ) {
                   res.status(500).end();
                 } else {
-                  if ( user.id == userId ) {
-                    card.destroy().complete(function(err) {
-                      if ( err ) {
-                        res.status(500).end();
-                      } else {
-                        res.status(200).end();
-                      }
-                    });
-                  } else {
-                    res.status(400).end();
-                  }
+                  res.status(200).end(JSON.stringify({}));
                 }
               });
               

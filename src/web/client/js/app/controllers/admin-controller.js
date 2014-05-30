@@ -178,6 +178,7 @@
   App.AdminUserController = Ember.ObjectController.extend({
     needs: [ 'application' ],
     
+    // user info
     userTypes: userTypes,
     newPassword: "",
     newPasswordRepeat: "",
@@ -232,7 +233,13 @@
       return !changes;
     }.property('newPassword', 'newPasswordRepeat', 'newType', 'model.type', 'newUsername', 'model.username'),
     
+    // cards
+    usersCards: function() {
+      return this.get('model.cards');
+    }.property('model.cards'),
+    
     actions: {
+      // user info
       saveEdit: function() {
         var user = this.get('model');
         
@@ -250,7 +257,7 @@
         
         var self = this;
         user.save().then(function() {
-          alert("Changes saved.");
+          // silent
         }, function() {
           user.set('username', oldUsername);
           self.set('newUsername', oldUsername);
@@ -266,6 +273,46 @@
         user.destroyRecord();
         // TODO: only after promise returned
         this.transitionToRoute('admin.index');
+      },
+      
+      // cards
+      newRFID: "",
+      _newRFIDUpdater: function() {
+        this.set('newRFID', '');
+      }.observes('model'),
+      addCardDisabled: function() {
+        return ( this.get('newRFID') === "" );
+      }.property('newRFID'),
+      
+      removeCardAssociation: function(card) {
+        card.destroyRecord().then(function() {
+          // silent, everything's just great!
+        }, function() {
+          alert("Card could not be removed.");
+        });
+      },
+      getRFIDFromServer: function() {
+        var self = this;
+        
+        $("#button-getRFID").button('loading');
+        return Ember.$.get('/get_rfid', function(data) {
+          $("#button-getRFID").button('reset');
+          
+          self.set('newRFID', data);
+        });
+      },
+      addRFIDCard: function() {
+        var self = this;
+        
+        var card = self.store.createRecord('card', {
+          uid: self.get('newRFID'),
+          user: self.get('model')
+        });
+        return card.save().then(function() {
+          self.set('newRFID', '');
+        }, function() {
+          alert("Erorr adding the card.");
+        });
       }
     }
   });

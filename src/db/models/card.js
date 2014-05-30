@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
     uid: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models){
+      associate: function(models) {
         Card.belongsTo(models.User);
       }
     },
