@@ -41,8 +41,12 @@ div.tab-content
 
   div.tab-pane.fade#edituser-tab-cards
     ul.list-group
+      li.list-group-item
+        Ember.TextField classNames="form-control" placeholder="Add new card with id..." value=newRFID
+        button.btn.btn-default click="getRFIDFromServer" Get from RFID Reader
+        button.btn.btn-success.pull-right click="addRFIDCard" disabled=addCardDisabled Add Card
       each usersCards
-        li.card.list-group-item.grid
+        li.card.list-group-item
           b= this.uid
           button.btn.btn-danger.pull-right click="removeCardAssociation this" Remove card from this user
       else

@@ -276,6 +276,14 @@
       },
       
       // cards
+      newRFID: "",
+      _newRFIDUpdater: function() {
+        this.set('newRFID', '');
+      }.observes('model'),
+      addCardDisabled: function() {
+        return ( this.get('newRFID') === "" );
+      }.property('newRFID'),
+      
       removeCardAssociation: function(card) {
         card.destroyRecord().complete(function(err) {
           if ( !!err ) {
@@ -283,6 +291,26 @@
           }
           
           alert("Relationship removed.");
+        });
+      },
+      getRFIDFromServer: function() {
+        var self = this;
+        
+        return Ember.$.get('/get_rfid', function(data) {
+          self.set('newRFID', data);
+        });
+      },
+      addRFIDCard: function() {
+        var self = this;
+        
+        var card = self.store.createRecord('card', {
+          uid: self.get('newRFID'),
+          user: self.get('model')
+        });
+        return card.save().then(function() {
+          self.set('newRFID', '');
+        }, function() {
+          alert("Erorr adding the card.");
         });
       }
     }

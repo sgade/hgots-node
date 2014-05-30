@@ -96,7 +96,7 @@ exports.getCard = function(req, res) {
   });
 };
 
-/* POST /user/:id/card */
+/* POST /cards */
 exports.createNewCard = function(req, res) {
   helpers.getRequestingUser(req, function(err, reqUser) {
     if ( err ) {
@@ -107,8 +107,12 @@ exports.createNewCard = function(req, res) {
       } else {
         
         if ( reqUser.isPrivileged() ) {
-          var id = req.params.id;
-          var uid = req.body.uid;
+          var cardBody = req.body.card;
+          if ( !cardBody ) {
+            return res.status(400).end();
+          }
+          var id = cardBody.user;
+          var uid = cardBody.uid;
           
           helpers.getUser({
             id: id
