@@ -136,6 +136,10 @@ describe('HGOTS Web Server', function() {
         .type('form')
         .expect(302)
         .end(function(err, res) {
+          if ( !!err ) {
+            throw err;
+          }
+          
           res.header.location.should.include('/');
           done();
         });
@@ -149,6 +153,10 @@ describe('HGOTS Web Server', function() {
         .send({ password: "failingPassword" })
         .expect(302)
         .end(function(err, res) {
+          if ( !!err ) {
+            throw err;
+          }
+          
           res.header.location.should.include('/');
           done();
         });
@@ -162,6 +170,10 @@ describe('HGOTS Web Server', function() {
         .send({ password: "zulf" })
         .expect(302)
         .end(function(err, res) {
+          if ( !!err ) {
+            throw err;
+          }
+          
           res.header.location.should.include('/');
           done();
         });
@@ -175,6 +187,10 @@ describe('HGOTS Web Server', function() {
         .send({ password: defaultPasswordHash })
         .expect(302)
         .end(function(err, res) {
+          if ( !!err ) {
+            throw err;
+          }
+          
           res.header.location.should.include('/app');
           done();
         });
