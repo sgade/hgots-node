@@ -204,6 +204,20 @@ describe('HGOTS Server Specs', function() {
           });
       });
     });
+    
+    describe('GET /app', function() {
+      it('should redirect without credentials', function(done) {
+        request(expressApp)
+          .get('/app')
+          .expect(302, done);
+      });
+
+      it('should stay with credentials', function(done) {
+        authenticatedUserAgent
+          .get('/app')
+          .expect(200, done);
+      });
+    });
   });
   
   describe("API", function() {
