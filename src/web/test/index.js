@@ -76,13 +76,23 @@ var loginUser = function(username, cb) {
 };
 
 // first, test the server...
-describe('HGOTS Web Server', function() {
+describe('HGOTS Server Specs', function() {
   beforeEach(function(done) {
     app.init(port, null, null, function() {
       app.start(function() {
         expressApp = app.getExpress();
-        
-        done();
+        sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, function() {
+          async.map(["testAdmin", "testController", "testUser", "foo"], loginUser, function(err, results) {
+            if ( err ) throw err;
+
+            authenticatedAdminAgent = results[0];
+            authenticatedControllerAgent = results[1];
+            authenticatedUserAgent = results[2];
+            authenticatedDeadUserAgent = results[3];
+
+            done();
+          });
+        });
       });
     });
   });
@@ -92,12 +102,114 @@ describe('HGOTS Web Server', function() {
     done();
   });
   
-  it('should exist', function(done) {
-    should.exist(expressApp);
-    done();
+  describe('Web Server', function() {
+    it('should exist', function(done) {
+      should.exist(expressApp);
+      done();
+    });
+    
+    it('should be listening at localhost:' + port, function(done) {
+      request(expressApp)
+        .get('/')
+        .expect(200, done);
+    });
+    
+    describe('GET /', function() {
+      it('should respond with HTML on /', function(done) {
+        request(expressApp)
+          .get('/')
+          .expect('Content-Type', /html/)
+          .expect(200, done);
+      });
+    });
+    
+    describe('POST /auth/login', function() {
+      var loginUrl = '/auth/login';
+      
+      it('should redirect to / ', function(done) {
+        request(expressApp)
+          .post(loginUrl)
+          .expect(302)
+          .end(function(err, res) {
+            if ( !!err ) {
+              throw err;
+            }
+            
+            res.header.location.should.include('/');
+            done();
+          });
+      });
+      
+      it('should redirect to / without credentials', function(done) {
+        request(expressApp)
+          .post(loginUrl)
+          .type('form')
+          .expect(302)
+          .end(function(err, res) {
+            if ( !!err ) {
+              throw err;
+            }
+            
+            res.header.location.should.include('/');
+            done();
+          });
+      });
+      
+      it('should redirect to / with wrong credentials', function(done) {
+        request(expressApp)
+          .post(loginUrl)
+          .type('form')
+          .send({ username: "wrongUsername", password: "wrongPassword" })
+          .expect(302)
+          .end(function(err, res) {
+            if ( !!err ) {
+              throw err;
+            }
+            
+            res.header.location.should.include('/');
+            done();
+          });
+      });
+
+      it('should redirect to / with correct username but wrong password', function(done) {
+        request(expressApp)
+          .post('/auth/login')
+          .type('form')
+          .send({ username: "testUser", password: "wrongPassword" })
+          .expect(302)
+          .end(function(err, res) {
+            if ( !!err ) {
+              throw err;
+            }
+            
+            res.header.location.should.include('/');
+            done();
+          });
+      });
+      
+      it('should redirect to /app with correct credentials', function(done) {
+        request(expressApp)
+          .post('/auth/login')
+          .type('form')
+          .send({ username: "testUser" })
+          .send({ password: defaultPasswordHash })
+          .expect(302)
+          .end(function(err, res) {
+            if ( !!err ) {
+              throw err;
+            }
+            
+            res.header.location.should.include('/app');
+            done();
+          });
+      });
+    });
   });
   
-  it('should be listening at localhost:' + port, function(done) {
+  describe("API", function() {
+    
+  });
+});
     request(expressApp)
       .get('/')
       .expect(200, done);
