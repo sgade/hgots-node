@@ -13,20 +13,49 @@ var defaultPasswordHash = "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919ba
 var users = [ {
                 id: 1,
                 username: "testAdmin",
-                type: "Admin"
+                type: "Admin",
+                cards: [ 2, 6 ]
               }, {
                 id: 2,
                 username: "testController",
-                type: "Controller"
+                type: "Controller",
+                cards: []
               }, {
                 id: 3,
                 username: "testUser",
-                type: "User"
+                type: "User",
+                cards: [ 1, 3, 4, 5 ]
               }, {
                 id: 4,
                 username: "killMe",
-                type: "User"
+                type: "User",
+                cards: []
               } ];
+var cards = [ {
+  "UserId": 1,
+  "id": 2,
+  "uid": "52"
+}, {
+  "UserId": 1,
+  "id": 6,
+  "uid": "52d"
+}, {
+  "UserId": 3,
+  "id": 1,
+  "uid": "42"
+}, {
+  "UserId": 3,
+  "id": 3,
+  "uid": "52a"
+}, {
+  "UserId": 3,
+  "id": 4,
+  "uid": "52b"
+}, {
+  "UserId": 3,
+  "id": 5,
+  "uid": "52c"
+}];
 
 
 var authenticatedAdminAgent;
@@ -48,7 +77,6 @@ var loginUser = function(username, cb) {
 
 describe('HGOTS Web Server', function() {
   this.timeout(10000);
-  
   
   beforeEach(function(done) {
     app.init(port, null, null, function() {
@@ -179,7 +207,7 @@ describe('HGOTS Web Server', function() {
             .get(url)
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({users: users}, done);
+            .expect({users: users, cards: cards}, done);
         });
         
         it('should return only users to a controller', function(done) {
@@ -189,6 +217,8 @@ describe('HGOTS Web Server', function() {
             .expect(200)
             .expect({users: users.filter(function(user) {
               return ( user.type == 'User' );
+            }), cards: cards.filter(function(card) {
+              return ( card.UserId !== 1 );
             })}, done);
         });
         
@@ -283,7 +313,9 @@ describe('HGOTS Web Server', function() {
             .get(url + 3)
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({user: users[2] }, done);
+            .expect({user: users[2], cards: cards.filter(function(card) {
+              return ( card.UserId === users[2].id );
+            }) }, done);
         });
         
         it('should return user 3 to a controller', function(done) {
@@ -291,7 +323,9 @@ describe('HGOTS Web Server', function() {
             .get(url + 3)
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({ user: users[2] }, done);
+            .expect({ user: users[2], cards: cards.filter(function(card) {
+              return ( card.UserId === users[2].id );
+            }) }, done);
         });
         
         it('should return user 3 to user 3', function(done) {
@@ -299,7 +333,9 @@ describe('HGOTS Web Server', function() {
             .get(url + 3)
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({ user: users[2] }, done);
+            .expect({ user: users[2], cards: cards.filter(function(card) {
+              return ( card.UserId === users[2].id );
+            })  }, done);
         });
         
         it('should not return any user to any other user', function(done) {
@@ -311,6 +347,9 @@ describe('HGOTS Web Server', function() {
       
       describe('PUT /users/:id', function() {
         var url = prefix + "/users/";
+        var hisCards = cards.filter(function(card) {
+          return ( card.UserId === 4 );
+        });
         
         it('should allow an admin to update user 4', function(done) {
           authenticatedAdminAgent
@@ -318,7 +357,9 @@ describe('HGOTS Web Server', function() {
             .send({ user: { username: "killMeToo", type: 'User' } })
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({ user: {id: 4, username: "killMeToo", type: "User"} }, done);
+            .expect({ user: {id: 4, username: "killMeToo", type: "User", cards: hisCards.map(function(card) {
+              return card.id;
+            })}, cards: hisCards }, done);
         });
         
         it('should allow a controller to update user 4', function(done) {
@@ -327,7 +368,9 @@ describe('HGOTS Web Server', function() {
             .send({user :{username: "killMeToo", type: 'User'} })
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({user: {id: 4, username: "killMeToo", type: "User"}}, done);
+            .expect({ user: {id: 4, username: "killMeToo", type: "User", cards: hisCards.map(function(card) {
+              return card.id;
+            })}, cards: hisCards }, done);
         });
         
         it('should not allow user 4 to update user 4', function(done) {
@@ -420,32 +463,36 @@ describe('HGOTS Web Server', function() {
         });
       });
       
-      describe('POST /users/:id/cards', function() {
-        var url = prefix + "/users";
+      describe('POST /cards', function() {
+        var url = prefix + "/cards";
+        var payload = { card: {
+          uid: "42",
+          user: 3
+        } };
         it('should allow an Admin to add a new card to a user', function(done) {
           authenticatedAdminAgent
-            .post(url + '/3/cards')
-            .send({uid: "42"})
+            .post(url)
+            .send(payload)
             .expect(200, done);
         });
         
         it('should allow a controller to add a new card to a user', function(done) {
           authenticatedControllerAgent
-            .post(url + '/3/cards')
-            .send({uid: "42"})
+            .post(url)
+            .send(payload)
             .expect(200, done);
         });
         
         it('should not allow a normal user to add a new card to a user', function(done) {
           authenticatedUserAgent
-            .post(url + '/3/cards')
-            .send({uid: "42"})
+            .post(url)
+            .send(payload)
             .expect(403, done);
         });
       });
       
-      describe('DELETE /users/:id/card/:id', function() {
-        var url = prefix + "/users/3/card/";
+      describe('DELETE /cards/:id', function() {
+        var url = prefix + "/cards/";
         
         it('should allow an Admin to delete a card from a user', function(done) {
           authenticatedAdminAgent
