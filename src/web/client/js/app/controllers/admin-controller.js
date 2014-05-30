@@ -257,7 +257,7 @@
         
         var self = this;
         user.save().then(function() {
-          alert("Changes saved.");
+          // silent
         }, function() {
           user.set('username', oldUsername);
           self.set('newUsername', oldUsername);

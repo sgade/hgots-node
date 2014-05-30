@@ -179,7 +179,7 @@ exports.deleteCard = function(req, res) {
                 if ( !!err ) {
                   res.status(500).end();
                 } else {
-                  res.status(200).end();
+                  res.status(200).end(JSON.stringify({}));
                 }
               });
               
