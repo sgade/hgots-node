@@ -80,9 +80,17 @@ exports.authenticateAdmin = function(req, res, callback) {
 };
 // SENDING models
 exports.getPublicModels = function(modelList, callback) {
+  if ( !modelList.length ) {
+    modelList = [ modelList ];
+  }
+  
   var retVal = modelList.map(function(model) {
     return model.getPublicModel();
   });
+  
+  if ( retVal.length === 1 ) {
+    retVal = retVal[0];
+  }
   return callback(null, retVal);
 };
 exports.sendPublicModels = function(res, publicModels, wrapper) {
