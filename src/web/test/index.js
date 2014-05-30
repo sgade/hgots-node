@@ -102,5 +102,16 @@ describe('HGOTS Web Server', function() {
       .get('/')
       .expect(200, done);
   });
+  
+  describe('GET /', function() {
+    it('should respond with HTML on /', function(done) {
+      request(expressApp)
+        .get('/')
+        .expect('Content-Type', /html/)
+        .expect(200, done);
+    });
+  });
+
+});
 
 });
