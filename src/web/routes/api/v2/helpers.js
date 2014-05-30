@@ -15,6 +15,7 @@ exports.sendStatusMessage = function(res, status, object) {
   return res.status(status).set('Content-Type', 'application/json').end(json);
 };
 exports.sendStatusError = function(res, status, errorDescription) {
+  errorDescription = errorDescription || "Unknown";
   var error = {
     error: errorDescription
   };
@@ -23,6 +24,11 @@ exports.sendStatusError = function(res, status, errorDescription) {
 // 200
 exports.sendOk = function(res, data) {
   return exports.sendStatusMessage(res, 200, data);
+};
+// 400
+exports.sendBadRequest = function(res, errorDescription) {
+  errorDescription = errorDescription || "Bad Request";
+  return exports.sendStatusError(res, 400, errorDescription);
 };
 // 403
 exports.sendForbidden = function(res, errorDescription) {
