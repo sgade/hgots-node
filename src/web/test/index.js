@@ -109,7 +109,7 @@ describe('HGOTS Server Specs', function() {
       done();
     });
     
-    it('should be listening at localhost:' + port, function(done) {
+    it('should listen on port ' + port, function(done) {
       request(expressApp)
         .get('/')
         .expect(200, done);
