@@ -20,6 +20,10 @@ exports.sendStatusError = function(res, status, errorDescription) {
   };
   return exports.sendStatusMessage(res, status, error);
 };
+// 200
+exports.sendOk = function(res, data) {
+  return exports.sendStatusMessage(res, 200, data);
+};
 // 403
 exports.sendForbidden = function(res, errorDescription) {
   errorDescription = errorDescription || "Forbidden";
@@ -78,7 +82,7 @@ exports.getPublicModels = function(modelList, callback) {
 exports.sendPublicModels = function(res, publicModels, wrapper) {
   var response = {};
   response[wrapper] = publicModels;
-  return exports.sendStatusMessage(res, 200, response);
+  return exports.sendOk(res, response);
 };
 exports.sendModels = function(res, modelList, wrapper) {
   exports.getPublicModels(modelList, function(err, models) {
