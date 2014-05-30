@@ -285,12 +285,10 @@
       }.property('newRFID'),
       
       removeCardAssociation: function(card) {
-        card.destroyRecord().complete(function(err) {
-          if ( !!err ) {
-            return console.log(err);
-          }
-          
-          alert("Relationship removed.");
+        card.destroyRecord().then(function() {
+          // silent, everything's just great!
+        }, function() {
+          alert("Card could not be removed.");
         });
       },
       getRFIDFromServer: function() {

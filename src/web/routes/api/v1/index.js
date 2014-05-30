@@ -19,7 +19,7 @@ module.exports = function(app) {
   app.get(prefix + '/users/:id/cards', cards.getCardsOfUser);
   app.get(prefix + '/cards/:id', cards.getCard);
   app.post(prefix + '/cards', cards.createNewCard);
-  app.delete(prefix + '/card/:id', cards.deleteCard);
+  app.delete(prefix + '/cards/:id', cards.deleteCard);
   
   app.post(prefix + '/setup-auth', setup.authenticate);
   app.post(prefix + '/setup', setup.doSetup);

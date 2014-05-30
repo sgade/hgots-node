@@ -132,7 +132,12 @@ exports.createNewCard = function(req, res) {
                   } else {
                     card.setUser(user);
                     
-                    res.set('Content-Type', 'application/json').end(JSON.stringify(card.getPublicModel()));
+                    var publicCard = card.getPublicModel();
+                    publicCard.user = user.id;
+                    
+                    res.set('Content-Type', 'application/json').end(JSON.stringify({
+                      card: publicCard
+                    }));
                   }
                 });
                 
@@ -161,8 +166,7 @@ exports.deleteCard = function(req, res) {
         
         if ( reqUser.isPrivileged() ) {
           
-          var userId = req.params.userid,
-            cardId = req.params.id;
+          var cardId = req.params.id;
           
           helpers.getCard({
             id: cardId
@@ -171,21 +175,11 @@ exports.deleteCard = function(req, res) {
               res.status(500).end();
             } else {
               
-              card.getUser().complete(function(err, user) {
-                if ( err ) {
+              card.destroy().complete(function(err) {
+                if ( !!err ) {
                   res.status(500).end();
                 } else {
-                  if ( user.id == userId ) {
-                    card.destroy().complete(function(err) {
-                      if ( err ) {
-                        res.status(500).end();
-                      } else {
-                        res.status(200).end();
-                      }
-                    });
-                  } else {
-                    res.status(400).end();
-                  }
+                  res.status(200).end();
                 }
               });
               
