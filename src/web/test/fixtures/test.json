@@ -26,7 +26,7 @@
   {
     "model": "User",
     "data": {
-      "username": "killMe",
+      "username": "foo",
       "password": "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb",
       "type": "User"
     }
@@ -34,43 +34,29 @@
   {
     "model": "Card",
     "data": {
-      "uid": "42",
-      "UserId": 3
-    }
-  },
-  {
-    "model": "Card",
-    "data": {
-      "uid": "52",
+      "uid": "0123456789",
       "UserId": 1
     }
   },
   {
     "model": "Card",
     "data": {
-      "uid": "52a",
-      "UserId": 3
-    }
-  },
-  {
-    "model": "Card",
-    "data": {
-      "uid": "52b",
-      "UserId": 3
-    }
-  },
-  {
-    "model": "Card",
-    "data": {
-      "uid": "52c",
-      "UserId": 3
-    }
-  },
-  {
-    "model": "Card",
-    "data": {
-      "uid": "52d",
+      "uid": "1234567890",
       "UserId": 1
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "2345678901",
+      "UserId": 2
+    }
+  },
+  {
+    "model": "Card",
+    "data": {
+      "uid": "3456789012",
+      "UserId": 3
     }
   }
 ]
