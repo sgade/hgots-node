@@ -47,7 +47,7 @@ function startWeb() {
 }
 // callbacks for web requests
 function web_RFIDRequest(callback) {
-  rfidReader.on('data', function(data) {
+  rfidReader.once('data', function(data) {
     callback(data);
   });
 }
