@@ -81,18 +81,8 @@ describe('HGOTS Web Server', function() {
     app.init(port, null, null, function() {
       app.start(function() {
         expressApp = app.getExpress();
-        sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, function() {
-          async.map(["testAdmin", "testController", "testUser", "killMe"], loginUser, function(err, results) {
-            if ( err ) throw err;
-
-            authenticatedAdminAgent = results[0];
-            authenticatedControllerAgent = results[1];
-            authenticatedUserAgent = results[2];
-            authenticatedDeadUserAgent = results[3];
-
-            done();
-          });
-        });
+        
+        done();
       });
     });
   });
