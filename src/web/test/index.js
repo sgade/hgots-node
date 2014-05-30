@@ -13,19 +13,55 @@ var defaultPasswordHash = "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919ba
 var users = [ {
                 id: 1,
                 username: "testAdmin",
-                type: "Admin"
+                type: "Admin",
+                cards: [
+                  {
+                    "UserId": 1,
+                    "id": 2,
+                    "uid": "52"
+                  },
+                  {
+                    "UserId": 1,
+                    "id": 6,
+                    "uid": "52d"
+                  }
+                ]
               }, {
                 id: 2,
                 username: "testController",
-                type: "Controller"
+                type: "Controller",
+                cards: []
               }, {
                 id: 3,
                 username: "testUser",
-                type: "User"
+                type: "User",
+                cards: [
+                  {
+                    "UserId": 3,
+                    "id": 1,
+                    "uid": "42"
+                  },
+                  {
+                    "UserId": 3,
+                    "id": 3,
+                    "uid": "52a"
+                  },
+                  {
+                    "UserId": 3,
+                    "id": 4,
+                    "uid": "52b"
+                  },
+                  {
+                    "UserId": 3,
+                    "id": 5,
+                    "uid": "52c"
+                  }
+                ]
               }, {
                 id: 4,
                 username: "killMe",
-                type: "User"
+                type: "User",
+                cards: []
               } ];
 
 
@@ -318,16 +354,16 @@ describe('HGOTS Web Server', function() {
             .send({ user: { username: "killMeToo", type: 'User' } })
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({ user: {id: 4, username: "killMeToo", type: "User"} }, done);
+            .expect({ user: {id: 4, username: "killMeToo", type: "User", cards: []} }, done);
         });
         
         it('should allow a controller to update user 4', function(done) {
           authenticatedControllerAgent
             .put(url + 4)
-            .send({user :{username: "killMeToo", type: 'User'} })
+            .send({user :{username: "killMeToo", type: 'User' } })
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({user: {id: 4, username: "killMeToo", type: "User"}}, done);
+            .expect({user: {id: 4, username: "killMeToo", type: "User", cards: []}}, done);
         });
         
         it('should not allow user 4 to update user 4', function(done) {
