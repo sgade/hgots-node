@@ -11,19 +11,19 @@ var port = 3333;
 /* Fixtures */
 var defaultPasswordHash = "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb";
 var cards = [ {
-  "UserId": 1,
+  "user_id": 1,
   "id": 1,
   "uid": "0123456789"
 }, {
-  "UserId": 1,
+  "user_id": 1,
   "id": 2,
   "uid": "1234567890"
 }, {
-  "UserId": 2,
+  "user_id": 2,
   "id": 3,
   "uid": "2345678901"
 }, {
-  "UserId": 3,
+  "user_id": 3,
   "id": 4,
   "uid": "3456789012"
 } ];
@@ -33,28 +33,28 @@ var users = [ {
   username: "testAdmin",
   type: "Admin",
   cards: cards.filter(function(card) {
-    return ( card.UserId === 1 );
+    return ( card.user_id === 1 );
   })
 }, {
   id: 2,
   username: "testController",
   type: "Controller",
   cards: cards.filter(function(card) {
-    return ( card.UserId === 2 );
+    return ( card.user_id === 2 );
   })
 }, {
   id: 3,
   username: "testUser",
   type: "User",
   cards: cards.filter(function(card) {
-    return ( card.UserId === 3 );
+    return ( card.user_id === 3 );
   })
 }, {
   id: 4,
   username: "foo",
   type: "User",
   cards: cards.filter(function(card) {
-    return ( card.UserId === 4 );
+    return ( card.user_id === 4 );
   })
 } ];
 
