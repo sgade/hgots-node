@@ -12,7 +12,7 @@ exports.getRequestingUser = function(req, callback) {
 // xxx
 exports.sendStatusMessage = function(res, status, object) {
   var json = JSON.stringify(object);
-  return res.status(status).end(json);
+  return res.status(status).set('Content-Type', 'application/json').end(json);
 };
 exports.sendStatusError = function(res, status, errorDescription) {
   var error = {
