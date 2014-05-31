@@ -32,6 +32,14 @@
     }
   },
   {
+    "model": "User",
+    "data": {
+      "username": "secondAdmin",
+      "password": "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb",
+      "type": "Admin"
+    }
+  },
+  {
     "model": "Card",
     "data": {
       "uid": "0123456789",

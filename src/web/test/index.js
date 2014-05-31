@@ -56,6 +56,13 @@ var users = [ {
   cards: cards.filter(function(card) {
     return ( card.user_id === 4 );
   })
+}, {
+  id: 5,
+  username: "secondAdmin",
+  type: "Admin",
+  cards: cards.filter(function(card) {
+    return ( card.user_id === 5 );
+  })
 } ];
 
 /* Agents */
