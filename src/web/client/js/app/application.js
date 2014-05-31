@@ -10,6 +10,10 @@ hgots.config(['$routeProvider', function($routeProvider) {
       templateUrl: 'views/admin.html',
       controller: 'AdminController'
     })
+    .when('/admin/user/:userId', {
+      templateUrl: 'views/admin.html',
+      controller: 'AdminController'
+    })
     .when('/about', {
       templateUrl: 'views/about.html',
       controller: 'AboutController'
