@@ -371,6 +371,14 @@ describe('HGOTS Server Specs', function() {
               .expect({ error: "Forbidden" }, done);
           });
           
+          it('should be forbidden for everyone else', function(done) {
+            request(expressApp)
+              .get(url + admin.id)
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
         });
         
         describe('POST /users', function() {
@@ -459,6 +467,15 @@ describe('HGOTS Server Specs', function() {
             authenticatedUserAgent
               .post(url)
               .send(user)
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should be forbidden for everyone else', function(done) {
+            request(expressApp)
+              .post(url)
+              .send(admin)
               .expect('Content-Type', /json/)
               .expect(403)
               .expect({ error: "Forbidden" }, done);
@@ -563,6 +580,14 @@ describe('HGOTS Server Specs', function() {
               .expect({ error: "Forbidden" }, done);
           });
           
+          it('should be forbidden for everyone else', function(done) {
+            request(expressApp)
+              .put(url + admin.id)
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
         });
         
         describe('DELETE /users/:id', function() {
@@ -659,6 +684,14 @@ describe('HGOTS Server Specs', function() {
           it('should not allow an user to delete an user', function(done) {
             authenticatedUserAgent
               .delete(url + user.id)
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should be forbidden for everyone else', function(done) {
+            request(expressApp)
+              .delete(url + admin.id)
               .expect('Content-Type', /json/)
               .expect(403)
               .expect({ error: "Forbidden" }, done);
