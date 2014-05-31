@@ -123,3 +123,64 @@ exports.newUser = function(req, res) {
     });
   });
 };
+
+/* PUT /users/:id */
+exports.updateUser = function(req, res) {
+  // if controller or admin
+  return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {
+    // get and verify parameters
+    var user_id = req.params.id;
+    if ( user_id < 1 ) {
+      return helpers.sendBadRequest(res);
+    }
+    
+    var userBody = req.body.user;
+    if ( !userBody ) {
+      return helpers.sendBadRequest(res);
+    }
+    var username = userBody.username,
+      password = userBody.password,
+      type = userBody.type;
+    if ( !username && !password && !type ) {
+      return helpers.sendBadRequest(res);
+    }
+    
+    db.User.find({
+      where: {
+        id: user_id
+      }
+    }).complete(function(err, user) {
+      if ( !!err ) {
+        return helpers.sendInternalServerError(res);
+      }
+      if ( !user ) {
+        return helpers.sendBadRequest(res);
+      }
+      
+      if ( user.type === "Admin" || user.type === "Controller" ) {
+        if ( authenticationResponse.user.type !== "Admin" ) {
+          return helpers.sendForbidden(res);
+        }
+      }
+      
+      user.username = username || user.username;
+      user.password = password || user.password;
+      user.type = type || user.type;
+      
+      user.save().complete(function(err) {
+        if ( !!err ) {
+          return helpers.sendInternalServerError(res);
+        }
+        
+        getPublicUserModelWithCard(user, function(err, publicUser) {
+          if ( !!err ) {
+            return helpers.sendInternalServerError(res);
+          }
+          
+          return helpers.sendPublicModels(res, publicUser, "user", 200);
+        });
+      });
+    });
+    
+  });
+};

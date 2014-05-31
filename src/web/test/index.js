@@ -457,6 +457,105 @@ describe('HGOTS Server Specs', function() {
         
       });
       
+      describe('PUT /users/:id', function() {
+        var url = prefix + '/users/';
+        
+        var admin = users.filter(function(user) {
+          return ( user.type === "Admin" );
+        })[0];
+        var controller = users.filter(function(user) {
+          return ( user.type === "Controller" );
+        })[0];
+        var user = users.filter(function(user_) {
+          return ( user_.type === "User" );
+        })[0];
+        
+        // Admin (3x)
+        it('should allow an admin to update an admin', function(done) {
+          authenticatedAdminAgent
+            .put(url + admin.id)
+            .send({ user: { username: "changed" } })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({ user: { id: admin.id, type: admin.type, cards: admin.cards, username: "changed" } }, done);
+        });
+        
+        it('should allow an admin to update a controller', function(done) {
+          authenticatedAdminAgent
+            .put(url + controller.id)
+            .send({ user: controller })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({ user: controller }, done);
+        });
+        
+        it('should allow an admin to update an user', function(done) {
+          authenticatedAdminAgent
+            .put(url + user.id)
+            .send({ user: user })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({ user: user }, done);
+        });
+        
+        // Controller (3x)
+        it('should not allow a controller to update an admin', function(done) {
+          authenticatedControllerAgent
+            .put(url + admin.id)
+            .send({ user: admin })
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow a controller to update a controller', function(done) {
+          authenticatedControllerAgent
+            .put(url + controller.id)
+            .send({ user: controller })
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should allow a controller to update an user', function(done) {
+          authenticatedControllerAgent
+            .put(url + user.id)
+            .send({ user: user })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({ user: user }, done);
+        });
+        
+        // User (3x)
+        it('should not allow an user to update an admin', function(done) {
+          authenticatedUserAgent
+            .put(url + admin.id)
+            .send({ user: admin })
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow an user to update a controller', function(done) {
+          authenticatedUserAgent
+            .put(url + controller.id)
+            .send({ user: controller })
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow an user to update an user', function(done) {
+          authenticatedUserAgent
+            .put(url + user.id)
+            .send({ user: user })
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+      });
+      
     });
   });
 });
