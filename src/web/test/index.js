@@ -275,6 +275,99 @@ describe('HGOTS Server Specs', function() {
         
       });
       
+      describe('POST /users', function() {
+        var url = prefix + '/users';
+        var newID = 5;
+        var admin = { user: { username: 'test', password: defaultPasswordHash, type: 'Admin' } };
+        var controller = { user: { username: 'test', password: defaultPasswordHash, type: 'Controller' } };
+        var user = { user: { username: 'test', password: defaultPasswordHash, type: 'User' } };
+        
+        // For admin (3x)
+        it('should allow an admin to create an admin', function(done) {
+          authenticatedAdminAgent
+            .post(url)
+            .send(admin)
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .expect({ user: { id: newID, username: admin.user.username, type: admin.user.type } }, done);
+        });
+        
+        it('should allow an admin to create a controller', function(done) {
+          authenticatedAdminAgent
+            .post(url)
+            .send(controller)
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .expect({ user: { id: newID, username: controller.user.username, type: controller.user.type } }, done);
+        });
+        
+        it('should allow an admin to create an user', function(done) {
+          authenticatedAdminAgent
+            .post(url)
+            .send(user)
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .expect({ user: { id: newID, username: user.user.username, type: user.user.type } }, done);
+        });
+        
+        // For controller (3x)
+        it('should not allow a controller to create an admin', function(done) {
+          authenticatedControllerAgent
+            .post(url)
+            .send(admin)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow a controller to create a controller', function(done) {
+          authenticatedControllerAgent
+            .post(url)
+            .send(controller)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should allow a controller to create an user', function(done) {
+          authenticatedControllerAgent
+            .post(url)
+            .send(user)
+            .expect('Content-Type', /json/)
+            .expect(201)
+            .expect({ user: { id: newID, username: user.user.username, type: user.user.type } }, done);
+        });
+        
+        // For user (3x)
+        it('should not allow an user to create an admin', function(done) {
+          authenticatedUserAgent
+            .post(url)
+            .send(admin)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow an user to create a controller', function(done) {
+          authenticatedUserAgent
+            .post(url)
+            .send(controller)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow an user to create an user', function(done) {
+          authenticatedUserAgent
+            .post(url)
+            .send(user)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+      });
+      
     });
   });
 });
