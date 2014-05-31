@@ -7,5 +7,5 @@ module.exports = function(app) {
   app.get(prefix + '/users/:id', users.getUser);
   app.post(prefix + '/users', users.newUser);
   
-  return prefix;
+  return app;
 };
