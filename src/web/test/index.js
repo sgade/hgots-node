@@ -366,7 +366,7 @@ describe('HGOTS Server Specs', function() {
       
       describe('POST /users', function() {
         var url = prefix + '/users';
-        var newID = 5;
+        var newID = users.length + 1;
         var admin = { user: { username: 'test', password: defaultPasswordHash, type: 'Admin' } };
         var controller = { user: { username: 'test', password: defaultPasswordHash, type: 'Controller' } };
         var user = { user: { username: 'test', password: defaultPasswordHash, type: 'User' } };
