@@ -52,7 +52,7 @@ exports.getUser = function(req, res) {
   // if controller or admin
   return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {
     var user_id = req.params.id;
-    if ( !user_id && user_id !== 0 ) {
+    if ( user_id < 1 ) {
       return helpers.sendBadRequest(res);
     }
     
