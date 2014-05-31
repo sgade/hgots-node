@@ -135,7 +135,6 @@ function configureRoutes() {
   }));
   // Routes for app
   app.get('/app', routes.app);
-  app.get('/js/i18n.js', routes.i18n);
   app.get('/get_rfid', queries.getRFID);
   app.get('/open_door', queries.openDoor);
   app.get('/user', queries.getUser);

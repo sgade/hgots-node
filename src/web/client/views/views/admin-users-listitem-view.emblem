@@ -1,4 +1,0 @@
-li.list-group-item
-  link-to 'admin.user' id | #{ username }
-  div.pull-right
-    span.label.label-default= type

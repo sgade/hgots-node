@@ -17,12 +17,9 @@
   ],
   "dependencies": {
     "bootstrap": "~3.1.1",
-    "ember": "1.5.0",
-    "ember-data": "1.0.0-beta.7",
     "jquery": "~2.1.0",
     "bootflatv2": "~2.0.1",
     "cryptojslib": "~3.1.2",
-    "emblem": "0.3.*",
-    "ember-i18n": "~1.6.3"
+    "angular": "~1.2.16"
   }
 }

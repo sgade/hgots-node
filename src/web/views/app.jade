@@ -1,6 +1,30 @@
 extends layout
 
 block content
+  div.app(ng-app="HGOTSApp")
+    nav.navbar.navbar-default.navbar-static-top(role="navigation", ng-controller="NavbarController")
+      div.container-fluid
+        div.navbar-header
+          button.navbar-toggle(type="button", data-toggle="collapse", data-target="#nav-collapse")
+            span.sr-only Toggle Navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+            
+          span.navbar-brand #{title}
+        div.collapse.navbar-collapse#nav-collapse
+          ul.nav.navbar-nav
+            li
+              a(href="#/") Home
+            li(ng-if="currentUserIsPrivileged")
+              a(href="#/admin") Admin
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href="#/about") About
+            li
+              a(href="/logout") Logout
+            
+    div(ng-view)
+    
   script(src="/js/app.js")
-  script(src="/js/i18n.js")
-  script(src="/js/templates.js")
+  
