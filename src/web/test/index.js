@@ -563,6 +563,107 @@ describe('HGOTS Server Specs', function() {
         
       });
       
+      describe('DELETE /users/:id', function() {
+        var url = prefix + '/users/';
+        
+        var admin = users.filter(function(user) {
+          return ( user.type === "Admin" );
+        })[0];
+        var admin2 = users.filter(function(user) {
+          return ( user.type === "Admin" );
+        })[1];
+        var controller = users.filter(function(user) {
+          return ( user.type === "Controller" );
+        })[0];
+        var user = users.filter(function(user_) {
+          return ( user_.type === "User" );
+        })[0];
+        
+        // Admin (4x)
+        it('should allow an admin to delete another admin', function(done) {
+          authenticatedAdminAgent
+            .delete(url + admin2.id)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({}, done);
+        });
+        
+        it('should not allow an admin to delete himself', function(done) {
+          authenticatedAdminAgent
+            .delete(url + admin.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should allow an admin to delete a controller', function(done) {
+          authenticatedAdminAgent
+            .delete(url + controller.id)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({}, done);
+        });
+        
+        it('should allow an admin to delete an user', function(done) {
+          authenticatedAdminAgent
+            .delete(url + user.id)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({}, done);
+        });
+        
+        // Controller (3x)
+        it('should not allow a controller to delete an admin', function(done) {
+          authenticatedControllerAgent
+            .delete(url + admin.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow a controller to delete a controller', function(done) {
+          authenticatedControllerAgent
+            .delete(url + controller.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should allow a controller to delete an user', function(done) {
+          authenticatedControllerAgent
+            .delete(url + user.id)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({}, done);
+        });
+        
+        // User (3x)
+        it('should not allow an user to delete an admin', function(done) {
+          authenticatedUserAgent
+            .delete(url + admin.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow an user to delete a controller', function(done) {
+          authenticatedUserAgent
+            .delete(url + controller.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not allow an user to delete an user', function(done) {
+          authenticatedUserAgent
+            .delete(url + user.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+      });
+      
     });
   });
 });

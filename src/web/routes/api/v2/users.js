@@ -184,3 +184,45 @@ exports.updateUser = function(req, res) {
     
   });
 };
+
+/* DELETE /users/:id */
+exports.deleteUser = function(req, res) {
+  // if controller or admin
+  return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {
+    var user_id = req.params.id;
+    if ( user_id < 1 ) {
+      return helpers.sendBadRequest(res);
+    }
+    
+    db.User.find({
+      where: {
+        id: user_id
+      }
+    }).complete(function(err, user) {
+      if ( !!err ) {
+        return helpers.sendInternalServerError(res);
+      }
+      if ( !user ) {
+        return helpers.sendBadRequest(res);
+      }
+      
+      // same user:
+      if ( user.id === authenticationResponse.user.id ) {
+        return helpers.sendForbidden(res);
+      }
+      if ( user.type === "Controller" || user.type === "Admin" ) {
+        if ( authenticationResponse.user.type !== "Admin" ) {
+          return helpers.sendForbidden(res);
+        }
+      }
+      
+      user.destroy().complete(function(err) {
+        if ( !!err ) {
+          return helpers.sendInternalServerError(res);
+        }
+        
+        return helpers.sendStatusMessage(res, 200, {});
+      });
+    });
+  });
+};

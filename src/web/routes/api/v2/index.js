@@ -7,6 +7,7 @@ module.exports = function(app) {
   app.get(prefix + '/users/:id', users.getUser);
   app.post(prefix + '/users', users.newUser);
   app.put(prefix + '/users/:id', users.updateUser);
+  app.delete(prefix + '/users/:id', users.deleteUser);
   
   return app;
 };
