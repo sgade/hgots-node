@@ -1,4 +1,4 @@
-var hgots = angular.module('HGOTSApp', [ 'ngRoute' ]);
+var hgots = angular.module('HGOTSApp', [ 'ngRoute', 'HGOTSAdmin' ]);
 
 hgots.config(['$routeProvider', function($routeProvider) {
   $routeProvider

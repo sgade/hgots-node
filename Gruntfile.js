@@ -64,6 +64,7 @@ module.exports = function(grunt) {
                './bower_components/bootstrap/dist/js/bootstrap.js',
                './bower_components/angular/angular.js',
                './bower_components/angular-route/angular-route.js',
+               './bower_components/angular-resource/angular-resource.js',
                './src/web/client/js/app/**/*.js' ],
 
         dest: './src/web/public/js/app.js'

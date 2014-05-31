@@ -1,0 +1,49 @@
+<div class="grid">
+  <div class="col-md-4">
+    <!-- User list -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <div class="row">
+            <div class="col-sm-5">
+              <!-- Header -->
+              Users
+            </div>
+            <div class="col-sm-7">
+              <!-- Search -->
+              <input type="search" ng-model="search" placeholder="Search">
+            </div>
+          </div>
+          <div class="row" style="margin-top: 3px;">
+            <div class="col-sm-12">
+              <!-- Create new user -->
+              <a class="btn btn-xs pull-right" href="#/admin/new">
+                Create new User
+              </a>
+            </div>
+          </div>
+        </h3>
+      </div>
+      
+      <ul class="list-group" id="users">
+        <!-- ng-repeat -->
+        <li ng-repeat="user in users" class="list-group-item">
+          <a href="#/admin/user/{{user.id}}">
+            {{user.username}}
+          </a>
+          
+          <div class="pull-right">
+            <span class="label label-default">{{user.type}}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="col-sm-8">
+    <!-- Right panel -->
+    <div class="admin-scroll-right" style="{{rightPanelStyle}}">
+      {{content}}
+    </div>
+  </div>
+</div>
