@@ -275,6 +275,95 @@ describe('HGOTS Server Specs', function() {
         
       });
       
+      describe('GET /users/:id', function() {
+        var url = prefix + '/users/';
+        var admin = users.filter(function(user) {
+          return ( user.type === "Admin" );
+        })[0];
+        var controller = users.filter(function(user) {
+          return ( user.type === "Controller" );
+        })[0];
+        var user = users.filter(function(user_) {
+          return ( user_.type === "User" );
+        })[0];
+        
+        // Admin (3x)
+        it('should return an admin to an admin', function(done) {
+          authenticatedAdminAgent
+            .get(url + admin.id)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({ user: admin }, done);
+        });
+        
+        it('should return a controller to an admin', function(done) {
+          authenticatedAdminAgent
+            .get(url + controller.id)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({ user: controller }, done);
+        });
+        
+        it('should return an user to an admin', function(done) {
+          authenticatedAdminAgent
+            .get(url + user.id)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({ user: user }, done);
+        });
+        
+        // Controller (3x)
+        it('should not return an admin to a controller', function(done) {
+          authenticatedControllerAgent
+            .get(url + admin.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not return a controller to a controller', function(done) {
+          authenticatedControllerAgent
+            .get(url + controller.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should return an user to a controller', function(done) {
+          authenticatedControllerAgent
+            .get(url + user.id)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({ user: user }, done);
+        });
+        
+        // User 3x
+        it('should not return an admin to an user', function(done) {
+          authenticatedUserAgent
+            .get(url + admin.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not return a controller to an user', function(done) {
+          authenticatedUserAgent
+            .get(url + controller.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+        it('should not return an user to an user', function(done) {
+          authenticatedUserAgent
+            .get(url + user.id)
+            .expect('Content-Type', /json/)
+            .expect(403)
+            .expect({ error: "Forbidden" }, done);
+        });
+        
+      });
+      
       describe('POST /users', function() {
         var url = prefix + '/users';
         var newID = 5;

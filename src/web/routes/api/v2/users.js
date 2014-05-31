@@ -47,6 +47,44 @@ exports.getUsers = function(req, res) {
   });
 };
 
+/* GET /users/:id */
+exports.getUser = function(req, res) {
+  // if controller or admin
+  return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {
+    var user_id = req.params.id;
+    if ( !user_id && user_id !== 0 ) {
+      return helpers.sendBadRequest(res);
+    }
+    
+    db.User.find({
+      where: {
+        id: user_id
+      }
+    }).complete(function(err, user) {
+      if ( !!err ) {
+        return helpers.sendInternalServerError(res);
+      }
+      if ( !user ) {
+        return helpers.sendBadRequest(res);
+      }
+      
+      if ( user.type === "Admin" || user.type === "Controller" ) {
+        if ( authenticationResponse.user.type === "Controller" ) {
+          return helpers.sendForbidden(res);
+        }
+      }
+      
+      getPublicUserModelWithCard(user, function(err, publicUser) {
+        if ( !!err ) {
+          return helpers.sendInternalServerError(res);
+        }
+        
+        helpers.sendPublicModels(res, publicUser, "user");
+      });
+    });
+  });
+};
+
 /* POST /users */
 exports.newUser = function(req, res) {
   // if controller or admin
