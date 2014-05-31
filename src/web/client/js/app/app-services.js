@@ -11,6 +11,13 @@ hgotsServices.factory('User', [ '$resource', function($resource) {
         return json.users;
       },
       isArray: true
+    },
+    get: {
+      method: 'GET',
+      transformResponse: function(data) {
+        var json = JSON.parse(data);
+        return json.user;
+      }
     }
   });
 }]);

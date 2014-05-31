@@ -1,3 +1,75 @@
-<p ng-controller="AdminUserController">
-  {{userDetails.username}}
-</p>
+<div ng-controller="AdminUserController">
+  <h1 class="page-header">{{user.username}}</h1>
+  
+  <ul class="nav nav-pills">
+    <li class="active">
+      <a href="#edituser-tab-info" data-toggle="tab">User details</a>
+    </li>
+    <li>
+      <a href="#edituser-tab-cards" data-toggle="tab">Cards</a>
+    </li>
+  </ul>
+  
+  <div class="tab-content">
+    <div class="tab-pane fade active in" id="edituser-tab-info">
+      
+      <form class="form-horizontal" id="editUser">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="edituser-name">Name:</label>
+          <div class="col-sm-10">
+            <input type="text" id="edituser-name" class="form-control" placeholder="Username">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="edituser-type">Type:</label>
+          <div class="col-sm-10">
+            <select id="edituser-type" class="form-control" ng-model="newType" ng-options="type as type for type in userTypes">
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="edituser-pw1">Password:</label>
+          <div class="col-sm-10">
+            <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="newPassword">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="edituser-pw2">Repeat Password:</label>
+          <div class="col-sm-10">
+            <input type="password" id="edituser-pw2" class="form-control" placeholder="Password (repeat)" ng-model="newPasswordRepeat">
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <div class="row">
+            <button class="btn btn-success col-sm-6">Save</button>
+            <button class="btn btn-danger col-sm-6">Cancel</button>
+          </div>
+        </div>
+      </form>
+      
+    </div>
+    
+    <div class="tab-pane fade" id="edituser-tab-cards">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <input type="text" class="form-control" placeholder="Add new card with id...">
+          <button class="btn btn-default" data-loading-text="Please put your card in front of the reader...">
+            Get from RFID Reader
+          </button>
+          
+          <button class="btn btn-success pull-right" >
+            Add Card
+          </button>
+        </li>
+        <li ng-repeat="card in user.cards" class="card list-group-item">
+          <b>{{card.uid}}</b>
+          <button class="btn btn-danger pull-right">
+            Remove card from this user
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+</div>

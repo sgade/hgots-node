@@ -11,7 +11,10 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', 'User', fun
 }]);
 
 hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'User', function($scope, $routeParams, User) {
-  $scope.userDetails = User.get({
+  $scope.userTypes = [ 'User', 'Controller', 'Admin' ];
+  $scope.user = User.get({
     userId: $routeParams.userId
+  }, function(user) {
+    $scope.newType = user.type;
   });
 }]);
