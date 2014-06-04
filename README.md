@@ -4,7 +4,7 @@
 
 *Door lock system in nodejs.*
 
-This application is still in very early development.
+This application is still in development.
 
 # Setup
 
