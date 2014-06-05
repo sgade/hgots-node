@@ -43,6 +43,68 @@ exports.getCardsOfUser = function(req, res) {
   });
 };
 
+/* POST /users/:userId/cards */
+exports.newCardForUser = function(req, res) {
+  return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {
+    var userId = req.params.userId;
+    if ( userId < 1 ) {
+      return helpers.sendBadRequest(res);
+    }
+    
+    return db.User.find({
+      where: {
+        id: userId
+      }
+    }).complete(function(err, user) {
+      if ( !!err ) {
+        return helpers.sendInternalServerError(res);
+      }
+      if ( !user ) {
+        return helpers.sendBadRequest(res);
+      }
+      
+      if ( user.isPrivileged() && authenticationResponse.user.type !== "Admin" ) {
+        return helpers.sendForbidden(res);
+      }
+      
+      var card = req.body.card;
+      var uid;
+      if ( !card || !( uid = card.uid ) ) {
+        return helpers.sendBadRequest(res);
+      }
+      
+      return db.Card.find({
+        where: {
+          uid: uid
+        }
+      }).complete(function(err, card) {
+        if ( !!err ) {
+          return helpers.sendInternalServerError(res);
+        }
+        if ( card ) { // cannot have more than one time use
+          return helpers.sendBadRequest(res);
+        }
+        
+        return db.Card.create({
+          uid: uid
+        }).complete(function(err, card) {
+          if ( !!err || !card ) {
+            return helpers.sendInternalServerError(res);
+          }
+          
+          card.setUser(user).complete(function(err) {
+            if ( !!err ) {
+              return helpers.sendInternalServerError(res);
+            }
+            
+            return helpers.sendModels(res, card, "card", 201);
+          });
+        });
+      });
+    });
+  });
+};
+
 /* DELETE /users/:userId/cards/:id */
 exports.deleteCardOfUser = function(req, res) {
   return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {

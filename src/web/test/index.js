@@ -916,6 +916,130 @@ describe('HGOTS Server Specs', function() {
           
         });
         
+        describe('POST /users/:userId/cards', function() {
+          var url = function(userId) {
+            return ( prefix + '/users/' + userId + '/cards' );
+          };
+          var admin = users.filter(function(user) {
+            return ( user.type === "Admin" );
+          })[0];
+          var controller = users.filter(function(user) {
+            return ( user.type === "Controller" );
+          })[0];
+          var user = users.filter(function(user_) {
+            return ( user_.type === "User" );
+          })[0];
+          
+          var newUID = 'test';
+          var oldUID = cards[0].uid;
+          var newId = cards.length + 1;
+          
+          // Admin
+          it('should allow an admin to create a new card for an admin', function(done) {
+            authenticatedAdminAgent
+              .post(url(admin.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(201)
+              .expect({ card: { id: newId, uid: newUID, user_id: admin.id } }, done);
+          });
+          
+          it('should allow an admin to create a new card for a controller', function(done) {
+            authenticatedAdminAgent
+              .post(url(controller.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(201)
+              .expect({ card: { id:newId, uid: newUID, user_id: controller.id } }, done);
+          });
+          
+          it('should allow an admin to create a new card for an user', function(done) {
+            authenticatedAdminAgent
+              .post(url(user.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(201)
+              .expect({ card: { id: newId, uid: newUID, user_id: user.id } }, done);
+          });
+          
+          // Controller
+          it('should not allow a controller to create a new card for an admin', function(done) {
+            authenticatedControllerAgent
+              .post(url(admin.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not allow a controller to create a new card for a controller', function(done) {
+            authenticatedControllerAgent
+              .post(url(controller.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should allow a controller to create a new card for an user', function(done) {
+            authenticatedControllerAgent
+              .post(url(user.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(201)
+              .expect({ card: { id: newId, uid: newUID, user_id: user.id } }, done);
+          });
+          
+          // User
+          it('should not allow an user to create a new card for an admin', function(done) {
+            authenticatedUserAgent
+              .post(url(admin.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not allow an user to create a new card for a controller', function(done) {
+            authenticatedUserAgent
+              .post(url(controller.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not allow an user to create a new card for an user', function(done) {
+            authenticatedUserAgent
+              .post(url(user.id))
+              .send( { card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          // tests
+          it('should not allow to add a single card twice', function(done) {
+            authenticatedAdminAgent
+              .post(url(admin.id))
+              .send( { card: { uid: oldUID } })
+              .expect('Content-Type', /json/)
+              .expect(400)
+              .expect({ error: "Bad Request" }, done);
+          });
+          
+          it('should not allow anyone else to add a card', function(done) {
+            request(expressApp)
+              .post(url(admin.id))
+              .send({ card: { uid: newUID } })
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+        });
+        
+        
         describe('DELETE /users/:userId/cards/:id', function() {
           var url = function(userId, cardId) {
             return ( prefix + '/users/' + userId + '/cards/' + cardId );
