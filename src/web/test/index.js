@@ -275,6 +275,40 @@ describe('HGOTS Server Specs', function() {
           });
         });
         
+        describe('GET /getrfid', function() {
+          var url = prefix + '/getrfid';
+          
+          it('should be ok for an admin', function(done) {
+            authenticatedAdminAgent
+              .get(url)
+              .expect('Content-Type', /json/)
+              .expect(200, done);
+          });
+          
+          it('should be ok for a controller', function(done) {
+            authenticatedControllerAgent
+              .get(url)
+              .expect('Content-Type', /json/)
+              .expect(200, done);
+          });
+          
+          it('should be forbidden for an user', function(done) {
+            authenticatedUserAgent
+              .get(url)
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should be forbidden for everyone else', function(done) {
+            request(expressApp)
+              .get(url)
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+        });
+        
         describe('GET /user', function() {
           var url = prefix + '/user';
           
