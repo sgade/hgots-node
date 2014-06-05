@@ -4,7 +4,7 @@ var async = require('async');
 var crypto = require('../../../../crypto/');
 
 function getPublicUserModelWithCard(user, callback) {
-  user.getCards().complete(function(err, cards) {
+  return user.getCards().complete(function(err, cards) {
     if ( !!err ) {
       return callback(err);
     }
@@ -15,7 +15,7 @@ function getPublicUserModelWithCard(user, callback) {
       publicUser.cards.push(card.getPublicModel());
     });
     
-    callback(null, publicUser);
+    return callback(null, publicUser);
   });
 }
 
@@ -24,7 +24,7 @@ exports.getUsers = function(req, res) {
   // if controller or admin
   return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {
     // get all users
-    db.User.findAll().complete(function(err, users) {
+    return db.User.findAll().complete(function(err, users) {
       if ( !!err ) {
         return helpers.sendInternalServerError(res);
       }
@@ -36,12 +36,12 @@ exports.getUsers = function(req, res) {
         });
       }
       
-      async.map(users, getPublicUserModelWithCard, function(err, results) {
+      return async.map(users, getPublicUserModelWithCard, function(err, results) {
         if ( !!err ) {
           return helpers.sendInternalServerError(res);
         }
         
-        helpers.sendPublicModels(res, results, "users");
+        return helpers.sendPublicModels(res, results, "users");
       });
     });
   });
@@ -56,7 +56,7 @@ exports.getUser = function(req, res) {
       return helpers.sendBadRequest(res);
     }
     
-    db.User.find({
+    return db.User.find({
       where: {
         id: user_id
       }
@@ -74,12 +74,12 @@ exports.getUser = function(req, res) {
         }
       }
       
-      getPublicUserModelWithCard(user, function(err, publicUser) {
+      return getPublicUserModelWithCard(user, function(err, publicUser) {
         if ( !!err ) {
           return helpers.sendInternalServerError(res);
         }
         
-        helpers.sendPublicModels(res, publicUser, "user");
+        return helpers.sendPublicModels(res, publicUser, "user");
       });
     });
   });
@@ -107,7 +107,7 @@ exports.newUser = function(req, res) {
     }
     
     password = crypto.encrypt(password);
-    db.User.create({
+    return db.User.create({
       username: username,
       password: password,
       type: type
@@ -145,7 +145,7 @@ exports.updateUser = function(req, res) {
       return helpers.sendBadRequest(res);
     }
     
-    db.User.find({
+    return db.User.find({
       where: {
         id: user_id
       }
@@ -167,12 +167,12 @@ exports.updateUser = function(req, res) {
       user.password = crypto.encrypt(password) || user.password;
       user.type = type || user.type;
       
-      user.save().complete(function(err) {
+      return user.save().complete(function(err) {
         if ( !!err ) {
           return helpers.sendInternalServerError(res);
         }
         
-        getPublicUserModelWithCard(user, function(err, publicUser) {
+        return getPublicUserModelWithCard(user, function(err, publicUser) {
           if ( !!err ) {
             return helpers.sendInternalServerError(res);
           }
@@ -194,7 +194,7 @@ exports.deleteUser = function(req, res) {
       return helpers.sendBadRequest(res);
     }
     
-    db.User.find({
+    return db.User.find({
       where: {
         id: user_id
       }
@@ -216,7 +216,7 @@ exports.deleteUser = function(req, res) {
         }
       }
       
-      user.destroy().complete(function(err) {
+      return user.destroy().complete(function(err) {
         if ( !!err ) {
           return helpers.sendInternalServerError(res);
         }
