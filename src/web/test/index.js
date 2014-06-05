@@ -241,6 +241,46 @@ describe('HGOTS Server Specs', function() {
       
       describe('Users', function() {
         
+        describe('GET /user', function() {
+          var url = prefix + '/user';
+          
+          it('should return the current admin', function(done) {
+            authenticatedAdminAgent
+              .get(url)
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({
+                user: users.filter(function(user) {
+                  return ( user.type === "Admin" );
+                })[0]
+              }, done);
+          });
+          
+          it('should return the current controller', function(done) {
+            authenticatedControllerAgent
+              .get(url)
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({
+                user: users.filter(function(user) {
+                  return ( user.type === "Controller" );
+                })[0]
+              }, done);
+          });
+          
+          it('should return the current user', function(done) {
+            authenticatedUserAgent
+              .get(url)
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({
+                user: users.filter(function(user) {
+                  return ( user.type === "User" );
+                })[0]
+              }, done);
+          });
+        });
+        
         describe('GET /users', function() {
           var url = prefix + '/users';
           
