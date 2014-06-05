@@ -1,4 +1,5 @@
 var users = require('./users');
+var cards = require('./cards');
 var misc = require('./misc');
 var setup = require('./setup');
 
@@ -10,6 +11,8 @@ module.exports = function(app, callbacks) {
   app.post(prefix + '/users', users.newUser);
   app.put(prefix + '/users/:id', users.updateUser);
   app.delete(prefix + '/users/:id', users.deleteUser);
+  
+  app.get(prefix + '/users/:userId/cards', cards.getCardsOfUser);
   
   app.get(prefix + '/user', users.getCurrentUser);
   misc.setOpenDoorRequestCallback(callbacks.openDoorRequestCallback);

@@ -816,6 +816,107 @@ describe('HGOTS Server Specs', function() {
         });
         
       });
+      
+      describe('Cards', function() {
+        
+        describe('GET /users/:id/cards', function() {
+          var url = function(userId) {
+            return ( prefix + '/users/' + userId + '/cards' );
+          };
+          var cardsByUser = function(user) {
+            return cards.filter(function(card) {
+              return ( card.user_id === user.id );
+            });
+          };
+          
+          var admin = users.filter(function(user) {
+            return ( user.type === "Admin" );
+          })[0];
+          var controller = users.filter(function(user) {
+            return ( user.type === "Controller" );
+          })[0];
+          var user = users.filter(function(user_) {
+            return ( user_.type === "User" );
+          })[0];
+          
+          // Admin (3x)
+          it('should return cards of an admin to an admin', function(done) {
+            authenticatedAdminAgent
+              .get(url(admin.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({ cards: cardsByUser(admin) }, done);
+          });
+          
+          it('should return cards of a controller to an admin', function(done) {
+            authenticatedAdminAgent
+              .get(url(controller.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({ cards: cardsByUser(controller) }, done);
+          });
+          
+          it('should return cards of a user to an admin', function(done) {
+            authenticatedAdminAgent
+              .get(url(user.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({ cards: cardsByUser(user) }, done);
+          });
+          
+          // Controller (3x)
+          it('should not return cards of an admin to a controller', function(done) {
+            authenticatedControllerAgent
+              .get(url(admin.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not return cards of a controller to a controller', function(done) {
+            authenticatedControllerAgent
+              .get(url(controller.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should return cards of an user to a controller', function(done) {
+            authenticatedControllerAgent
+              .get(url(user.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({ cards: cardsByUser(user) }, done);
+          });
+          
+          // User (3x)
+          it('should not return cards of an admin to an user', function(done) {
+            authenticatedUserAgent
+              .get(url(admin.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not return cards of a controller to an user', function(done) {
+            authenticatedUserAgent
+              .get(url(controller.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not return cards of an user to an user', function(done) {
+            authenticatedUserAgent
+              .get(url(user.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+        });
+        
+      });
     });
   });
 });
