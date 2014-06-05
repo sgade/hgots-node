@@ -916,6 +916,107 @@ describe('HGOTS Server Specs', function() {
           
         });
         
+        describe('GET /users/:userID/card/:cardId', function() {
+          var url = function(userId, cardId) {
+            return ( prefix + '/users/' + userId + '/cards/' + cardId );
+          };
+          
+          var admin = users.filter(function(user) {
+            return ( user.type === "Admin" );
+          })[0];
+          var controller = users.filter(function(user) {
+            return ( user.type === "Controller" );
+          })[0];
+          var user = users.filter(function(user_) {
+            return ( user_.type === "User" );
+          })[0];
+          
+          var adminCard = cards.filter(function(card) {
+            return ( card.user_id === admin.id );
+          })[0];
+          var controllerCard = cards.filter(function(card) {
+            return ( card.user_id === controller.id );
+          })[0];
+          var userCard = cards.filter(function(card) {
+            return ( card.user_id === user.id );
+          })[0];
+          
+          // Admin (3x)
+          it('should return the card of an admin to an admin', function(done) {
+            authenticatedAdminAgent
+              .get(url(admin.id, adminCard.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({ card: adminCard }, done);
+          });
+          
+          it('should return the card of a controller to an admin', function(done) {
+            authenticatedAdminAgent
+              .get(url(controller.id, controllerCard.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({ card: controllerCard }, done);
+          });
+          
+          it('should return the card of a user to an admin', function(done) {
+            authenticatedAdminAgent
+              .get(url(user.id, userCard.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({ card: userCard }, done);
+          });
+          
+          // Controller (3x)
+          it('should not return the card of an admin to a controller', function(done) {
+            authenticatedControllerAgent
+              .get(url(admin.id, adminCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not return the card of a controller to a controller', function(done) {
+            authenticatedControllerAgent
+              .get(url(controller.id, controllerCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should return the card of an user to a controller', function(done) {
+            authenticatedControllerAgent
+              .get(url(user.id, userCard.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({ card: userCard }, done);
+          });
+          
+          // User (3x)
+          it('should not return the card of an admin to an user', function(done) {
+            authenticatedUserAgent
+              .get(url(admin.id, adminCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not return the card of a controller to an user', function(done) {
+            authenticatedUserAgent
+              .get(url(controller.id, controllerCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not return the card of an user to an user', function(done) {
+            authenticatedUserAgent
+              .get(url(user.id, userCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+        });
+        
         describe('POST /users/:userId/cards', function() {
           var url = function(userId) {
             return ( prefix + '/users/' + userId + '/cards' );

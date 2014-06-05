@@ -43,6 +43,50 @@ exports.getCardsOfUser = function(req, res) {
   });
 };
 
+/* GET /users/:userId/cards/:cardId */
+exports.getCardOfUser = function(req, res) {
+  return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {
+    var userId = req.params.userId,
+      cardId = req.params.cardId;
+    if ( userId < 1 || cardId < 1 ) {
+      return helpers.sendBadRequest(res);
+    }
+    
+    return db.User.find({
+      where: {
+        id: userId
+      }
+    }).complete(function(err, user) {
+      if ( !!err ) {
+        return helpers.sendInternalServerError(res);
+      }
+      if ( !user ) {
+        return helpers.sendBadRequest(res);
+      }
+      
+      if ( user.isPrivileged() && authenticationResponse.user.type !== "Admin" ) {
+        return helpers.sendForbidden(res);
+      }
+      
+      return db.Card.find({
+        where: {
+          id: cardId,
+          UserId: userId
+        }
+      }).complete(function(err, card) {
+        if ( !!err ) {
+          return helpers.sendInternalServerError(res);
+        }
+        if ( !card ) {
+          return helpers.sendBadRequest(res);
+        }
+        
+        return helpers.sendModels(res, card, "card");
+      });
+    });
+  });
+};
+
 /* POST /users/:userId/cards */
 exports.newCardForUser = function(req, res) {
   return helpers.authenticatePrivileged(req, res, function(err, authenticationResponse) {

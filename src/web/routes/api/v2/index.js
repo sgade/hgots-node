@@ -13,6 +13,7 @@ module.exports = function(app, callbacks) {
   app.delete(prefix + '/users/:id', users.deleteUser);
   
   app.get(prefix + '/users/:userId/cards', cards.getCardsOfUser);
+  app.get(prefix + '/users/:userId/cards/:cardId', cards.getCardOfUser);
   app.post(prefix + '/users/:userId/cards', cards.newCardForUser);
   app.delete(prefix + '/users/:userId/cards/:id', cards.deleteCardOfUser);
   
