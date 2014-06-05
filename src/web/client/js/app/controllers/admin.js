@@ -171,12 +171,8 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
   
   $scope.$watch('newCardID', function() {
     console.log("call");
-    $scope.onNewCardIDChange();
-  });
-  $scope.onNewCardIDChange = function() {
-    console.log("calc:", $scope.newCardID, !$scope.newCardID);
     $scope.newCardDisabled = ( !$scope.newCardID );
-  };
+  });
   $scope.addCard = function() {
     // TODO: add cards
     var card = new Card({
