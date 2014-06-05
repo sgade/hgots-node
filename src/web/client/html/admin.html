@@ -35,7 +35,7 @@
 
         <ul class="list-group" id="users">
           <!-- ng-repeat -->
-          <li ng-repeat="user in users | filter:search" class="list-group-item" ng-click="showUser(user)">
+          <li ng-repeat="user in users | filter:search" class="list-group-item" ng-class="ifCurrentUserStyle(user)" ng-click="showUser(user)">
             <a href="#/admin/user/{{user.id}}">
               {{user.username}}
             </a>

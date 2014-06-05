@@ -36,6 +36,17 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
       }
     }
   });
+  $scope.ifCurrentUserStyle = function(user) {
+    if ( !!AdminShared.selectedUser ) {
+      if ( AdminShared.selectedUser === user ) {
+        
+        return "current-user";
+        
+      }
+    }
+    
+    return "";
+  };
   
   $scope.showUser = function(user) {
     // redirect to page linked to in link, but on element click already
