@@ -164,7 +164,7 @@ exports.updateUser = function(req, res) {
       }
       
       user.username = username || user.username;
-      user.password = password || user.password;
+      user.password = crypto.encrypt(password) || user.password;
       user.type = type || user.type;
       
       user.save().complete(function(err) {
