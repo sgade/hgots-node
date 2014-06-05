@@ -279,6 +279,14 @@ describe('HGOTS Server Specs', function() {
                 })[0]
               }, done);
           });
+          
+          it('should be forbidden for everyone else', function(done) {
+            request(expressApp)
+              .get(url)
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
         });
         
         describe('GET /users', function() {
