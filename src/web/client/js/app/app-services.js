@@ -1,7 +1,7 @@
 var hgotsServices = angular.module('HGOTSServices', [ 'ngResource' ]);
 
 hgotsServices.factory('User', [ '$resource', function($resource) {
-  var apiPrefix = '/api/v1';
+  var apiPrefix = '/api/v2';
   
   return $resource(apiPrefix + '/users/:userId', { userId: '@id' }, {
     query: {
