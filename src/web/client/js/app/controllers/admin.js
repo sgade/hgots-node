@@ -1,13 +1,42 @@
 var hgotsAdmin = angular.module('HGOTSAdmin', [ 'HGOTSServices' ]);
 
-hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', 'User', function($scope, $routeParams, User) {
-  $scope.users = User.query();
-  $scope.includeFile = "views/admin-welcome.html";
+hgotsAdmin.service('AdminShared', function() {
+  return {
+    userTypes: [ 'User', 'Controller', 'Admin' ],
+    selectedUser: {}
+  };
+});
+hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 'User', 'AdminShared', function($scope, $routeParams, $window, User, AdminShared) {
+  $scope.getIncludeFile = function() {
+    var retVal = "views/admin-";
+    
+    if ( !!$routeParams.new ) {
+      retVal += "new";
+    } else if ( !!$routeParams.userId ) {
+      retVal += "user";
+    } else {
+      retVal += "welcome";
+    }
+    
+    return retVal + ".html";
+  };
+  $scope.includeFile = $scope.getIncludeFile();
   
-  $scope.showUserDetails = !!$routeParams.userId;
-  if ( $scope.showUserDetails ) {
-    $scope.includeFile = "views/admin-user.html";
-  }
+  $scope.users = User.query(function() {
+    if ( $scope.includeFile.indexOf("user") != -1 ) {
+      
+      var filteredList = $scope.users.filter(function(user) {
+        return ( user.id === parseInt($routeParams.userId) );
+      });
+      
+      if ( filteredList.length === 1 ) {
+        AdminShared.selectedUser = filteredList[0];
+      } else {
+        console.error("User could not be found.");
+      }
+    }
+  });
+  
   $scope.infoPanelStyle = { "margin-top": "0px" };
   // little scroll "hack"
   $($window).on('scroll', function() {
@@ -22,18 +51,22 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', 'User', fun
   });
 }]);
 
-hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'User', function($scope, $routeParams, User) {
-  $scope.userTypes = [ 'User', 'Controller', 'Admin' ];
-  $scope.user = User.get({
-    userId: $routeParams.userId
-  }, function(user) {
-    $scope.newUsername = user.username;
-    $scope.newType = user.type;
+hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminShared', 'User', function($scope, $routeParams, AdminShared, User) {
+  $scope.userTypes = AdminShared.userTypes;
+  $scope.$watch(function() {
+    return AdminShared.selectedUser;
+  }, function() {
+    $scope.user = AdminShared.selectedUser;
   });
+  $scope.$watch('user', 'checkIfDirty()');
   
   $scope.canSaveChanges = false;
   $scope.checkIfDirty = function() {
     var user = $scope.user;
+    
+    if ( !user ) {
+      return false;
+    }
     
     var usernameChanged = ( !!$scope.newUsername && user.username !== $scope.newUsername );
     var typeChanged = ( !!$scope.newType && user.type !== $scope.newType );
@@ -71,4 +104,8 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'User',
       $scope.newPasswordRepeat = "";
     });
   };
+}]);
+
+hgotsAdmin.controller('AdminNewController', [ '$scope', 'AdminShared', function($scope, AdminShared) {
+  $scope.userTypes = AdminShared.userTypes;
 }]);
