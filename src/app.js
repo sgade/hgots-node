@@ -51,9 +51,14 @@ function startWeb() {
 }
 // callbacks for web requests
 function web_RFIDRequest(callback) {
-  rfidReader.once('data', function(data) {
-    callback(null, data);
-  });
+  if ( rfidReader.isOpen ) {
+    return rfidReader.once('data', function(data) {
+      return callback(null, data);
+    });
+  }
+  
+  // not open
+  return callback(new Error('RFID reader is not ready.'));
 }
 function web_OpenDoor(callback) {
   console.log("Opening door...");
