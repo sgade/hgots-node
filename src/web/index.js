@@ -45,7 +45,7 @@ exports.getExpress = function() {
 exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, done) {
   app = express();
   configure(port, {
-    getRFIDRequestCallback: getRFIDRequestCallback,
+    rfidRequestCallback: getRFIDRequestCallback,
     openDoorRequestCallback: openDoorRequestCallback
   });
   db.init(done);

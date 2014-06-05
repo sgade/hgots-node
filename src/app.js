@@ -57,8 +57,7 @@ function web_RFIDRequest(callback) {
 }
 function web_OpenDoor(callback) {
   console.log("Opening door...");
-  
-  openDoor(callback);
+  return openDoor(callback);
 }
 
 /**
@@ -162,7 +161,7 @@ function initRelais() {
 
 function openDoor(callback) {
   // TODO: Try out if it really works in real environments
-  relais.setSingle(config.relaisport.door, function(err) {
+  return relais.setSingle(config.relaisport.door, function(err) {
     if ( !!err ) {
       console.log("Error opening the door:", err);
       return callback(err);
