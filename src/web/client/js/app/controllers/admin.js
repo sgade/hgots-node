@@ -16,8 +16,8 @@ hgotsAdmin.service('AdminShared', [ '$http', '$location', function($http, $locat
     selectedUser: {}
   };
   // fill object with data from server
-  $http({ method: 'GET', url: '/user' }).then(function(currentUser) {
-    obj.currentUser = currentUser.data;
+  $http({ method: 'GET', url: '/api/v2/user' }).then(function(currentUser) {
+    obj.currentUser = currentUser.data.user;
   });
   
   return obj;

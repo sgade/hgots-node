@@ -109,7 +109,7 @@ exports.newUser = function(req, res) {
     password = crypto.encrypt(password);
     db.User.create({
       username: username,
-      password: crypto.encrypt(password),
+      password: password,
       type: type
     }).complete(function(err, user) {
       if ( !!err ) {
@@ -224,5 +224,11 @@ exports.deleteUser = function(req, res) {
         return helpers.sendStatusMessage(res, 200, {});
       });
     });
+  });
+};
+
+exports.getCurrentUser = function(req, res) {
+  return helpers.authenticate(req, res, function(err, authenticationResponse) {
+    return helpers.sendPublicModels(res, authenticationResponse.user, "user");
   });
 };

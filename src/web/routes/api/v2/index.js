@@ -9,5 +9,7 @@ module.exports = function(app) {
   app.put(prefix + '/users/:id', users.updateUser);
   app.delete(prefix + '/users/:id', users.deleteUser);
   
+  app.get(prefix + '/user', users.getCurrentUser);
+  
   return app;
 };

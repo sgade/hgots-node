@@ -36,22 +36,3 @@ exports.openDoor = function(req, res) {
     }
   });
 };
-
-exports.getUser = function(req, res) {
-  helpers.validateAuthenticatedRequest(req, function(ok) {
-    if ( ok ) {
-      res.status(200);
-      helpers.getRequestingUser(req, function(err, user) {
-        if ( err ) {
-          res.end();
-          throw err;
-        }
-        
-        res.set('Content-Type', 'application/json');
-        res.end(JSON.stringify(user));
-      });
-    } else {
-      res.status(403).end();
-    }
-  });
-};
