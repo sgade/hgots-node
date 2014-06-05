@@ -84,9 +84,10 @@ var loginUser = function(username, cb) {
 };
 
 // first, test the server...
+var nullCallback = function(callback) { return callback(null, null); };
 describe('HGOTS Server Specs', function() {
   beforeEach(function(done) {
-    app.init(port, null, null, function() {
+    app.init(port, nullCallback, nullCallback, function() {
       app.start(function() {
         expressApp = app.getExpress();
         sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, function() {
