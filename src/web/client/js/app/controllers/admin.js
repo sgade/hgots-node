@@ -42,6 +42,14 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
     $location.path('/admin/user/' + user.id);
   };
   
+  $scope.userTypeBackgroundStyle = function(user) {
+    if ( user.type === "Admin" ) {
+      return "bg-primary";
+    } else if ( user.type === "Controller" ) {
+      return "bg-info";
+    }
+  };
+  
   $scope.infoPanelStyle = { "margin-top": "0px" };
   // little scroll "hack"
   $($window).on('scroll', function() {

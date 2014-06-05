@@ -25,12 +25,14 @@
       &:hover {
         background-color: #ccc;
         cursor: pointer;
-
+      }
+      
+      .label {
         &.bg-primary {
-          background-color: #87ACCB;
+          background-color: rgba(0, 116, 217, 0.5);
         }
         &.bg-info {
-          background-color: #D3DDE2;
+          background-color: rgba(127, 219, 255, 0.5);
         }
       }
     }
