@@ -21,7 +21,6 @@ var expressBodyParser = require('body-parser'),
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
-var queries = require('./routes/queries');
 var http = require('http');
 var path = require('path');
 var db = require('../db');
@@ -43,19 +42,19 @@ exports.getExpress = function() {
  * Initializes the server instance and configures express.
  * @param {Integer} port - The port to listen on.
  * */
-exports.init = function(port, rfidRequestCallback, openDoorCallback, done) {
-  queries.setRFIDRequestCallback(rfidRequestCallback);
-  queries.setOpenDoorCallback(openDoorCallback);
-
+exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, done) {
   app = express();
-  configure(port);
+  configure(port, {
+    getRFIDRequestCallback: getRFIDRequestCallback,
+    openDoorRequestCallback: openDoorRequestCallback
+  });
   db.init(done);
 };
 /**
  * Configures express.
  * @param {Integer} port - The port to listen on.
  * */
-function configure(port) {
+function configure(port, callbacks) {
   // all environments
   app.set('port', port || process.env.PORT || 3000);
   app.set('views', path.join(__dirname, 'views'));
@@ -78,7 +77,7 @@ function configure(port) {
     // app.use(express.logger('dev'));
   }
 
-  configureRoutes();
+  configureRoutes(callbacks);
 }
 function configurePassport() {
   app.use(passport.initialize());
@@ -116,7 +115,7 @@ function configurePassport() {
     });
   });
 }
-function configureRoutes() {
+function configureRoutes(callbacks) {
   // info about app
   app.get('/info', function(req, res) {
     var pkg = require('./../../package');
@@ -135,11 +134,9 @@ function configureRoutes() {
   }));
   // Routes for app
   app.get('/app', routes.app);
-  app.get('/get_rfid', queries.getRFID);
-  app.get('/open_door', queries.openDoor);
 
   // configure api
-  require('./routes/api/')(app);
+  require('./routes/api/')(app, callbacks);
 }
 
 /**

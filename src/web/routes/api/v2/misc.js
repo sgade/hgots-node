@@ -1,6 +1,9 @@
 var helpers = require('./helpers');
 
-var callbacks = {};
+var callbacks = {
+  rfidRequestCallback: function(callback) { return callback(null, null); },
+  openDoorRequestCallback: function(callback) { return callback(null, null); }
+};
 exports.setRFIDRequestCallback = function(callback) {
   callbacks.rfidRequestCallback = callback;
   return callback;

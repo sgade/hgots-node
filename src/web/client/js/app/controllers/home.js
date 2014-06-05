@@ -4,7 +4,7 @@ hgots.controller('HomeController', [ '$scope', '$http', '$timeout', function($sc
   $scope.openDoor = function() {
     $scope.buttonDisabled = true;
     
-    $http.get('/open_door').success(function() {
+    $http.get('/api/v2/opendoor').success(function() {
       // reset button state after 10s to prevent spamming
       $timeout(function() {
         $scope.buttonDisabled = false;

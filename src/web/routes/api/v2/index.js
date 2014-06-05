@@ -2,7 +2,7 @@ var users = require('./users');
 var misc = require('./misc');
 var setup = require('./setup');
 
-module.exports = function(app) {
+module.exports = function(app, callbacks) {
   var prefix = '/api/v2';
   
   app.get(prefix + '/users', users.getUsers);
@@ -13,7 +13,9 @@ module.exports = function(app) {
   
   app.get(prefix + '/user', users.getCurrentUser);
   app.get(prefix + '/opendoor', misc.openDoor);
+  misc.setRFIDRequestCallback(callbacks.rfidRequestCallback);
   app.get(prefix + '/getrfid', misc.getRFID);
+  misc.setOpenDoorRequestCallback(callbacks.openDoorRequestCallback);
   
   app.post(prefix + '/setup-auth', setup.authenticate);
   app.post(prefix + '/setup', setup.doSetup);
