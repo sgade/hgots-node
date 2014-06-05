@@ -51,18 +51,18 @@
       <h4>Associated Cards</h4>
       <ul class="list-group">
         <li class="list-group-item">
-          <input type="text" class="form-control" placeholder="Add new card with id...">
-          <button class="btn btn-default" data-loading-text="Please put your card in front of the reader...">
+          <input type="text" class="form-control" placeholder="Add new card with id..." ng-model="newCardID" ng-change="onNewCardIDChange()">
+          <button class="btn btn-default" data-loading-text="Please put your card in front of the reader..." ng-click="getRFID()">
             Get from RFID Reader
           </button>
           
-          <button class="btn btn-success pull-right" >
+          <button class="btn btn-success pull-right" ng-disabled="newCardDisabled" ng-click="addCard()">
             Add Card
           </button>
         </li>
         <li ng-repeat="card in user.cards" class="card list-group-item">
           <b>{{card.uid}}</b>
-          <button class="btn btn-danger pull-right">
+          <button class="btn btn-danger pull-right" ng-click="deleteCard(card)">
             Remove card from this user
           </button>
         </li>
