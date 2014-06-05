@@ -1,5 +1,12 @@
 <div ng-controller="AdminUserController">
-  <h1 class="page-header">{{user.username}}</h1>
+  <h1 class="page-header">
+    {{user.username}}
+    <span ng-if="userIsSelf()" class="small pull-right">
+      <span class="label label-default">
+        This is you
+      </span>
+    </span>
+  </h1>
   
   <ul class="nav nav-pills">
     <li class="active">
