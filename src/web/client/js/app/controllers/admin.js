@@ -1,15 +1,25 @@
 var hgotsAdmin = angular.module('HGOTSAdmin', [ 'HGOTSServices' ]);
 
-hgotsAdmin.service('AdminShared', [ '$location', function($location) {
-  return {
+hgotsAdmin.service('AdminShared', [ '$http', '$location', function($http, $location) {
+  var obj = {
     userTypes: [ 'User', 'Controller', 'Admin' ],
     showUser: function(user) {
-      $location.path('/admin/user/' + user.id);
+      if ( !!user ) {
+        $location.path('/admin/user/' + user.id);
+      } else {
+        $location.path('/admin');
+      }
     },
+    currentUser: {},
     
     // variable
     selectedUser: {}
   };
+  $http({ method: 'GET', url: '/user' }).then(function(currentUser) {
+    obj.currentUser = currentUser.data;
+  });
+  
+  return obj;
 }]);
 hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', '$location', 'User', 'AdminShared', function($scope, $routeParams, $window, $location, User, AdminShared) {
   $scope.getIncludeFile = function() {
@@ -44,9 +54,7 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
   $scope.ifSelectedUserStyle = function(user) {
     if ( !!AdminShared.selectedUser ) {
       if ( AdminShared.selectedUser === user ) {
-        
         return "selected-user";
-        
       }
     }
     
@@ -95,8 +103,15 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminS
   }, function() {
     $scope.user = AdminShared.selectedUser;
     setNewValuesByUser($scope.user);
+    
+    
   });
   $scope.$watch('user', 'checkIfDirty()');
+  
+  $scope.userIsSelf = function() {
+    console.log(AdminShared.currentUser);
+    return ( AdminShared.currentUser.id === AdminShared.selectedUser.id );
+  };
   
   // make save available
   $scope.canSaveChanges = false;
@@ -132,6 +147,12 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminS
     $scope.user.$update(function(newUser, putResponseHeader) {
       $scope.user = newUser;
       setNewValuesByUser(newUser);
+    });
+  };
+  
+  $scope.deleteUser = function() {
+    $scope.user.$delete(function() {
+      AdminShared.showUser(null);
     });
   };
 }]);

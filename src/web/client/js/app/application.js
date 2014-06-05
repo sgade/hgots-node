@@ -27,11 +27,11 @@ hgots.config(['$routeProvider', function($routeProvider) {
     });
 }]);
 
-hgots.controller('NavbarController', [ '$scope', '$http', function($scope, $http) {
+hgots.controller('NavbarController', [ '$scope', '$http', 'AdminShared', function($scope, $http, AdminShared) {
   $scope.currentUserIsPrivileged = false;
-  $http({ method: 'GET', url: '/user' }).then(function(user) {
+  $scope.$watch(function() {
+    return AdminShared.currentUser;
+  }, function(user) {
     $scope.currentUserIsPrivileged = ( user.type !== "User" );
-  }, function(err) {
-    console.log("Error retrieving user object:", err);
   });
 }]);
