@@ -1,4 +1,11 @@
 <div class="grid">
+  <div class="col-sm-8">
+    <!-- Info panel -->
+    <div class="admin-scroll-info" ng-style="infoPanelStyle">
+      <div ng-include="includeFile"></div>
+    </div>
+  </div>
+  
   <div class="col-md-4">
     <!-- User list -->
     <div class="panel panel-default">
@@ -37,13 +44,6 @@
           </div>
         </li>
       </ul>
-    </div>
-  </div>
-  
-  <div class="col-sm-8">
-    <!-- Right panel -->
-    <div class="admin-scroll-right" ng-style="rightPanelStyle">
-      <div ng-include="includeFile"></div>
     </div>
   </div>
 </div>

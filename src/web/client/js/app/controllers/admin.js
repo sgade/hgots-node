@@ -8,7 +8,7 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', 'User', fun
   if ( $scope.showUserDetails ) {
     $scope.includeFile = "views/admin-user.html";
   }
-  $scope.rightPanelStyle = { "margin-top": "0px" };
+  $scope.infoPanelStyle = { "margin-top": "0px" };
   // little scroll "hack"
   $($window).on('scroll', function() {
     if ( $window.innerWidth >= 992 ) {
@@ -16,7 +16,7 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', 'User', fun
       var scrollY = $window.scrollY;
       var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
       
-      $scope.rightPanelStyle = { "margin-top": offset + "px" };
+      $scope.infoPanelStyle = { "margin-top": offset + "px" };
       $scope.$apply();
     }
   });
