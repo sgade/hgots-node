@@ -39,7 +39,11 @@ function startWeb() {
     port = 'passenger';
   }
   
-  web.init(port, web_RFIDRequest, web_OpenDoor, function() {
+  web.init(port, web_RFIDRequest, web_OpenDoor, function(err) {
+    if ( !!err ) {
+      throw err;
+    }
+    
     web.start(function() {
       console.log("Web interface running on port " + web.getPort() + ".");
     });
