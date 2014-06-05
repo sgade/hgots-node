@@ -15,6 +15,7 @@ hgotsAdmin.service('AdminShared', [ '$http', '$location', function($http, $locat
     // variable
     selectedUser: {}
   };
+  // fill object with data from server
   $http({ method: 'GET', url: '/user' }).then(function(currentUser) {
     obj.currentUser = currentUser.data;
   });
@@ -109,7 +110,6 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminS
   $scope.$watch('user', 'checkIfDirty()');
   
   $scope.userIsSelf = function() {
-    console.log(AdminShared.currentUser);
     return ( AdminShared.currentUser.id === AdminShared.selectedUser.id );
   };
   
