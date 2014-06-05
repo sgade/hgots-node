@@ -1,4 +1,5 @@
 var users = require('./users');
+var setup = require('./setup');
 
 module.exports = function(app) {
   var prefix = '/api/v2';
@@ -10,6 +11,9 @@ module.exports = function(app) {
   app.delete(prefix + '/users/:id', users.deleteUser);
   
   app.get(prefix + '/user', users.getCurrentUser);
+  
+  app.post(prefix + '/setup-auth', setup.authenticate);
+  app.post(prefix + '/setup', setup.doSetup);
   
   return app;
 };
