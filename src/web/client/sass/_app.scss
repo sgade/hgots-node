@@ -1,13 +1,10 @@
 .app {
   span.navbar-brand {
     cursor: default;
-  }
-  a.active {
-    font-weight: bold;
-  }
-  
-  .panel .ember-view {
-    width: 100%;
+    color: inherit;
+    &:hover {
+      color: inherit;
+    }
   }
   
   .admin-scroll-info {
@@ -17,10 +14,6 @@
     h1 {
       margin-top: 0;
     }
-  }
-
-  #createNewUser .form-actions button {
-    width: 100%;
   }
 
   #users {
