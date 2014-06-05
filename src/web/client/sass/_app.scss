@@ -18,7 +18,7 @@
 
   #users {
     li {
-      &.current-user {
+      &.selected-user {
         border-radius: 3px;
         box-shadow: inset 0 0 3px #8d8d8d;
         

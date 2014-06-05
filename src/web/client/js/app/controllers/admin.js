@@ -41,11 +41,11 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
       }
     }
   });
-  $scope.ifCurrentUserStyle = function(user) {
+  $scope.ifSelectedUserStyle = function(user) {
     if ( !!AdminShared.selectedUser ) {
       if ( AdminShared.selectedUser === user ) {
         
-        return "current-user";
+        return "selected-user";
         
       }
     }
