@@ -65,14 +65,24 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
 }]);
 
 hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminShared', 'User', function($scope, $routeParams, AdminShared, User) {
+  // set all user types
   $scope.userTypes = AdminShared.userTypes;
+  // watch for user changes
+  function setNewValuesByUser(user) {
+    $scope.newUsername = user.username;
+    $scope.newType = user.type;
+    $scope.newPassword = "";
+    $scope.newPasswordRepeat = "";
+  }
   $scope.$watch(function() {
     return AdminShared.selectedUser;
   }, function() {
     $scope.user = AdminShared.selectedUser;
+    setNewValuesByUser($scope.user);
   });
   $scope.$watch('user', 'checkIfDirty()');
   
+  // make save available
   $scope.canSaveChanges = false;
   $scope.checkIfDirty = function() {
     var user = $scope.user;
@@ -89,18 +99,14 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminS
     //console.log("dirty:", usernameChanged, typeChanged, passwordChanged, "=>", dirty);
     $scope.canSaveChanges = dirty;
   };
-  
-  $scope.newUsername = "";
-  $scope.newType = $scope.userTypes[0];
-  $scope.newPassword = "";
-  $scope.newPasswordRepeat = "";
-  
+  // also check on every 'new' variable
   ['newUsername', 'newType', 'newPassword', 'newPasswordRepeat'].forEach(function(scopeVariable) {
     $scope.$watch(scopeVariable, function() {
       $scope.checkIfDirty();
     });
   });
   
+  // save changes to server
   $scope.saveUser = function() {
     $scope.user.username = $scope.newUsername;
     $scope.user.type = $scope.newType;
@@ -110,11 +116,7 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminS
     
     $scope.user.$update(function(newUser, putResponseHeader) {
       $scope.user = newUser;
-      
-      $scope.newUsername = newUser.username;
-      $scope.newType = newUser.type;
-      $scope.newPassword = "";
-      $scope.newPasswordRepeat = "";
+      setNewValuesByUser(newUser);
     });
   };
 }]);
