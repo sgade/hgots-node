@@ -6,7 +6,7 @@ hgotsAdmin.service('AdminShared', function() {
     selectedUser: {}
   };
 });
-hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 'User', 'AdminShared', function($scope, $routeParams, $window, User, AdminShared) {
+hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', '$location', 'User', 'AdminShared', function($scope, $routeParams, $window, $location, User, AdminShared) {
   $scope.getIncludeFile = function() {
     var retVal = "views/admin-";
     
@@ -36,6 +36,11 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
       }
     }
   });
+  
+  $scope.showUser = function(user) {
+    // redirect to page linked to in link, but on element click already
+    $location.path('/admin/user/' + user.id);
+  };
   
   $scope.infoPanelStyle = { "margin-top": "0px" };
   // little scroll "hack"
