@@ -8,6 +8,18 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', 'User', fun
   if ( $scope.showUserDetails ) {
     $scope.includeFile = "views/admin-user.html";
   }
+  $scope.rightPanelStyle = { "margin-top": "0px" };
+  // little scroll "hack"
+  $($window).on('scroll', function() {
+    if ( $window.innerWidth >= 992 ) {
+      var navbarHeight = $(".navbar").height();
+      var scrollY = $window.scrollY;
+      var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
+      
+      $scope.rightPanelStyle = { "margin-top": offset + "px" };
+      $scope.$apply();
+    }
+  });
 }]);
 
 hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'User', function($scope, $routeParams, User) {
