@@ -1,11 +1,16 @@
 var hgotsAdmin = angular.module('HGOTSAdmin', [ 'HGOTSServices' ]);
 
-hgotsAdmin.service('AdminShared', function() {
+hgotsAdmin.service('AdminShared', [ '$location', function($location) {
   return {
     userTypes: [ 'User', 'Controller', 'Admin' ],
+    showUser: function(user) {
+      $location.path('/admin/user/' + user.id);
+    },
+    
+    // variable
     selectedUser: {}
   };
-});
+}]);
 hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', '$location', 'User', 'AdminShared', function($scope, $routeParams, $window, $location, User, AdminShared) {
   $scope.getIncludeFile = function() {
     var retVal = "views/admin-";
@@ -50,7 +55,7 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
   
   $scope.showUser = function(user) {
     // redirect to page linked to in link, but on element click already
-    $location.path('/admin/user/' + user.id);
+    AdminShared.showUser(user);
   };
   
   $scope.userTypeBackgroundStyle = function(user) {
@@ -107,7 +112,6 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminS
     var passwordChanged = ( !!$scope.newPassword && $scope.newPassword === $scope.newPasswordRepeat );
     
     var dirty = ( usernameChanged || typeChanged || passwordChanged );
-    //console.log("dirty:", usernameChanged, typeChanged, passwordChanged, "=>", dirty);
     $scope.canSaveChanges = dirty;
   };
   // also check on every 'new' variable
@@ -132,6 +136,39 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', 'AdminS
   };
 }]);
 
-hgotsAdmin.controller('AdminNewController', [ '$scope', 'AdminShared', function($scope, AdminShared) {
+hgotsAdmin.controller('AdminNewController', [ '$scope', 'AdminShared', 'User', function($scope, AdminShared, User) {
   $scope.userTypes = AdminShared.userTypes;
+  
+  $scope.newUsername = "";
+  $scope.newType = $scope.userTypes[0];
+  $scope.newPassword = "";
+  $scope.newPasswordRepeat = "";
+  $scope.createDisabled = true;
+  // make create available
+  $scope.checkIfValid = function() {
+    var usernamePresent = ( !!$scope.newUsername );
+    var passwordPresent = ( !!$scope.newPassword && $scope.newPassword === $scope.newPasswordRepeat );
+    
+    var valid = ( usernamePresent && passwordPresent );
+    console.log("valid:", valid);
+    $scope.createDisabled = !valid;
+    return valid;
+  };
+  // also check on every 'new' variable
+  ['newUsername', 'newType', 'newPassword', 'newPasswordRepeat'].forEach(function(scopeVariable) {
+    $scope.$watch(scopeVariable, function() {
+      $scope.checkIfValid();
+    });
+  });
+  
+  $scope.createUser = function() {
+    var newUser = new User({
+      username: $scope.newUsername,
+      type: $scope.newType,
+      password: $scope.newPassword
+    });
+    newUser.$save(function(user) {
+      AdminShared.showUser(user);
+    });
+  };
 }]);

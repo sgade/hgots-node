@@ -109,7 +109,7 @@ exports.newUser = function(req, res) {
     password = crypto.encrypt(password);
     db.User.create({
       username: username,
-      password: password,
+      password: crypto.encrypt(password),
       type: type
     }).complete(function(err, user) {
       if ( !!err ) {

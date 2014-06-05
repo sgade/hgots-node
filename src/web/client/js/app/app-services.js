@@ -19,6 +19,24 @@ hgotsServices.factory('User', [ '$resource', function($resource) {
         return json.user;
       }
     },
+    save: {
+      method: 'POST',
+      transformRequest: function(resource) {
+        var retVal = {
+          user: {
+            username: resource.username,
+            type: resource.type,
+            password: resource.password
+          }
+        };
+        
+        return JSON.stringify(retVal);
+      },
+      transformResponse: function(data) {
+        var json = JSON.parse(data);
+        return json.user;
+      }
+    },
     update: {
       method: 'PUT',
       transformRequest: function(resource) {
@@ -30,8 +48,6 @@ hgotsServices.factory('User', [ '$resource', function($resource) {
         if ( resource.password ) {
           retVal.user.password = resource.password;
         }
-                      
-        console.log("transformRequest:", resource, "to", retVal);
         
         return JSON.stringify(retVal);
       },
