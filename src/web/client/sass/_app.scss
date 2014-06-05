@@ -25,6 +25,10 @@
 
   #users {
     li {
+      &:nth-child(even) {
+        background-color: #eee;
+      }
+      
       &:hover {
         background-color: #ccc;
         cursor: pointer;
