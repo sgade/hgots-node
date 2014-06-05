@@ -24,21 +24,11 @@
   }
 
   #users {
-    .ember-view {
-      & li {
-        // make the li adapt the bg-color of the view
-        background-color: inherit;
-      }
-      // Real styles:
-      
-      & a {
-        color: black;
-      }
-      
+    li {
       &:hover {
         background-color: #ccc;
         cursor: pointer;
-        
+
         &.bg-primary {
           background-color: #87ACCB;
         }
@@ -46,6 +36,10 @@
           background-color: #D3DDE2;
         }
       }
+    }
+    // Real styles:
+    a {
+      color: black;
     }
   }
   
