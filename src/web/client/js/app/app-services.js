@@ -1,7 +1,12 @@
 var hgotsServices = angular.module('HGOTSServices', [ 'ngResource' ]);
 
-hgotsServices.factory('User', [ '$resource', function($resource) {
-  var apiPrefix = '/api/v2';
+hgotsServices.service('HGOTSServicesShared', function() {
+  return {
+    apiPrefix: '/api/v2'
+  };
+});
+hgotsServices.factory('User', [ '$resource', 'HGOTSServicesShared', function($resource, HGOTSServicesShared) {
+  var apiPrefix = HGOTSServicesShared.apiPrefix;
   
   return $resource(apiPrefix + '/users/:userId', { userId: '@id' }, {
     query: {
@@ -54,6 +59,26 @@ hgotsServices.factory('User', [ '$resource', function($resource) {
       transformResponse: function(data) {
         var json = JSON.parse(data);
         return json.user;
+      }
+    }
+  });
+}]);
+
+hgotsServices.factory('Card', [ '$resource', 'HGOTSServicesShared', function($resource, HGOTSServicesShared) {
+  var apiPrefix = HGOTSServicesShared.apiPrefix;
+  
+  return $resource(apiPrefix + '/users/:userId/cards/:cardId', { userId: '@user_id', cardId: '@id' }, {
+    save: {
+      method: 'POST',
+      transformRequest: function(resource) {
+        var retVal = {
+          card: {
+            user_id: resource.user_id,
+            uid: resource.uid
+          }
+        };
+        
+        return JSON.stringify(retVal);
       }
     }
   });

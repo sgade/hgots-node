@@ -89,7 +89,7 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
   });
 }]);
 
-hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http', 'AdminShared', 'User', function($scope, $routeParams, $http, AdminShared, User) {
+hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http', 'AdminShared', 'User', 'Card', function($scope, $routeParams, $http, AdminShared, User, Card) {
   // set all user types
   $scope.userTypes = AdminShared.userTypes;
   // watch for user changes
@@ -156,25 +156,39 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
   
   // Cards
   $scope.getRFID = function() {
+    $scope.currentlyLoadingRFIDResponse = true;
+    
     $http({ method: 'GET', url: '/api/v2/getrfid' }).success(function(data) {
-      console.log(data);
       $scope.newCardID = data.rfid;
+      
+      $scope.currentlyLoadingRFIDResponse = false;
     }).error(function(data) {
       console.log("Error getting rfid:", data);
+      
+      $scope.currentlyLoadingRFIDResponse = false;
     });
   };
   
   $scope.$watch('newCardID', function() {
+    console.log("call");
     $scope.onNewCardIDChange();
   });
   $scope.onNewCardIDChange = function() {
+    console.log("calc:", $scope.newCardID, !$scope.newCardID);
     $scope.newCardDisabled = ( !$scope.newCardID );
   };
   $scope.addCard = function() {
     // TODO: add cards
+    var card = new Card({
+      user_id: $scope.user.id,
+      uid: $scope.newCardID
+    });
+    card.$save(function() {
+      $scope.newCardID = "";
+    });
   };
   $scope.deleteCard = function(card) {
-    card.delete();
+    Card.$delete({ userId: $scope.user.id, id: card.id });
   };
 }]);
 
