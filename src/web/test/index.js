@@ -916,6 +916,123 @@ describe('HGOTS Server Specs', function() {
           
         });
         
+        describe('DELETE /users/:userId/cards/:id', function() {
+          var url = function(userId, cardId) {
+            return ( prefix + '/users/' + userId + '/cards/' + cardId );
+          };
+          
+          var admin = users.filter(function(user) {
+            return ( user.type === "Admin" );
+          })[0];
+          var controller = users.filter(function(user) {
+            return ( user.type === "Controller" );
+          })[0];
+          var user = users.filter(function(user_) {
+            return ( user_.type === "User" );
+          })[0];
+          
+          var adminCard = cards.filter(function(card) {
+            return ( card.user_id === admin.id );
+          })[0];
+          var controllerCard = cards.filter(function(card) {
+            return ( card.user_id === controller.id );
+          })[0];
+          var userCard = cards.filter(function(card) {
+            return ( card.user_id === user.id );
+          })[0];
+          
+          // Admin
+          it('should allow an admin to delete a card of an admin', function(done) {
+            authenticatedAdminAgent
+              .delete(url(admin.id, adminCard.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({}, done);
+          });
+          
+          it('should allow an admin to delete a card of a controller', function(done) {
+            authenticatedAdminAgent
+              .delete(url(controller.id, controllerCard.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({}, done);
+          });
+          
+          it('should allow an admin to delete a card of an user', function(done) {
+            authenticatedAdminAgent
+              .delete(url(user.id, userCard.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({}, done);
+          });
+          
+          // Controller
+          it('should not allow a controller to delete a card of an admin', function(done) {
+            authenticatedControllerAgent
+              .delete(url(admin.id, adminCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not allow a controller to delete a card of a controller', function(done) {
+            authenticatedControllerAgent
+              .delete(url(controller.id, controller.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should allow a controller to delete a card of an user', function(done) {
+            authenticatedControllerAgent
+              .delete(url(user.id, userCard.id))
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .expect({}, done);
+          });
+          
+          // User
+          it('should not allow an user to delete a card of an admin', function(done) {
+            authenticatedUserAgent
+              .delete(url(admin.id, adminCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not allow an user to delete a card of a controller', function(done) {
+            authenticatedUserAgent
+              .delete(url(controller.id, controllerCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not allow an user to delete a card of an user', function(done) {
+            authenticatedUserAgent
+              .delete(url(user.id, userCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should not allow anyone to delete any card', function(done) {
+            request(expressApp)
+              .delete(url(admin.id, adminCard.id))
+              .expect('Content-Type', /json/)
+              .expect(403)
+              .expect({ error: "Forbidden" }, done);
+          });
+          
+          it('should return bad request with invalid parameters', function(done) {
+            authenticatedAdminAgent
+              .delete(url(userCard.id, admin.id))
+              .expect('Content-Type', /json/)
+              .expect(400)
+              .expect({ error: "Bad Request" }, done);
+          });
+          
+        });
       });
     });
   });

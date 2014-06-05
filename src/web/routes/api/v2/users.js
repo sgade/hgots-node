@@ -227,6 +227,7 @@ exports.deleteUser = function(req, res) {
   });
 };
 
+/* GET /user */
 exports.getCurrentUser = function(req, res) {
   return helpers.authenticate(req, res, function(err, authenticationResponse) {
     
