@@ -229,6 +229,13 @@ exports.deleteUser = function(req, res) {
 
 exports.getCurrentUser = function(req, res) {
   return helpers.authenticate(req, res, function(err, authenticationResponse) {
-    return helpers.sendPublicModels(res, authenticationResponse.user, "user");
+    
+    return getPublicUserModelWithCard(authenticationResponse.user, function(err, publicUser) {
+      if ( !!err ) {
+        return helpers.sendInternalServerError(res);
+      }
+      
+      return helpers.sendPublicModels(res, publicUser, "user");
+    });
   });
 };
