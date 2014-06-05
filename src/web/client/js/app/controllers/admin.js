@@ -184,7 +184,12 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
     });
   };
   $scope.deleteCard = function(card) {
-    Card.$delete({ userId: $scope.user.id, id: card.id });
+    Card.get({ userId: $scope.user.id, cardId: card.id }, function(card) {
+      console.log("card:", card);
+      card.$delete(function() {
+        console.log("Delete done.");
+      });
+    });
   };
 }]);
 

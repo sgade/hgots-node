@@ -15,26 +15,26 @@
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-name">Name:</label>
           <div class="col-sm-10">
-            <input type="text" id="edituser-name" class="form-control" placeholder="Username" ng-model="newUsername">
+            <input type="text" id="edituser-name" class="form-control" placeholder="Username" ng-model="$parent.newUsername">
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-type">Type:</label>
           <div class="col-sm-10">
-            <select id="edituser-type" class="form-control" ng-model="newType" ng-options="type as type for type in userTypes">
+            <select id="edituser-type" class="form-control" ng-model="$parent.newType" ng-options="type as type for type in userTypes" ng-disabled="userIsSelf()">
             </select>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-pw1">Password:</label>
           <div class="col-sm-10">
-            <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="newPassword">
+            <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="$parent.newPassword">
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-pw2">Repeat Password:</label>
           <div class="col-sm-10">
-            <input type="password" id="edituser-pw2" class="form-control" placeholder="Password (repeat)" ng-model="newPasswordRepeat">
+            <input type="password" id="edituser-pw2" class="form-control" placeholder="Password (repeat)" ng-model="$parent.newPasswordRepeat">
           </div>
         </div>
         
