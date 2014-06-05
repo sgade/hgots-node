@@ -79,7 +79,7 @@ exports.authenticateAdmin = function(req, res, callback) {
   });
 };
 // SENDING models
-exports.getPublicModels = function(modelList, callback) {
+exports.getPublicModels = function(modelList, wrapper, callback) {
   if ( !modelList.length ) {
     modelList = [ modelList ];
   }
@@ -88,7 +88,7 @@ exports.getPublicModels = function(modelList, callback) {
     return model.getPublicModel();
   });
   
-  if ( retVal.length === 1 ) {
+  if ( retVal.length === 1 && wrapper[wrapper.length - 1] !== 's' ) { // if length is one and wrapper does not end with 's' (-> plural) give back one argument
     retVal = retVal[0];
   }
   return callback(null, retVal);
@@ -102,7 +102,7 @@ exports.sendPublicModels = function(res, publicModels, wrapper, status) {
   return exports.sendStatusMessage(res, status, response);
 };
 exports.sendModels = function(res, modelList, wrapper, status) {
-  exports.getPublicModels(modelList, function(err, models) {
+  exports.getPublicModels(modelList, wrapper, function(err, models) {
     if ( !!err ) {
       return exports.sendInternalServerError(res);
     }
