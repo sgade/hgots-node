@@ -52,9 +52,23 @@
     }
   }
   
-  #edituser-tab-cards {
-    .card {
-      min-height: 55px;
+  ul.nav-tabs {
+    border: 1px solid #ddd;
+    border-bottom-width: 1px;
+    
+    li {
+      cursor: pointer;
+
+      a {
+        color: #3bafda;
+      }
+
+      &.active {
+        color: #555;
+        border: 1px solid #ddd;
+        border-bottom-width: 0;
+        border-radius: 5px;
+      }
     }
   }
 }

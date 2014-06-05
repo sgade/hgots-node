@@ -8,18 +8,9 @@
     </span>
   </h1>
   
-  <ul class="nav nav-pills">
-    <li class="active">
-      <a href="#edituser-tab-info" data-toggle="tab">User details</a>
-    </li>
-    <li>
-      <a href="#edituser-tab-cards" data-toggle="tab">Cards</a>
-    </li>
-  </ul>
-  
-  <div class="tab-content">
-    <div class="tab-pane fade active in" id="edituser-tab-info">
-      
+  <tabset>
+    <tab heading="User details">
+      <!-- Content -->
       <form class="form-horizontal" id="editUser">
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-name">Name:</label>
@@ -54,10 +45,10 @@
           </div>
         </div>
       </form>
-      
-    </div>
-    
-    <div class="tab-pane fade" id="edituser-tab-cards">
+    </tab>
+    <tab heading="Card">
+      <!-- Content -->
+      <h4>Associated Cards</h4>
       <ul class="list-group">
         <li class="list-group-item">
           <input type="text" class="form-control" placeholder="Add new card with id...">
@@ -76,7 +67,7 @@
           </button>
         </li>
       </ul>
-    </div>
-  </div>
+    </tab>
+  </tabset>
   
 </div>
