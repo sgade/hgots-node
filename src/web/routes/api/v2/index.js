@@ -12,10 +12,10 @@ module.exports = function(app, callbacks) {
   app.delete(prefix + '/users/:id', users.deleteUser);
   
   app.get(prefix + '/user', users.getCurrentUser);
+  misc.setOpenDoorRequestCallback(callbacks.openDoorRequestCallback);
   app.get(prefix + '/opendoor', misc.openDoor);
   misc.setRFIDRequestCallback(callbacks.rfidRequestCallback);
   app.get(prefix + '/getrfid', misc.getRFID);
-  misc.setOpenDoorRequestCallback(callbacks.openDoorRequestCallback);
   
   app.post(prefix + '/setup-auth', setup.authenticate);
   app.post(prefix + '/setup', setup.doSetup);
