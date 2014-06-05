@@ -32,6 +32,6 @@ hgots.controller('NavbarController', [ '$scope', '$http', 'AdminShared', functio
   $scope.$watch(function() {
     return AdminShared.currentUser;
   }, function(user) {
-    $scope.currentUserIsPrivileged = ( user.type !== "User" );
+    $scope.currentUserIsPrivileged = ( !!user.type && user.type !== "User" );
   });
 }]);
