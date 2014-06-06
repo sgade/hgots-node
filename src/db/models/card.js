@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         return {
           id: this.id,
           uid: this.uid,
-          UserId: this.UserId
+          user_id: this.UserId
         };
       }
     }

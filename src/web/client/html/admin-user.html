@@ -1,0 +1,73 @@
+<div ng-controller="AdminUserController">
+  <h1 class="page-header">
+    {{user.username}}
+    <span ng-if="userIsSelf()" class="small pull-right">
+      <span class="label label-default">
+        This is you
+      </span>
+    </span>
+  </h1>
+  
+  <tabset>
+    <tab heading="User details">
+      <!-- Content -->
+      <form class="form-horizontal" id="editUser">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="edituser-name">Name:</label>
+          <div class="col-sm-10">
+            <input type="text" id="edituser-name" class="form-control" placeholder="Username" ng-model="$parent.newUsername">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="edituser-type">Type:</label>
+          <div class="col-sm-10">
+            <select id="edituser-type" class="form-control" ng-model="$parent.newType" ng-options="type as type for type in userTypes" ng-disabled="userIsSelf()">
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="edituser-pw1">Password:</label>
+          <div class="col-sm-10">
+            <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="$parent.newPassword">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="edituser-pw2">Repeat Password:</label>
+          <div class="col-sm-10">
+            <input type="password" id="edituser-pw2" class="form-control" placeholder="Password (repeat)" ng-model="$parent.newPasswordRepeat">
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <div class="row">
+            <button class="btn btn-success col-sm-6 col-sm-offset-1" ng-disabled="!canSaveChanges" ng-click="saveUser()">Save</button>
+            <button class="btn btn-danger col-sm-3 col-sm-offset-1" ng-click="deleteUser()" ng-disabled="userIsSelf()">Delete</button>
+          </div>
+        </div>
+      </form>
+    </tab>
+    <tab heading="Cards">
+      <!-- Content -->
+      <h4>Associated Cards</h4>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <input type="text" class="form-control" placeholder="Add new rfid tag with id..." ng-model="$parent.newCardID">
+          <button class="btn btn-default" data-loading-text="Please put your card in front of the reader..." ng-click="getRFID()" ng-disabled="currentlyLoadingRFIDResponse">
+            Get from RFID Reader
+          </button>
+          
+          <button class="btn btn-success pull-right" ng-disabled="newCardDisabled" ng-click="addCard()">
+            Add Card
+          </button>
+        </li>
+        <li ng-repeat="card in user.cards" class="card list-group-item">
+          <b>{{card.uid}}</b>
+          <button class="btn btn-danger pull-right" ng-click="deleteCard(card)">
+            Remove card from this user
+          </button>
+        </li>
+      </ul>
+    </tab>
+  </tabset>
+  
+</div>

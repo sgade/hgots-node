@@ -2,16 +2,9 @@
  * Routes that render html or redirect to html rendering pages.
  * */
 
-var fs = require('fs');
-
 var helpers = require('./helpers');
 var pkg = require('./../../../package');
 var db = require('./../../db/');
-
-var availableLanguages = fs.readdirSync(__dirname + '/../public/js/languages');
-
-for(var i = 0; i < availableLanguages.length; i++)
-  availableLanguages[i] = availableLanguages[i].split(".")[0];
 
 /* Default route: Login */
 exports.index = function(req, res) {
@@ -43,14 +36,6 @@ exports.app = function(req, res) {
     }
     
   });
-};
-
-/* Special stuff for i18n */
-exports.i18n = function(req, res) {
-  var language = req.acceptsLanguage(availableLanguages);
-  
-  res.set('Content-Type', 'text/javascript');
-  fs.createReadStream(__dirname + '/../public/js/languages/' + language + '.js').pipe(res);
 };
 
 exports.logout = function(req, res) {

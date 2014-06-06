@@ -39,7 +39,11 @@ function startWeb() {
     port = 'passenger';
   }
   
-  web.init(port, web_RFIDRequest, web_OpenDoor, function() {
+  web.init(port, web_RFIDRequest, web_OpenDoor, function(err) {
+    if ( !!err ) {
+      throw err;
+    }
+    
     web.start(function() {
       console.log("Web interface running on port " + web.getPort() + ".");
     });
@@ -47,14 +51,18 @@ function startWeb() {
 }
 // callbacks for web requests
 function web_RFIDRequest(callback) {
-  rfidReader.once('data', function(data) {
-    callback(data);
-  });
+  if ( rfidReader.isOpen ) {
+    return rfidReader.once('data', function(data) {
+      return callback(null, data);
+    });
+  }
+  
+  // not open
+  return callback(new Error('RFID reader is not ready.'));
 }
 function web_OpenDoor(callback) {
   console.log("Opening door...");
-  
-  openDoor(callback);
+  return openDoor(callback);
 }
 
 /**
@@ -158,7 +166,7 @@ function initRelais() {
 
 function openDoor(callback) {
   // TODO: Try out if it really works in real environments
-  relais.setSingle(config.relaisport.door, function(err) {
+  return relais.setSingle(config.relaisport.door, function(err) {
     if ( !!err ) {
       console.log("Error opening the door:", err);
       return callback(err);

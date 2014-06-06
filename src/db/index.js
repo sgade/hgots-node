@@ -48,7 +48,7 @@ var initDB = function(done) {
       if(process.env.NODE_ENV !== 'test') {
         sampleData(done);
       } else {
-        done();
+        done(null);
       }
     }
   });
@@ -88,7 +88,7 @@ var sampleData = function(callback) {
             });
           }
           
-          callback();
+          callback(null);
         });
       });
       

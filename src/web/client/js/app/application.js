@@ -1,94 +1,37 @@
-App = undefined;
+var hgots = angular.module('HGOTSApp', [ 'ngRoute', 'HGOTSAdmin' ]);
 
-(function() {
-  "use strict";
-  
-  // Application:
-  App = Ember.Application.create();
-
-  /* ==========
-   * Store
-   * ==========
-   * */
-  // Fetch
-  App.ApplicationAdapter = DS.RESTAdapter.extend({
-    namespace: 'api/v1'
-  });
-  App.Store = DS.Store.extend({
-    adapter: 'App.ApplicationAdapter'
-  });
-
-  /* ==========
-   * Routing
-   * ==========
-   * */
-  App.Router.reopen({
-    rootURL: '/app'
-  });
-  App.Router.map(function() {
-    this.resource('admin', function() {
-      /* TODO: may specify sub-routes for specific users to be shown to the admin */
-      this.route('new');
-      this.route('user', {
-        path: '/user/:userid'
-      });
+hgots.config(['$routeProvider', function($routeProvider) {
+  $routeProvider
+    .when('/', {
+      templateUrl: 'views/home.html',
+      controller: 'HomeController'
+    })
+    .when('/admin', {
+      templateUrl: 'views/admin.html',
+      controller: 'AdminController'
+    })
+    .when('/admin/:new', {
+      templateUrl: 'views/admin.html',
+      controller: 'AdminController'
+    })
+    .when('/admin/user/:userId', {
+      templateUrl: 'views/admin.html',
+      controller: 'AdminController'
+    })
+    .when('/about', {
+      templateUrl: 'views/about.html',
+      controller: 'AboutController'
+    })
+    .otherwise({
+      redirectTo: '/'
     });
-    
-    this.route('about');
-    this.route('readme');
+}]);
+
+hgots.controller('NavbarController', [ '$scope', '$http', 'AdminShared', function($scope, $http, AdminShared) {
+  $scope.currentUserIsPrivileged = false;
+  $scope.$watch(function() {
+    return AdminShared.currentUser;
+  }, function(user) {
+    $scope.currentUserIsPrivileged = ( !!user.type && user.type !== "User" );
   });
-  
-  /*
-   * ==========
-   * Global controller
-   * ==========
-   * */
-   // dirty:
-   App.ApplicationController = Ember.ObjectController.extend({
-     // init, load things
-     init: function() {
-       this._super();
-       
-       this.loadCurrentUser();
-       this.loadPackageInfo();
-     },
-     
-     // properties that get filled in
-     currentUser: {},
-     pkg: {
-       name: "...",
-       version: "0.0.0"
-     },
-     
-     // getters
-     isCurrentUserPrivileged: function() {
-       var status = false;
-       
-       var user = this.get('currentUser');
-       if ( user && user.type ) {
-         status = ( user.type !== 'User' );
-       }
-       
-       return status;
-     }.property('currentUser'),
-     
-     /* ***********
-      * ajax calls
-      * ***********
-      * */
-     loadCurrentUser: function() {
-       var self = this;
-       
-       return Ember.$.get('/user').then(function(user) {
-         self.set('currentUser', user);
-       });
-     },
-     loadPackageInfo: function() {
-       var self = this;
-       
-       return Ember.$.get('/info').then(function(pkg) {
-         self.set('pkg', pkg);
-       });
-     }
-   });
-}());
+}]);
