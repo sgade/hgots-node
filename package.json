@@ -54,10 +54,10 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-watch": "~0.6.0",
     "grunt-jsdoc": "~0.5.4",
-    "grunt-mocha-test": "~0.10.0",
+    "grunt-mocha-test": "~0.11.0",
     "mocha": "^1.20.0",
     "sequelize-fixtures": "^0.3.0",
     "should": "^3.3.1",
-    "supertest": "^0.12.0"
+    "supertest": "^0.13.0"
   }
 }
