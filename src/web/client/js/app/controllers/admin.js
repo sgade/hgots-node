@@ -170,24 +170,23 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
   };
   
   $scope.$watch('newCardID', function() {
-    console.log("call");
     $scope.newCardDisabled = ( !$scope.newCardID );
   });
   $scope.addCard = function() {
-    // TODO: add cards
     var card = new Card({
       user_id: $scope.user.id,
       uid: $scope.newCardID
     });
     card.$save(function() {
       $scope.newCardID = "";
+      
+      $scope.user.cards.push(card.card);
     });
   };
   $scope.deleteCard = function(card) {
-    Card.get({ userId: $scope.user.id, cardId: card.id }, function(card) {
-      console.log("card:", card);
-      card.$delete(function() {
-        console.log("Delete done.");
+    $http({ method: 'DELETE', url: '/api/v2/users/' + $scope.user.id + '/cards/' + card.id }).success(function() {
+      $scope.user.cards = $scope.user.cards.filter(function(cardItem) {
+        return ( cardItem.id !== card.id );
       });
     });
   };
