@@ -90,14 +90,9 @@ function configure(port, callbacks) {
   app.use(expressMethodOverride());
   app.use(expressOnTimeout);
   app.use(expressCookieParser(config.web.secret)); // cookies
-  
-  var sessionStore = null;
-  if ('production' === app.get('env')) {
-    sessionStore = new SQLiteStore();
-  }
   app.use(expressSession({ // session support
     secret: config.web.secret,
-    store: sessionStore
+    store: new SQLiteStore()
   }));
   app.use(expressOnTimeout);
 
