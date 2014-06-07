@@ -30,11 +30,15 @@ hgots.config(['$routeProvider', function($routeProvider) {
 
 hgots.service('AppShared', [ '$http', function($http) {
   var obj = {
-    currentUser: {}
+    currentUser: {},
+    pkg: {}
   };
   // fill object with data from server
-  $http({ method: 'GET', url: '/api/v2/user' }).then(function(currentUser) {
+  obj.currentUser = $http({ method: 'GET', url: '/api/v2/user' }).then(function(currentUser) {
     obj.currentUser = currentUser.data.user;
+  });
+  obj.pkg = $http({ method: 'GET', url: '/info' }).then(function(response) {
+    obj.pkg = response.data;
   });
   
   return obj;
