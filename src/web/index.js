@@ -222,18 +222,29 @@ exports.start = function(callback) {
     
     cluster.on('fork', function(worker) {
       runningWorkers++;
+      console.log("worker", worker.process.pid, "forked");
+    });
+    cluster.on('online', function(worker) {
+      console.log('worker', worker.process.pid, 'online');
     });
     cluster.on('listening', function(worker, address) {
+      console.log("worker", worker.process.pid, "listening");
       if ( runningWorkers < numCPUS ) {
         cluster.fork();
       }
+    });
+    cluster.on('disconnect', function(worker) {
+      console.log("worker", worker.process.pid, "disconnected");
     });
     cluster.on('exit', function(worker, code, signal) {
       console.log("worker", worker.process.pid, 'died');
     });
   } else {
     var server = http.createServer(app);
-    server.listen(app.get('port'), callback);
+    server.listen(app.get('port'), function() {
+      console.log("worker", cluster.worker.process.pid, "started server");
+      callback();
+    });
     
     servers.push(server);
   }
