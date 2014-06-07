@@ -34,6 +34,9 @@
         </div>
 
         <ul class="list-group" id="users">
+          <li ng-show="!(users | filter:search ).length" class="list-group-item">
+            No users found.
+          </li>
           <!-- ng-repeat -->
           <li ng-repeat="user in users | filter:search | orderBy:'type'" class="list-group-item" ng-class="ifSelectedUserStyle(user)" ng-click="showUser(user)">
             <a href="#/admin/user/{{user.id}}">

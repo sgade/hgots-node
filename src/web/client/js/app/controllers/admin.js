@@ -1,6 +1,6 @@
-var hgotsAdmin = angular.module('HGOTSAdmin', [ 'HGOTSServices', 'ui.bootstrap' ]);
+var hgotsAdmin = angular.module('HGOTSAdmin', [ 'HGOTSApp', 'HGOTSServices', 'ui.bootstrap' ]);
 
-hgotsAdmin.service('AdminShared', [ '$http', '$location', function($http, $location) {
+hgotsAdmin.service('AdminShared', [ '$http', '$location', 'AppShared', function($http, $location, AppShared) {
   var obj = {
     userTypes: [ 'User', 'Controller', 'Admin' ],
     showUser: function(user) {
@@ -10,15 +10,11 @@ hgotsAdmin.service('AdminShared', [ '$http', '$location', function($http, $locat
         $location.path('/admin');
       }
     },
-    currentUser: {},
+    currentUser: AppShared.currentUser,
     
     // variable
     selectedUser: {}
   };
-  // fill object with data from server
-  $http({ method: 'GET', url: '/api/v2/user' }).then(function(currentUser) {
-    obj.currentUser = currentUser.data.user;
-  });
   
   return obj;
 }]);

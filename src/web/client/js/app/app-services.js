@@ -12,7 +12,7 @@ hgotsServices.factory('User', [ '$resource', 'HGOTSServicesShared', function($re
     query: {
       method: 'GET',
       transformResponse: function(data) {
-        var json = JSON.parse(data);
+        var json = angular.fromJson(data);
         return json.users;
       },
       isArray: true
@@ -20,7 +20,7 @@ hgotsServices.factory('User', [ '$resource', 'HGOTSServicesShared', function($re
     get: {
       method: 'GET',
       transformResponse: function(data) {
-        var json = JSON.parse(data);
+        var json = angular.fromJson(data);
         return json.user;
       }
     },
@@ -35,10 +35,10 @@ hgotsServices.factory('User', [ '$resource', 'HGOTSServicesShared', function($re
           }
         };
         
-        return JSON.stringify(retVal);
+        return angular.toJson(retVal);
       },
       transformResponse: function(data) {
-        var json = JSON.parse(data);
+        var json = angular.fromJson(data);
         return json.user;
       }
     },
@@ -54,10 +54,10 @@ hgotsServices.factory('User', [ '$resource', 'HGOTSServicesShared', function($re
           retVal.user.password = resource.password;
         }
         
-        return JSON.stringify(retVal);
+        return angular.toJson(retVal);
       },
       transformResponse: function(data) {
-        var json = JSON.parse(data);
+        var json = angular.fromJson(data);
         return json.user;
       }
     }
@@ -78,7 +78,7 @@ hgotsServices.factory('Card', [ '$resource', 'HGOTSServicesShared', function($re
           }
         };
         
-        return JSON.stringify(retVal);
+        return angular.toJson(retVal);
       }
     }
   });

@@ -22,6 +22,10 @@
     "cryptojslib": "~3.1.2",
     "angular": "~1.2.16",
     "angular-resource": "~1.2.16",
-    "angular-route": "~1.2.16"
+    "angular-route": "~1.2.16",
+    "angular-animate": "~1.2.17"
+  },
+  "resolutions": {
+    "angular": "~1.2.16"
   }
 }
