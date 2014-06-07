@@ -80,6 +80,17 @@ function configure(port, callbacks) {
   
   // Middlewares
   app.use(expressResponseTime()); // start measuring time
+  app.use(function(req, res, next) {
+    // send message to master
+    process.send({
+      request: true
+    });
+    
+    // making db possibly available
+    setTimeout(function() {
+      next();
+    }, 0);
+  });
   app.use(expressTimeout(config.web.requestTimeout));
   app.use(expressCompress({ // compress all data
     threshold: 256
@@ -218,6 +229,7 @@ exports.start = function(callback) {
   if ( cluster.isMaster ) {
     var numCPUS = require('os').cpus().length;
     var runningWorkers = 0;
+    var requests = 0;
     console.log("Spawning", numCPUS, "workers.");
     if ( numCPUS < 1 ) {
       throw new Error("Invalid num of CPUS:", numCPUS);
@@ -232,9 +244,17 @@ exports.start = function(callback) {
           start();
         });
         
-        cluster.fork();
+        var worker = cluster.fork();
+        worker.on('message', function(msg) {
+          if ( msg.request ) {
+            requests++;
+          }
+        });
       }
     };
+    setInterval(function() {
+      console.log("Received", requests, "requests so far.");
+    }, 10000);
     
     cluster.on('fork', function(worker) {
       //console.log("worker", worker.process.pid, "forked");
@@ -249,7 +269,7 @@ exports.start = function(callback) {
       console.log("worker", worker.process.pid, "disconnected");
     });
     cluster.on('exit', function(worker, code, signal) {
-      console.log("worker", worker.process.pid, 'died');
+      console.log("worker", worker.process.pid, 'died:', signal, '(', code, ')');
       runningWorkers--;
       start(); // restart
     });
