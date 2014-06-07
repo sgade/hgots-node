@@ -8,6 +8,7 @@
  * Module dependencies.
  */
 var config = require('../config');
+var pkg = require('../../package');
 var express = require('express');
 // middleware
 var expressBodyParser = require('body-parser'),
@@ -59,6 +60,10 @@ function configure(port, callbacks) {
   app.set('port', port || process.env.PORT || 3000);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
+  app.use(function(req, res, next) {
+    res.set('Server', pkg.name + '/' + pkg.version);
+    next();
+  });
   app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico')));
   app.use(expressCompress({
     threshold: 256
