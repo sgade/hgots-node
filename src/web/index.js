@@ -41,6 +41,11 @@ exports.getExpress = function() {
   return app;
 };
 
+function expressSendServerHeader(req, res, next) {
+  res.set('Server', pkg.name + '/' + pkg.version);
+  next();
+}
+
 /**
  * Initializes the server instance and configures express.
  * @param {Integer} port - The port to listen on.
@@ -58,42 +63,41 @@ exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, d
  * @param {Integer} port - The port to listen on.
  * */
 function configure(port, callbacks) {
-  // all environments
+  // config for server
   app.set('port', port || process.env.PORT || 3000);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
   
-  app.use(expressResponseTime());
-  app.use(function(req, res, next) {
-    res.set('Server', pkg.name + '/' + pkg.version);
-    next();
-  });
-  app.use(expressCompress({
+  // Middlewares
+  app.use(expressResponseTime()); // start measuring time
+  app.use(expressCompress({ // compress all data
     threshold: 256
   }));
+  app.use(expressSendServerHeader); // send 'Server' header
   app.use(expressBodyParser());
   app.use(expressMethodOverride());
-  app.use(expressCookieParser(config.web.secret));
-  app.use(expressSession({
+  app.use(expressCookieParser(config.web.secret)); // cookies
+  app.use(expressSession({ // session support
     secret: config.web.secret
   }));
-  configurePassport();
+  configurePassport(); // configure passport
 
-  app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico')));
-  if(typeof PhusionPassenger === 'undefined') { // only serve static files if not using Passenger
-    app.use(expressStatic(path.join(__dirname, 'public')));
+  app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico'))); // send favicon
+  if(typeof PhusionPassenger === 'undefined') {
+    app.use(expressStatic(path.join(__dirname, 'public'))); // only serve static files if not using Passenger
   }
 
-  // development only
   if ('development' === app.get('env')) {
-    app.use(expressErrorHandler());
-    app.use(expressMorgan({
+    // development only:
+    app.use(expressErrorHandler()); // error handler
+    app.use(expressMorgan({ // dev logs
       format: 'dev'
     }));
   } else if ('production' === app.get('env')) {
-    app.use(expressMorgan('short'));
+    app.use(expressMorgan('short')); // request logs
   }
-
+  
+  // all middleware registered, now the final routes
   configureRoutes(callbacks);
 }
 function configurePassport() {
@@ -133,12 +137,6 @@ function configurePassport() {
   });
 }
 function configureRoutes(callbacks) {
-  // info about app
-  app.get('/info', function(req, res) {
-    var pkg = require('./../../package');
-    res.set('Content-Type', 'application/json');
-    res.end(JSON.stringify(pkg));
-  });
   // Routes for login
   app.get('/', routes.index);
   app.get('/logout', routes.logout);
@@ -149,8 +147,15 @@ function configureRoutes(callbacks) {
     successRedirect: '/app',
     failureRedirect: '/'
   }));
+  
   // Routes for app
   app.get('/app', routes.app);
+  // info about app
+  app.get('/info', function(req, res) {
+    var pkg = require('./../../package');
+    res.set('Content-Type', 'application/json');
+    res.end(JSON.stringify(pkg));
+  });
 
   // configure api
   require('./routes/api/')(app, callbacks);
