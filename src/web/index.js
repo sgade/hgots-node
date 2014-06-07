@@ -80,12 +80,6 @@ function configure(port, callbacks) {
   app.use(expressSession({ // session support
     secret: config.web.secret
   }));
-  configurePassport(); // configure passport
-
-  app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico'))); // send favicon
-  if(typeof PhusionPassenger === 'undefined') {
-    app.use(expressStatic(path.join(__dirname, 'public'))); // only serve static files if not using Passenger
-  }
 
   if ('development' === app.get('env')) {
     // development only:
@@ -95,6 +89,13 @@ function configure(port, callbacks) {
     }));
   } else if ('production' === app.get('env')) {
     app.use(expressMorgan('short')); // request logs
+  }
+  
+  configurePassport(); // configure passport
+
+  app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico'))); // send favicon
+  if(typeof PhusionPassenger === 'undefined') {
+    app.use(expressStatic(path.join(__dirname, 'public'))); // only serve static files if not using Passenger
   }
   
   // Catch HEAD requests, makes them faster
