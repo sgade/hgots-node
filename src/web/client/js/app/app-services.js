@@ -102,3 +102,21 @@ hgotsServices.factory('alert', [ '$window', '$q', function($window, $q) {
     return ( defer.promise );
   };
 }]);
+
+hgotsServices.factory('confirm', [ '$window', '$q', function($window, $q) {
+  return function(message) {
+    var defer = $q.defer();
+    
+    $window.setImmediate(function() {
+      var result = $window.confirm(message);
+      
+      if ( result ) {
+        defer.resolve(true);
+      } else {
+        defer.resolve(false);
+      }
+    });
+    
+    return ( defer.promise );
+  };
+}]);
