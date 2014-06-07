@@ -10,6 +10,7 @@
 var config = require('../config');
 var pkg = require('../../package');
 var express = require('express');
+var cluster = require('cluster');
 // middleware
 var expressBodyParser = require('body-parser'),
   expressCookieParser = require('cookie-parser'),
@@ -33,7 +34,7 @@ var db = require('../db');
  * The express instance
  * */
 var app = null;
-var server = null;
+var servers = [];
 
 /**
  * Express instance for testing purposes.
@@ -190,8 +191,10 @@ function configureRoutes(callbacks) {
  * Stops the express server.
  * */
 exports.stop = function(callback) {
-  if ( server ) {
-    server.close(callback);
+  if ( servers.length > 0 ) {
+    for ( var i = 0; i < servers.length; i++ ) {
+      servers[i].close(callback);
+    }
   }
 };
 
@@ -208,15 +211,33 @@ exports.getPort = function() {
  * @param {Callback} callback - A callback that is called once the server is running.
  * */
 exports.start = function(callback) {
-  server = http.createServer(app);
-  server.listen(app.get('port'), callback);
+  if ( cluster.isMaster ) {
+    for ( var i = 0; i < require('os').cpus().length; i++ ) {
+      cluster.fork();
+    }
+    
+    cluster.on('exit', function(worker, code, signal) {
+      console.log("worker", worker.process.pid, 'died');
+    });
+  } else {
+    var server = http.createServer(app);
+    server.listen(app.get('port'), callback);
+    
+    servers.push(server);
+  }
 };
 
 // start the server if we are invoked directly
 if ( !module.parent ) {
-  exports.init();
-  exports.start(function() {
-    console.log('Express server listening on port ' + app.get('port') + ".");
+  var nullCallback = function(cb) { return cb(null, null); };
+  exports.init(config.web.port, nullCallback, nullCallback,function(err) {
+    if ( !!err ) {
+      throw err;
+    }
+    
+    exports.start(function() {
+      console.log('Express server listening on port ' + app.get('port') + ".");
+    });
   });
 }
 
