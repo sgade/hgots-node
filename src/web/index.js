@@ -102,6 +102,7 @@ function configure(port, callbacks) {
     if ( req.method.toLowerCase() === 'head' ) {
       res.end();
     }
+    return next();
   });
   
   // all middleware registered, now the final routes
