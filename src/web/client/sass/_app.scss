@@ -53,22 +53,15 @@
   
   ul.nav-tabs {
     border: 1px solid #ddd;
-    border-bottom-width: 1px;
     
     li {
       cursor: pointer;
-
-      a {
-        color: #3bafda;
-      }
-
-      &.active {
-        color: #555;
-        border: 1px solid #ddd;
-        border-bottom-width: 0;
-        border-radius: 5px;
-      }
     }
+  }
+  .tab-content {
+    border: 1px solid #ddd;
+    border-top-width: 0;
+    border-radius: 0 0 4px 4px;
   }
 
   // Animations
