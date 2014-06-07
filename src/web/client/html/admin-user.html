@@ -60,11 +60,17 @@
             Add Card
           </button>
         </li>
-        <li ng-repeat="card in user.cards" class="card list-group-item">
-          <b>{{card.uid}}</b>
-          <button class="btn btn-danger pull-right" ng-click="deleteCard(card)">
-            Remove card from this user
-          </button>
+        <li ng-repeat="card in user.cards" class="list-group-item">
+          <div class="row">
+            <div class="col-md-8">
+              <b>{{card.uid}}</b>
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-danger pull-right" ng-click="deleteCard(card)">
+                Remove
+              </button>
+            </div>
+          </div>
         </li>
       </ul>
     </tab>
