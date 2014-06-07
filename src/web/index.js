@@ -80,7 +80,7 @@ function configure(port, callbacks) {
   
   // Middlewares
   app.use(expressResponseTime()); // start measuring time
-  app.use(expressTimeout(5000));
+  app.use(expressTimeout(config.web.requestTimeout));
   app.use(expressCompress({ // compress all data
     threshold: 256
   }));
@@ -108,6 +108,8 @@ function configure(port, callbacks) {
   app.use(expressOnTimeout);
   
   configurePassport(); // configure passport
+  
+  app.use(expressOnTimeout);
 
   app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico'))); // send favicon
   if(typeof PhusionPassenger === 'undefined') {
