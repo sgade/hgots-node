@@ -27,11 +27,21 @@ hgots.config(['$routeProvider', function($routeProvider) {
     });
 }]);
 
-hgots.controller('NavbarController', [ '$scope', '$http', 'AdminShared', function($scope, $http, AdminShared) {
+hgots.service('AppShared', [ '$http', function($http) {
+  var obj = {
+    currentUser: {}
+  };
+  // fill object with data from server
+  $http({ method: 'GET', url: '/api/v2/user' }).then(function(currentUser) {
+    obj.currentUser = currentUser.data.user;
+  });
+  
+  return obj;
+}]);
+
+hgots.controller('NavbarController', [ '$scope', '$http', 'AppShared', function($scope, $http, AppShared) {
   $scope.currentUserIsPrivileged = false;
-  $scope.$watch(function() {
-    return AdminShared.currentUser;
-  }, function(user) {
-    $scope.currentUserIsPrivileged = ( !!user.type && user.type !== "User" );
+  $scope.$watch(function() { return AppShared.currentUser; }, function(user) {
+    $scope.currentUserIsPrivileged = ( !!user && !!user.type && user.type !== "User" );
   });
 }]);
