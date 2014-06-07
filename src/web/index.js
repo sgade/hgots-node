@@ -90,7 +90,7 @@ function configure(port, callbacks) {
     app.use(expressMorgan({
       format: 'dev'
     }));
-  } else {
+  } else if ('production' === app.get('env')) {
     app.use(expressMorgan('short'));
   }
 
