@@ -89,15 +89,19 @@
     .ng-enter,
     .ng-move {
       left: -100px;
+      opacity: 0;
     }
     .ng-enter.ng-enter-active,
     .ng-move.ng-move-active {
       left: 0px;
+      opacity: 1;
     }
     .ng-leave {
       left: 0px;
+      opacity: 1;
       &.ng-leave-active {
         left: 100px;
+        opacity: 0;
       }
     }
   }
