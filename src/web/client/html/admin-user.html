@@ -40,8 +40,8 @@
         
         <div class="form-actions">
           <div class="row">
-            <button class="btn btn-success col-sm-6 col-sm-offset-1" ng-disabled="!canSaveChanges" ng-click="saveUser()">Save</button>
-            <button class="btn btn-danger col-sm-3 col-sm-offset-1" ng-click="deleteUser()" ng-disabled="userIsSelf()">Delete</button>
+            <button class="btn btn-success col-xs-6 col-xs-offset-1" ng-disabled="!canSaveChanges" ng-click="saveUser()">Save</button>
+            <button class="btn btn-danger col-xs-3 col-xs-offset-1" ng-click="deleteUser()" ng-disabled="userIsSelf()">Delete</button>
           </div>
         </div>
       </form>
@@ -51,14 +51,23 @@
       <h4>Associated Cards</h4>
       <ul class="list-group">
         <li class="list-group-item">
-          <input type="text" class="form-control" placeholder="Add new rfid tag with id..." ng-model="$parent.newCardID">
-          <button class="btn btn-default" data-loading-text="Please put your card in front of the reader..." ng-click="getRFID()" ng-disabled="currentlyLoadingRFIDResponse">
-            Get from RFID Reader
-          </button>
-          
-          <button class="btn btn-success pull-right" ng-disabled="newCardDisabled" ng-click="addCard()">
-            Add Card
-          </button>
+          <div class="row">
+            <div class="col-md-12">
+              <input type="text" class="form-control" placeholder="Add new rfid tag with id..." ng-model="$parent.newCardID">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <button class="btn btn-default" data-loading-text="Please put your card in front of the reader..." ng-click="getRFID()" ng-disabled="currentlyLoadingRFIDResponse">
+                Get from RFID Reader
+              </button>
+            </div>
+            <div class="col-sm-4">
+              <button class="btn btn-success pull-right" ng-disabled="newCardDisabled" ng-click="addCard()">
+                Add Card
+              </button>
+            </div>
+          </div>
         </li>
         <li ng-repeat="card in user.cards" class="list-group-item">
           <div class="row">
