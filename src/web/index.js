@@ -97,6 +97,13 @@ function configure(port, callbacks) {
     app.use(expressMorgan('short')); // request logs
   }
   
+  // Catch HEAD requests, makes them faster
+  app.use(function(req, res, next) {
+    if ( req.method.toLowerCase() === 'head' ) {
+      res.end();
+    }
+  });
+  
   // all middleware registered, now the final routes
   configureRoutes(callbacks);
 }
