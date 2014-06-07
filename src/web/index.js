@@ -224,6 +224,7 @@ exports.start = function(callback) {
       if ( runningWorkers < numCPUS ) {
         cluster.once('fork', function() {
           runningWorkers++;
+          console.log('', runningWorkers, 'workers running');
         });
         cluster.once('listening', function() {
           start();
@@ -234,7 +235,7 @@ exports.start = function(callback) {
     };
     
     cluster.on('fork', function(worker) {
-      console.log("worker", worker.process.pid, "forked");
+      //console.log("worker", worker.process.pid, "forked");
     });
     cluster.on('online', function(worker) {
       console.log('worker', worker.process.pid, 'online');
