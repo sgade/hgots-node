@@ -75,4 +75,26 @@
   .list-group-item.card {
     min-height: 50px;
   }
+  
+  ul, ol {
+    .ng-enter,
+    .ng-move,
+    .ng-leave {
+      transition: all 0.25s;
+    }
+    .ng-enter,
+    .ng-move {
+      opacity: 0;
+    }
+    .ng-leave {
+      opacity: 1;
+    }
+    .ng-enter.ng-enter-active,
+    .ng-move.ng-move-active {
+      opacity: 1;
+    }
+    .ng-leave.ng-leave-active {
+      opacity: 0;
+    }
+  }
 }
