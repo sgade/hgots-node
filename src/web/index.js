@@ -79,7 +79,7 @@ function configure(port, callbacks) {
   
   // Middlewares
   app.use(expressResponseTime()); // start measuring time
-  app.use(expressTimeout(5000));
+  app.use(expressTimeout(config.web.requestTimeout));
   app.use(expressCompress({ // compress all data
     threshold: 256
   }));
