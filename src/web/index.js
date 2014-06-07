@@ -19,7 +19,8 @@ var expressBodyParser = require('body-parser'),
   expressMethodOverride = require('method-override'),
   expressErrorHandler = require('errorhandler'),
   expressStatic = require('serve-static'),
-  expressResponseTime = require('response-time');
+  expressResponseTime = require('response-time'),
+  expressMorgan = require('morgan');
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
@@ -86,7 +87,11 @@ function configure(port, callbacks) {
   // development only
   if ('development' === app.get('env')) {
     app.use(expressErrorHandler());
-    // app.use(express.logger('dev'));
+    app.use(expressMorgan({
+      format: 'dev'
+    }));
+  } else {
+    app.use(expressMorgan('short'));
   }
 
   configureRoutes(callbacks);
