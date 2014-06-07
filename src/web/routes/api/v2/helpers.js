@@ -1,3 +1,5 @@
+var status = require('statuses');
+
 /*
  * Internal Helpers
  * */
@@ -23,22 +25,26 @@ exports.sendStatusError = function(res, status, errorDescription) {
 };
 // 200
 exports.sendOk = function(res, data) {
-  return exports.sendStatusMessage(res, 200, data);
+  return exports.sendStatusMessage(res, status('OK'), data);
 };
 // 400
 exports.sendBadRequest = function(res, errorDescription) {
   errorDescription = errorDescription || "Bad Request";
-  return exports.sendStatusError(res, 400, errorDescription);
+  return exports.sendStatusError(res, status('Bad Request'), errorDescription);
 };
 // 403
 exports.sendForbidden = function(res, errorDescription) {
   errorDescription = errorDescription || "Forbidden";
-  return exports.sendStatusError(res, 403, errorDescription);
+  return exports.sendStatusError(res, status('Forbidden'), errorDescription);
 };
 // 500
 exports.sendInternalServerError = function(res, errorDescription) {
   errorDescription = errorDescription || "Internal Server Error";
-  return exports.sendStatusError(res, 500, errorDescription);
+  return exports.sendStatusError(res, status('Internal Server Error'), errorDescription);
+};
+// For API customization
+exports.status = function(input) {
+  return status(input);
 };
  
 /*

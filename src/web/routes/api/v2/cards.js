@@ -141,7 +141,7 @@ exports.newCardForUser = function(req, res) {
               return helpers.sendInternalServerError(res);
             }
             
-            return helpers.sendModels(res, card, "card", 201);
+            return helpers.sendModels(res, card, "card", helpers.status('Created'));
           });
         });
       });
@@ -192,7 +192,7 @@ exports.deleteCardOfUser = function(req, res) {
             return helpers.sendInternalServerError(res);
           }
           
-          return helpers.sendStatusMessage(res, 200, {});
+          return helpers.sendStatusMessage(res, helpers.status('OK'), {});
         });
       });
     });

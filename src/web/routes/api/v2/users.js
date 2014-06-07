@@ -119,7 +119,7 @@ exports.newUser = function(req, res) {
         return helpers.sendBadRequest(res);
       }
       
-      return helpers.sendModels(res, user, "user", 201);
+      return helpers.sendModels(res, user, "user", helpers.status('Created'));
     });
   });
 };
@@ -177,7 +177,7 @@ exports.updateUser = function(req, res) {
             return helpers.sendInternalServerError(res);
           }
           
-          return helpers.sendPublicModels(res, publicUser, "user", 200);
+          return helpers.sendPublicModels(res, publicUser, "user");
         });
       });
     });
@@ -221,7 +221,7 @@ exports.deleteUser = function(req, res) {
           return helpers.sendInternalServerError(res);
         }
         
-        return helpers.sendStatusMessage(res, 200, {});
+        return helpers.sendStatusMessage(res, helpers.status('OK'), {});
       });
     });
   });
