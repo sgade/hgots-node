@@ -212,10 +212,22 @@ exports.getPort = function() {
  * */
 exports.start = function(callback) {
   if ( cluster.isMaster ) {
-    for ( var i = 0; i < require('os').cpus().length; i++ ) {
-      cluster.fork();
+    var numCPUS = require('os').cpus().length;
+    var runningWorkers = 0;
+    console.log("Spawning", numCPUS, "workers.");
+    if ( numCPUS < 1 ) {
+      throw new Error("Invalid num of CPUS:", numCPUS);
     }
+    cluster.fork(); // fork first
     
+    cluster.on('fork', function(worker) {
+      runningWorkers++;
+    });
+    cluster.on('listening', function(worker, address) {
+      if ( runningWorkers < numCPUS ) {
+        cluster.fork();
+      }
+    });
     cluster.on('exit', function(worker, code, signal) {
       console.log("worker", worker.process.pid, 'died');
     });
