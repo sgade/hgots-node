@@ -264,6 +264,10 @@ exports.start = function(callback) {
     });
     cluster.on('listening', function(worker, address) {
       console.log("worker", worker.process.pid, "listening");
+      
+      if ( runningWorkers === numCPUS ) {
+        console.log("All workers running.");
+      }
     });
     cluster.on('disconnect', function(worker) {
       console.log("worker", worker.process.pid, "disconnected");
