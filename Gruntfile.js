@@ -93,11 +93,18 @@ module.exports = function(grunt) {
         }
       }
     },
+    /* CSS */
     sass: {
       src: {
         files: {
           './src/web/public/css/style.css': [ './src/web/client/sass/style.scss' ]
         }
+      }
+    },
+    autoprefixer: {
+      src: {
+        src: './src/web/public/css/style.css',
+        dest: './src/web/public/css/style.css'
       }
     },
     cssmin: {
@@ -138,7 +145,7 @@ module.exports = function(grunt) {
 
       css: {
         files: [ './src/web/client/sass/**/*.scss' ],
-        tasks: [ 'build-css' ]
+        tasks: [ 'build-dev-css' ]
       },
       i18n: {
         files: [ './src/web/client/translations/**/*.js' ],
@@ -160,18 +167,19 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [ 'lint', 'build' ]);
   grunt.registerTask('dev', [ 'build-dev', 'watch' ]);
   /* Single purpose tasks */
-  grunt.registerTask('build-dev', [ 'clean', 'build-dev-html', 'build-dev-js', 'build-css' ]);
+  grunt.registerTask('build-dev', [ 'clean', 'build-dev-html', 'build-dev-js', 'build-dev-css' ]);
   grunt.registerTask('build-dev-html', [ 'copy:angularViews' ]);
   grunt.registerTask('build-dev-js', [ 'build-dev-js-app', 'build-dev-js-index' ]);
   grunt.registerTask('build-dev-js-index', [ 'concat:index' ]);
   grunt.registerTask('build-dev-js-app', [ 'concat:app' ]);
+  grunt.registerTask('build-dev-css', [ 'sass', 'autoprefixer', 'cssmin' ]);
   
   grunt.registerTask('build', [ 'clean', 'build-html', 'build-js', 'build-css' ]);
   grunt.registerTask('build-html', [ 'build-dev-html' ]);
   grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index' ]);
   grunt.registerTask('build-js-index', [ 'build-dev-js-index', 'uglify:index' ]);
   grunt.registerTask('build-js-app', [ 'build-dev-js-app', 'uglify:app' ]);
-  grunt.registerTask('build-css', [ 'sass', 'cssmin' ]);
+  grunt.registerTask('build-css', [ 'build-dev-css' ]);
   
   grunt.registerTask('lint', [ 'jshint' ]);
   grunt.registerTask('test', [ 'env', 'lint', 'build', 'test-pure' ]);
