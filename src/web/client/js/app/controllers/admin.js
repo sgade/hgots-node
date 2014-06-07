@@ -85,7 +85,7 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
   });
 }]);
 
-hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http', 'AdminShared', 'User', 'Card', function($scope, $routeParams, $http, AdminShared, User, Card) {
+hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http', '$location', 'AdminShared', 'User', 'Card', function($scope, $routeParams, $http, $location, AdminShared, User, Card) {
   // set all user types
   $scope.userTypes = AdminShared.userTypes;
   // watch for user changes
@@ -99,12 +99,38 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
     return AdminShared.selectedUser;
   }, function() {
     $scope.user = AdminShared.selectedUser;
+    
+    $scope.tabs.details.active = true;
+    $scope.tabs.cards.active = false;
+    
     setNewValuesByUser($scope.user);
   });
   $scope.$watch('user', 'checkIfDirty()');
   
   $scope.userIsSelf = function() {
     return ( AdminShared.currentUser.id === AdminShared.selectedUser.id );
+  };
+  
+  $scope.tabs = {
+    details: {
+      active: !$location.search().cards
+    },
+    cards: {
+      active: !!$location.search().cards
+    }
+  };
+  $scope.setSearch = function(text) {
+    if ( $location.path().indexOf('admin/user') === -1 ) {
+      return;
+    }
+    if ( !text ) {
+      var obj = $location.search();
+      for ( var key in obj ) {
+        $location.search(key, null);
+      }
+    } else {
+      $location.search(text);
+    }
   };
   
   // make save available

@@ -16,7 +16,8 @@ hgots.config(['$routeProvider', function($routeProvider) {
     })
     .when('/admin/user/:userId', {
       templateUrl: 'views/admin.html',
-      controller: 'AdminController'
+      controller: 'AdminController',
+      reloadOnSearch: false
     })
     .when('/about', {
       templateUrl: 'views/about.html',
