@@ -18,7 +18,8 @@ var expressBodyParser = require('body-parser'),
   expressCompress = require('compression'),
   expressMethodOverride = require('method-override'),
   expressErrorHandler = require('errorhandler'),
-  expressStatic = require('serve-static');
+  expressStatic = require('serve-static'),
+  expressResponseTime = require('response-time');
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
@@ -60,6 +61,8 @@ function configure(port, callbacks) {
   app.set('port', port || process.env.PORT || 3000);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
+  
+  app.use(expressResponseTime());
   app.use(function(req, res, next) {
     res.set('Server', pkg.name + '/' + pkg.version);
     next();
