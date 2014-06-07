@@ -230,7 +230,7 @@ exports.start = function(callback) {
 // start the server if we are invoked directly
 if ( !module.parent ) {
   var nullCallback = function(cb) { return cb(null, null); };
-  exports.init(config.web.port, nullCallback, nullCallback,function(err) {
+  exports.init(config.web.port, nullCallback, nullCallback, function(err) {
     if ( !!err ) {
       throw err;
     }
