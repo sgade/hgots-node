@@ -68,7 +68,6 @@ function configure(port, callbacks) {
     res.set('Server', pkg.name + '/' + pkg.version);
     next();
   });
-  app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico')));
   app.use(expressCompress({
     threshold: 256
   }));
@@ -80,6 +79,7 @@ function configure(port, callbacks) {
   }));
   configurePassport();
 
+  app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico')));
   if(typeof PhusionPassenger === 'undefined') { // only serve static files if not using Passenger
     app.use(expressStatic(path.join(__dirname, 'public')));
   }
