@@ -220,10 +220,20 @@ exports.start = function(callback) {
     if ( numCPUS < 1 ) {
       throw new Error("Invalid num of CPUS:", numCPUS);
     }
-    cluster.fork(); // fork first
+    var start = function() {
+      if ( runningWorkers < numCPUS ) {
+        cluster.once('fork', function() {
+          runningWorkers++;
+        });
+        cluster.once('listening', function() {
+          start();
+        });
+        
+        cluster.fork();
+      }
+    };
     
     cluster.on('fork', function(worker) {
-      runningWorkers++;
       console.log("worker", worker.process.pid, "forked");
     });
     cluster.on('online', function(worker) {
@@ -231,16 +241,17 @@ exports.start = function(callback) {
     });
     cluster.on('listening', function(worker, address) {
       console.log("worker", worker.process.pid, "listening");
-      if ( runningWorkers < numCPUS ) {
-        cluster.fork();
-      }
     });
     cluster.on('disconnect', function(worker) {
       console.log("worker", worker.process.pid, "disconnected");
     });
     cluster.on('exit', function(worker, code, signal) {
       console.log("worker", worker.process.pid, 'died');
+      runningWorkers--;
+      start(); // restart
     });
+    
+    start(); // fork first
   } else {
     var server = http.createServer(app);
     server.listen(app.get('port'), function() {
