@@ -65,8 +65,8 @@ function configure(port, callbacks) {
   }));
   app.use(expressBodyParser());
   app.use(expressMethodOverride());
-  app.use(expressCookieParser('your secret here'));
   app.use(expressSession());
+  app.use(expressCookieParser(config.web.secret));
   configurePassport();
 
   if(typeof PhusionPassenger === 'undefined') { // only serve static files if not using Passenger

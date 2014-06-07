@@ -16,7 +16,8 @@
   },
   "web": {
     "port": 3000,
-    "doorOpenTime": 2000
+    "doorOpenTime": 2000,
+    "secret": "web-secret"
   },
   "setupCode": "your secret code here"
 }
