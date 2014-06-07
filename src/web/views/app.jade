@@ -2,7 +2,7 @@ extends layout
 
 block content
   div.app(ng-app="HGOTSApp")
-    nav.navbar.navbar-default.navbar-static-top(role="navigation", ng-controller="NavbarController")
+    nav.navbar.navbar-default.navbar-static-top.animations(role="navigation", ng-controller="NavbarController")
       div.container-fluid
         div.navbar-header
           button.navbar-toggle(type="button", data-toggle="collapse", data-target="#nav-collapse")
@@ -24,7 +24,7 @@ block content
             li
               a(href="/logout") Logout
             
-    div.container-fluid(ng-view)
+    div.container-fluid.animations(ng-view)
     
   script(src="/js/app.js")
   
