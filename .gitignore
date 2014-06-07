@@ -10,6 +10,7 @@ src/web/public
 doc
 #./src/web/public
 *.sqlite
+*.db
 
 # User-defined
 config.json

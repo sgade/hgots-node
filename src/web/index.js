@@ -22,7 +22,8 @@ var expressBodyParser = require('body-parser'),
   expressStatic = require('serve-static'),
   expressResponseTime = require('response-time'),
   expressMorgan = require('morgan'),
-  expressTimeout = require('connect-timeout');
+  expressTimeout = require('connect-timeout'),
+  SQLiteStore = require('connect-sqlite3')(expressSession);
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
@@ -89,8 +90,14 @@ function configure(port, callbacks) {
   app.use(expressMethodOverride());
   app.use(expressOnTimeout);
   app.use(expressCookieParser(config.web.secret)); // cookies
+  
+  var sessionStore = null;
+  if ('production' === app.get('env')) {
+    sessionStore = new SQLiteStore();
+  }
   app.use(expressSession({ // session support
-    secret: config.web.secret
+    secret: config.web.secret,
+    store: sessionStore
   }));
   app.use(expressOnTimeout);
 
