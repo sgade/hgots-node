@@ -60,7 +60,9 @@ function configure(port, callbacks) {
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'jade');
   app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico')));
-  app.use(expressCompress());
+  app.use(expressCompress({
+    threshold: 256
+  }));
   app.use(expressBodyParser());
   app.use(expressMethodOverride());
   app.use(expressCookieParser('your secret here'));
