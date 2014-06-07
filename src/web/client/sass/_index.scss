@@ -1,5 +1,11 @@
+$iPhoneWidth: 320px;
+$mobileWidth: $iPhoneWidth;
+
 .login {
   margin: 50px;
+  @media ( max-width: $mobileWidth ) {
+    margin: 6px;
+  }
   
   .well {
     background-color: #37bc9b;
