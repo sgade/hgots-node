@@ -42,9 +42,7 @@
           </li>
           <!-- ng-repeat -->
           <li ng-repeat="user in users | filter:search | orderBy:'type'" class="list-group-item" ng-class="ifSelectedUserStyle(user)" ng-click="showUser(user)" ng-cloak>
-            <a href="#/admin/user/{{user.id}}">
-              {{user.username}}
-            </a>
+            {{user.username}}
 
             <div class="pull-right">
               <span class="label label-default" ng-class="userTypeBackgroundStyle(user)">{{user.type}}</span>
