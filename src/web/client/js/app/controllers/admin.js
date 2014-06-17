@@ -87,7 +87,6 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
       // a minimum height is required, otherwise the controls hide
       var minHeight = navbarHeight + navbarMarginBottom + adminInfoPanelHeight;
       
-      console.log("minheight:", minHeight, "innerHeight", $window.innerHeight);
       if ( $window.innerHeight > minHeight ) {
         var scrollY = $window.scrollY;
         //newOffset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
@@ -95,7 +94,6 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
       }
     }
     
-    console.log(oldOffset, "===", newOffset);
     newOffset = ( newOffset >= 0 ) ? newOffset : 0;
     if ( newOffset !== oldOffset ) {
       $scope.infoPanelStyle = { "margin-top": newOffset + "px" };
@@ -230,7 +228,6 @@ hgotsAdmin.controller('AdminNewController', [ '$scope', 'AdminShared', 'User', f
     var passwordPresent = ( !!$scope.newPassword && $scope.newPassword === $scope.newPasswordRepeat );
     
     var valid = ( usernamePresent && passwordPresent );
-    console.log("valid:", valid);
     $scope.createDisabled = !valid;
     return valid;
   };
