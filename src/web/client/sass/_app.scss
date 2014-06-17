@@ -1,6 +1,10 @@
 #loading-bar .bar {
   top: 50px;
   background: #0074D9;
+  
+  body.scrolled & {
+    top: 0px;
+  }
 }
 .app {
   // *** General ***
