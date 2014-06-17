@@ -1,4 +1,12 @@
 .app {
+  // General:
+  .panel,
+  .list-group-item {
+    .row:not(:first-child) {
+      margin-top: 3px;
+    }
+  }
+  
   span.navbar-brand {
     cursor: default;
     color: inherit;
