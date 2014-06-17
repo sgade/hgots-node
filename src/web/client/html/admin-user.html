@@ -41,7 +41,10 @@
         
         <div class="form-actions">
           <div class="row">
-            <button class="btn btn-success col-xs-6 col-xs-offset-1" ng-disabled="!canSaveChanges" ng-click="saveUser()">Save</button>
+            <button class="btn btn-success col-xs-6 col-xs-offset-1" ng-disabled="!canSaveChanges" ng-click="saveUser()">
+              <span ng-if="canSaveChanges" class="octicon octicon-check"></span>
+              Save
+            </button>
             <button class="btn btn-danger col-xs-3 col-xs-offset-1" ng-click="deleteUser()" ng-disabled="userIsSelf()">
               <span class="octicon octicon-x"></span>
               Delete
@@ -68,7 +71,8 @@
             </div>
             <div class="col-sm-4">
               <button class="btn btn-success pull-right" ng-disabled="newCardDisabled" ng-click="addCard()">
-                Add Card
+                <span ng-if="!newCardDisabled" class="octicon octicon-check"></span>
+                Add
               </button>
             </div>
           </div>
