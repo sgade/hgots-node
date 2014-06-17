@@ -15,14 +15,22 @@ block content
         div.collapse.navbar-collapse#nav-collapse
           ul.nav.navbar-nav
             li
-              a(href="#/") Home
+              a(href="#/")
+                span.octicon.octicon-home
+                | Home
             li(ng-if="currentUserIsPrivileged")
-              a(href="#/admin") Admin
+              a(href="#/admin")
+                span.octicon.octicon-tools
+                | Admin
           ul.nav.navbar-nav.navbar-right
             li
-              a(href="#/about") About
+              a(href="#/about")
+                span.octicon.octicon-file-media
+                | About
             li
-              a(href="/logout") Logout
+              a(href="/logout")
+                span.octicon.octicon-sign-out
+                | Logout
             
     div.container-fluid.animations(ng-view)
     
