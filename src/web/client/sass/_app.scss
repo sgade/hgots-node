@@ -1,5 +1,5 @@
 .app {
-  // General:
+  // *** General ***
   .panel,
   .list-group-item {
     .row:not(:first-child) {
@@ -7,6 +7,8 @@
     }
   }
   
+  // *** --- ***
+  // Navbar
   span.navbar-brand {
     cursor: default;
     color: inherit;
@@ -15,6 +17,7 @@
     }
   }
   
+  // Admin
   .admin-scroll-info {
     transition: margin 0.25s;
     
@@ -72,7 +75,7 @@
     border-radius: 0 0 4px 4px;
   }
 
-  // Animations
+  // *** Animations ***
   .animations {
     .ng-enter,
     .ng-move,
