@@ -74,12 +74,31 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
   $scope.infoPanelStyle = { "margin-top": "0px" };
   // little scroll "hack"
   $($window).on('scroll', function() {
+    var oldOffset = parseInt($scope.infoPanelStyle["margin-top"]);
+    var newOffset = oldOffset || 0;
+    
+    // this needs a certain min width b/c of the responsive layout
     if ( $window.innerWidth >= 992 ) {
-      var navbarHeight = $(".navbar").height();
-      var scrollY = $window.scrollY;
-      var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
+      var navbar = $(".navbar");
+      var navbarHeight = navbar.height();
+      var navbarMarginBottom = parseInt(navbar.css('margin-bottom'));
+      var adminInfoPanelHeight = $('.admin-scroll-info').height();
       
-      $scope.infoPanelStyle = { "margin-top": offset + "px" };
+      // a minimum height is required, otherwise the controls hide
+      var minHeight = navbarHeight + navbarMarginBottom + adminInfoPanelHeight;
+      
+      console.log("minheight:", minHeight, "innerHeight", $window.innerHeight);
+      if ( $window.innerHeight > minHeight ) {
+        var scrollY = $window.scrollY;
+        //newOffset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
+        newOffset = scrollY - navbarHeight;
+      }
+    }
+    
+    console.log(oldOffset, "===", newOffset);
+    newOffset = ( newOffset >= 0 ) ? newOffset : 0;
+    if ( newOffset !== oldOffset ) {
+      $scope.infoPanelStyle = { "margin-top": newOffset + "px" };
       $scope.$apply();
     }
   });
