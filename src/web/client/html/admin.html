@@ -16,18 +16,26 @@
             <div class="row">
               <div class="col-sm-5">
                 <!-- Header -->
-                <b>Users</b>
+                <b>
+                  <span class="octicon octicon-organization"></span>
+                  Users
+                </b>
               </div>
               <div class="col-sm-7">
                 <!-- Search -->
-                <input type="search" class="form-control" ng-model="search" placeholder="Search">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <span class="octicon octicon-search"></span>
+                  </span>
+                  <input type="search" class="form-control" ng-model="search" placeholder="Search">
+                </div>
               </div>
             </div>
             <div class="row" style="margin-top: 3px;">
               <div class="col-sm-12">
                 <!-- Create new user -->
                 <a class="btn pull-right" href="#/admin/new">
-                  Create new User
+                  <span class="octicon octicon-plus no-text"></span>
                 </a>
               </div>
             </div>
@@ -36,10 +44,13 @@
 
         <ul class="list-group" id="users">
           <li ng-show="!(users | filter:search ).length" class="list-group-item">
+            <span class="octicon octicon-stop"></span>
             No users found.
           </li>
           <!-- ng-repeat -->
           <li ng-repeat="user in users | filter:search | orderBy:'type'" class="list-group-item" ng-class="ifSelectedUserStyle(user)" ng-click="showUser(user)">
+            <span class="octicon octicon-person"></span>
+            
             <a href="#/admin/user/{{user.id}}">
               {{user.username}}
             </a>

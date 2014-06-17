@@ -12,6 +12,8 @@ block content
             input#login-password.flex-item.form-control(type="password", placeholder="Password")
             input#login-password-hash(type="hidden", name="password", placeholder="invisible")
           div.flex-container
-            button.btn.btn-default.flex-item.btn-lg#login(type="submit") Login
+            button.btn.btn-default.flex-item.btn-lg#login(type="submit")
+              span.octicon.octicon-sign-in
+              | Login
   
   script(src='/js/index.js')

@@ -32,3 +32,11 @@ $good: #2ECC40;
     }
   }
 }
+
+.octicon,
+.mega-octicon {
+  margin-right: 6px;
+  &.no-text {
+    margin-right: 0;
+  }
+}
