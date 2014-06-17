@@ -68,6 +68,8 @@ module.exports = function(grunt) {
                './bower_components/angular-route/angular-route.js',
                './bower_components/angular-animate/angular-animate.js',
                './bower_components/angular-resource/angular-resource.js',
+               // 3rd party angular
+               './bower_components/angular-loading-bar/build/loading-bar.js',
                // own code
                './src/web/client/js/app/**/*.js' ],
 
@@ -120,6 +122,7 @@ module.exports = function(grunt) {
                                               './bower_components/bootflatv2/bootflat/css/bootflat.css',
                                               './bower_components/octicons/octicons/octicons.css',
                                               './bower_components/angular/angular-csp.css',
+                                              './bower_components/angular-loading-bar/build/loading-bar.css',
                                               './src/web/public/css/style.css' ]
         }
       }

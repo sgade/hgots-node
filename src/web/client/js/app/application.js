@@ -1,6 +1,7 @@
-var hgots = angular.module('HGOTSApp', [ 'ngRoute', 'ngAnimate', 'HGOTSServices', 'HGOTSAdmin' ]);
+var hgots = angular.module('HGOTSApp', [ 'ngRoute', 'ngAnimate', 'HGOTSServices', 'HGOTSAdmin', 'angular-loading-bar' ]);
 
-hgots.config(['$routeProvider', function($routeProvider) {
+hgots.config(['$routeProvider', 'cfpLoadingBarProvider', function($routeProvider, cfpLoadingBarProvider) {
+  // routes
   $routeProvider
     .when('/', {
       templateUrl: 'views/home.html',
@@ -26,6 +27,9 @@ hgots.config(['$routeProvider', function($routeProvider) {
     .otherwise({
       redirectTo: '/'
     });
+  
+  // loading bar
+  cfpLoadingBarProvider.includeSpinner = false;
 }]);
 
 hgots.service('AppShared', [ '$http', function($http) {
