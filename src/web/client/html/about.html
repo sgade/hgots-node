@@ -1,16 +1,21 @@
 <div class="jumbotron">
   <div class="container text-center">
-    <h3>{{pkg.name}}</h3>
+    <!-- Top -->
+    <div ng-cloak>
+      <h3>{{pkg.name}}</h3>
+
+      <p class="lead">
+        Version:
+        <a class="label label-primary" title="Go to the release page of this version on Github" href="{{versionLinkToGithub}}">
+          {{pkg.version}}
+        </a>
+      </p>
+    </div>
     
-    <p class="lead">
-      Version:
-      <a class="label label-primary" title="Go to the release page of this version on Github" href="{{versionLinkToGithub}}">
-        {{pkg.version}}
-      </a>
-    </p>
-    
+    <!-- Divider -->
     <hr>
     
+    <!-- Bottom -->
     <p>
       By <a href="https://github.com/sgade">Sören Gade</a> with the help of these <a href="https://github.com/sgade/hgots-node/blob/master/AUTHORS">contributors</a>.
     </p>
