@@ -44,6 +44,7 @@
 
         <ul class="list-group" id="users">
           <li ng-show="!(users | filter:search ).length" class="list-group-item">
+            <span class="octicon octicon-stop"></span>
             No users found.
           </li>
           <!-- ng-repeat -->
@@ -51,6 +52,8 @@
             <a href="#/admin/user/{{user.id}}">
               {{user.username}}
             </a>
+            <span class="octicon octicon-person"></span>
+            
 
             <div class="pull-right">
               <span class="label label-default" ng-class="userTypeBackgroundStyle(user)">{{user.type}}</span>
