@@ -113,7 +113,7 @@ module.exports = function(grunt) {
           banner: BANNER
         },
         files: {
-          './src/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css', './bower_components/bootflatv2/bootflat/css/bootflat.css', './bower_components/angular/angular-csp.css', './src/web/public/css/style.css' ]
+          './src/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css', './bower_components/bootflatv2/bootflat/css/bootflat.css', './bower_components/octicons/octicons/octicons.css', './bower_components/angular/angular-csp.css', './src/web/public/css/style.css' ]
         }
       }
     },
@@ -123,6 +123,12 @@ module.exports = function(grunt) {
         cwd: './src/web/client/html/',
         src: '*.html',
         dest: './src/web/public/views/'
+      },
+      octiconsFont: {
+        expand: true,
+        cwd: './bower_components/octicons/octicons/',
+        src: [ '*.eot', '*.woff', '*.ttf', '*.svg' ],
+        dest: './src/web/public/css/'
       }
     },
     /* Watch */
@@ -167,14 +173,15 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [ 'lint', 'build' ]);
   grunt.registerTask('dev', [ 'build-dev', 'watch' ]);
   /* Single purpose tasks */
-  grunt.registerTask('build-dev', [ 'clean', 'build-dev-html', 'build-dev-js', 'build-dev-css' ]);
+  grunt.registerTask('build-dev', [ 'clean', 'build-dev-html', 'build-dev-js', 'build-dev-css', 'build-once' ]);
   grunt.registerTask('build-dev-html', [ 'copy:angularViews' ]);
   grunt.registerTask('build-dev-js', [ 'build-dev-js-app', 'build-dev-js-index' ]);
   grunt.registerTask('build-dev-js-index', [ 'concat:index' ]);
   grunt.registerTask('build-dev-js-app', [ 'concat:app' ]);
   grunt.registerTask('build-dev-css', [ 'sass', 'autoprefixer', 'cssmin' ]);
+  grunt.registerTask('build-once', [ 'copy:octiconsFont' ]);
   
-  grunt.registerTask('build', [ 'clean', 'build-html', 'build-js', 'build-css' ]);
+  grunt.registerTask('build', [ 'clean', 'build-html', 'build-js', 'build-css', 'build-once' ]);
   grunt.registerTask('build-html', [ 'build-dev-html' ]);
   grunt.registerTask('build-js', [ 'build-js-app', 'build-js-index' ]);
   grunt.registerTask('build-js-index', [ 'build-dev-js-index', 'uglify:index' ]);

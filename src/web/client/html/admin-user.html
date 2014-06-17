@@ -3,7 +3,8 @@
     {{user.username}}
     <span ng-if="userIsSelf()" class="small pull-right">
       <span class="label label-default">
-        This is you
+        <span class="mega-octicon octicon-octoface"></span>
+        You
       </span>
     </span>
   </h1>
@@ -40,8 +41,14 @@
         
         <div class="form-actions">
           <div class="row">
-            <button class="btn btn-success col-xs-6 col-xs-offset-1" ng-disabled="!canSaveChanges" ng-click="saveUser()">Save</button>
-            <button class="btn btn-danger col-xs-3 col-xs-offset-1" ng-click="deleteUser()" ng-disabled="userIsSelf()">Delete</button>
+            <button class="btn btn-success col-xs-6 col-xs-offset-1" ng-disabled="!canSaveChanges" ng-click="saveUser()">
+              <span ng-if="canSaveChanges" class="octicon octicon-check"></span>
+              Save
+            </button>
+            <button class="btn btn-danger col-xs-3 col-xs-offset-1" ng-click="deleteUser()" ng-disabled="userIsSelf()">
+              <span class="octicon octicon-x"></span>
+              Delete
+            </button>
           </div>
         </div>
       </form>
@@ -65,7 +72,8 @@
             </div>
             <div class="col-sm-4">
               <button class="btn btn-success pull-right" ng-disabled="newCardDisabled" ng-click="addCard()">
-                Add Card
+                <span ng-if="!newCardDisabled" class="octicon octicon-check"></span>
+                Add
               </button>
             </div>
           </div>
@@ -76,8 +84,8 @@
               <b>{{card.uid}}</b>
             </div>
             <div class="col-md-4">
-              <button class="btn btn-danger pull-right" ng-click="deleteCard(card)">
-                Remove
+              <button class="btn btn-danger pull-right" ng-click="deleteCard(card)" title="Remove">
+                <span class="octicon octicon-x no-text"></span>
               </button>
             </div>
           </div>
