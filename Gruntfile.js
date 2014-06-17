@@ -113,7 +113,7 @@ module.exports = function(grunt) {
           banner: BANNER
         },
         files: {
-          './src/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css', './bower_components/bootflatv2/bootflat/css/bootflat.css', './src/web/public/css/style.css' ]
+          './src/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css', './bower_components/bootflatv2/bootflat/css/bootflat.css', './bower_components/angular/angular-csp.css', './src/web/public/css/style.css' ]
         }
       }
     },
