@@ -8,33 +8,33 @@
     </span>
   </h1>
   
-  <tabset>
-    <tab heading="User details" select="setSearch('')" active="tabs.details.active">
-      <!-- Content -->
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- User info -->
       <form class="form-horizontal" id="editUser">
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-name">Name:</label>
           <div class="col-sm-10">
-            <input type="text" id="edituser-name" class="form-control" placeholder="Username" ng-model="$parent.newUsername">
+            <input type="text" id="edituser-name" class="form-control" placeholder="Username" ng-model="newUsername">
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-type">Type:</label>
           <div class="col-sm-10">
-            <select id="edituser-type" class="form-control" ng-model="$parent.newType" ng-options="type as type for type in userTypes" ng-disabled="userIsSelf()">
+            <select id="edituser-type" class="form-control" ng-model="newType" ng-options="type as type for type in userTypes" ng-disabled="userIsSelf()">
             </select>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-pw1">Password:</label>
           <div class="col-sm-10">
-            <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="$parent.newPassword">
+            <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="newPassword">
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-pw2">Repeat Password:</label>
           <div class="col-sm-10">
-            <input type="password" id="edituser-pw2" class="form-control" placeholder="Password (repeat)" ng-model="$parent.newPasswordRepeat">
+            <input type="password" id="edituser-pw2" class="form-control" placeholder="Password (repeat)" ng-model="newPasswordRepeat">
           </div>
         </div>
         
@@ -45,15 +45,16 @@
           </div>
         </div>
       </form>
-    </tab>
-    <tab heading="Cards" select="setSearch('cards')" active="tabs.cards.active">
-      <!-- Content -->
+      
+    </div>
+    <div class="col-lg-6">
+      <!-- Cards -->
       <h4>Associated Cards</h4>
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <input type="text" class="form-control" placeholder="Add new rfid tag with id..." ng-model="$parent.newCardID">
+              <input type="text" class="form-control" placeholder="Add new rfid tag with id..." ng-model="newCardID">
             </div>
           </div>
           <div class="row">
@@ -82,7 +83,8 @@
           </div>
         </li>
       </ul>
-    </tab>
-  </tabset>
+      
+    </div>
+  </div>
   
 </div>

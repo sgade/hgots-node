@@ -119,37 +119,12 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
   }, function() {
     $scope.user = AdminShared.selectedUser;
     
-    $scope.tabs.details.active = true;
-    $scope.tabs.cards.active = false;
-    
     setNewValuesByUser($scope.user);
   });
   $scope.$watch('user', 'checkIfDirty()');
   
   $scope.userIsSelf = function() {
     return ( AdminShared.currentUser.id === AdminShared.selectedUser.id );
-  };
-  
-  $scope.tabs = {
-    details: {
-      active: !$location.search().cards
-    },
-    cards: {
-      active: !!$location.search().cards
-    }
-  };
-  $scope.setSearch = function(text) {
-    if ( $location.path().indexOf('admin/user') === -1 ) {
-      return;
-    }
-    if ( !text ) {
-      var obj = $location.search();
-      for ( var key in obj ) {
-        $location.search(key, null);
-      }
-    } else {
-      $location.search(text);
-    }
   };
   
   // make save available
