@@ -86,7 +86,7 @@ var loginUser = function(username, cb) {
 // first, test the server...
 var nullCallback = function(callback) { return callback(null, null); };
 describe('HGOTS Server Specs', function() {
-  this.timeout(5000);
+  this.timeout(20000);
   
   beforeEach(function(done) {
     app.init(port, nullCallback, nullCallback, function() {
