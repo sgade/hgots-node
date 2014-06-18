@@ -101,8 +101,6 @@ function configure(port, callbacks) {
       stream: new LogStream()
     })); // request logs
   }
-  
-  configurePassport(); // configure passport
 
   app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico'))); // send favicon
   if(typeof PhusionPassenger === 'undefined') {
@@ -118,6 +116,7 @@ function configure(port, callbacks) {
   });
   
   // all middleware registered, now the final routes
+  configurePassport(); // configure passport
   configureRoutes(callbacks);
 }
 function configurePassport() {
