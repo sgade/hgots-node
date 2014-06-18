@@ -85,9 +85,11 @@ hgotsServices.factory('Card', [ '$resource', 'HGOTSServicesShared', function($re
 }]);
 
 // Modals, implemented as async factories. Inspired by http://www.bennadel.com/blog/2632-creating-asynchronous-alerts-prompts-and-confirms-in-angularjs.htm
-window.setImmediate = function(fn) {
-  window.setTimeout(fn, 0);
-};
+if ( !window.setImmediate ) {
+  window.setImmediate = function(fn) {
+    window.setTimeout(fn, 0);
+  };
+}
 
 hgotsServices.factory('alert', [ '$window', '$q', function($window, $q) {
   return function(message) {
