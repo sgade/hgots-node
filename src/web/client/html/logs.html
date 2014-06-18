@@ -1,4 +1,16 @@
 <div class="grid">
-  <div>From {{log.date}}.{{log.month}}.{{log.year}}</div>
-  {{log.content}}
+  <h3>Log file from <input type="date" ng-model="date" class="form-control"></h3>  
+  
+  <div class="input-group">
+    <input type="search" class="form-control" ng-model="search" placeholder="Search">
+    <span class="input-group-addon">
+      <span class="octicon octicon-search"></span>
+    </span>
+  </div>
+  
+  <ul>
+    <li ng-repeat="line in logLines | filter:search">
+      {{line}}
+    </li>
+  </ul>
 </div>
