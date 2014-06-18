@@ -21,6 +21,12 @@
     </div>
   </div>
   
+  <div>
+    <span class="small">&nbsp;</span> <!-- To create space for the right-pulled results number, b/c it floats -->
+    <span class="small pull-right" ng-cloak ng-if="logLines !== null">
+      {{ (logLines | filter:search).length }} results
+    </span>
+  </div>
   <ul class="list-group">
     
     <!-- If no log was found -->
