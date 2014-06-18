@@ -21,7 +21,16 @@
     <div class="form-group">
       <label for="newuser-password" class="col-sm-2">Password:</label>
       <div class="col-sm-10">
-        <input type="password" id="newuser-password" class="form-control" placeholder="Password" ng-model="newPassword" required>
+        
+        <!-- SubView: Password Strength -->
+        <div class="password-strength-view" ng-controller="PasswordStrengthViewController">
+          <div class="input-group">
+            <input type="password" id="newuser-password" class="form-control" placeholder="Password" ng-model="password" ng-change="$parent.newPassword=password" required>
+            <span class="input-group-addon" ng-cloak>{{estimation}}</span>
+          </div>
+          <div class="bar {{barClass}}"></div>
+        </div>
+        
       </div>
     </div>
     

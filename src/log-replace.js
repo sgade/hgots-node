@@ -34,7 +34,7 @@ module.exports = function() {
     util.log(string);
     
     // log to file, if on production
-    if ( process.env.NODE_ENV !== 'production' ) {
+    if ( process.env.NODE_ENV === 'production' ) {
       var d = new Date();
       
       date = d.getFullYear() + "." + ( d.getMonth() + 1 ) + "." + d.getDate();

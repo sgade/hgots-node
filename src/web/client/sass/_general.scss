@@ -1,38 +1,3 @@
-$bad: #FF4136;
-$okay: #FFDC00;
-$good: #2ECC40;
-
-.password-strength-view {
-  .strength-bar {
-    height: 5px;
-    border-radius: 3px;
-    
-    width: 0%;
-    background-color: blue;
-    
-    &.score-0 {
-      width: 10%;
-      background-color: $bad;
-    }
-    &.score-1 {
-      width: 25%;
-      background-color: $bad;
-    }
-    &.score-2 {
-      width: 50%;
-      background-color: $okay;
-    }
-    &.score-3 {
-      width: 75%;
-      background-color: $okay;
-    }
-    &.score-4 {
-      width: 100%;
-      background-color: $good;
-    }
-  }
-}
-
 .octicon,
 .mega-octicon {
   margin-right: 6px;

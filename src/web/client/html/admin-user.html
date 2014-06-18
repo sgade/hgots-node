@@ -30,7 +30,15 @@
         <div class="form-group">
           <label class="control-label col-sm-2" for="edituser-pw1">Password:</label>
           <div class="col-sm-10">
-            <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="newPassword">
+            
+            <!-- SubView: Password Strength -->
+            <div class="password-strength-view" ng-controller="PasswordStrengthViewController">
+              <div class="input-group">
+                <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="password" ng-change="$parent.newPassword=password" require>
+                <span class="input-group-addon">{{estimation}}</span>
+              </div>
+              <div class="bar {{barClass}}"></div>
+            </div>
           </div>
         </div>
         <div class="form-group">
