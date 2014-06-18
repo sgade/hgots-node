@@ -2,6 +2,7 @@ var users = require('./users');
 var cards = require('./cards');
 var misc = require('./misc');
 var setup = require('./setup');
+var log = require('./log');
 
 module.exports = function(app, callbacks) {
   var prefix = '/api/v2';
@@ -25,6 +26,8 @@ module.exports = function(app, callbacks) {
   
   app.post(prefix + '/setup-auth', setup.authenticate);
   app.post(prefix + '/setup', setup.doSetup);
+  
+  app.get(prefix + '/log/:year/:month/:date', log.getLogFromDate);
   
   return app;
 };
