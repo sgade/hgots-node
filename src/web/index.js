@@ -7,6 +7,8 @@
 /*
  * Module dependencies.
  */
+var http = require('http');
+var path = require('path');
 var config = require('../config');
 var pkg = require('../../package');
 var LogStream = require('../log').LogStream;
@@ -26,8 +28,6 @@ var expressBodyParser = require('body-parser'),
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
-var http = require('http');
-var path = require('path');
 var db = require('../db');
 
 /**
