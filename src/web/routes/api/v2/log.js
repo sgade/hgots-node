@@ -21,10 +21,11 @@ exports.getLogFromDate = function(req, res) {
     var date = year + "." + month + "." + day;
     var logName = util.format(config.logname, date);
     logName = './logs/' + logName;
-    console.log("file:", logName);
     fs.exists(logName, function(exists) {
       if ( !exists ) {
-        return helpers.sendNotFound(res);
+        return helpers.sendOk(res, {
+          error: helpers.status('Not Found')
+        });
       }
       
       fs.readFile(logName, function(err, buffer) {
