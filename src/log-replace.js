@@ -17,6 +17,14 @@ module.exports = function() {
     }
   });
   
+  function zerofy(num) {
+    if ( num < 10 ) {
+      return "0" + num;
+    } else {
+      return num;
+    }
+  }
+  
   console.log = function() {
     
     var string = "";
@@ -40,7 +48,7 @@ module.exports = function() {
       date = d.getFullYear() + "." + ( d.getMonth() + 1 ) + "." + d.getDate();
       var currentLogName = util.format(config.logname, date);
       currentLogName = path.join(logsDir, currentLogName);
-      time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+      time = zerofy(d.getHours()) + ":" + zerofy(d.getMinutes()) + ":" + zerofy(d.getSeconds());
       
       string += '\n';
       string = time + ': ' + string;
