@@ -203,6 +203,9 @@ if ( !module.parent || typeof PhusionPassenger !== 'undefined') {
    * */
   (function main() {
     console.log(package.name, "v" + package.version, "started.");
+    if ( process.env.NODE_ENV === 'production' ) {
+      console.log("Application is running in production mode.");
+    }
     
     initRFIDReader();
     initRelais();
