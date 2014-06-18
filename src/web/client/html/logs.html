@@ -1,5 +1,5 @@
 <div class="grid">
-  <h3>Log file from <input type="date" ng-model="date" class="form-control"></h3>  
+  <h3>Log file from <input type="date" ng-model="dateModel" class="form-control" ng-change="loadLog()"></h3>
   
   <div class="input-group">
     <input type="search" class="form-control" ng-model="search" placeholder="Search">
@@ -9,7 +9,11 @@
   </div>
   
   <ul class="list-group">
-    <li ng-repeat="line in logLines | filter:search" class="list-group-item">
+    <li ng-show="logLines === null" class="list-group-item">
+      <span class="octicon octicon-info"></span>
+      No log was found for that date.
+    </li>
+    <li ng-repeat="line in logLines | filter:search" class="list-group-item log-item">
       {{line}}
     </li>
   </ul>
