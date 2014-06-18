@@ -1,4 +1,4 @@
-var hgotsAdmin = angular.module('HGOTSAdmin', [ 'HGOTSApp', 'HGOTSServices' ]);
+var hgotsAdmin = angular.module('HGOTSAdmin', [ 'HGOTSApp', 'HGOTSServices', 'PasswordStrengthView' ]);
 
 hgotsAdmin.service('AdminShared', [ '$http', '$location', 'AppShared', function($http, $location, AppShared) {
   var obj = {
