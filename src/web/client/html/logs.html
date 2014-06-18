@@ -1,20 +1,36 @@
 <div class="grid">
-  <h3>Log file from <input type="date" ng-model="dateModel" class="form-control" ng-change="loadLog()"></h3>
+  <h3>Access logs</h3>
   
-  <div class="input-group">
-    <input type="search" class="form-control" ng-model="search" placeholder="Search">
-    <span class="input-group-addon">
-      <span class="octicon octicon-search"></span>
-    </span>
+  <div class="row">
+    <div class="col-xs-6">
+      
+      <!-- Date field -->
+      <input type="date" ng-model="dateModel" class="form-control" ng-change="loadLog()">
+      
+    </div>
+    <div class="col-xs-6">
+      
+      <!-- Search field -->
+      <div class="input-group">
+        <input type="search" class="form-control" ng-model="search" placeholder="Search">
+        <span class="input-group-addon">
+          <span class="octicon octicon-search"></span>
+        </span>
+      </div>
+      
+    </div>
   </div>
   
   <ul class="list-group">
+    
+    <!-- If no log was found -->
     <li ng-show="logLines === null" class="list-group-item">
       <span class="octicon octicon-info"></span>
       No log was found for that date.
     </li>
-    <li ng-repeat="line in logLines | filter:search" class="list-group-item log-item">
-      <div ng-bind-html="trustAsHtml(line)"></div>
+    
+    <!-- List of log entries -->
+    <li ng-repeat="line in logLines | filter:search" class="list-group-item log-item" ng-bind-html="trustAsHtml(line)">
     </li>
   </ul>
 </div>
