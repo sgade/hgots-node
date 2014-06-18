@@ -8,8 +8,8 @@
     </span>
   </div>
   
-  <ul>
-    <li ng-repeat="line in logLines | filter:search">
+  <ul class="list-group">
+    <li ng-repeat="line in logLines | filter:search" class="list-group-item">
       {{line}}
     </li>
   </ul>
