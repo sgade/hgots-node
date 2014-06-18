@@ -73,10 +73,8 @@ hgots.controller('NavbarController', [ '$scope', '$http', 'AppShared', '$window'
       var scrollY = $window.scrollY;
       
       if ( scrollY > 0 && !body.hasClass(className) ) {
-        console.log("scrolled");
         body.addClass(className);
       } else if ( scrollY === 0 && body.hasClass(className) ) {
-        console.log("not");
         body.removeClass(className);
       }
       
