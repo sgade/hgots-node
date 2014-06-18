@@ -12,13 +12,12 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
     return date.getFullYear() + "-" + zerofy( date.getMonth() + 1 ) + "-" + zerofy( date.getDate() );
   }
   
-  $scope.$watch('date', function() {
-    $scope.dateModel = dateForInput($scope.date);
-  });
   $scope.$watch('dateModel', function() {
     $scope.date = new Date($scope.dateModel);
     $scope.loadLog();
   });
+  // starting date is always today
+  $scope.dateModel = dateForInput(new Date());
   
   function parseRawContent(content) {
     content = content.split('\n');
@@ -77,9 +76,8 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
       console.error("Error loading log file:", err);
     });
   };
+  // helper for ng-bind-html
   $scope.trustAsHtml = function(html) {
     return $sce.trustAsHtml(html);
   };
-  
-  $scope.date = new Date();
 }]);
