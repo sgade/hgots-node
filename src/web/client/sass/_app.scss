@@ -74,6 +74,15 @@
       box-shadow: none;
     }
   }
+  
+  .log-item {
+    .time {
+      color: blue;
+    }
+    .error {
+      color: red;
+    }
+  }
 
   // *** Animations ***
   .animations {

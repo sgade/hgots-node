@@ -14,7 +14,7 @@
       No log was found for that date.
     </li>
     <li ng-repeat="line in logLines | filter:search" class="list-group-item log-item">
-      {{line}}
+      <div ng-bind-html="trustAsHtml(line)"></div>
     </li>
   </ul>
 </div>
