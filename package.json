@@ -1,6 +1,6 @@
 {
   "name": "hgots-node",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "A door lock system.",
   "main": "src/app.js",
   "scripts": {
