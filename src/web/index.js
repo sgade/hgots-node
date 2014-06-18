@@ -9,6 +9,7 @@
  */
 var config = require('../config');
 var pkg = require('../../package');
+var LogStream = require('../log').LogStream;
 var express = require('express');
 // middleware
 var expressBodyParser = require('body-parser'),
@@ -95,7 +96,10 @@ function configure(port, callbacks) {
       format: 'dev'
     }));
   } else if ('production' === app.get('env')) {
-    app.use(expressMorgan('short')); // request logs
+    app.use(expressMorgan({
+      format: 'short',
+      stream: new LogStream()
+    })); // request logs
   }
   
   configurePassport(); // configure passport
