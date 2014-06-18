@@ -25,6 +25,25 @@ passwordStrength.factory('zxcvbn', [ '$q', function($q) {
   };
 }]);
 
+/*
+ * How to use in your HTML Angular Template:
+ * 1. Add root element with class 'password-strength-view'
+ * 2. Add an input field with 'ng-model="password"'
+ * 3. You may want to bind ng-change to update a variable in your controller's scope (e.g. $parent.newPassword=password)
+ * 4. You may style everything the way you like.
+ * 5. The controller provides a text estimation under 'estimation', the entire zxcvbn analysis under 'estimate' and the bar class under 'barClass'.
+ *
+ * Example:
+ * <div class="password-strength-view" ng-controller="PasswordStrengthViewController">
+ *    <div class="input-group">
+ *      <input type="password" id="newuser-password" class="form-control" placeholder="Password" ng-model="password" ng-change="$parent.newPassword=password" required>
+ *      <span class="input-group-addon" ng-cloak>{{estimation}}</span>
+ *    </div>
+ *    <div class="bar {{barClass}}"></div>
+ * </div>
+ *
+ * */
+
 passwordStrength.controller('PasswordStrengthViewController', [ '$scope', 'zxcvbn', function($scope, zxcvbn) {
   var estimations = {
     0: "very bad",
@@ -45,6 +64,5 @@ passwordStrength.controller('PasswordStrengthViewController', [ '$scope', 'zxcvb
       setEstimate(estimate);
     });
   });
-  
   
 }]);
