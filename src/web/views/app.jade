@@ -25,6 +25,10 @@ block content
               a(href="#/admin")
                 span.octicon.octicon-tools
                 | Admin
+            li(ng-if="currentUserIsPrivileged")
+              a(href="#/logs")
+                span.octicon.octicon-three-bars
+                | Access logs
           ul.nav.navbar-nav.navbar-right
             li
               a(href="#/about")
