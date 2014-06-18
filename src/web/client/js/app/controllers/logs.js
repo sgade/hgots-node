@@ -32,8 +32,14 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
       var dateSurplusRegex = /:\ /;
       var errorRegex = /\[Error: .*]/g;
       
+      var startRegex = /v[0-9]*\.[0-9]*\.[0-9]*\ started/;
+      
       line = line.replace(dateRegex, '<span class="time">$&</span>');
       line = line.replace(errorRegex, '<span class="error">$&</span>');
+      
+      if ( line.search(startRegex) !== -1 ) {
+        line += '<span class="app-start" title="The app was started at this point."><span class="octicon octicon-chevron-left"></span></span>';
+      }
       
       return line;
     });
