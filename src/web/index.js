@@ -21,7 +21,6 @@ var expressBodyParser = require('body-parser'),
   expressStatic = require('serve-static'),
   expressResponseTime = require('response-time'),
   expressMorgan = require('morgan'),
-  expressTimeout = require('connect-timeout'),
   SQLiteStore = require('connect-sqlite3')(expressSession);
 var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
@@ -46,13 +45,6 @@ exports.getExpress = function() {
 function expressSendServerHeader(req, res, next) {
   res.set('Server', pkg.name + '/' + pkg.version);
   next();
-}
-function expressOnTimeout(req, res, next) {
-  if ( !req.timedout ) {
-    return next();
-  }
-  res.end();
-  console.log("Middleware timeout.");
 }
 
 /**
@@ -79,15 +71,12 @@ function configure(port, callbacks) {
   
   // Middlewares
   app.use(expressResponseTime()); // start measuring time
-  app.use(expressTimeout(config.web.requestTimeout));
   app.use(expressCompress({ // compress all data
     threshold: 256
   }));
   app.use(expressSendServerHeader); // send 'Server' header
-  app.use(expressOnTimeout);
   app.use(expressBodyParser());
   app.use(expressMethodOverride());
-  app.use(expressOnTimeout);
   app.use(expressCookieParser(config.web.secret)); // cookies
   
   var sessionStore = null;
@@ -98,7 +87,6 @@ function configure(port, callbacks) {
     secret: config.web.secret,
     store: sessionStore
   }));
-  app.use(expressOnTimeout);
 
   if ('development' === app.get('env')) {
     // development only:
@@ -109,17 +97,13 @@ function configure(port, callbacks) {
   } else if ('production' === app.get('env')) {
     app.use(expressMorgan('short')); // request logs
   }
-  app.use(expressOnTimeout);
   
   configurePassport(); // configure passport
-  
-  app.use(expressOnTimeout);
 
   app.use(expressFavicon(path.join(__dirname, 'client/favicon.ico'))); // send favicon
   if(typeof PhusionPassenger === 'undefined') {
     app.use(expressStatic(path.join(__dirname, 'public'))); // only serve static files if not using Passenger
   }
-  app.use(expressOnTimeout);
   
   // Catch HEAD requests, makes them faster
   app.use(function(req, res, next) {
@@ -128,11 +112,9 @@ function configure(port, callbacks) {
     }
     return next();
   });
-  app.use(expressOnTimeout);
   
   // all middleware registered, now the final routes
   configureRoutes(callbacks);
-  app.use(expressOnTimeout);
 }
 function configurePassport() {
   app.use(passport.initialize());
