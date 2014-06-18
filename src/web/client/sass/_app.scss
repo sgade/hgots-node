@@ -1,6 +1,6 @@
 #loading-bar .bar {
   top: 50px;
-  background: #0074D9;
+  background: $darkBlue;
   
   body.scrolled & {
     top: 0px;
@@ -77,10 +77,10 @@
   
   .log-item {
     .time {
-      color: blue;
+      color: $blue;
     }
     .error {
-      color: red;
+      color: $red;
     }
   }
 
