@@ -20,6 +20,10 @@ hgots.config(['$routeProvider', 'cfpLoadingBarProvider', function($routeProvider
       controller: 'AdminController',
       reloadOnSearch: false
     })
+    .when('/logs', {
+      templateUrl: 'views/logs.html',
+      controller: 'LogsController'
+    })
     .when('/about', {
       templateUrl: 'views/about.html',
       controller: 'AboutController'
