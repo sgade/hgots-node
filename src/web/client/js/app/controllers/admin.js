@@ -74,12 +74,29 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
   $scope.infoPanelStyle = { "margin-top": "0px" };
   // little scroll "hack"
   $($window).on('scroll', function() {
+    var oldOffset = parseInt($scope.infoPanelStyle["margin-top"]);
+    var newOffset = oldOffset || 0;
+    
+    // this needs a certain min width b/c of the responsive layout
     if ( $window.innerWidth >= 992 ) {
-      var navbarHeight = $(".navbar").height();
-      var scrollY = $window.scrollY;
-      var offset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
+      var navbar = $(".navbar");
+      var navbarHeight = navbar.height();
+      var navbarMarginBottom = parseInt(navbar.css('margin-bottom'));
+      var adminInfoPanelHeight = $('.admin-scroll-info').height();
       
-      $scope.infoPanelStyle = { "margin-top": offset + "px" };
+      // a minimum height is required, otherwise the controls hide
+      var minHeight = navbarHeight + navbarMarginBottom + adminInfoPanelHeight;
+      
+      if ( $window.innerHeight > minHeight ) {
+        var scrollY = $window.scrollY;
+        //newOffset = ( scrollY > navbarHeight ) ? ( scrollY - navbarHeight ) : 0;
+        newOffset = scrollY - navbarHeight;
+      }
+    }
+    
+    newOffset = ( newOffset >= 0 ) ? newOffset : 0;
+    if ( newOffset !== oldOffset ) {
+      $scope.infoPanelStyle = { "margin-top": newOffset + "px" };
       $scope.$apply();
     }
   });
@@ -100,37 +117,12 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
   }, function() {
     $scope.user = AdminShared.selectedUser;
     
-    $scope.tabs.details.active = true;
-    $scope.tabs.cards.active = false;
-    
     setNewValuesByUser($scope.user);
   });
   $scope.$watch('user', 'checkIfDirty()');
   
   $scope.userIsSelf = function() {
     return ( AdminShared.currentUser.id === AdminShared.selectedUser.id );
-  };
-  
-  $scope.tabs = {
-    details: {
-      active: !$location.search().cards
-    },
-    cards: {
-      active: !!$location.search().cards
-    }
-  };
-  $scope.setSearch = function(text) {
-    if ( $location.path().indexOf('admin/user') === -1 ) {
-      return;
-    }
-    if ( !text ) {
-      var obj = $location.search();
-      for ( var key in obj ) {
-        $location.search(key, null);
-      }
-    } else {
-      $location.search(text);
-    }
   };
   
   // make save available
@@ -167,6 +159,7 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
     $scope.user.$update(function(newUser, putResponseHeader) {
       $scope.user = newUser;
       setNewValuesByUser(newUser);
+      $scope.checkIfDirty();
     });
   };
   
@@ -236,7 +229,6 @@ hgotsAdmin.controller('AdminNewController', [ '$scope', 'AdminShared', 'User', f
     var passwordPresent = ( !!$scope.newPassword && $scope.newPassword === $scope.newPasswordRepeat );
     
     var valid = ( usernamePresent && passwordPresent );
-    console.log("valid:", valid);
     $scope.createDisabled = !valid;
     return valid;
   };
