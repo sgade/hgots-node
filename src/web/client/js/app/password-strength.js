@@ -25,3 +25,26 @@ passwordStrength.factory('zxcvbn', [ '$q', function($q) {
   };
 }]);
 
+passwordStrength.controller('PasswordStrengthViewController', [ '$scope', 'zxcvbn', function($scope, zxcvbn) {
+  var estimations = {
+    0: "very bad",
+    1: "bad",
+    2: "still bad",
+    3: "okay",
+    4: "good"
+  };
+  function setEstimate(estimate) {
+    $scope.estimate = estimate;
+    
+    $scope.barClass = "score-" + estimate.score;
+    $scope.estimation = estimations[estimate.score];
+  }
+  
+  $scope.$watch('password', function() {
+    zxcvbn($scope.password).then(function(estimate) {
+      setEstimate(estimate);
+    });
+  });
+  
+  
+}]);
