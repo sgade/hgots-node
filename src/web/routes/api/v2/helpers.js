@@ -37,6 +37,10 @@ exports.sendForbidden = function(res, errorDescription) {
   errorDescription = errorDescription || "Forbidden";
   return exports.sendStatusError(res, status('Forbidden'), errorDescription);
 };
+exports.sendNotFound = function(res, errorDescription) {
+  errorDescription = errorDescription || "Not Found";
+  return exports.sendStatusError(res, status('Not Found'), errorDescription);
+};
 // 500
 exports.sendInternalServerError = function(res, errorDescription) {
   errorDescription = errorDescription || "Internal Server Error";

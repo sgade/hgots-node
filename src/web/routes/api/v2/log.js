@@ -1,4 +1,5 @@
 var fs = require('fs');
+var util = require('util');
 
 var config = require('./../../../../config');
 var helpers = require('./helpers');
@@ -12,20 +13,37 @@ exports.getLogFromDate = function(req, res) {
     }
     var year = params.year;
     var month = params.month;
-    var date = params.date;
-    if ( !year || !month || !date ) {
+    var day = params.date;
+    if ( !year || !month || !day ) {
       return helpers.sendBadRequest(res);
     }
     
-    var logName = './logs/access_' + year + "." + month + "." + date + ".log";
+    var date = year + "." + month + "." + day;
+    var logName = util.format(config.logname, date);
+    logName = './logs/' + logName;
     console.log("file:", logName);
-    fs.readFile(logName, function(err, buffer) {
-      if ( !!err ) {
-        return helpers.sendInternalServerError(res);
+    fs.exists(logName, function(exists) {
+      if ( !exists ) {
+        return helpers.sendNotFound(res);
       }
-      var content = buffer.toString('utf-8');
       
-      return helpers.sendOk(res, content);
+      fs.readFile(logName, function(err, buffer) {
+        if ( !!err ) {
+          return helpers.sendInternalServerError(res);
+        }
+        var content = buffer.toString('utf-8');
+        
+        var json = {
+          log: {
+            year: year,
+            month: month,
+            date: day,
+            content: content
+          }
+        };
+        
+        return helpers.sendOk(res, json);
+      });
     });
   });
 };
