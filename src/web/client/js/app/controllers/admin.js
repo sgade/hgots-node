@@ -159,6 +159,7 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
     $scope.user.$update(function(newUser, putResponseHeader) {
       $scope.user = newUser;
       setNewValuesByUser(newUser);
+      $scope.checkIfDirty();
     });
   };
   
