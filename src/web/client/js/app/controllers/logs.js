@@ -55,6 +55,8 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
     
     var url = apiPrefix + '/log/' + year + '/' + month + '/' + day;
     
+    $scope.logLines = [ 'Loading messages from server. This might take a while and may freeze the browser.' ];
+    
     $http({ url: url, method: 'GET' }).success(function(response) {
       if ( !response.log ) {
         //console.log("No log file found.");
