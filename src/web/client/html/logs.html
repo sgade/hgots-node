@@ -1,5 +1,5 @@
 <div class="grid">
-  <h3>Access logs</h3>
+  <h3>{{ 'NAV.ACCESS_LOGS' | translate }}</h3>
   
   <div class="row">
     <div class="col-xs-6">
@@ -12,7 +12,7 @@
       
       <!-- Search field -->
       <div class="input-group">
-        <input type="search" class="form-control" ng-model="search" placeholder="Search">
+        <input type="search" class="form-control" ng-model="search" placeholder="{{ 'LOGS.SEARCH' | translate }}">
         <span class="input-group-addon">
           <span class="octicon octicon-search"></span>
         </span>
@@ -24,7 +24,7 @@
   <div>
     <span class="small">&nbsp;</span> <!-- To create space for the right-pulled results number, b/c it floats -->
     <span class="small pull-right" ng-cloak ng-if="logLines !== null && logLines.length > 2">
-      {{ (logLines | filter:search).length }} results
+      {{ (logLines | filter:search).length }} {{ 'LOGS.RESULTS' | translate }}
     </span>
   </div>
   <ul class="list-group log-items" ng-activity-indicator>
@@ -32,7 +32,7 @@
     <!-- If no log was found -->
     <li ng-show="logLines === null" class="list-group-item">
       <span class="octicon octicon-info"></span>
-      No log was found for that date.
+      {{ 'LOGS.NO_LOG_FOUND' | translate }}
     </li>
     
     <!-- List of log entries -->
