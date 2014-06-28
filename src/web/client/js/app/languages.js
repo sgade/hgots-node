@@ -173,7 +173,7 @@ hgots.config([ '$translateProvider', function($translateProvider) {
         USER_INFO: 'Benutzerinformationen',
         SAVE: 'Speichern',
         DELETE: 'Löschen',
-        ASSOCIATED_CARDS: 'Verbundene Karten',
+        ASSOCIATED_CARDS: 'Zugeordnete Karten',
         NEW_RFID_TAG: 'Neuer RFID tag',
         GET_FROM_RFID: 'Vom RFID Leser lesen',
         ADD: 'Hinzufügen',
