@@ -4,7 +4,7 @@
     <span ng-if="userIsSelf()" class="small pull-right">
       <span class="label label-default">
         <span class="mega-octicon octicon-octoface"></span>
-        You
+        {{ 'ADMIN.USER.YOU' | translate }}
       </span>
     </span>
   </h1>
@@ -12,29 +12,29 @@
   <div class="row">
     <div class="col-lg-6">
       <!-- User info -->
-      <h4>User info</h4>
+      <h4>{{ 'ADMIN.USER.USER_INFO' | translate }}</h4>
       <form class="form-horizontal" id="editUser">
         <div class="form-group">
-          <label class="control-label col-sm-2" for="edituser-name">Name:</label>
+          <label class="control-label col-sm-2" for="edituser-name">{{ 'ADMIN.USERNAME' | translate }}</label>
           <div class="col-sm-10">
-            <input type="text" id="edituser-name" class="form-control" placeholder="Username" ng-model="newUsername">
+            <input type="text" id="edituser-name" class="form-control" placeholder="{{ 'ADMIN.USERNAME' | translate }}" ng-model="newUsername">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="edituser-type">Type:</label>
+          <label class="control-label col-sm-2" for="edituser-type">{{ 'ADMIN.TYPE' | translate }}</label>
           <div class="col-sm-10">
             <select id="edituser-type" class="form-control" ng-model="newType" ng-options="type as type for type in userTypes" ng-disabled="userIsSelf()">
             </select>
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="edituser-pw1">Password:</label>
+          <label class="control-label col-sm-2" for="edituser-pw1">{{ 'ADMIN.PASSWORD' | translate }}</label>
           <div class="col-sm-10">
             
             <!-- SubView: Password Strength -->
             <div class="password-strength-view" ng-controller="PasswordStrengthViewController">
               <div class="input-group">
-                <input type="password" id="edituser-pw1" class="form-control" placeholder="Password" ng-model="password" ng-change="$parent.newPassword=password" require>
+                <input type="password" id="edituser-pw1" class="form-control" placeholder="{{ 'ADMIN.PASSWORD' | translate }}" ng-model="password" ng-change="$parent.newPassword=password" require>
                 <span class="input-group-addon">{{estimation}}</span>
               </div>
               <div class="bar {{barClass}}"></div>
@@ -42,9 +42,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="edituser-pw2">Repeat Password:</label>
+          <label class="control-label col-sm-2" for="edituser-pw2">{{ 'ADMIN.PASSWORD_REPEAT' | translate }}</label>
           <div class="col-sm-10">
-            <input type="password" id="edituser-pw2" class="form-control" placeholder="Password (repeat)" ng-model="newPasswordRepeat">
+            <input type="password" id="edituser-pw2" class="form-control" placeholder="{{ 'ADMIN.PASSWORD_REPEAT' | translate }}" ng-model="newPasswordRepeat">
           </div>
         </div>
         
@@ -52,11 +52,11 @@
           <div class="row">
             <button class="btn btn-success col-xs-6 col-xs-offset-1" ng-disabled="!canSaveChanges" ng-click="saveUser()">
               <span ng-if="canSaveChanges" class="octicon octicon-check"></span>
-              Save
+              {{ 'ADMIN.USER.SAVE' | translate }}
             </button>
             <button class="btn btn-danger col-xs-3 col-xs-offset-1" ng-click="deleteUser()" ng-disabled="userIsSelf()">
               <span class="octicon octicon-x"></span>
-              Delete
+              {{ 'ADMIN.USER.DELETE' | translate }}
             </button>
           </div>
         </div>
@@ -65,24 +65,24 @@
     </div>
     <div class="col-lg-6">
       <!-- Cards -->
-      <h4>Associated Cards</h4>
+      <h4>{{ 'ADMIN.USER.ASSOCIATED_CARDS' | translate }}</h4>
       <ul class="list-group cards">
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-12">
-              <input type="text" class="form-control" placeholder="Add new rfid tag with id..." ng-model="newCardID">
+              <input type="text" class="form-control" placeholder="{{ 'ADMIN.USER.NEW_RFID_TAG' | translate }}..." ng-model="newCardID">
             </div>
           </div>
           <div class="row">
             <div class="col-sm-8">
-              <button class="btn btn-default" data-loading-text="Please put your card in front of the reader..." ng-click="getRFID()" ng-disabled="currentlyLoadingRFIDResponse">
-                Get from RFID Reader
+              <button class="btn btn-default" ng-click="getRFID()" ng-disabled="currentlyLoadingRFIDResponse">
+                {{ 'ADMIN.USER.GET_FROM_RFID' | translate }}
               </button>
             </div>
             <div class="col-sm-4">
               <button class="btn btn-success pull-right" ng-disabled="newCardDisabled" ng-click="addCard()">
                 <span ng-if="!newCardDisabled" class="octicon octicon-check"></span>
-                Add
+                {{ 'ADMIN.USER.ADD' | translate }}
               </button>
             </div>
           </div>
@@ -93,7 +93,7 @@
               <b>{{card.uid}}</b>
             </div>
             <div class="col-md-4">
-              <button class="btn btn-danger pull-right" ng-click="deleteCard(card)" title="Remove">
+              <button class="btn btn-danger pull-right" ng-click="deleteCard(card)" title="{{ 'ADMIN.USER.REMOVE' | translate }}">
                 <span class="octicon octicon-x no-text"></span>
               </button>
             </div>

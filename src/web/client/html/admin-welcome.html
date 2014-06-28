@@ -2,40 +2,36 @@
 <div class="jumbotron">
   <div class="container text-justify">
     
-    <h1>Welcome to the Administration Interface</h1>
+    <h1>{{ 'ADMIN.WELCOME.HEADER' | translate }}</h1>
     
     <div class="row">
       <div class="col-md-9">
-        <p>
-          This is your home for managing who has access to this system.
-        </p>
+        <p>{{ 'ADMIN.WELCOME.P_1' | translate }}</p>
 
         <ul>
-          <li>
-            All the users that have access to this system are listed in the list.
-          </li>
+          <li>{{ 'ADMIN.WELCOME.P_2' | translate }}</li>
           <!-- We assume that user 1 must exist because we have at least one user to view this! -->
           <li>
-            You can <a href="#/admin/new">create</a> new users and edit existing ones in the list.
+            {{ 'ADMIN.WELCOME.P_3.YOU_CAN' | translate }} <a href="#/admin/new">{{ 'ADMIN.WELCOME.P_3.CREATE' | translate }}</a> {{ 'ADMIN.WELCOME.P_3.END' | translate }}
           </li>
           <li>
-            There are three different user types:
+            {{ 'ADMIN.WELCOME.THREE_TYPES.INTRO' | translate }}:
             <ol>
               <li>
-                Admin: Has full rights. He can create new users, controllers and admins. Can open the door.
+                {{ 'TYPE.ADMIN' | translate }}: {{ 'ADMIN.WELCOME.THREE_TYPES.ADMIN' | translate }}
               </li>
               <li>
-                Controller: Has rights to create new users. Can open the door.
+                {{ 'TYPE.CONTROLLER' | translate }}: {{ 'ADMIN.WELCOME.THREE_TYPES.CONTROLLER' | translate }}
               </li>
               <li>
-                User: Can open the door.
+                {{ 'TYPE.USER' | translate }}: {{ 'ADMIN.WELCOME.THREE_TYPES.USER' | translate }}
               </li>
             </ol>
           </li>
         </ul>
 
         <p>
-          If you have any questions, see the <a href="#/about">About page</a>.
+          {{ 'ADMIN.WELCOME.QUESTIONS' | translate }} <a href="#/about">{{ 'NAV.ABOUT' | translate }}</a>.
         </p>
         
       </div>
