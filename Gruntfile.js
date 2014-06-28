@@ -70,6 +70,7 @@ module.exports = function(grunt) {
                './bower_components/angular-resource/angular-resource.js',
                // 3rd party angular
                './bower_components/angular-loading-bar/build/loading-bar.js',
+               './bower_components/ngActivityIndicator/ngActivityIndicator.js',
                // own code
                './src/web/client/js/app/**/*.js' ],
 
@@ -123,6 +124,7 @@ module.exports = function(grunt) {
                                               './bower_components/octicons/octicons/octicons.css',
                                               './bower_components/angular/angular-csp.css',
                                               './bower_components/angular-loading-bar/build/loading-bar.css',
+                                              './bower_components/ngActivityIndicator/css/ngActivityIndicator.css',
                                               './src/web/public/css/style.css' ]
         }
       }

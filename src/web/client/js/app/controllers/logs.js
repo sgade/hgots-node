@@ -1,4 +1,4 @@
-hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '$sce', '$timeout', function($scope, $http, HGOTSServicesShared, $sce, $timeout) {
+hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '$sce', '$timeout', '$activityIndicator', function($scope, $http, HGOTSServicesShared, $sce, $timeout, $activityIndicator) {
   var apiPrefix = HGOTSServicesShared.apiPrefix;
   
   function zerofy(num) {
@@ -45,10 +45,6 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
     
     return lines;
   }
-  function getLoadingRingsWithText(text) {
-    console.log("Loading:", text);
-    return '<div class="loading"><div class="outer-ring"></div><div class="inner-ring"></div></div> <span class="pull-right">' + text + ' This might take a while and may freeze the browser.</span>';
-  }
   
   $scope.loadLog = function() {
     var date = $scope.date;
@@ -59,29 +55,30 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
     
     var url = apiPrefix + '/log/' + year + '/' + month + '/' + day;
     
-    $scope.logLines = [ getLoadingRingsWithText("Loading messages from the server.") ];
-    
+    $scope.logLines = [];
+    $activityIndicator.startAnimating();
     $http({ url: url, method: 'GET' }).success(function(response) {
       if ( !response.log ) {
-        //console.log("No log file found.");
+        $activityIndicator.stopAnimating(0);
         $scope.logLines = null;
         return;
       }
-      
       if ( $scope.date !== date ) {
         return;
       }
       
-      $scope.logLines = [ getLoadingRingsWithText("Parsing messages received from the server.") ];
       $timeout(function() {
         var log = response.log;
         var content = parseRawContent(log.content);
         var lines = parseContentLines(content);
         $scope.logLines = lines;
+        
+        $activityIndicator.stopAnimating();
       }, 100);
                
     }).error(function(err) {
       console.error("Error loading log file:", err);
+      $activityIndicator.stopAnimating();
     });
   };
   // helper for ng-bind-html

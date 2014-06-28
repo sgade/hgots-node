@@ -5,7 +5,7 @@
     <div class="col-xs-6">
       
       <!-- Date field -->
-      <input type="date" ng-model="dateModel" class="form-control" ng-change="loadLog()">
+      <input type="date" ng-model="dateModel" class="form-control">
       
     </div>
     <div class="col-xs-6">
@@ -27,7 +27,7 @@
       {{ (logLines | filter:search).length }} results
     </span>
   </div>
-  <ul class="list-group">
+  <ul class="list-group log-items" ng-activity-indicator>
     
     <!-- If no log was found -->
     <li ng-show="logLines === null" class="list-group-item">

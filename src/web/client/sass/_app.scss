@@ -1,30 +1,3 @@
-/* Animations */
-@keyframes spinPulse {
-  0% {
-    transform: rotate(0deg);
-    opacity: 1.0;
-  }
-  50% {
-    transform: rotate(360deg);
-    opacity: 0.3;
-  }
-  100% {
-    transform: rotate(0deg);
-    opacity: 1.0;
-  }
-}
-@keyframes spinPulseFast {
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(360deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
 /* Styles */
 #loading-bar .bar {
   top: 50px;
@@ -103,51 +76,21 @@
     }
   }
   
-  .log-item {
-    .time {
-      color: $blue;
+  .log-items {
+    .ai-indicator {
+      margin: auto;
     }
-    .error {
-      color: $red;
-    }
-    .app-start {
-      float: right;
-    }
-  }
-  .loading {
-    display: inline;
-    height: 50px;
     
-    .outer-ring {
-      background-color: rgba(0, 0, 0, 0);
-      border: 5px solid rgba(0, 183, 229, 0.9);
-      opacity: 0.9;
-      border-top: 5px solid rgba(0,0,0,0);
-      border-left: 5px solid rgba(0,0,0,0);
-      border-radius: 50px;
-
-      box-shadow: 0 0 35px #2187e7;
-      width: 50px;
-      height: 50px;
-
-      animation: spinPulse 5s infinite ease;
-    }
-    .inner-ring {
-      border: 5px solid rgba(0, 183, 229, 0.9);
-      border-top: 5px solid rgba(0,0,0,0);
-      border-left: 5px solid rgba(0,0,0,0);
-      border-radius: 40px;
-
-      position: relative;
-      top: -45px;
-      left: 5px;
-
-      width: 40px;
-      height: 40px;
-
-      animation: spinPulseFast 10s infinite ease;
-      
-      display: inline-block;
+    .log-item {
+      .time {
+        color: $blue;
+      }
+      .error {
+        color: $red;
+      }
+      .app-start {
+        float: right;
+      }
     }
   }
 
