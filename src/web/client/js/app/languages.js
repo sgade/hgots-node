@@ -92,7 +92,7 @@ hgots.config([ '$translateProvider', function($translateProvider) {
     SEARCH: 'Suche',
     TYPE: {
       ADMIN: 'Admin',
-      CONTROLLER: 'Verwalter',
+      CONTROLLER: 'Controller',
       USER: 'Benutzer'
     },
     
@@ -144,7 +144,7 @@ hgots.config([ '$translateProvider', function($translateProvider) {
         },
         THREE_TYPES: {
           INTRO: 'Es gibt drei Typen von Benutzern',
-          ADMIN: 'Hat alle Rechte. Er kann neue Benutzer, Verwalter und Admins erstellen. Er kann die Tür öffnen.',
+          ADMIN: 'Hat alle Rechte. Er kann neue Benutzer, Controller und Admins erstellen. Er kann die Tür öffnen.',
           CONTROLLER: 'Hat das Recht, neue Benutzer zu erstellen. Kann die Tür öffnen.',
           USER: 'Kann die Tür öffnen.'
         },
