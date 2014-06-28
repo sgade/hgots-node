@@ -138,8 +138,6 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
     var typeChanged = ( !!$scope.newType && user.type !== $scope.newType );
     var passwordChanged = ( !!$scope.newPassword && $scope.newPassword === $scope.newPasswordRepeat );
     
-    console.log($scope.newPassword, $scope.newPasswordRepeat);
-    
     var dirty = ( usernameChanged || typeChanged || passwordChanged );
     if ( dirty && $scope.newPassword && !passwordChanged ) {
       dirty = false;
