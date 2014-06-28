@@ -6,8 +6,9 @@ hgots.controller('NavbarController', [ '$scope', '$http', 'AppShared', '$window'
   });
   
   $scope.isActive = function(route) {
-    console.log($location.path());
-    return ( route === $location.path() );
+    var path = $location.path();
+    
+    return ( route === path || ( route.length > 1 && path.indexOf(route) !== -1 ) );
   };
   
   // Loading bar, related to navbar
