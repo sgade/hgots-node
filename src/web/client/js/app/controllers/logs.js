@@ -55,14 +55,15 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
     
     var url = apiPrefix + '/log/' + year + '/' + month + '/' + day;
     
+    $scope.logLines = [];
     $activityIndicator.startAnimating();
     $http({ url: url, method: 'GET' }).success(function(response) {
       if ( !response.log ) {
-        //console.log("No log file found.");
+        $activityIndicator.stopAnimating(0);
+        console.log("0");
         $scope.logLines = null;
         return;
       }
-      
       if ( $scope.date !== date ) {
         return;
       }
