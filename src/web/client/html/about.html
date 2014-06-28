@@ -30,7 +30,7 @@
     <hr>
     
     <div ng-controller="LanguageSwitcherController">
-      Force language to <select class="form-control only-control" ng-model="selectedLanguage" ng-options="lang as lang.name for lang in languages">
+      {{ 'ABOUT.FORCE_LANG' | translate }} <select class="form-control only-control" ng-model="selectedLanguage" ng-options="lang as lang.name for lang in languages">
       </select>
     </div>
   </div>

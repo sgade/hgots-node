@@ -30,7 +30,8 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       WITH_HELP_OF_THESE: 'with the help of these',
       CONTRIBUTORS: 'contributors',
       VISIT_THE: 'Visit the',
-      GITHUB_REPOSITORY: 'Github Repository'
+      GITHUB_REPOSITORY: 'Github Repository',
+      FORCE_LANG: 'Force language to'
     },
     LOGS: {
       RESULTS: 'results',
@@ -113,7 +114,8 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       WITH_HELP_OF_THESE: 'zusammen mit diesen',
       CONTRIBUTORS: 'Helfern',
       VISIT_THE: 'Besuchen Sie das',
-      GITHUB_REPOSITORY: 'Github Repository'
+      GITHUB_REPOSITORY: 'Github Repository',
+      FORCE_LANG: 'Erzwinge Sprache:'
     },
     LOGS: {
       RESULTS: 'Ergebnisse',
