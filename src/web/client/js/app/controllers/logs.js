@@ -55,7 +55,7 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
     
     var url = apiPrefix + '/log/' + year + '/' + month + '/' + day;
     
-    $scope.logLines = [ '<div class="loading"><div class="outer-ring"></div><div class="inner-ring"></div></div> <span class="pull-right">Loading messages from server. This might take a while and may freeze the browser.</span>' ];
+    $scope.logLines = [ '<div class="loading"><div class="outer-ring"></div><div class="inner-ring"></div></div> <span class="pull-right">Loading messages from the server. This might take a while and may freeze the browser.</span>' ];
     
     $http({ url: url, method: 'GET' }).success(function(response) {
       if ( !response.log ) {
