@@ -1,9 +1,14 @@
-hgots.controller('NavbarController', [ '$scope', '$http', 'AppShared', '$window', function($scope, $http, AppShared, $window) {
+hgots.controller('NavbarController', [ '$scope', '$http', 'AppShared', '$window', '$location', function($scope, $http, AppShared, $window, $location) {
   // Navbar itself
   $scope.currentUserIsPrivileged = false;
   $scope.$watch(function() { return AppShared.currentUser; }, function(user) {
     $scope.currentUserIsPrivileged = ( !!user && !!user.type && user.type !== "User" );
   });
+  
+  $scope.isActive = function(route) {
+    console.log($location.path());
+    return ( route === $location.path() );
+  };
   
   // Loading bar, related to navbar
   $(function() {

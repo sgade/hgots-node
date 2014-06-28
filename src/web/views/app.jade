@@ -17,20 +17,20 @@ block content
             | #{title}
         div.collapse.navbar-collapse#nav-collapse
           ul.nav.navbar-nav(ng-cloak)
-            li
+            li(ng-class="{ active: isActive('/') }")
               a(href="#/")
                 span.octicon.octicon-home
                 | {{ 'NAV.HOME' | translate }}
-            li(ng-if="currentUserIsPrivileged")
+            li(ng-if="currentUserIsPrivileged", ng-class="{ active: isActive('/admin') }")
               a(href="#/admin")
                 span.octicon.octicon-tools
                 | {{ 'NAV.ADMIN' | translate }}
-            li(ng-if="currentUserIsPrivileged")
+            li(ng-if="currentUserIsPrivileged", ng-class="{ active: isActive('/logs') }")
               a(href="#/logs")
                 span.octicon.octicon-three-bars
                 | {{ 'NAV.ACCESS_LOGS' | translate }}
           ul.nav.navbar-nav.navbar-right
-            li
+            li(ng-class="{ active: isActive('/about') }")
               a(href="#/about")
                 span.octicon.octicon-package
                 | {{ 'NAV.ABOUT' | translate }}
