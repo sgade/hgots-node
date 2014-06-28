@@ -1,4 +1,4 @@
-hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '$sce', function($scope, $http, HGOTSServicesShared, $sce) {
+hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '$sce', '$timeout', function($scope, $http, HGOTSServicesShared, $sce, $timeout) {
   var apiPrefix = HGOTSServicesShared.apiPrefix;
   
   function zerofy(num) {
@@ -72,17 +72,14 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
         return;
       }
       
-      var log = response.log;
-      var content = parseRawContent(log.content);
-      var lines = parseContentLines(content);
-      /* $scope.trustedLogLines = [];
-      angular.forEach(lines, function(line) {
-        $scope.trustedLogLines.push(
-          $sce.trustAsHtml(line)
-        );
-      }); */
-      $scope.logLines = lines;
       $scope.logLines = [ getLoadingRingsWithText("Parsing messages received from the server.") ];
+      $timeout(function() {
+        var log = response.log;
+        var content = parseRawContent(log.content);
+        var lines = parseContentLines(content);
+        $scope.logLines = lines;
+      }, 100);
+               
     }).error(function(err) {
       console.error("Error loading log file:", err);
     });
