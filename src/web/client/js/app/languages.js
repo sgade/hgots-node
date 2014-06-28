@@ -16,7 +16,8 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       LOGOUT: 'Logout'
     },
     HOME: {
-      OPEN_DOOR: 'Open Door'
+      OPEN_DOOR: 'Open Door',
+      ERROR: 'Error opening the door: {{err}}.\nWe\'re sorry.'
     },
     ABOUT: {
       VERSION: 'Version',

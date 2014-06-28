@@ -1,4 +1,4 @@
-hgots.controller('HomeController', [ '$scope', '$http', '$timeout', 'alert', 'confirm', function($scope, $http, $timeout, alert) {
+hgots.controller('HomeController', [ '$scope', '$http', '$timeout', 'alert', '$translate', function($scope, $http, $timeout, alert, $translate) {
   $scope.buttonDisabled = false;
   
   $scope.openDoor = function() {
@@ -11,12 +11,15 @@ hgots.controller('HomeController', [ '$scope', '$http', '$timeout', 'alert', 'co
       }, 10000);
     }).error(function(err) {
       err = err.error || err;
-      console.log("Error opening door:", err);
+      console.error("Error opening door:", err);
       
-      // show alert to user
-      alert('Could not open the door: ' + err + '\nWe\'re sorry.').then(function() {
-        // reset button state
-        $scope.buttonDisabled = false;
+      $translate('HOME.ERROR', { err: err }).then(function(errorString) {
+        // show alert to user
+        alert(errorString).then(function() {
+          // reset button state
+          $scope.buttonDisabled = false;
+        });
+        
       });
     });
   };
