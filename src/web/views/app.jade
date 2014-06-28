@@ -20,24 +20,24 @@ block content
             li
               a(href="#/")
                 span.octicon.octicon-home
-                | Home
+                | {{ 'NAV.HOME' | translate }}
             li(ng-if="currentUserIsPrivileged")
               a(href="#/admin")
                 span.octicon.octicon-tools
-                | Admin
+                | {{ 'NAV.ADMIN' | translate }}
             li(ng-if="currentUserIsPrivileged")
               a(href="#/logs")
                 span.octicon.octicon-three-bars
-                | Access logs
+                | {{ 'NAV.ACCESS_LOGS' | translate }}
           ul.nav.navbar-nav.navbar-right
             li
               a(href="#/about")
                 span.octicon.octicon-package
-                | About
+                | {{ 'NAV.ABOUT' | translate }}
             li
               a(href="/logout")
                 span.octicon.octicon-sign-out
-                | Logout
+                | {{ 'NAV.LOGOUT' | translate }}
             
     div.container-fluid.animations(ng-view)
     
