@@ -43,6 +43,12 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       NO_USERS_FOUND: 'No users found.',
       CREATE_NEW: 'Create new user',
       
+      ESTIMATION_0: 'very bad',
+      ESTIMATION_1: 'bad',
+      ESTIMATION_2: 'still bad',
+      ESTIMATION_3: 'okay',
+      ESTIMATION_4: 'good',
+      
       USERNAME: 'Username',
       TYPE: 'Type',
       PASSWORD: 'Password',
@@ -126,6 +132,12 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       USERS: 'Benutzer',
       NO_USERS_FOUND: 'Keine Benutzer gefunden.',
       CREATE_NEW: 'Neuen Benutzer erstellen',
+      
+      ESTIMATION_0: 'sehr schlecht',
+      ESTIMATION_1: 'schlecht',
+      ESTIMATION_2: 'immer noch schlecht',
+      ESTIMATION_3: 'okay',
+      ESTIMATION_4: 'gut',
       
       USERNAME: 'Benutzername',
       TYPE: 'Typ',

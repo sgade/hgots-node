@@ -57,6 +57,7 @@ passwordStrength.controller('PasswordStrengthViewController', [ '$scope', 'zxcvb
     
     $scope.barClass = "score-" + estimate.score;
     $scope.textClass = $scope.barClass;
+    $scope.estimationScore = estimate.score;
     $scope.estimation = estimations[estimate.score];
   }
   

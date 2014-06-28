@@ -24,7 +24,7 @@
         <div class="password-strength-view" ng-controller="PasswordStrengthViewController">
           <div class="input-group">
             <input type="password" id="newuser-password" class="form-control" placeholder="{{ 'ADMIN.PASSWORD' | translate }}" ng-model="password" ng-change="$parent.newPassword=password" required>
-            <span class="input-group-addon" ng-cloak>{{estimation}}</span>
+            <span class="input-group-addon" ng-cloak>{{ 'ADMIN.ESTIMATION_' + estimationScore | translate }}</span>
           </div>
           <div class="bar {{barClass}}"></div>
         </div>
