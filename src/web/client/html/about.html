@@ -26,5 +26,12 @@
         {{ 'ABOUT.GITHUB_REPOSITORY' | translate }}</a>.
       <!-- Want a newline here, but then we have a space to the full-stop! -->
     </p>
+    
+    <hr>
+    
+    <div ng-controller="LanguageSwitcherController">
+      Force language to <select class="form-control only-control" ng-model="selectedLanguage" ng-options="lang as lang.name for lang in languages">
+      </select>
+    </div>
   </div>
 </div>

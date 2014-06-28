@@ -16,6 +16,11 @@
     }
   }
   
+  .form-control.only-control {
+    width: auto;
+    display: inline-block;
+  }
+  
   // *** --- ***
   // Navbar
   span.navbar-brand {
