@@ -1,6 +1,9 @@
 var hgots = angular.module('HGOTSApp', [ 'ngRoute', 'ngAnimate', 'HGOTSServices', 'HGOTSAdmin', 'angular-loading-bar', 'ngActivityIndicator', 'pascalprecht.translate' ]);
 
-hgots.config([ '$routeProvider', 'cfpLoadingBarProvider', function($routeProvider, cfpLoadingBarProvider) {
+hgots.config([ '$locationProvider', '$routeProvider', 'cfpLoadingBarProvider', function($locationProvider, $routeProvider, cfpLoadingBarProvider) {
+  
+  $locationProvider.html5Mode(false).hashPrefix('');
+  
   // routes
   $routeProvider
     .when('/', {
