@@ -23,7 +23,7 @@
   
   <div>
     <span class="small">&nbsp;</span> <!-- To create space for the right-pulled results number, b/c it floats -->
-    <span class="small pull-right" ng-cloak ng-if="logLines !== null">
+    <span class="small pull-right" ng-cloak ng-if="logLines !== null && logLines.length > 2">
       {{ (logLines | filter:search).length }} results
     </span>
   </div>
