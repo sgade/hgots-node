@@ -71,9 +71,9 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
         var log = response.log;
         var content = parseRawContent(log.content);
         var lines = parseContentLines(content);
-        //$scope.logLines = lines;
+        $scope.logLines = lines;
         
-        //$activityIndicator.stopAnimating();
+        $activityIndicator.stopAnimating();
       }, 100);
                
     }).error(function(err) {
