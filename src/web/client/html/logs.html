@@ -36,7 +36,7 @@
     </li>
     
     <!-- List of log entries -->
-    <li ng-repeat="line in logLines track by $index | filter:search" class="list-group-item log-item" ng-bind-html="trustAsHtml(line)">
+    <li ng-repeat="line in logLines | filter:search track by $index" class="list-group-item log-item" ng-bind-html="trustAsHtml(line)">
     </li>
   </ul>
 </div>
