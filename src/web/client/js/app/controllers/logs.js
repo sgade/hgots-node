@@ -1,4 +1,4 @@
-hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '$sce', '$timeout', function($scope, $http, HGOTSServicesShared, $sce, $timeout) {
+hgots.controller('LogsController', [ '$scope', '$http', 'WebWorker', 'HGOTSServicesShared', '$sce', '$timeout', function($scope, $http, WebWorker, HGOTSServicesShared, $sce, $timeout) {
   var apiPrefix = HGOTSServicesShared.apiPrefix;
   
   function zerofy(num) {
@@ -25,25 +25,21 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
       return ( line.length > 0 );
     });
   }
-  function parseContentLines(lines) {  
-    lines = lines.map(function(line) {
-      var dateRegex = /[0-9]+:[0-9]+:[0-9]+/;
-      var dateSurplusRegex = /:\ /;
-      var errorRegex = /\[Error: .*]/g;
-      
-      var startRegex = /v[0-9]*\.[0-9]*\.[0-9]*\ started/;
-      
-      line = line.replace(dateRegex, '<span class="time">$&</span>');
-      line = line.replace(errorRegex, '<span class="error">$&</span>');
-      
-      if ( line.search(startRegex) !== -1 ) {
-        line += '<span class="app-start" title="The app was started at this point."><span class="octicon octicon-chevron-left"></span></span>';
-      }
-      
-      return line;
-    });
+  function parseContentLine(line) {
+    var dateRegex = /[0-9]+:[0-9]+:[0-9]+/;
+    var dateSurplusRegex = /:\ /;
+    var errorRegex = /\[Error: .*]/g;
+
+    var startRegex = /v[0-9]*\.[0-9]*\.[0-9]*\ started/;
+
+    line = line.replace(dateRegex, '<span class="time">$&</span>');
+    line = line.replace(errorRegex, '<span class="error">$&</span>');
+
+    if ( line.search(startRegex) !== -1 ) {
+      line += '<span class="app-start" title="The app was started at this point."><span class="octicon octicon-chevron-left"></span></span>';
+    }
     
-    return lines;
+    return line;
   }
   function getLoadingRingsWithText(text) {
     console.log("Loading:", text);
@@ -63,22 +59,24 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
     
     $http({ url: url, method: 'GET' }).success(function(response) {
       if ( !response.log ) {
-        //console.log("No log file found.");
         $scope.logLines = null;
         return;
       }
-      
       if ( $scope.date !== date ) {
         return;
       }
       
       $scope.logLines = [ getLoadingRingsWithText("Parsing messages received from the server.") ];
-      $timeout(function() {
-        var log = response.log;
-        var content = parseRawContent(log.content);
-        var lines = parseContentLines(content);
+      
+      var log = response.log;
+      var content = parseRawContent(log.content);
+      async.mapSeries(content, function(item, cb) {
+        WebWorker.runAgain(parseContentLine, item).then(function(line) {
+          cb(null, line);
+        });
+      }, function(err, lines) {
         $scope.logLines = lines;
-      }, 100);
+      });
                
     }).error(function(err) {
       console.error("Error loading log file:", err);
