@@ -26,6 +26,7 @@
     "angular-animate": "~1.2.17",
     "octicons": "~2.0.1",
     "angular-loading-bar": "~0.4.3",
-    "ngActivityIndicator": "~0.1.3"
+    "ngActivityIndicator": "~0.1.3",
+    "angular-translate": "~2.2.0"
   }
 }

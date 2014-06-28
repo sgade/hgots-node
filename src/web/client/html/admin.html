@@ -21,7 +21,7 @@
                 <!-- Header -->
                 <b>
                   <span class="octicon octicon-organization"></span>
-                  Users
+                  {{ 'ADMIN.USERS' | translate }}
                 </b>
               </div>
               <div class="col-sm-7">
@@ -30,12 +30,12 @@
                   <span class="input-group-addon">
                     <span class="octicon octicon-search"></span>
                   </span>
-                  <input type="search" class="form-control" ng-model="search" placeholder="Search">
+                  <input type="search" class="form-control" ng-model="search" placeholder="{{ 'SEARCH' | translate }}">
                 </div>
               </div>
             </div>
             <div class="row">
-              <a class="col-sm-3 col-sm-offset-1 btn" href="#/admin/new">
+              <a class="col-sm-3 col-sm-offset-1 btn" href="#/admin/new" title="{{ 'ADMIN.CREATE_NEW' | translate }}">
                 <span class="octicon octicon-plus no-text"></span>
               </a>
             </div>
@@ -46,7 +46,7 @@
         <ul class="list-group" id="users">
           <li ng-show="!(users | filter:search ).length" class="list-group-item">
             <span class="octicon octicon-stop"></span>
-            No users found.
+            {{ 'ADMIN.NO_USERS_FOUND' | translate }}
           </li>
           <!-- ng-repeat -->
           <li ng-repeat="user in users | filter:search | orderBy:'type'" class="list-group-item" ng-class="ifSelectedUserStyle(user)" ng-click="showUser(user)" ng-cloak>

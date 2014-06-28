@@ -31,7 +31,7 @@ passwordStrength.factory('zxcvbn', [ '$q', function($q) {
  * 2. Add an input field with 'ng-model="password"'
  * 3. You may want to bind ng-change to update a variable in your controller's scope (e.g. $parent.newPassword=password)
  * 4. You may style everything the way you like.
- * 5. The controller provides a text estimation under 'estimation', the entire zxcvbn analysis under 'estimate' and the bar class under 'barClass'. If you want provide color for text, use 'textClass'.
+ * 5. The controller provides a text estimation under 'estimation', the entire zxcvbn analysis under 'estimate' and the bar class under 'barClass'. If you want provide color for text, use 'textClass'. In case you are interested in the score itself (e.g. for translation purposes), it is available via 'estimationScore'.
  *
  * Example:
  * <div class="password-strength-view" ng-controller="PasswordStrengthViewController">
@@ -57,6 +57,7 @@ passwordStrength.controller('PasswordStrengthViewController', [ '$scope', 'zxcvb
     
     $scope.barClass = "score-" + estimate.score;
     $scope.textClass = $scope.barClass;
+    $scope.estimationScore = estimate.score;
     $scope.estimation = estimations[estimate.score];
   }
   

@@ -1,32 +1,30 @@
 <div ng-controller="AdminNewController">
-  <h1 class="page-header">
-    New User
-  </h1>
+  <h1 class="page-header">{{ 'ADMIN.NEW.HEADER' | translate }}</h1>
   
   <form class="form-horizontal">
     <div class="form-group">
-      <label for="newuser-username" class="col-sm-2">Username:</label>
+      <label for="newuser-username" class="col-sm-2">{{ 'ADMIN.USERNAME' | translate }}</label>
       <div class="col-sm-10">
-        <input type="text" id="newuser-username" class="form-control" placeholder="Username" ng-model="newUsername" required>
+        <input type="text" id="newuser-username" class="form-control" placeholder="{{ 'ADMIN.USERNAME' | translate }}" ng-model="newUsername" required>
       </div>
     </div>
     
     <div class="form-group">
-      <label for="newuser-type" class="col-sm-2">Type:</label>
+      <label for="newuser-type" class="col-sm-2">{{ 'ADMIN.TYPE' | translate }}</label>
       <div class="col-sm-10">
         <select id="newuser-type" class="form-control" ng-options="type as type for type in userTypes" ng-model="newType" required></select>
       </div>
     </div>
     
     <div class="form-group">
-      <label for="newuser-password" class="col-sm-2">Password:</label>
+      <label for="newuser-password" class="col-sm-2">{{ 'ADMIN.PASSWORD' | translate }}</label>
       <div class="col-sm-10">
         
         <!-- SubView: Password Strength -->
         <div class="password-strength-view" ng-controller="PasswordStrengthViewController">
           <div class="input-group">
-            <input type="password" id="newuser-password" class="form-control" placeholder="Password" ng-model="password" ng-change="$parent.newPassword=password" required>
-            <span class="input-group-addon" ng-cloak>{{estimation}}</span>
+            <input type="password" id="newuser-password" class="form-control" placeholder="{{ 'ADMIN.PASSWORD' | translate }}" ng-model="password" ng-change="$parent.newPassword=password" required>
+            <span class="input-group-addon" ng-cloak>{{ 'ADMIN.ESTIMATION_' + estimationScore | translate }}</span>
           </div>
           <div class="bar {{barClass}}"></div>
         </div>
@@ -35,14 +33,14 @@
     </div>
     
     <div class="form-group">
-      <label for="newuser-password-repeat" class="col-sm-2">Repeat Password:</label>
+      <label for="newuser-password-repeat" class="col-sm-2">{{ 'ADMIN.PASSWORD_REPEAT' | translate }}</label>
       <div class="col-sm-10">
-        <input type="password" id="newuser-password-repeat" class="form-control" placeholder="Repeat Password" ng-model="newPasswordRepeat" required>
+        <input type="password" id="newuser-password-repeat" class="form-control" placeholder="{{ 'ADMIN.PASSWORD_REPEAT' | translate }}" ng-model="newPasswordRepeat" required>
       </div>
     </div>
     
     <div class="form-actions row">
-      <button class="btn btn-success col-xs-8 col-xs-offset-2" ng-disabled="createDisabled" ng-click="createUser()">Create</button>
+      <button class="btn btn-success col-xs-8 col-xs-offset-2" ng-disabled="createDisabled" ng-click="createUser()">{{ 'ADMIN.NEW.CREATE' | translate }}</button>
     </div>
   </form>
 </div>

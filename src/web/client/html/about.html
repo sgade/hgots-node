@@ -5,8 +5,8 @@
       <h3>{{pkg.name}}</h3>
 
       <p class="lead">
-        Version:
-        <a class="label label-primary" title="Go to the release page of this version on Github" href="{{versionLinkToGithub}}">
+        {{ 'ABOUT.VERSION' | translate }}:
+        <a class="label label-primary" title="{{ 'ABOUT.GO_TO_GITHUB' | translate }}" href="{{versionLinkToGithub}}">
           {{pkg.version}}
         </a>
       </p>
@@ -17,13 +17,21 @@
     
     <!-- Bottom -->
     <p>
-      By <a href="https://github.com/sgade">Sören Gade</a> with the help of these <a href="https://github.com/sgade/hgots-node/blob/master/AUTHORS">contributors</a>.
+      {{ 'ABOUT.BY' | translate }} <a href="https://github.com/sgade">Sören Gade</a> {{ 'ABOUT.WITH_HELP_OF_THESE' | translate }} <a href="https://github.com/sgade/hgots-node/blob/master/AUTHORS">{{ 'ABOUT.CONTRIBUTORS' | translate }}</a>.
     </p>
     <p>
-      Visit the
+      {{ 'ABOUT.VISIT_THE' | translate }}
       <a href="https://github.com/sgade/hgots-node">
         <span class="octicon octicon-repo no-text"></span>
-        Github Repository</a>.
+        {{ 'ABOUT.GITHUB_REPOSITORY' | translate }}</a>.
+      <!-- Want a newline here, but then we have a space to the full-stop! -->
     </p>
+    
+    <hr>
+    
+    <div ng-controller="LanguageSwitcherController">
+      {{ 'ABOUT.FORCE_LANG' | translate }} <select class="form-control only-control" ng-model="selectedLanguage" ng-options="lang as lang.name for lang in languages">
+      </select>
+    </div>
   </div>
 </div>

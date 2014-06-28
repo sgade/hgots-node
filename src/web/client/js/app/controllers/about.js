@@ -15,3 +15,18 @@ hgots.controller('AboutController', [ '$scope', 'AppShared', function($scope, Ap
     return ( url + '/releases/v' + pkg.version );
   }
 }]);
+
+hgots.controller('LanguageSwitcherController', [ '$scope', '$translate', function($scope, $translate) {
+  $scope.languages = [ {
+    key: 'en',
+    name: 'English'
+  }, {
+    key: 'de',
+    name: 'Deutsch'
+  } ];
+  
+  $scope.selectedLanguage = $scope.languages[$translate.preferredLanguage()];
+  $scope.$watch('selectedLanguage', function() {
+    $translate.use($scope.selectedLanguage.key);
+  });
+}]);

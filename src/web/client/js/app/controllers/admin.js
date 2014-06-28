@@ -102,7 +102,7 @@ hgotsAdmin.controller('AdminController', [ '$scope', '$routeParams', '$window', 
   });
 }]);
 
-hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http', '$location', 'AdminShared', 'User', 'Card', 'confirm', function($scope, $routeParams, $http, $location, AdminShared, User, Card, confirm) {
+hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http', '$location', 'AdminShared', 'User', 'Card', 'confirm', '$translate', function($scope, $routeParams, $http, $location, AdminShared, User, Card, confirm, $translate) {
   // set all user types
   $scope.userTypes = AdminShared.userTypes;
   // watch for user changes
@@ -170,12 +170,18 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
   };
   
   $scope.deleteUser = function() {
-    confirm('Do you really want to delete ' + $scope.user.username + '?').then(function(confirm) {
-      if ( confirm ) {
-        $scope.user.$delete(function() {
-          AdminShared.showUser(null);
-        });
-      }
+    $translate('ADMIN.USER.CONFIRM_DELETE_USER', {
+      username: $scope.user.username
+    }).then(function(confirmText) {
+      
+      confirm(confirmText).then(function(confirm) {
+        if ( confirm ) {
+          $scope.user.$delete(function() {
+            AdminShared.showUser(null);
+          });
+        }
+      });
+      
     });
   };
   
@@ -209,14 +215,20 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
     });
   };
   $scope.deleteCard = function(card) {
-    confirm("Do you really want to remove card '" + card.uid + "' from this user?").then(function(confirm) {
-      if ( confirm ) {
-        $http({ method: 'DELETE', url: '/api/v2/users/' + $scope.user.id + '/cards/' + card.id }).success(function() {
-          $scope.user.cards = $scope.user.cards.filter(function(cardItem) {
-            return ( cardItem.id !== card.id );
+    $translate('ADMIN.USER.CONFIRM_DELETE_CARD', {
+      uid: card.uid
+    }).then(function(confirmText) {
+      
+      confirm(confirmText).then(function(confirm) {
+        if ( confirm ) {
+          $http({ method: 'DELETE', url: '/api/v2/users/' + $scope.user.id + '/cards/' + card.id }).success(function() {
+            $scope.user.cards = $scope.user.cards.filter(function(cardItem) {
+              return ( cardItem.id !== card.id );
+            });
           });
-        });
-      }
+        }
+      });
+      
     });
   };
 }]);

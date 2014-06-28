@@ -71,6 +71,7 @@ module.exports = function(grunt) {
                // 3rd party angular
                './bower_components/angular-loading-bar/build/loading-bar.js',
                './bower_components/ngActivityIndicator/ngActivityIndicator.js',
+               './bower_components/angular-translate/angular-translate.js',
                // own code
                './src/web/client/js/app/**/*.js' ],
 

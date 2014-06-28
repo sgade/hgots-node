@@ -1,4 +1,4 @@
-hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '$sce', '$timeout', '$activityIndicator', function($scope, $http, HGOTSServicesShared, $sce, $timeout, $activityIndicator) {
+hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '$sce', '$timeout', '$translate', '$activityIndicator', function($scope, $http, HGOTSServicesShared, $sce, $timeout, $translate, $activityIndicator) {
   var apiPrefix = HGOTSServicesShared.apiPrefix;
   
   function zerofy(num) {
@@ -25,7 +25,7 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
       return ( line.length > 0 );
     });
   }
-  function parseContentLines(lines) {  
+  function parseContentLines(lines, appStartedText) {  
     lines = lines.map(function(line) {
       var dateRegex = /[0-9]+:[0-9]+:[0-9]+/;
       var dateSurplusRegex = /:\ /;
@@ -37,7 +37,7 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
       line = line.replace(errorRegex, '<span class="error">$&</span>');
       
       if ( line.search(startRegex) !== -1 ) {
-        line += '<span class="app-start" title="The app was started at this point."><span class="octicon octicon-chevron-left"></span></span>';
+        line += '<span class="app-start" title="' + appStartedText + '"><span class="octicon octicon-chevron-left"></span></span>';
       }
       
       return line;
@@ -68,12 +68,14 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
       }
       
       $timeout(function() {
-        var log = response.log;
-        var content = parseRawContent(log.content);
-        var lines = parseContentLines(content);
-        $scope.logLines = lines;
-        
-        $activityIndicator.stopAnimating();
+        $translate('LOG.APP_WAS_STARTED').then(function(appStartedText) {
+          var log = response.log;
+          var content = parseRawContent(log.content);
+          var lines = parseContentLines(content, appStartedText);
+          $scope.logLines = lines;
+
+          $activityIndicator.stopAnimating();
+        });
       }, 100);
                
     }).error(function(err) {
