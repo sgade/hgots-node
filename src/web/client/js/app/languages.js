@@ -78,7 +78,7 @@ hgots.config([ '$translateProvider', function($translateProvider) {
         DELETE: 'Delete',
         ASSOCIATED_CARDS: 'Associated cards',
         NEW_RFID_TAG: 'New RFID tag',
-        GET_FROM_RFID: 'Get tag from RFID reader...',
+        GET_FROM_RFID: 'Get tag from RFID reader',
         ADD: 'Add',
         REMOVE: 'Remove',
         
