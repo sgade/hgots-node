@@ -27,7 +27,7 @@
       {{ (logLines | filter:search).length }} results
     </span>
   </div>
-  <ul class="list-group" ng-activity-indicator>
+  <ul class="list-group log-items" ng-activity-indicator>
     
     <!-- If no log was found -->
     <li ng-show="logLines === null" class="list-group-item">

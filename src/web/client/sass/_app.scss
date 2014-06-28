@@ -76,15 +76,21 @@
     }
   }
   
-  .log-item {
-    .time {
-      color: $blue;
+  .log-items {
+    .ai-indicator {
+      margin: auto;
     }
-    .error {
-      color: $red;
-    }
-    .app-start {
-      float: right;
+    
+    .log-item {
+      .time {
+        color: $blue;
+      }
+      .error {
+        color: $red;
+      }
+      .app-start {
+        float: right;
+      }
     }
   }
 
