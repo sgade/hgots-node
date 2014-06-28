@@ -76,7 +76,10 @@ hgots.config([ '$translateProvider', function($translateProvider) {
         NEW_RFID_TAG: 'New RFID tag',
         GET_FROM_RFID: 'Get tag from RFID reader...',
         ADD: 'Add',
-        REMOVE: 'Remove'
+        REMOVE: 'Remove',
+        
+        CONFIRM_DELETE_USER: 'Do you really want to delete {{username}}?',
+        CONFIRM_DELETE_CARD: 'Do you really want to remove card "{{uid}}" from this user?'
       }
     }
   });
