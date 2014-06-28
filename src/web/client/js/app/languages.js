@@ -30,7 +30,8 @@ hgots.config([ '$translateProvider', function($translateProvider) {
     },
     LOGS: {
       RESULTS: 'results',
-      NO_LOG_FOUND: 'No log was found for that date.'
+      NO_LOG_FOUND: 'No log was found for that date.',
+      APP_WAS_STARTED: 'The application was started at this point.'
     },
     ADMIN: {
       USERS: 'Users',
@@ -81,7 +82,5 @@ hgots.config([ '$translateProvider', function($translateProvider) {
   });
   $translateProvider.determinePreferredLanguage();
   $translateProvider.fallbackLanguage('en_US');
-  
-  console.log($translateProvider.preferredLanguage());
   
 }]);
