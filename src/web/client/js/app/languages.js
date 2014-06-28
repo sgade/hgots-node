@@ -1,5 +1,9 @@
 hgots.config([ '$translateProvider', function($translateProvider) {
   
+  /*
+   * ENGLISH
+   * DEFAULT
+   * */
   $translateProvider.translations('en_US', {
     SEARCH: 'Search',
     TYPE: {
@@ -21,7 +25,7 @@ hgots.config([ '$translateProvider', function($translateProvider) {
     },
     ABOUT: {
       VERSION: 'Version',
-      GO_TO_GITHUB: 'Go tothe release page of this version on Github',
+      GO_TO_GITHUB: 'Go to the release page of this version on Github',
       BY: 'By',
       WITH_HELP_OF_THESE: 'with the help of these',
       CONTRIBUTORS: 'contributors',
@@ -83,7 +87,9 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       }
     }
   });
+  // determine language
   $translateProvider.determinePreferredLanguage();
+  // default language is english
   $translateProvider.fallbackLanguage('en_US');
   
 }]);
