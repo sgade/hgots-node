@@ -1,6 +1,8 @@
 hgots.config([ '$translateProvider', function($translateProvider) {
   
-  $translateProvider.translations('en_US', {    
+  $translateProvider.translations('en_US', {
+    SEARCH: 'Search',
+    
     NAV: {
       HOME: 'Home',
       ADMIN: 'Admin',
@@ -21,7 +23,6 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       GITHUB_REPOSITORY: 'Github Repository'
     },
     LOGS: {
-      SEARCH: 'Search',
       RESULTS: 'results',
       NO_LOG_FOUND: 'No log was found for that date.'
     }
