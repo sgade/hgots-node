@@ -60,7 +60,6 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
     $http({ url: url, method: 'GET' }).success(function(response) {
       if ( !response.log ) {
         $activityIndicator.stopAnimating(0);
-        console.log("0");
         $scope.logLines = null;
         return;
       }
