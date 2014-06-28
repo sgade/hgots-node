@@ -10,6 +10,15 @@ hgots.config([ '$translateProvider', function($translateProvider) {
     },
     HOME: {
       OPEN_DOOR: 'Open Door'
+    },
+    ABOUT: {
+      VERSION: 'Version',
+      GO_TO_GITHUB: 'Go tothe release page of this version on Github',
+      BY: 'By',
+      WITH_HELP_OF_THESE: 'with the help of these',
+      CONTRIBUTORS: 'contributors',
+      VISIT_THE: 'Visit the',
+      GITHUB_REPOSITORY: 'Github Repository'
     }
   });
   $translateProvider.determinePreferredLanguage();
