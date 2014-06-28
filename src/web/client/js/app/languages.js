@@ -8,6 +8,9 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       ABOUT: 'About',
       LOGOUT: 'Logout'
     },
+    HOME: {
+      OPEN_DOOR: 'Open Door'
+    }
   });
   $translateProvider.determinePreferredLanguage();
   
