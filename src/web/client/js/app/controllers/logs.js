@@ -65,7 +65,6 @@ hgots.controller('LogsController', [ '$scope', '$http', 'HGOTSServicesShared', '
       }
       
       if ( $scope.date !== date ) {
-        console.log("Date changed.");
         return;
       }
       
