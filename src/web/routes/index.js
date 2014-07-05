@@ -14,8 +14,18 @@ exports.index = function(req, res) {
       res.redirect("/app");
     } else {
       
-      res.render('index', {
-        title: pkg.name
+      db.User.count().complete(function(err, count) {
+        if ( !!err ) {
+          throw err; // TODO: handle or render default /
+        }
+        
+        if ( count === 0 ) {
+          res.redirect('/setup');
+        } else {
+          res.render('index', {
+            title: pkg.name
+          });
+        }
       });
       
     }

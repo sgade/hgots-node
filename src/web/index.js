@@ -187,6 +187,9 @@ function configureRoutes(callbacks) {
 
   // configure api
   require('./routes/api/')(app, callbacks);
+  
+  // initial setup
+  app.get('/setup', routes.setup);
 }
 
 /**
