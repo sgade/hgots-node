@@ -42,6 +42,7 @@
     "load-grunt-tasks": "~0.4.0",
     "lodash": "^2.4.1",
     "marked": "^0.3.2",
+    "mdns": "^2.2.0",
     "method-override": "^1.0.0",
     "morgan": "^1.1.1",
     "passport": "^0.2.0",
