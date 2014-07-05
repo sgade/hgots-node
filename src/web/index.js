@@ -13,7 +13,11 @@ var config = require('../config');
 var pkg = require('../../package');
 var LogStream = require('../log').LogStream;
 var express = require('express');
-var mdns = require('mdns');
+try {
+  var mdns = require('mdns');
+} catch(e) {
+  mdns = null;
+}
 // middleware
 var expressBodyParser = require('body-parser'),
   expressCookieParser = require('cookie-parser'),
@@ -66,8 +70,10 @@ exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, d
   });
   db.init(done);
   
-  ad = mdns.createAdvertisement(mdns.tcp('hgots'), port);
-  ad.start();
+  if(mdns) {
+    ad = mdns.createAdvertisement(mdns.tcp('hgots'), port);
+    ad.start();
+  }
 };
 /**
  * Configures express.
