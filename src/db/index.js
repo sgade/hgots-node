@@ -45,10 +45,12 @@ var initDB = function(done) {
         console.log("Connected to database.");
       }
     
-      if(process.env.NODE_ENV !== 'test') {
-        sampleData(done);
-      } else {
+      if ( process.env.NODE_ENV === 'production' ) {
         done(null);
+      } else if ( process.env.NODE_ENV === 'test' ) {
+        done(null);
+      } else {
+        sampleData(done);
       }
     }
   });
@@ -88,6 +90,7 @@ var sampleData = function(callback) {
             });
           }
           
+          console.log("Sample data loaded.");
           callback(null);
         });
       });
