@@ -66,7 +66,7 @@ exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, d
   });
   db.init(done);
   
-  ad = mdns.createAdvertisement(mdns.tcp('http'), port);
+  ad = mdns.createAdvertisement(mdns.tcp('hgots'), port);
   ad.start();
 };
 /**
