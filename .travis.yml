@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "0.10"
 before_install:
-  - apt-get install libavahi-compat-libdnssd
+  - sudo apt-get install libavahi-compat-libdnssd-dev
   - npm install -g grunt-cli
   - npm install -g bower
   - gem install sass
