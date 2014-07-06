@@ -104,7 +104,7 @@ SCRIPTNAME=/etc/init.d/$INIT_SCRIPT_NAME
 . /lib/lsb/init-functions
  
 # uncomment to override system setting
-# VERBOSE=yes
+VERBOSE=yes
  
 #
 # Function that starts the daemon/service
