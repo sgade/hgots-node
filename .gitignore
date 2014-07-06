@@ -8,16 +8,15 @@ bower_components
 # Generated
 src/web/public
 doc
-#./src/web/public
 *.sqlite
 *.db
-
-# User-defined
-config.json
-
 *.log
 logs/
 
-*.lock
+# User-defined
+config.json
+# SSL
+ssl/
 
+*.lock
 tmp/restart.txt
