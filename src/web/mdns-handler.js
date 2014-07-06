@@ -42,7 +42,7 @@ function mDNSAdvertiser(name, port) {
       }
     });
     
-    callback(null);
+    return callback(null);
   };
   
   var _changeAdvertising = function(type, callback) {
