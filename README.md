@@ -25,11 +25,12 @@ To start the installation, please prepare your raspberry. Install Raspbian or an
 Once the device is connected to the network, `ssh` into it. This is pretty easy. In the case of raspbian, the default user is called `pi` with the password set to `raspberry`.
 
 1. `ssh pi@ipOfRaspberry`: Connect to the raspberry
-2. `git clone https://github.com/sgade/hgots-node.git`: Clone the repository.
-3. `cd hgots-node`: Go into the repository directory.
-4. `sh setup.sh`: Run the production setup route.
-5. `cp config.example.json config.json`: Copy the example configuration file and create the required one. **You should edit the config.json file to fit your needs!**
-6. `node src/app`: You are ready to launch the application!
+2. `apt-get install libavahi-compat-libdnssd-dev`: Install needed dependencies. ___(optional)___
+3. `git clone https://github.com/sgade/hgots-node.git`: Clone the repository.
+4. `cd hgots-node`: Go into the repository directory.
+5. `sh setup.sh`: Run the production setup route.
+6. `cp config.example.json config.json`: Copy the example configuration file and create the required one. **You should edit the config.json file to fit your needs!**
+7. `node src/app`: You are ready to launch the application!
 
 # Technical details
 

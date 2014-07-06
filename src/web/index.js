@@ -13,6 +13,11 @@ var config = require('../config');
 var pkg = require('../../package');
 var LogStream = require('../log').LogStream;
 var express = require('express');
+try {
+  var mdns = require('mdns');
+} catch(e) {
+  mdns = null;
+}
 // middleware
 var expressBodyParser = require('body-parser'),
   expressCookieParser = require('cookie-parser'),
@@ -35,6 +40,11 @@ var db = require('../db');
  * */
 var app = null;
 var server = null;
+
+/** 
+ * The Bonjour/MDNS Server Advertisement
+ * */
+var ad = null;
 
 /**
  * Express instance for testing purposes.
@@ -59,6 +69,11 @@ exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, d
     openDoorRequestCallback: openDoorRequestCallback
   });
   db.init(done);
+  
+  if(mdns) {
+    ad = mdns.createAdvertisement(mdns.tcp('hgots'), port);
+    ad.start();
+  }
 };
 /**
  * Configures express.

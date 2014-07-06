@@ -55,6 +55,9 @@
     "statuses": "^1.0.2",
     "time-grunt": "^0.3.1"
   },
+  "optionalDependencies": {
+    "mdns": "^2.2.0"
+  },
   "devDependencies": {
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-watch": "~0.6.0",
