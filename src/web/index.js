@@ -182,6 +182,11 @@ function configureRoutes(callbacks) {
     failureRedirect: '/'
   }));
   
+  app.post('/auth/login/api', passport.authenticate('local'), function(req, res) {
+    res.send({ id: req.user.id, username: req.user.username, type: req.user.type });
+    res.end();
+  });
+  
   // Routes for app
   app.get('/app', routes.app);
   // info about app
