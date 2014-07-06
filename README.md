@@ -32,6 +32,15 @@ Once the device is connected to the network, `ssh` into it. This is pretty easy.
 6. `cp config.example.json config.json`: Copy the example configuration file and create the required one. **You should edit the config.json file to fit your needs!**
 7. `node src/app`: You are ready to launch the application!
 
+## First login
+
+On first start in *production mode* (`env NODE_ENV=production node src/app` or run `start.sh`), a default login will be created. The credentials for this admin are:
+
+**Username:** `admin`<br>
+**Password:** `admin`
+
+It is highly recommended that you **immediately change this password!**
+
 # Technical details
 
 During the setup routine, the raspberry checks for ruby, node and other requirements and even tries to install those. It will tell you if it is not able to resolve any problems by itself.
