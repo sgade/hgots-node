@@ -17,7 +17,8 @@
   "web": {
     "port": 80,
     "doorOpenTime": 2000,
-    "secret": "web-secret"
+    "secret": "web-secret",
+    "useBonjour": true
   },
   "logname": "access_%s.log"
 }

@@ -225,7 +225,12 @@ exports.start = function(callback) {
       return callback(err);
     }
     
-    mdnsAd.startAdvertising(callback);
+    if ( config.web.useBonjour ) {
+      mdnsAd.startAdvertising(callback);
+      console.log("Advertising web server via bonjour.");
+    } else {
+      callback(null);
+    }
   });
 };
 
