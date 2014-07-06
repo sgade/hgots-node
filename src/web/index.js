@@ -13,11 +13,6 @@ var config = require('../config');
 var pkg = require('../../package');
 var LogStream = require('../log').LogStream;
 var express = require('express');
-try {
-  var mdns = require('mdns');
-} catch(e) {
-  mdns = null;
-}
 // middleware
 var expressBodyParser = require('body-parser'),
   expressCookieParser = require('cookie-parser'),
@@ -34,17 +29,13 @@ var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
 var db = require('../db');
+var mdns = require('./mdns-handler');
 
 /**
  * The express instance
  * */
 var app = null;
 var server = null;
-
-/** 
- * The Bonjour/MDNS Server Advertisement
- * */
-var ad = null;
 
 /**
  * Express instance for testing purposes.
@@ -68,12 +59,14 @@ exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, d
     rfidRequestCallback: getRFIDRequestCallback,
     openDoorRequestCallback: openDoorRequestCallback
   });
-  db.init(done);
-  
-  if(mdns) {
-    ad = mdns.createAdvertisement(mdns.tcp('hgots'), port);
-    ad.start();
-  }
+  db.init(function(err) {
+    if ( !!err ) {
+      console.log("Could not initialize database.");
+      throw err; // This has to be done
+    }
+    
+    mdns.init('hgots', port, done);
+  });
 };
 /**
  * Configures express.
@@ -203,7 +196,9 @@ function configureRoutes(callbacks) {
  * */
 exports.stop = function(callback) {
   if ( server ) {
-    server.close(callback);
+    mdns.stopAdvertising(function() {
+      server.close(callback);
+    });
   }
 };
 
@@ -221,7 +216,13 @@ exports.getPort = function() {
  * */
 exports.start = function(callback) {
   server = http.createServer(app);
-  server.listen(app.get('port'), callback);
+  server.listen(app.get('port'), function(err) {
+    if ( !!err ) {
+      return callback(err);
+    }
+    
+    mdns.startAdvertising(callback);
+  });
 };
 
 // start the server if we are invoked directly
