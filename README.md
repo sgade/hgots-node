@@ -57,6 +57,21 @@ Everything important is defined in the file named `config.json` which is located
 3. `bower install`
 4. `grunt dev` and `node src/app`
 
+## A Note for API developers
+
+This application was designed with no specific frontend in mind. Although it features a web server and an angular UI, it is totally compatible with third party REST consumers. If you discover bugs in the API that are not following the REST guidelines or simply do not work for you, feel free to open an issue.
+
+If you want to create a third-party application for the API server there are some things you should consider:
+
+1. You *may not* sell your application or gain profit from this project, as it is open-source.
+2. You *must* link or refer to this repository and indicate that you are only using our work efforts.
+3. You *can* contact me if you are interested in being listed here. You application does not have to be open-source (but again, free and without commercial use, i.e. no charges in any form like ads) but it would be nice if it would.
+4. If you want to represent certain actions in your application, you should use the icons used in the web application. They were carefully selected and should be used to give the user a sense of coherency. Here's a small list, using the [Github Octicons](https://octicons.github.com/):
+  - Sign In: [sign-in](https://octicons.github.com/icon/sign-in/)
+  - Sign Out: [sign-out](https://octicons.github.com/icon/sign-out/)
+  - Open Door: [key](https://octicons.github.com/icon/key/)
+  - About: [package](https://octicons.github.com/icon/package/)
+
 # Generate documentation
 
 Use `grunt doc` and look in the `./doc/` directory.
