@@ -11,6 +11,7 @@ var http = require('http');
 var https = require('https');
 var crypto = require('crypto');
 var fs = require('fs');
+var async = require('async');
 var path = require('path');
 var config = require('../config');
 var pkg = require('../../package');
@@ -204,11 +205,18 @@ function configureRoutes(callbacks) {
  * Stops the express server.
  * */
 exports.stop = function(callback) {
-  if ( server ) {
-    mdnsAd.stopAdvertising(function() {
-      server.close(callback);
-    });
-  }
+  async.eachSeries([ server, serverSSL ], function(sItem, done) {
+    if ( !!sItem ) {
+      return sItem.close(done);
+    }
+    done(null);
+  }, function(err) {
+    if ( !!mDNSAd ) {
+      return mDNSAd.stopAdvertising(callback);
+    }
+    
+    callback(null);
+  });
 };
 
 /**
