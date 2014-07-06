@@ -9,6 +9,7 @@
  */
 var http = require('http');
 var https = require('https');
+var crypto = require('crypto');
 var fs = require('fs');
 var path = require('path');
 var config = require('../config');
@@ -240,13 +241,23 @@ exports.start = function(callback) {
             throw err;
           }
           
-          var credentials = {
+          var options = {
             key: sslPrivateKey,
             cert: sslCertificate,
-            passphrase: config.web.sslPassphrase
+            passphrase: config.web.sslPassphrase,
+            
+            SNICallback: function(servername) {
+              console.log("SSL servername:", servername);
+              
+              return crypto.createCredentials({
+                key: sslPrivateKey,
+                cert: sslCertificate,
+                passphrase: config.web.sslPassphrase
+              }).context;
+            }
           };
           
-          serverSSL = https.createServer(credentials, app);
+          serverSSL = https.createServer(options, app);
           serverSSL.listen(433, function(err) {
             console.log("SSL server started.");
           });
