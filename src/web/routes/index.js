@@ -4,7 +4,6 @@
 
 var helpers = require('./helpers');
 var pkg = require('./../../../package');
-var db = require('./../../db/');
 
 /* Default route: Login */
 exports.index = function(req, res) {

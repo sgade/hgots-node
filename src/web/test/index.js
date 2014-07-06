@@ -2,11 +2,12 @@ var async = require('async');
 var should = require('should');
 var request = require('supertest');
 var sequelize_fixtures =  require('sequelize-fixtures');
+var config = require('./../../config');
 
 var app = require('../');
 var db = require('../../db');
 var expressApp = null;
-var port = 3333;
+var port = config.web.port;
 
 /* Fixtures */
 var defaultPasswordHash = "fd5cb51bafd60f6fdbedde6e62c473da6f247db271633e15919bab78a02ee9eb";
