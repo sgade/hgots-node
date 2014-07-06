@@ -16,6 +16,7 @@ doc
 config.json
 
 *.log
+logs/
 
 *.lock
 
