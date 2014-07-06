@@ -44,7 +44,7 @@ var server = null;
 /** 
  * The Bonjour/MDNS Server Advertisement
  * */
-var ad;
+var ad = null;
 
 /**
  * Express instance for testing purposes.
