@@ -27,6 +27,8 @@ hgots.controller('LanguageSwitcherController', [ '$scope', '$translate', functio
   
   $scope.selectedLanguage = $scope.languages[$translate.preferredLanguage()];
   $scope.$watch('selectedLanguage', function() {
-    $translate.use($scope.selectedLanguage.key);
+    if ( $scope.selectedLanguage ) {
+      $translate.use($scope.selectedLanguage.key);
+    }
   });
 }]);
