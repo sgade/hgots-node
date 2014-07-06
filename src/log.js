@@ -5,6 +5,8 @@ var fs = require('fs');
 var path = require('path');
 var config = require('./config');
 
+var creatingLog = false;
+
 function LogStream(highWaterMark, decodeStrings, objectMode) {
   Writable.call(this, highWaterMark, decodeStrings, objectMode);
   
@@ -53,7 +55,13 @@ exports.writeToLog = function(string, callback) {
   // check for log directory
   fs.exists(logsDir, function(exists) {
     if ( !exists ) {
+      if ( creatingLog ) {
+        return writeToLog();
+      }
+      
+      creatingLog = true;
       fs.mkdir(logsDir, function(err) {
+        creatingLog = false;
         if ( !!err ) {
           console.log("Could not create log directory.");
           throw err;
