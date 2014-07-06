@@ -123,7 +123,7 @@ hgots.config([ '$translateProvider', function($translateProvider) {
       CONTRIBUTORS: 'Helfern',
       VISIT_THE: 'Besuchen Sie das',
       GITHUB_REPOSITORY: 'Github Repository',
-      FORCE_LANG: 'Erzwinge Sprache:'
+      FORCE_LANG: 'Sprachwechsel erzwingen:'
     },
     LOGS: {
       RESULTS: 'Ergebnisse',
