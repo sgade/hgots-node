@@ -47,7 +47,7 @@ var initDB = function(done) {
       }
     
       if ( process.env.NODE_ENV === 'production' ) {
-        done(null);
+        defaultData(done);
       } else if ( process.env.NODE_ENV === 'test' ) {
         done(null);
       } else {
@@ -57,7 +57,37 @@ var initDB = function(done) {
   });
 };
 
+var defaultData = function(callback) {
+  callback = callback || function() {};
+  
+  // default login
+  db.User.count().complete(function(err, count) {
+    if ( !!err ) {
+      return callback(err);
+    }
+    
+    if ( count > 0 ) {
+      callback(null);
+    } else {
+      db.User.create({
+        username: 'admin',
+        password: crypt.encrypt('admin'),
+        type: 'Admin'
+      }).complete(function(err, user) {
+        if ( !!err ) {
+          return callback(err);
+        }
+        
+        console.log("Default admin login created.");
+        callback(null);
+      });
+    }
+  });
+};
+
 var sampleData = function(callback) {
+  callback = callback || function() {};
+  
   // Dummy data
   db.User.findOrCreate({
     username: 'test',
