@@ -8,6 +8,8 @@
  * Module dependencies.
  */
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
 var path = require('path');
 var config = require('../config');
 var pkg = require('../../package');
@@ -36,6 +38,7 @@ var mDNSAdvertiser = require('./mdns-handler').mDNSAdvertiser;
  * */
 var app = null;
 var server = null;
+var serverSSL = null;
 var mdnsAd = null;
 
 /**
@@ -224,6 +227,32 @@ exports.start = function(callback) {
   server.listen(app.get('port'), function(err) {
     if ( !!err ) {
       return callback(err);
+    }
+    
+    if ( config.web.enableSSL ) {
+      fs.readFile('ssl/server.key', function(err, sslPrivateKey) {
+        if ( !!err ) {
+          throw err;
+        }
+        
+        fs.readFile('ssl/server.crt', function(err, sslCertificate) {
+          if ( !!err ) {
+            throw err;
+          }
+          
+          var credentials = {
+            key: sslPrivateKey,
+            cert: sslCertificate,
+            passphrase: config.web.sslPassphrase
+          };
+          
+          serverSSL = https.createServer(credentials, app);
+          serverSSL.listen(433, function(err) {
+            console.log("SSL server started.");
+          });
+          
+        });
+      });
     }
     
     if ( config.web.useBonjour ) {
