@@ -50,7 +50,7 @@ function mDNSAdvertiser(name, port) {
     
     if ( !this.ad ) {
       if ( this._mdnsIsInstalled ) {
-        return callback(new Error('Advertisement is not initialized.'))
+        return callback(new Error('Advertisement is not initialized.'));
       }
       // mdns is not installed, ad cannot be initialized. The user should be aware of it
       return callback(null, null);
@@ -71,7 +71,7 @@ function mDNSAdvertiser(name, port) {
   this.stopAdvertising = function(callback) {
     _changeAdvertising('stop', callback);
   };
-};
+}
 
 module.exports = {
   mDNSAdvertiser: mDNSAdvertiser,
