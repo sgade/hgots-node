@@ -55,20 +55,16 @@ function expressSendServerHeader(req, res, next) {
  * @param {Integer} port - The port to listen on.
  * */
 exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, done) {
+  // load server
   app = express();
   configure(port, {
     rfidRequestCallback: getRFIDRequestCallback,
     openDoorRequestCallback: openDoorRequestCallback
   });
-  db.init(function(err) {
-    if ( !!err ) {
-      console.log("Could not initialize database.");
-      throw err; // This has to be done
-    }
-    
-    mdnsAd = new mDNSAdvertiser('hgots', port);
-    mdnsAd.init(done);
-  });
+  // load bonjour
+  mdnsAd = new mDNSAdvertiser('hgots', port);
+  // load database
+  db.init(done);
 };
 /**
  * Configures express.

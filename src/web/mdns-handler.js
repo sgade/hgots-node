@@ -18,7 +18,7 @@ function mDNSAdvertiser(name, port) {
     return callback(null, this._mdnsIsInstalled);
   };
   
-  this.init = function(callback) {
+  this._init = function(callback) {
     callback = callback || function() {};
     
     if ( !this._mdnsIsInstalled ) {
@@ -26,6 +26,10 @@ function mDNSAdvertiser(name, port) {
         console.log("mDNS module is not installed.");
       }
       return callback(null);
+    }
+    
+    if ( !!this.ad ) {
+      return callback(new Error('Advertisement already created.'));
     }
     
     var options = {};
@@ -60,13 +64,18 @@ function mDNSAdvertiser(name, port) {
       this.ad.start();
     } else if ( type === 'stop' ) {
       this.ad.stop();
+      this.ad = null;
     }
     
     callback(null);
   };
   
   this.startAdvertising = function(callback) {
-    _changeAdvertising.call(this, 'start', callback);
+    var self = this;
+    
+    self._init(function(err) {
+      _changeAdvertising.call(self, 'start', callback);
+    });
   };
   this.stopAdvertising = function(callback) {
     _changeAdvertising.call(this, 'stop', callback);
