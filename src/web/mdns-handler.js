@@ -66,10 +66,10 @@ function mDNSAdvertiser(name, port) {
   };
   
   this.startAdvertising = function(callback) {
-    _changeAdvertising('start', callback);
+    _changeAdvertising.call(this, 'start', callback);
   };
   this.stopAdvertising = function(callback) {
-    _changeAdvertising('stop', callback);
+    _changeAdvertising.call(this, 'stop', callback);
   };
 }
 
