@@ -82,7 +82,9 @@ function configure(port, callbacks) {
     threshold: 256
   }));
   app.use(expressSendServerHeader); // send 'Server' header
-  app.use(expressBodyParser.urlencoded());
+  app.use(expressBodyParser.urlencoded({
+    extended: true
+  }));
   app.use(expressBodyParser.json());
   app.use(expressMethodOverride());
   app.use(expressCookieParser(config.web.secret)); // cookies
@@ -93,7 +95,9 @@ function configure(port, callbacks) {
   }
   app.use(expressSession({ // session support
     secret: config.web.secret,
-    store: sessionStore
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: true
   }));
 
   if ('development' === app.get('env')) {
