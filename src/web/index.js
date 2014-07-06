@@ -29,13 +29,14 @@ var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
 var db = require('../db');
-var mdns = require('./mdns-handler');
+var mDNSAdvertiser = require('./mdns-handler').mDNSAdvertiser;
 
 /**
  * The express instance
  * */
 var app = null;
 var server = null;
+var mdnsAd = null;
 
 /**
  * Express instance for testing purposes.
@@ -65,7 +66,8 @@ exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, d
       throw err; // This has to be done
     }
     
-    mdns.init('hgots', port, done);
+    mdnsAd = new mDNSAdvertiser('hgots', port);
+    mdnsAd.init(done);
   });
 };
 /**
@@ -196,7 +198,7 @@ function configureRoutes(callbacks) {
  * */
 exports.stop = function(callback) {
   if ( server ) {
-    mdns.stopAdvertising(function() {
+    mdnsAd.stopAdvertising(function() {
       server.close(callback);
     });
   }
@@ -221,7 +223,7 @@ exports.start = function(callback) {
       return callback(err);
     }
     
-    mdns.startAdvertising(callback);
+    mdnsAd.startAdvertising(callback);
   });
 };
 
