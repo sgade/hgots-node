@@ -90,7 +90,9 @@ hgots.config([ '$translateProvider', function($translateProvider) {
         REMOVE: 'Remove',
         
         CONFIRM_DELETE_USER: 'Do you really want to delete {{username}}?',
-        CONFIRM_DELETE_CARD: 'Do you really want to remove card "{{uid}}" from this user?'
+        CONFIRM_DELETE_CARD: 'Do you really want to remove card "{{uid}}" from this user?',
+        
+        ERROR_GETRFID: "An error occured when reading the tag from the RFID reader: {{error}}"
       }
     }
   });
@@ -180,7 +182,9 @@ hgots.config([ '$translateProvider', function($translateProvider) {
         REMOVE: 'Entfernen',
         
         CONFIRM_DELETE_USER: 'Möchten Sie wirklich den Benutzer "{{username}}" löschen?',
-        CONFIRM_DELETE_CARD: 'Möchten Sie wirklich die Karte "{{uid}}" von diesem Benutzer entfernen?'
+        CONFIRM_DELETE_CARD: 'Möchten Sie wirklich die Karte "{{uid}}" von diesem Benutzer entfernen?',
+        
+        ERROR_GETRFID: "Ein Fehler trat beim Lesen vom RFID Leser auf: {{error}}"
       }
     }
   });

@@ -91,8 +91,10 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
       console.log("Error getting rfid:", data);
       var error = data.error;
       
-      alert("An error occured when reading the tag from the RFID reader:" + error).then(function() {
-        $scope.currentlyLoadingRFIDResponse = false;
+      $translate('ADMIN.USER.ERROR_GETRFID', { error: error }).then(function(errorText) {
+        alert(errorText).then(function() {
+          $scope.currentlyLoadingRFIDResponse = false;
+        });
       });
     });
   };
