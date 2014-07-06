@@ -1,4 +1,4 @@
-hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http', '$location', 'AdminShared', 'User', 'Card', 'confirm', '$translate', function($scope, $routeParams, $http, $location, AdminShared, User, Card, confirm, $translate) {
+hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http', '$location', 'AdminShared', 'User', 'Card', 'confirm', '$translate', 'alert', function($scope, $routeParams, $http, $location, AdminShared, User, Card, confirm, $translate, alert) {
   // set all user types
   $scope.userTypes = AdminShared.userTypes;
   // watch for user changes
@@ -89,8 +89,11 @@ hgotsAdmin.controller('AdminUserController', [ '$scope', '$routeParams', '$http'
       $scope.currentlyLoadingRFIDResponse = false;
     }).error(function(data) {
       console.log("Error getting rfid:", data);
+      var error = data.error;
       
-      $scope.currentlyLoadingRFIDResponse = false;
+      alert("An error occured when reading the tag from the RFID reader:" + error).then(function() {
+        $scope.currentlyLoadingRFIDResponse = false;
+      });
     });
   };
   
