@@ -192,7 +192,7 @@ function openDoor(callback) {
         console.log("Door closed.");
         return callback(null);
       });
-    }, config.web.doorOpenTime);
+    }, config.doorOpenTime);
     
   });
 }

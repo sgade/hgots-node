@@ -18,9 +18,9 @@
     "port": 80,
     "enableSSL": true,
     "sslPassphrase": "",
-    "doorOpenTime": 2000,
     "secret": "web-secret",
     "useBonjour": true
   },
+  "doorOpenTime": 2000,
   "logname": "access_%s.log"
 }
