@@ -5,6 +5,7 @@ echo "Please make sure you have the latest version of the source code at hand."
 echo "If you want to check for and download new versions, please run 'git pull'."
 echo ""
 echo "INFO: This script will notify you about required software and may also install required dependencies for production."
+echo "INFO: If you want to use Bonjour to broadcast your web server and you are running on Linux, please run 'apt-get install libavahi-compat-libdnssd-dev' before you start the application."
 # Check for node and npm
 which node > /dev/null || ( echo "You need Node.js installed to use this application. See https://nodejs.org for more details." && exit )
 which npm > /dev/null  || ( echo "You need npm installed to use this application. Please install a version that is compatible with your nodejs version." && exit )
