@@ -249,6 +249,17 @@ exports.start = function(callback) {
             SNICallback: function(servername) {
               console.log("SSL servername:", servername);
               
+              if ( fs.existsSync('ssl/' + servername + '.crt') ) {
+                var sslPrivateKey = fs.readFileSync('ssl/' + servername + '.key');
+                var sslCertificate = fs.readFileSync('ssl/' + servername + '.crt');
+                
+                return crypto.createCredentials({
+                  key: sslPrivateKey,
+                  cert: sslCertificate,
+                  passphrase: config.web.sslPassphrase
+                }).context;
+              }
+              
               return crypto.createCredentials({
                 key: sslPrivateKey,
                 cert: sslCertificate,
