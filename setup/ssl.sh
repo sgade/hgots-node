@@ -1,10 +1,10 @@
 #!/bin/bash
 # See http://www.akadia.com/services/ssh_test_certificate.html
 
-echo "Enter the filename for the certificate (only name):"
-read CERT_NAME
 echo "This script will guide you through generating and self-signing a ssl-certificate."
 echo ""
+echo "Enter the filename for the certificate (only name):"
+read CERT_NAME
 echo "Generating private key..."
 openssl genrsa -des3 -out ssl/$CERT_NAME.key 1024
 
