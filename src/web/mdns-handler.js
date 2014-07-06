@@ -67,18 +67,18 @@ function mDNSAdvertiser(name, port) {
       this.ad = null;
     }
     
-    callback(null);
+    return callback(null);
   };
   
   this.startAdvertising = function(callback) {
     var self = this;
     
-    self._init(function(err) {
-      _changeAdvertising.call(self, 'start', callback);
+    return self._init(function(err) {
+      return _changeAdvertising.call(self, 'start', callback);
     });
   };
   this.stopAdvertising = function(callback) {
-    _changeAdvertising.call(this, 'stop', callback);
+    return _changeAdvertising.call(this, 'stop', callback);
   };
 }
 
