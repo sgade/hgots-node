@@ -19,6 +19,5 @@
     "doorOpenTime": 2000,
     "secret": "web-secret"
   },
-  "setupCode": "your secret code here",
   "logname": "access_%s.log"
 }
