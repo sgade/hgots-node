@@ -63,14 +63,15 @@ This application was designed with no specific frontend in mind. Although it fea
 
 If you want to create a third-party application for the API server there are some things you should consider:
 
-1. You *may not* sell your application or gain profit from this project, as it is open-source.
-2. You *must* link or refer to this repository and indicate that you are only using our work efforts.
+1. You *should not* sell your application or gain profit from this project, as it is open-source.
+2. You *should* link or refer to this repository and indicate that you are only using our work efforts.
 3. You *can* contact me if you are interested in being listed here. You application does not have to be open-source (but again, free and without commercial use, i.e. no charges in any form like ads) but it would be nice if it would.
 4. If you want to represent certain actions in your application, you should use the icons used in the web application. They were carefully selected and should be used to give the user a sense of coherency. Here's a small list, using the [Github Octicons](https://octicons.github.com/):
   - Sign In: [sign-in](https://octicons.github.com/icon/sign-in/)
   - Sign Out: [sign-out](https://octicons.github.com/icon/sign-out/)
   - Open Door: [key](https://octicons.github.com/icon/key/)
   - About: [package](https://octicons.github.com/icon/package/)
+5. Since we are using the MIT Licence, you are free to do what you want with the code but keep in mind that a little referal link is not hard to implement. Please help open source stay nice and open.
 
 # Generate documentation
 
@@ -111,3 +112,7 @@ http {
 }
 
 ```
+
+# License
+
+See `LICENSE` file.
