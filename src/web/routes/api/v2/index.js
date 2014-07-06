@@ -1,7 +1,6 @@
 var users = require('./users');
 var cards = require('./cards');
 var misc = require('./misc');
-var setup = require('./setup');
 var log = require('./log');
 
 module.exports = function(app, callbacks) {
@@ -23,9 +22,6 @@ module.exports = function(app, callbacks) {
   app.get(prefix + '/opendoor', misc.openDoor);
   misc.setRFIDRequestCallback(callbacks.rfidRequestCallback);
   app.get(prefix + '/getrfid', misc.getRFID);
-  
-  app.post(prefix + '/setup-auth', setup.authenticate);
-  app.post(prefix + '/setup', setup.doSetup);
   
   app.get(prefix + '/log/:year/:month/:date', log.getLogFromDate);
   
