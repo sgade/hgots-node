@@ -282,27 +282,20 @@ exports._startWithSSL = function(done) {
     if ( !!err ) {
       return done(err);
     }
+    console.log("HTTP forward server running.");
     
     // default hostname
-    certificateHandler.getCertificateForHostname('server', function(err, cert) {
-      if ( !!err ) {
-        throw err;
-      }
+    var defaultCert = certificateHandler.getCertificateForHostname('server');
       
-      var options = cert;
-      console.log(options);
-      options.SNICallback = function(servername) {
-        return certificateHandler.getCertificateForHostname(servername, function(err, cert) {
-          if ( !!err ) {
-            throw err;
-          }
-          
-          return cert;
-        });
-      };
+    var options = defaultCert;
+    options.SNICallback = function(servername) {
+      console.log("cert for " + servername);
+      return certificateHandler.getCertificateForHostname(servername).context;
+    };
       
-      serverSSL = https.createServer(options, app);
-      serverSSL.listen(app.get('port'), done);
+    serverSSL = https.createServer(options, app);
+    serverSSL.listen(app.get('port'), function(err) {
+      done(err);
     });
     
   });

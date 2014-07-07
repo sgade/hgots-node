@@ -5,66 +5,54 @@ var config = require('./../config');
 
 var loadedCertificates = {};
 
-exports._isCertificateLoaded = function(name, callback) {
+exports._isCertificateLoaded = function(name) {
   var loaded = !!loadedCertificates[name];
-  return callback(null, loaded);
+  return loaded;
 };
-exports._getCertificateFromCache = function(name, callback) {
-  return exports._isCertificateLoaded(name, function(err, isLoaded) {
-    if ( !!err || !isLoaded ) {
-      return callback(new Error('Certificate for "' + name + '" is not loaded.'))
-    }
+exports._getCertificateFromCache = function(name) {
+  if ( !exports._isCertificateLoaded(name) ) {
+    throw new Error('Certificate for "' + name + '" is not loaded.');
+  }
     
-    return callback(null, loadedCertificates[name]);
-  });
+  return loadedCertificates[name];
 };
 
-exports._checkForCertificateFiles = function(name, callback) {
+exports._checkForCertificateFiles = function(name) {
   var basePath = './ssl/';
   var privateKeyPath = path.join(basePath, name + '.key');
   var certificatePath = path.join(basePath, name + '.crt');
   
-  return fs.exists(privateKeyPath, function(exists) {
-    if ( !exists ) {
-      return callback(new Error('No private key found for host "' + name + '".'));
-    }
-    return fs.exists(certificatePath, function(exists) {
-      if ( !exists ) {
-        return callback(new Error('No certificate found for host "' + name + '".'));
-      }
-      
-      return fs.readFile(privateKeyPath, function(err, privateKey) {
-        if ( !!err ) {
-          return callback(err);
-        }
-        return fs.readFile(certificatePath, function(err, certificate) {
-          if ( !!err ) {
-            return callback(err);
-          }
-          
-          return callback(null, {
-            key: privateKey,
-            cert: certificate,
-            passphrase: config.web.sslPassphrase
-          });
-        });
-      });
-    });
-  });
+  if ( !fs.existsSync(privateKeyPath) ) {
+    throw new Error('No private key found for host "' + name + '".');
+  }
+  if ( !fs.existsSync(certificatePath) ) {
+    throw new Error('No certificate found for host "' + name + '".');
+  }
+  
+  var privateKey = fs.readFileSync(privateKeyPath);
+  var certificate = fs.readFileSync(certificatePath);
+  
+  return {
+    key: privateKey,
+    cert: certificate,
+    passphrase: config.web.sslPassphrase
+  };
 };
-exports._loadCertificateFromDisk = function(name, callback) {
-  return exports._checkForCertificateFiles(name, function(err, data) {
-    if ( !!err ) {
-      return callback(err);
-    }
+exports._loadCertificateFromDisk = function(name) {
+  var data = exports._checkForCertificateFiles(name);
+  
+  loadedCertificates[name] = data;
+  console.log("Loaded certificate \"" + name + "\".");
     
-    loadedCertificates[name] = data;
-    
-    return callback(null, data);
-  });
+  return data;
 };
 
-exports.getCertificateForHostname = function(hostname, callback) {
+exports.getCertificateForHostname = function(hostname) {
+  if ( exports._isCertificateLoaded(hostname) ) {
+    return exports._getCertificateFromCache(hostname);
+  } else {
+    return exports._loadCertificateFromDisk(hostname);
+  }
   return exports._isCertificateLoaded(hostname, function(err, isLoaded) {
     if ( isLoaded ) {
       return exports._getCertificateFromCache(hostname, callback);
