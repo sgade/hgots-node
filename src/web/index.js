@@ -268,9 +268,7 @@ exports._startWithSSL = function(done) {
     // redirect to https server
     var newURL = 'https://' + req.headers.host;
     var port = exports._getPort();
-    if ( port !== 433 ) {
-      newURL += ":" + port;
-    }
+    newURL += ":" + port;
     newURL += req.url;
     
     // 301
