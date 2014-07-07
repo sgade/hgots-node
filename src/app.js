@@ -32,14 +32,11 @@ var relais = null;
  * Starts the webserver.
  * */
 function startWeb() {
-  var port = config.web.port;
-  
   if(typeof PhusionPassenger !== 'undefined') {
     PhusionPassenger.configure({ autoInstall: false });
-    port = 'passenger';
   }
   
-  web.init(port, web_RFIDRequest, web_OpenDoor, function(err) {
+  web.init(web_RFIDRequest, web_OpenDoor, function(err) {
     if ( !!err ) {
       throw err;
     }

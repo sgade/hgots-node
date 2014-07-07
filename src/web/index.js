@@ -9,8 +9,7 @@
  */
 var http = require('http');
 var https = require('https');
-var crypto = require('crypto');
-var fs = require('fs');
+var certificateHandler = require('./certificate-handler');
 var async = require('async');
 var path = require('path');
 var config = require('../config');
@@ -59,15 +58,13 @@ function expressSendServerHeader(req, res, next) {
  * Initializes the server instance and configures express.
  * @param {Integer} port - The port to listen on.
  * */
-exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, done) {
+exports.init = function(getRFIDRequestCallback, openDoorRequestCallback, done) {
   // load server
   app = express();
-  configure(port, {
+  configure(exports._getPort(), {
     rfidRequestCallback: getRFIDRequestCallback,
     openDoorRequestCallback: openDoorRequestCallback
   });
-  // load bonjour
-  mdnsAd = new mDNSAdvertiser('hgots', port);
   // load database
   db.init(done);
 };
@@ -232,65 +229,82 @@ exports.getPort = function() {
  * @param {Callback} callback - A callback that is called once the server is running.
  * */
 exports.start = function(callback) {
-  server = http.createServer(app);
-  server.listen(app.get('port'), function(err) {
+  if ( !config.web.enableSSL ) {
+    exports._startNoSSL(mDNSCheck);
+  } else {
+    exports._startWithSSL(mDNSCheck);
+  }
+  
+  function mDNSCheck(err) {
     if ( !!err ) {
       return callback(err);
     }
     
-    if ( config.web.enableSSL ) {
-      fs.readFile('ssl/server.key', function(err, sslPrivateKey) {
-        if ( !!err ) {
-          throw err;
-        }
-        
-        fs.readFile('ssl/server.crt', function(err, sslCertificate) {
+    // load bonjour
+    mdnsAd = new mDNSAdvertiser('hgots', exports._getPort());
+    if ( config.web.useBonjour ) {
+      return mdnsAd.startAdvertising(callback);
+    }
+    
+    return callback(null);
+  }
+};
+exports._startNoSSL = function(done) {
+  server = http.createServer(app);
+  server.listen(app.get('port'), function(err) {
+    if ( !!err ) {
+      return done(err);
+    }
+    
+    if ( config.web.useBonjour ) {
+      return mdnsAd.startAdvertising(done);
+    }
+    
+    return done(null);
+  });
+};
+exports._startWithSSL = function(done) {
+  server = http.createServer(function(req, res) {
+    // redirect to https server
+    var newURL = 'https://' + req.headers.host;
+    var port = exports._getPort();
+    if ( port !== 433 ) {
+      newURL += ":" + port;
+    }
+    newURL += req.url;
+    
+    // 301
+    console.log("Request to http. Redirecting to '" + newURL + "'...");
+    res.writeHead(301, { Location: newURL });
+    res.end();
+  });
+  server.listen(80, function(err) {
+    if ( !!err ) {
+      return done(err);
+    }
+    
+    // default hostname
+    certificateHandler.getCertificateForHostname('server', function(err, cert) {
+      if ( !!err ) {
+        throw err;
+      }
+      
+      var options = cert;
+      console.log(options);
+      options.SNICallback = function(servername) {
+        return certificateHandler.getCertificateForHostname(servername, function(err, cert) {
           if ( !!err ) {
             throw err;
           }
           
-          var options = {
-            key: sslPrivateKey,
-            cert: sslCertificate,
-            passphrase: config.web.sslPassphrase,
-            
-            SNICallback: function(servername) {
-              console.log("SSL servername:", servername);
-              
-              if ( fs.existsSync('ssl/' + servername + '.crt') ) {
-                var sslPrivateKey = fs.readFileSync('ssl/' + servername + '.key');
-                var sslCertificate = fs.readFileSync('ssl/' + servername + '.crt');
-                
-                return crypto.createCredentials({
-                  key: sslPrivateKey,
-                  cert: sslCertificate,
-                  passphrase: config.web.sslPassphrase
-                }).context;
-              }
-              
-              return crypto.createCredentials({
-                key: sslPrivateKey,
-                cert: sslCertificate,
-                passphrase: config.web.sslPassphrase
-              }).context;
-            }
-          };
-          
-          serverSSL = https.createServer(options, app);
-          serverSSL.listen(433, function(err) {
-            console.log("SSL server started.");
-          });
-          
+          return cert;
         });
-      });
-    }
+      };
+      
+      serverSSL = https.createServer(options, app);
+      serverSSL.listen(app.get('port'), done);
+    });
     
-    if ( config.web.useBonjour ) {
-      mdnsAd.startAdvertising(callback);
-      console.log("Advertising web server via bonjour.");
-    } else {
-      callback(null);
-    }
   });
 };
 exports._getPort = function() {
