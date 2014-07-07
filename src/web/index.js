@@ -293,6 +293,24 @@ exports.start = function(callback) {
     }
   });
 };
+exports._getPort = function() {
+  var port = config.web.port;
+  var PORT_HTTP = 80;
+  var PORT_HTTPS = 433;
+  
+  if ( config.web.enableSSL ) {
+    if ( port === PORT_HTTP ) {
+      return PORT_HTTPS;
+    }
+    return port;
+  } else {
+    if ( port === PORT_HTTPS ) {
+      return PORT_HTTP;
+    }
+    
+    return port;
+  }
+};
 
 // start the server if we are invoked directly
 if ( !module.parent ) {
