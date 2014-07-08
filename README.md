@@ -55,6 +55,37 @@ Applications like `sass` (Ruby gem), `grunt` (npm package) and `bower` (npm pack
 
 Everything important is defined in the file named `config.json` which is located in the root of the project. You should have created such a file and should be able to edit the details in there with applications like `nano` (-> `nano config.json`).
 
+Explanation:
+```javascript
+{
+  port: { // device paths, this could be usb ports if serial ports are forwarded via usb to serial adapters
+    "rfid": "", // path to the rfid reader device
+    "relais": "" // path to the relais card
+  },
+  "relaisport": { // ports on the relais card that are mapped to certain functions:
+    "door": 0, // the port to open the door
+    "green": 0, // port for green led
+    "yellow": 0, // port for yellow led
+    "red": 0 // port for red led
+  },
+  "db": { // config for database
+    "name": "db.sqlite", // filename for the database
+    "username": "", // credentials for the database
+    "password": ""
+  },
+  "web": {
+    "port": 80, // port on which the web interface (either HTTP or HTTPS) is running
+    "secret": "x", // a UNIQUE secret that is used to save cookies
+    "useBonjour": true, // advertise the web interface via mdns (aka Apple's "Bonjour")
+    "enableSSL": false, // enable HTTPS connections. This is working but might be difficult to use. See README for config help.
+    "sslCertificatePassphrase": "" // see SSL config
+  },
+  "doorOpenTime": 2000, // the time in ms that the door will be open
+  "logname": "log_%s.log" // name of each log placed in the /logs directory. %s is the current date (yyyy.mm.dd).
+}
+```
+
+
 # How to develop
 
 1. `git clone https://github.com/sgade/hgots-node.git`
