@@ -85,7 +85,6 @@ module.exports = function(grunt) {
     /* Build */
     uglify: {
       options: {
-        sourceMap: true,
         banner: BANNER
       },
       index: {
