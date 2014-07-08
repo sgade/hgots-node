@@ -184,7 +184,7 @@ function configureRoutes(callbacks) {
     res.send({ id: req.user.id, username: req.user.username, type: req.user.type });
     res.end();
     
-    console.log('Login via API. User "' + req.user.username + '".');
+    console.log('Login via API. User: "' + req.user.username + '".');
   });
   
   // Routes for app
