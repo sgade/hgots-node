@@ -53,11 +53,4 @@ exports.getCertificateForHostname = function(hostname) {
   } else {
     return exports._loadCertificateFromDisk(hostname);
   }
-  return exports._isCertificateLoaded(hostname, function(err, isLoaded) {
-    if ( isLoaded ) {
-      return exports._getCertificateFromCache(hostname, callback);
-    } else {
-      return exports._loadCertificateFromDisk(hostname, callback);
-    }
-  })
 };
