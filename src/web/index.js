@@ -232,9 +232,9 @@ exports.getPort = function() {
  * */
 exports.start = function(callback) {
   if ( !config.web.enableSSL ) {
-    exports._startNoSSL(mDNSCheck);
+    return exports._startNoSSL(mDNSCheck);
   } else {
-    exports._startWithSSL(mDNSCheck);
+    return exports._startWithSSL(mDNSCheck);
   }
   
   function mDNSCheck(err) {
