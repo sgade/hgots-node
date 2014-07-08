@@ -90,7 +90,7 @@ describe('HGOTS Server Specs', function() {
   this.timeout(20000);
   
   beforeEach(function(done) {
-    app.init(port, nullCallback, nullCallback, function() {
+    app.init(nullCallback, nullCallback, function() {
       app.start(function() {
         expressApp = app.getExpress();
         sequelize_fixtures.loadFixtures(require('./fixtures/test.json'), db, function() {

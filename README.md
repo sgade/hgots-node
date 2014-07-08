@@ -41,6 +41,11 @@ On first start in *production mode* (`env NODE_ENV=production node src/app` or r
 
 It is highly recommended that you **immediately change this password!**
 
+## HTTPS
+
+If you want to enable node's https server, first run `setup/ssl.sh` to create a self-signed certificate or add your official one into the folder `./ssl`. You need to place a file that is called the way your server is accessed (e.g. `localhost.key` and `localhost.crt`).
+If you have your certificate(s) ready, go into your `config.json` and set `enableSSL` to `true` and enter your certificate password in `sslCertificatePassphrase`. That's all.
+
 # Technical details
 
 During the setup routine, the raspberry checks for ruby, node and other requirements and even tries to install those. It will tell you if it is not able to resolve any problems by itself.

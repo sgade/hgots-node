@@ -8,6 +8,9 @@
  * Module dependencies.
  */
 var http = require('http');
+var https = require('https');
+var certificateHandler = require('./certificate-handler');
+var async = require('async');
 var path = require('path');
 var config = require('../config');
 var pkg = require('../../package');
@@ -36,6 +39,7 @@ var mDNSAdvertiser = require('./mdns-handler').mDNSAdvertiser;
  * */
 var app = null;
 var server = null;
+var serverSSL = null;
 var mdnsAd = null;
 
 /**
@@ -54,15 +58,13 @@ function expressSendServerHeader(req, res, next) {
  * Initializes the server instance and configures express.
  * @param {Integer} port - The port to listen on.
  * */
-exports.init = function(port, getRFIDRequestCallback, openDoorRequestCallback, done) {
+exports.init = function(getRFIDRequestCallback, openDoorRequestCallback, done) {
   // load server
   app = express();
-  configure(port, {
+  configure(exports._getPort(), {
     rfidRequestCallback: getRFIDRequestCallback,
     openDoorRequestCallback: openDoorRequestCallback
   });
-  // load bonjour
-  mdnsAd = new mDNSAdvertiser('hgots', port);
   // load database
   db.init(done);
 };
@@ -181,6 +183,8 @@ function configureRoutes(callbacks) {
   app.post('/auth/login/api', passport.authenticate('local'), function(req, res) {
     res.send({ id: req.user.id, username: req.user.username, type: req.user.type });
     res.end();
+    
+    console.log('Login via API. User: "' + req.user.username + '".');
   });
   
   // Routes for app
@@ -200,11 +204,18 @@ function configureRoutes(callbacks) {
  * Stops the express server.
  * */
 exports.stop = function(callback) {
-  if ( server ) {
-    mdnsAd.stopAdvertising(function() {
-      server.close(callback);
-    });
-  }
+  async.eachSeries([ server, serverSSL ], function(sItem, done) {
+    if ( !!sItem ) {
+      return sItem.close(done);
+    }
+    done(null);
+  }, function(err) {
+    if ( !!mdnsAd ) {
+      return mdnsAd.stopAdvertising(callback);
+    }
+    
+    callback(null);
+  });
 };
 
 /**
@@ -220,19 +231,87 @@ exports.getPort = function() {
  * @param {Callback} callback - A callback that is called once the server is running.
  * */
 exports.start = function(callback) {
-  server = http.createServer(app);
-  server.listen(app.get('port'), function(err) {
+  if ( !config.web.enableSSL ) {
+    return exports._startNoSSL(mDNSCheck);
+  } else {
+    return exports._startWithSSL(mDNSCheck);
+  }
+  
+  function mDNSCheck(err) {
     if ( !!err ) {
       return callback(err);
     }
     
+    // load bonjour
+    mdnsAd = new mDNSAdvertiser('hgots', exports._getPort());
     if ( config.web.useBonjour ) {
-      mdnsAd.startAdvertising(callback);
-      console.log("Advertising web server via bonjour.");
-    } else {
-      callback(null);
+      return mdnsAd.startAdvertising(callback);
     }
+    
+    return callback(null);
+  }
+};
+exports._startNoSSL = function(done) {
+  server = http.createServer(app);
+  server.listen(app.get('port'), function(err) {
+    if ( !!err ) {
+      return done(err);
+    }
+    
+    return done(null);
   });
+};
+exports._startWithSSL = function(done) {
+  server = http.createServer(function(req, res) {
+    // redirect to https server
+    var newURL = 'https://' + req.headers.host;
+    var port = exports._getPort();
+    newURL += ":" + port;
+    newURL += req.url;
+    
+    // 301
+    console.log("Request to http. Redirecting to '" + newURL + "'...");
+    res.writeHead(301, { Location: newURL });
+    res.end();
+  });
+  server.listen(80, function(err) {
+    if ( !!err ) {
+      return done(err);
+    }
+    console.log("HTTP relay server running on port 80.");
+    
+    // default hostname
+    var defaultCert = certificateHandler.getCertificateForHostname('server');
+      
+    var options = defaultCert;
+    options.SNICallback = function(servername) {
+      return certificateHandler.getCertificateForHostname(servername).context;
+    };
+      
+    serverSSL = https.createServer(options, app);
+    serverSSL.listen(app.get('port'), function(err) {
+      done(err);
+    });
+    
+  });
+};
+exports._getPort = function() {
+  var port = config.web.port;
+  var PORT_HTTP = 80;
+  var PORT_HTTPS = 433;
+  
+  if ( config.web.enableSSL ) {
+    if ( port === PORT_HTTP ) {
+      return PORT_HTTPS;
+    }
+    return port;
+  } else {
+    if ( port === PORT_HTTPS ) {
+      return PORT_HTTP;
+    }
+    
+    return port;
+  }
 };
 
 // start the server if we are invoked directly
