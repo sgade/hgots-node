@@ -210,8 +210,8 @@ exports.stop = function(callback) {
     }
     done(null);
   }, function(err) {
-    if ( !!mDNSAd ) {
-      return mDNSAd.stopAdvertising(callback);
+    if ( !!mdnsAd ) {
+      return mdnsAd.stopAdvertising(callback);
     }
     
     callback(null);
