@@ -256,10 +256,6 @@ exports._startNoSSL = function(done) {
       return done(err);
     }
     
-    if ( config.web.useBonjour ) {
-      return mdnsAd.startAdvertising(done);
-    }
-    
     return done(null);
   });
 };
