@@ -16,10 +16,10 @@
   },
   "web": {
     "port": 3333,
-    "enableSSL": false,
-    "sslPassphrase": "",
     "secret": "web-secret",
-    "useBonjour": false
+    "useBonjour": false,
+    "enableSSL": false,
+    "sslCertificatePassphrase": "",
   },
   "doorOpenTime": 2000,
   "logname": "access_%s.log"

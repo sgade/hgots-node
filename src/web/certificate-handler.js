@@ -35,7 +35,7 @@ exports._checkForCertificateFiles = function(name) {
   return {
     key: privateKey,
     cert: certificate,
-    passphrase: config.web.sslPassphrase
+    passphrase: config.web.sslCertificatePassphrase
   };
 };
 exports._loadCertificateFromDisk = function(name) {
