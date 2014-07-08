@@ -183,6 +183,8 @@ function configureRoutes(callbacks) {
   app.post('/auth/login/api', passport.authenticate('local'), function(req, res) {
     res.send({ id: req.user.id, username: req.user.username, type: req.user.type });
     res.end();
+    
+    console.log('Login via API. User "' + req.user.username + '".');
   });
   
   // Routes for app
