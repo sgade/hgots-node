@@ -283,7 +283,6 @@ exports._startWithSSL = function(done) {
       
     var options = defaultCert;
     options.SNICallback = function(servername) {
-      console.log("cert for " + servername);
       return certificateHandler.getCertificateForHostname(servername).context;
     };
       
