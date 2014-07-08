@@ -19,7 +19,7 @@
     "secret": "web-secret",
     "useBonjour": false,
     "enableSSL": false,
-    "sslCertificatePassphrase": "",
+    "sslCertificatePassphrase": ""
   },
   "doorOpenTime": 2000,
   "logname": "access_%s.log"
