@@ -276,7 +276,7 @@ exports._startWithSSL = function(done) {
     if ( !!err ) {
       return done(err);
     }
-    console.log("HTTP forward server running.");
+    console.log("HTTP relay server running on port 80.");
     
     // default hostname
     var defaultCert = certificateHandler.getCertificateForHostname('server');
