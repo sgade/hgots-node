@@ -29,6 +29,8 @@ exports.getRFID = function(req, res) {
 
 exports.openDoor = function(req, res) {
   return helpers.authenticate(req, res, function(err, authenticationResponse) {
+    console.log('User "' + authenticationResponse.user.username + '" requested to open the door.');
+    
     return callbacks.openDoorRequestCallback(function(err) {
       if ( !!err ) {
         return helpers.sendInternalServerError(res);

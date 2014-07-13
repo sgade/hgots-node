@@ -78,7 +78,7 @@ function initRFIDReader() {
   // add event listeners
   rfidReader.on('data', function(data) {
     data = data.toString();
-    console.log("Data by RFID reader:", data);
+    //console.log("Data by RFID reader:", data);
     
     db.Card.find({
       where: {
@@ -86,7 +86,7 @@ function initRFIDReader() {
       }
     }).success(function(card) {
       if ( !card ) {
-        console.log("No card found.");
+        console.log('No card registered with id "' + data + '".');
         
         // switch yellow off, red on
         relais.setSingle(config.relaisport.red, function(err) {
@@ -103,9 +103,9 @@ function initRFIDReader() {
       } else {
         card.getUser().success(function(user) {
           if ( !user ) {
-            throw new Error("No user found for rfid card in database!");
+            throw new Error('No user found for RFID card "' + data + '" in database!');
           } else {
-            console.log("User is", user.username);
+            console.log('RFID card "' + data + '" belongs to user "' + user.username + '".');
             
             openDoor(function(err) {
               if ( !!err ) {
