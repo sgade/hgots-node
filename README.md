@@ -1,6 +1,10 @@
 # hgots-node
 
-[![Build Status](https://travis-ci.org/sgade/hgots-node.svg)](https://travis-ci.org/sgade/hgots-node) [![Code Climate](https://codeclimate.com/github/sgade/hgots-node.png)](https://codeclimate.com/github/sgade/hgots-node) [![Dependency Status](https://david-dm.org/sgade/hgots-node.png?theme=shields.io)](https://david-dm.org/sgade/hgots-node) [![devDependency Status](https://david-dm.org/sgade/hgots-node/dev-status.png?theme=shields.io)](https://david-dm.org/sgade/hgots-node#info=devDependencies) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Build Status](https://travis-ci.org/sgade/hgots-node.svg)](https://travis-ci.org/sgade/hgots-node)
+[![Code Climate](https://codeclimate.com/github/sgade/hgots-node.png)](https://codeclimate.com/github/sgade/hgots-node)
+[![Dependency Status](https://david-dm.org/sgade/hgots-node.svg)](https://david-dm.org/sgade/hgots-node)
+[![devDependency Status](https://david-dm.org/sgade/hgots-node/dev-status.svg)](https://david-dm.org/sgade/hgots-node#info=devDependencies)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 *Door lock system in nodejs for Herbartgymnasium Oldenburg.*
 
