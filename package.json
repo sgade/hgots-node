@@ -1,7 +1,7 @@
 {
   "name": "hgots-node",
-  "version": "0.9.0",
-  "versionName": "Jack of all trades",
+  "version": "0.9.1",
+  "versionName": "Clean Ant",
   "description": "Door lock system in nodejs for Herbartgymnasium Oldenburg.",
   "main": "src/app.js",
   "scripts": {

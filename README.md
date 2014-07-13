@@ -9,7 +9,7 @@
 
 *Door lock system in nodejs for Herbartgymnasium Oldenburg.*
 
-This application is still in development.
+**v0.9.1 (Clean Ant)**
 
 # Target environment and usage
 
