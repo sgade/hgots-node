@@ -1,6 +1,7 @@
 {
   "name": "hgots-node",
   "version": "0.9.0",
+  "versionName": "Jack of all trades",
   "description": "Door lock system in nodejs for Herbartgymnasium Oldenburg.",
   "main": "src/app.js",
   "scripts": {
