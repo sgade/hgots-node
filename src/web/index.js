@@ -32,6 +32,7 @@ var passport = require('passport'),
   PassportLocal = require('passport-local').Strategy;
 var routes = require('./routes');
 var db = require('../db');
+var crypto = require('../crypto');
 var mDNSAdvertiser = require('./mdns-handler').mDNSAdvertiser;
 
 /**
@@ -137,11 +138,11 @@ function configurePassport() {
   app.use(passport.session());
 
   // username and password based authentication
+  // Now even replay-proof 
   passport.use(new PassportLocal(function(username, password, done) {
     db.User.find({
       where: {
-        username: username,
-        password: password
+        username: username
       }
     }).complete(function(err, user) {
       if ( err ) {
@@ -149,9 +150,21 @@ function configurePassport() {
       }
 
       if ( !user ) {
-        return done(null, false, { message: 'Incorrect credentials.' });
+        return done(null, false, { message: 'Login failed: User does not exist.' });
       } else {
-        return done(null, user);
+        // User exists, now we have to check if the password hash is ok
+        // Format of the password variable should be sha256(sha256(pw) + unix_timestamp)
+        // 'password' should contain sha256(pw)
+        var currTs = Math.round(Date.now()/1000);
+    
+        var maxDiff = config.web.replayProtectionTimeDiff || 3;
+    
+        for (var ts = currTs; ts >= (currTs - maxDiff); ts--) {
+          if(crypto.encrypt(user.password + ts) === password) {
+            return done(null, user);
+          }
+        }
+        return done(null, false, { message: 'Login failed: Wrong password or time difference to big.' });
       }
     });
   }));

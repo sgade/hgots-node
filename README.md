@@ -41,7 +41,7 @@ Once the device is connected to the network, `ssh` into it. This is pretty easy.
 2. `apt-get install libavahi-compat-libdnssd-dev`: Install needed dependencies. ___(optional)___
 3. `git clone https://github.com/sgade/hgots-node.git`: Clone the repository.
 4. `cd hgots-node`: Go into the repository directory.
-5. `sh setup.sh`: Run the production setup route.
+5. `sh setup/app.sh`: Run the production setup route.
 6. `cp config.example.json config.json`: Copy the example configuration file and create the required one. **You should edit the config.json file to fit your needs!**
 7. `node src/app`: You are ready to launch the application!
 
@@ -91,7 +91,8 @@ Explanation:
     "secret": "x", // a UNIQUE secret that is used to save cookies
     "useBonjour": true, // advertise the web interface via mdns (aka Apple's "Bonjour")
     "enableSSL": false, // enable HTTPS connections. This is working but might be difficult to use. See README for config help.
-    "sslCertificatePassphrase": "" // see SSL config
+    "sslCertificatePassphrase": "", // see SSL config
+    "replayProtectionTimeDiff": 3 //The maximal time difference allowed for login timestamps. This is used to prevent replay attacks by letting the user hash his current timestamp into the password hash and the server checking current time until current time minus this number
   },
   "doorOpenTime": 2000, // the time in ms that the door will be open
   "logname": "log_%s.log" // name of each log placed in the /logs directory. %s is the current date (yyyy.mm.dd).
@@ -121,6 +122,17 @@ If you want to create a third-party application for the API server there are som
   - Open Door: [key](https://octicons.github.com/icon/key/)
   - About: [package](https://octicons.github.com/icon/package/)
 5. Since we are using the MIT Licence, you are free to do what you want with the code but keep in mind that a little referal link is not hard to implement. Please help open source stay nice and open.
+
+### Logging in
+
+To prevent replay attacks if your app or the server does not use https, you have to build the password parameter like so:
+
+1. Let the user input their password
+2. Generate the sha256 sum of the password **This is btw the thing to save if your app wants to save the password. Always save the hash, not the normal password**
+3. Get the current UNIX timestamp and append it to the hash
+4. Hash the thing again with sha256 and send it immediatly. By default you have 3 seconds to transmit it to the server. This step has to be redone for every login.
+
+So password should be `sha256(sha256(password + timestamp))`
 
 # Generate documentation
 

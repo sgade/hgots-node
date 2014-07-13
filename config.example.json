@@ -19,7 +19,8 @@
     "secret": "web-secret",
     "useBonjour": true,
     "enableSSL": false,
-    "sslCertificatePassphrase": ""
+    "sslCertificatePassphrase": "",
+    "replayProtectionTimeDiff": 3
   },
   "doorOpenTime": 2000,
   "logname": "access_%s.log"
