@@ -14,7 +14,9 @@
 # Screenshots
 
 Login screen: [![Login screen](README-assets/login.png)](README-assets/login.png)
+
 Admin interface: [![Admin interface](README-assets/admin.png)](README-assets/admin.png)
+
 Access logs: [![Logs](README-assets/logs.png)](README-assets/logs.png)
 
 # Target environment and usage
