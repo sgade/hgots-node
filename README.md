@@ -4,6 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/sgade/hgots-node.png)](https://codeclimate.com/github/sgade/hgots-node)
 [![Dependency Status](https://david-dm.org/sgade/hgots-node.svg)](https://david-dm.org/sgade/hgots-node)
 [![devDependency Status](https://david-dm.org/sgade/hgots-node/dev-status.svg)](https://david-dm.org/sgade/hgots-node#info=devDependencies)
+[![optionalDependency Status](https://david-dm.org/sgade/hgots-node/optional-status.svg)](https://david-dm.org/sgade/hgots-node#info=optionalDependencies)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 *Door lock system in nodejs for Herbartgymnasium Oldenburg.*
