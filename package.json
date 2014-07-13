@@ -79,7 +79,7 @@
     "grunt-mocha-test": "~0.11.0",
     "mocha": "^1.20.0",
     "sequelize-fixtures": "^0.3.0",
-    "should": "^3.3.1",
+    "should": "^4.0.4",
     "supertest": "^0.13.0"
   }
 }

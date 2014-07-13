@@ -147,7 +147,7 @@ describe('HGOTS Server Specs', function() {
               throw err;
             }
             
-            res.header.location.should.include('/');
+            res.header.location.should.containEql('/');
             done();
           });
       });
@@ -162,7 +162,7 @@ describe('HGOTS Server Specs', function() {
               throw err;
             }
             
-            res.header.location.should.include('/');
+            res.header.location.should.containEql('/');
             done();
           });
       });
@@ -178,7 +178,7 @@ describe('HGOTS Server Specs', function() {
               throw err;
             }
             
-            res.header.location.should.include('/');
+            res.header.location.should.containEql('/');
             done();
           });
       });
@@ -194,7 +194,7 @@ describe('HGOTS Server Specs', function() {
               throw err;
             }
             
-            res.header.location.should.include('/');
+            res.header.location.should.containEql('/');
             done();
           });
       });
@@ -211,7 +211,7 @@ describe('HGOTS Server Specs', function() {
               throw err;
             }
             
-            res.header.location.should.include('/app');
+            res.header.location.should.containEql('/app');
             done();
           });
       });
