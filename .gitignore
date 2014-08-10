@@ -6,7 +6,7 @@ bower_components
 .sass-cache
 
 # Generated
-src/web/public
+lib/web/public
 doc
 *.sqlite
 *.db

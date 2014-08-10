@@ -3,9 +3,9 @@
   "version": "0.9.1",
   "versionName": "Clean Ant",
   "description": "Door lock system in nodejs for Herbartgymnasium Oldenburg.",
-  "main": "src/app.js",
+  "main": "lib/app.js",
   "scripts": {
-    "start": "node src/app",
+    "start": "node lib/app",
     "test": "grunt test"
   },
   "engines": {

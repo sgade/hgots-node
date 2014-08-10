@@ -51,11 +51,11 @@ Once the device is connected to the network, `ssh` into it. This is pretty easy.
 4. `cd hgots-node`: Go into the repository directory.
 5. `sh setup.sh`: Run the production setup route.
 6. `cp config.example.json config.json`: Copy the example configuration file and create the required one. **You should edit the config.json file to fit your needs!**
-7. `node src/app`: You are ready to launch the application!
+7. `node lib/app`: You are ready to launch the application!
 
 ## First login
 
-On first start in *production mode* (`env NODE_ENV=production node src/app` or run `start.sh`), a default login will be created. The credentials for this admin are:
+On first start in *production mode* (`env NODE_ENV=production node lib/app` or run `start.sh`), a default login will be created. The credentials for this admin are:
 
 **Username:** `admin`<br>
 **Password:** `admin`
@@ -112,7 +112,7 @@ Explanation:
 1. `git clone https://github.com/sgade/hgots-node.git`
 2. `npm install`
 3. `bower install`
-4. `grunt dev` and `node src/app`
+4. `grunt dev` and `node lib/app`
 
 ## A Note for API developers
 
@@ -160,10 +160,10 @@ http {
         server_name  localhost;
 
         passenger_app_root /webapps/hgots-node/; # change this to the root-dir of the app
-        root /webapps/hgots-node/src/web/public/; # and this to the root dir + "/src/web/public"
+        root /webapps/hgots-node/lib/web/public/; # and this to the root dir + "/lib/web/public"
         passenger_enabled on;
         passenger_app_type node;
-        passenger_startup_file src/app.js;  
+        passenger_startup_file lib/app.js;  
     }
 
 }

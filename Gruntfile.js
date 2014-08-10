@@ -18,7 +18,7 @@ module.exports = function(grunt) {
      * */
     jshint: {
       self: [ './*.js', './*.json' ],
-      src: [ './src/**/*.js', '!./src/web/public/**/*.js', '!./src/web/client/js/app/lib/**/*.js' ]
+      src: [ './lib/**/*.js', '!./lib/web/public/**/*.js', '!./lib/web/client/js/app/lib/**/*.js' ]
     },
     env: {
       test: {
@@ -33,13 +33,13 @@ module.exports = function(grunt) {
      * */
     jsdoc: {
       src: {
-        src: [ './Readme.md', './src/**/*.js', '!./src/web/public/**/*.js' ],
+        src: [ './Readme.md', './lib/**/*.js', '!./lib/web/public/**/*.js' ],
         dest: 'doc'
       }
     },
     clean: {
       doc: [ "./doc/" ],
-      client: [ './src/web/public/' ]
+      client: [ './lib/web/public/' ]
     },
     
     /*
@@ -55,9 +55,9 @@ module.exports = function(grunt) {
       index: {
         src: [ './bower_components/cryptojslib/rollups/sha256.js',
                './bower_components/jquery/dist/jquery.js',
-               './src/web/client/js/index/index.js' ],
+               './lib/web/client/js/index/index.js' ],
 
-        dest: './src/web/public/js/index.js'
+        dest: './lib/web/public/js/index.js'
       },
       app: {
                // libs
@@ -73,13 +73,13 @@ module.exports = function(grunt) {
                './bower_components/ngActivityIndicator/ngActivityIndicator.js',
                './bower_components/angular-translate/angular-translate.js',
                // own code
-               './src/web/client/js/app/**/*.js' ],
+               './lib/web/client/js/app/**/*.js' ],
 
-        dest: './src/web/public/js/app.js'
+        dest: './lib/web/public/js/app.js'
       },
       setup: {
-        src: [ './bower_components/jquery/dist/jquery.js', './src/web/client/js/setup/**/*.js' ],
-        dest: './src/web/public/js/setup.js'
+        src: [ './bower_components/jquery/dist/jquery.js', './lib/web/client/js/setup/**/*.js' ],
+        dest: './lib/web/public/js/setup.js'
       }
     },
     /* Build */
@@ -89,17 +89,17 @@ module.exports = function(grunt) {
       },
       index: {
         files: {
-          './src/web/public/js/index.js': [ './src/web/public/js/index.js' ]
+          './lib/web/public/js/index.js': [ './lib/web/public/js/index.js' ]
         }
       },
       app: {
         files: {
-          './src/web/public/js/app.js': [ './src/web/public/js/app.js' ]
+          './lib/web/public/js/app.js': [ './lib/web/public/js/app.js' ]
         }
       },
       setup: {
         files: {
-          './src/web/public/js/setup.js': [ './src/web/public/js/setup.js' ]
+          './lib/web/public/js/setup.js': [ './lib/web/public/js/setup.js' ]
         }
       }
     },
@@ -107,14 +107,14 @@ module.exports = function(grunt) {
     sass: {
       src: {
         files: {
-          './src/web/public/css/style.css': [ './src/web/client/sass/style.scss' ]
+          './lib/web/public/css/style.css': [ './lib/web/client/sass/style.scss' ]
         }
       }
     },
     autoprefixer: {
       src: {
-        src: './src/web/public/css/style.css',
-        dest: './src/web/public/css/style.css'
+        src: './lib/web/public/css/style.css',
+        dest: './lib/web/public/css/style.css'
       }
     },
     cssmin: {
@@ -123,28 +123,28 @@ module.exports = function(grunt) {
           banner: BANNER
         },
         files: {
-          './src/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css',
+          './lib/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css',
                                               './bower_components/bootflatv2/bootflat/css/bootflat.css',
                                               './bower_components/octicons/octicons/octicons.css',
                                               './bower_components/angular/angular-csp.css',
                                               './bower_components/angular-loading-bar/build/loading-bar.css',
                                               './bower_components/ngActivityIndicator/css/ngActivityIndicator.css',
-                                              './src/web/public/css/style.css' ]
+                                              './lib/web/public/css/style.css' ]
         }
       }
     },
     copy: {
       angularViews: {
         expand: true,
-        cwd: './src/web/client/html/',
+        cwd: './lib/web/client/html/',
         src: '*.html',
-        dest: './src/web/public/views/'
+        dest: './lib/web/public/views/'
       },
       octiconsFont: {
         expand: true,
         cwd: './bower_components/octicons/octicons/',
         src: [ '*.eot', '*.woff', '*.ttf', '*.svg' ],
-        dest: './src/web/public/css/'
+        dest: './lib/web/public/css/'
       }
     },
     /* Watch */
@@ -153,28 +153,28 @@ module.exports = function(grunt) {
         livereload: true
       },
       htmlViews: {
-        files: [ './src/web/client/html/**/*.html' ],
+        files: [ './lib/web/client/html/**/*.html' ],
         tasks: [ 'build-dev-html' ]
       },
       jsIndex: {
-        files: [ './src/web/client/js/index/**/*.js' ],
+        files: [ './lib/web/client/js/index/**/*.js' ],
         tasks: [ 'build-dev-js-index' ]
       },
       jsapp: {
-        files: [ './src/web/client/js/app/**/*.js' ],
+        files: [ './lib/web/client/js/app/**/*.js' ],
         tasks: [ 'build-dev-js-app' ]
       },
       jsSetup: {
-        files: [ './src/web/client/js/setup/**/*.js' ],
+        files: [ './lib/web/client/js/setup/**/*.js' ],
         tasks: [ 'build-dev-js-setup' ]
       },
 
       css: {
-        files: [ './src/web/client/sass/**/*.scss' ],
+        files: [ './lib/web/client/sass/**/*.scss' ],
         tasks: [ 'build-dev-css' ]
       },
       i18n: {
-        files: [ './src/web/client/translations/**/*.js' ],
+        files: [ './lib/web/client/translations/**/*.js' ],
         tasks: [ 'build-dev-js-i18n' ]
       }
     },
@@ -185,7 +185,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['src/web/test/**/*.js']
+        src: [ './lib/web/test/**/*.js' ]
       }
     }
   });

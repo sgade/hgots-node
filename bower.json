@@ -6,7 +6,7 @@
     "Sören Gade <gade.soeren@googlemail.com>",
     "Jan-Henrik Bruhn <jh.bruhn@me.com>"
   ],
-  "main": "src/app.js",
+  "main": "lib/app.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
