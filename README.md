@@ -11,7 +11,7 @@
 
 **v0.9.1 (Clean Ant)**
 
-# Screenshots
+# Screenshots of the web interface
 
 ### Login screen
 [![Login screen](README-assets/login.png)](README-assets/login.png)
@@ -21,6 +21,11 @@
 
 ### Access logs
 [![Logs](README-assets/logs.png)](README-assets/logs.png)
+
+
+## Applications working with hgots
+
+* Android App with Wear Support: [jhbruhn/HGOTSUMTTM](https://github.com/jhbruhn/HGOTSUMTTM)
 
 # Target environment and usage
 
