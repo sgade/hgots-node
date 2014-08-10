@@ -105,12 +105,9 @@ function configure(port, callbacks) {
   if ('development' === app.get('env')) {
     // development only:
     app.use(expressErrorHandler()); // error handler
-    app.use(expressMorgan({ // dev logs
-      format: 'dev'
-    }));
+    app.use(expressMorgan('dev')); // dev logs
   } else if ('production' === app.get('env')) {
-    app.use(expressMorgan({
-      format: 'short',
+    app.use(expressMorgan('short', {
       stream: new LogStream()
     })); // request logs
   }
