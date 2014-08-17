@@ -82,6 +82,12 @@
     .cards {
       box-shadow: none;
     }
+    
+    .ng-enter,
+    .ng-move,
+    .ng-leave {
+      transition: all 0s !important;
+    }
   }
   
   .log-items {

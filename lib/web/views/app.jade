@@ -18,20 +18,20 @@ block content
         div.collapse.navbar-collapse#nav-collapse
           ul.nav.navbar-nav(ng-cloak)
             li(ng-class="{ active: isActive('/') }")
-              a(href="#/")
+              a(ui-sref="home")
                 span.octicon.octicon-home
                 | {{ 'NAV.HOME' | translate }}
             li(ng-if="currentUserIsPrivileged", ng-class="{ active: isActive('/admin') }")
-              a(href="#/admin")
+              a(ui-sref="admin.welcome")
                 span.octicon.octicon-tools
                 | {{ 'NAV.ADMIN' | translate }}
             li(ng-if="currentUserIsPrivileged", ng-class="{ active: isActive('/logs') }")
-              a(href="#/logs")
+              a(ui-sref="logs")
                 span.octicon.octicon-three-bars
                 | {{ 'NAV.ACCESS_LOGS' | translate }}
           ul.nav.navbar-nav.navbar-right
             li(ng-class="{ active: isActive('/about') }")
-              a(href="#/about")
+              a(ui-sref="about")
                 span.octicon.octicon-package
                 | {{ 'NAV.ABOUT' | translate }}
             li
@@ -39,7 +39,8 @@ block content
                 span.octicon.octicon-sign-out
                 | {{ 'NAV.LOGOUT' | translate }}
             
-    div.container-fluid.animations(ng-view)
+    div.container-fluid.animations(ui-view)
+      p Loading...
     
   script(src="/js/app.js")
   
