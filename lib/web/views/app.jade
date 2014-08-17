@@ -22,7 +22,7 @@ block content
                 span.octicon.octicon-home
                 | {{ 'NAV.HOME' | translate }}
             li(ng-if="currentUserIsPrivileged", ng-class="{ active: isActive('/admin') }")
-              a(ui-sref="admin")
+              a(ui-sref="admin.welcome")
                 span.octicon.octicon-tools
                 | {{ 'NAV.ADMIN' | translate }}
             li(ng-if="currentUserIsPrivileged", ng-class="{ active: isActive('/logs') }")
