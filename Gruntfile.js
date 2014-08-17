@@ -72,6 +72,7 @@ module.exports = function(grunt) {
                './bower_components/angular-loading-bar/build/loading-bar.js',
                './bower_components/ngActivityIndicator/ngActivityIndicator.js',
                './bower_components/angular-translate/angular-translate.js',
+               './bower_components/angular-ui-router/release/angular-ui-router.js',
                // own code
                './lib/web/client/js/app/**/*.js' ],
 
