@@ -1,10 +1,10 @@
-# hgots-node [![Release](http://img.shields.io/badge/v0.9.1-Clean_Ant-blue.svg)](https://github.com/sgade/hgots-node/releases)
+# hgots-node [![Release](http://img.shields.io/badge/v0.9.1-Clean_Ant-blue.svg?style=flat-square)](https://github.com/sgade/hgots-node/releases)
 
-[![Build Status](https://travis-ci.org/sgade/hgots-node.svg)](https://travis-ci.org/sgade/hgots-node)
-[![Code Climate](https://codeclimate.com/github/sgade/hgots-node.png)](https://codeclimate.com/github/sgade/hgots-node)
+[![Build Status](http://img.shields.io/travis/sgade/hgots-node.svg?style=flat-square)](https://travis-ci.org/sgade/hgots-node)
+[![Code Climate](http://img.shields.io/codeclimate/github/sgade/hgots-node.svg?style=flat-square)](https://codeclimate.com/github/sgade/hgots-node)
 
-[![Dependency Status](https://david-dm.org/sgade/hgots-node.svg)](https://david-dm.org/sgade/hgots-node)
-[![devDependency Status](https://david-dm.org/sgade/hgots-node/dev-status.svg)](https://david-dm.org/sgade/hgots-node#info=devDependencies)
+[![Dependency Status](http://img.shields.io/david/sgade/hgots-node.svg?style=flat-square)](https://david-dm.org/sgade/hgots-node)
+[![devDependency Status](http://img.shields.io/david/dev/sgade/hgots-node.svg?style=flat-square)](https://david-dm.org/sgade/hgots-node#info=devDependencies)
 [![optionalDependency Status](https://david-dm.org/sgade/hgots-node/optional-status.svg)](https://david-dm.org/sgade/hgots-node#info=optionalDependencies)
 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
