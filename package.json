@@ -1,7 +1,7 @@
 {
   "name": "hgots-node",
-  "version": "0.9.1",
-  "versionName": "Clean Ant",
+  "version": "0.9.2",
+  "versionName": "Routed Bird",
   "description": "Door lock system in nodejs for Herbartgymnasium Oldenburg.",
   "main": "lib/app.js",
   "scripts": {
