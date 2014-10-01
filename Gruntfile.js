@@ -63,6 +63,8 @@ module.exports = function(grunt) {
                // libs
         src: [ './bower_components/jquery/dist/jquery.js',
                './bower_components/bootstrap/dist/js/bootstrap.js',
+               './bower_components/bootstrap-material-design/scripts/ripples.js',
+               './bower_components/bootstrap-material-design/scripts/material.js',
                // angular
                './bower_components/angular/angular.js',
                './bower_components/angular-route/angular-route.js',
@@ -125,7 +127,8 @@ module.exports = function(grunt) {
         },
         files: {
           './lib/web/public/css/style.css': [ './bower_components/bootstrap/dist/css/bootstrap.css',
-                                              './bower_components/bootflatv2/bootflat/css/bootflat.css',
+                                              './bower_components/bootstrap-material-design/css-compiled/material.css',
+                                              './bower_components/bootstrap-material-design/css-compiled/ripples.css',
                                               './bower_components/octicons/octicons/octicons.css',
                                               './bower_components/angular/angular-csp.css',
                                               './bower_components/angular-loading-bar/build/loading-bar.css',
